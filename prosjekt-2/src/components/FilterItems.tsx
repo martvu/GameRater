@@ -16,14 +16,14 @@ export default function FilterItems({ listName, list }: Props) {
   const showLess = () => setNumItemsToShow(5); // Reset to showing 5 items
   return (
     <div>
-      <h2 className="mb-2 mt-2 font-semibold">{listName}</h2>
-      <div className="flex flex-col justify-center ">
+      <h2 className="my-2 text-left font-semibold">{listName}</h2>
+      <div className="flex flex-col">
         {list.slice(0, numItemsToShow).map(item => (
-          <div className="flex items-center space-x-2">
-          <Checkbox id="terms" />
+          <div className="flex items-center space-x-2 my-1">
+          <Checkbox id="filter-item" />
           <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            htmlFor="filter-item"
+            className="text-sm text-left font-light leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {item}
           </label>

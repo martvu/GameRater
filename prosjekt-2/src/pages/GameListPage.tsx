@@ -9,18 +9,24 @@ export default function GameListPage() {
     <div className="flex flex-col">
       <Nav />
       <div className="flex flex-col md:flex-row">
-        <div className='md:block hidden'>
+        <div className='md:block hidden ml-4'>
           <Filters />
         </div>
         
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col">
           <div className="flex justify-between md:justify-end">
-            <div className="block md:hidden">
+            <div className="block md:hidden ml-20">
               <FilterModal />
             </div>
-            <SortBy />
+            <div className='mr-20'>
+              <SortBy />
+            </div>
+            
           </div>
-          <GameList />
+          <div className='flex justify-center'>
+             <GameList />
+          </div>
+         
         </div>
       </div>
     </div>
