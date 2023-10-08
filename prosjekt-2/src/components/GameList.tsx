@@ -1,7 +1,7 @@
 import Botw from '../assets/botw.jpeg';
 import MarioWonder from '../assets/mariowonder.jpeg';
 import { GameCard } from './GameCard';
-import SortBy from './SortBy';
+
 
 const gameData = [
   {
@@ -25,10 +25,7 @@ const gameData = [
 export default function GameList() {
   return (
     <div className="flex w-full flex-col">
-      <div className="mr-1 flex justify-end">
-        <SortBy />
-      </div>
-      <div className="flex max-w-[1000px] flex-row flex-wrap justify-end">
+      <div className="flex max-w-[1000px] flex-row flex-wrap justify-center sm:justify-end">
         {gameData.map(game => (
           <div className="m-1" key={game.title}>
             <GameCard
