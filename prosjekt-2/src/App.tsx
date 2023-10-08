@@ -1,4 +1,4 @@
-import './App.css';
+import './index.css';
 import { ThemeProvider } from './components/theme/ThemeProvider';
 import GameListPage from './pages/GameListPage';
 

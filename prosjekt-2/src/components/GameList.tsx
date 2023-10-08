@@ -25,7 +25,7 @@ const gameData = [
 export default function GameList() {
   return (
     <div className="flex w-full flex-col">
-      <div className="flex max-w-[1000px] flex-row flex-wrap justify-center ">
+      <div className="flex flex-row flex-wrap justify-center ">
         {gameData.map(game => (
           <div className="m-1" key={game.title}>
             <GameCard

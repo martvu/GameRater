@@ -14,13 +14,11 @@ export default function GameListPage() {
         </div>
         
         <div className="flex flex-col">
-          <div className="flex justify-between md:justify-end">
-            <div className="block md:hidden ml-20">
+          <div className="flex justify-between md:justify-end px-4">
+            <div className="block md:hidden">
               <FilterModal />
             </div>
-            <div className='mr-20'>
-              <SortBy />
-            </div>
+            <SortBy />
             
           </div>
           <div className='flex justify-center'>
