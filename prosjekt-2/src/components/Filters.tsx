@@ -1,19 +1,16 @@
-import { Button } from "./ui/button";
-
+import { Button } from './ui/button';
 
 export default function Filters() {
   return (
     <>
-    
-    <div className="max-w-[280px] min-w-[280px] md:block hidden border border-solid h-full">
-      Filters
-    </div>
-    <div className="w-full md:hidden block">
-      <Button variant="outline" className="rounded-xl" >
-      Filters
-    </Button>
-    </div> 
-    
+      <div className="hidden h-full min-w-[280px] max-w-[280px] border border-solid md:block">
+        Filters
+      </div>
+      <div className="block w-full md:hidden">
+        <Button variant="outline" className="rounded-xl">
+          Filters
+        </Button>
+      </div>
     </>
-  )
+  );
 }
