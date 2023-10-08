@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card';
 
 interface GameCardProps {
   title: string;
@@ -13,21 +13,19 @@ interface GameCardProps {
   image: string;
 }
 
-export function GameCard( { title, description, image }: GameCardProps ) {
+export function GameCard({ title, description, image }: GameCardProps) {
   return (
-    <Card className="w-[240px] overflow-hidden h-[300px]">
-      <CardContent className="p-0 h-4/7 overflow-hidden">
-        <div className="w-full h-full hover:scale-110 duration-200" >
-<img src={image} alt={title} />
+    <Card className="h-[300px] w-[240px] overflow-hidden">
+      <CardContent className="h-4/7 overflow-hidden p-0">
+        <div className="h-full w-full duration-200 hover:scale-110">
+          <img src={image} alt={title} />
         </div>
-       
       </CardContent>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardFooter className="flex justify-between">
-      </CardFooter>
+      <CardFooter className="flex justify-between"></CardFooter>
     </Card>
-  )
+  );
 }

@@ -9,7 +9,7 @@ export default function Filters() {
       Filters
     </div>
     <div className="w-full md:hidden block">
-      <Button className="bg-red-400 rounded-xl" >
+      <Button variant="outline" className="rounded-xl" >
       Filters
     </Button>
     </div> 
