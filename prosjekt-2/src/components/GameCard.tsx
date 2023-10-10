@@ -26,7 +26,7 @@ export function GameCard({ title, description, image, rating }: GameCardProps) {
       </CardHeader>
       <CardContent className='text-start px-3'>
         <CardTitle className='text-xl my-2'>{title}</CardTitle>
-        <CardDescription className='line-clamp-3'>{description}</CardDescription>
+        <CardDescription className='line-clamp-2'>{description}</CardDescription>
       </CardContent>
       <CardFooter className="absolute px-3 pb-2 bottom-0 mt-auto left-0">
         <div className='flex items-center'>

@@ -11,53 +11,49 @@ import { useState } from 'react';
 
 export default function GameListPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const gamesPerPage = 10;
+  const gamesPerPage = 12;
 
   return (
-    <>
-    <Nav />
-      <div className="flex flex-col">
-        <div className="flex-grow-1 grid grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal overflow-auto">
-          <div className="ml-4 hidden md:block">
-            <Filters />
+    <div className="flex flex-col min-h-screen">
+      <Nav />
+      <div className="flex-grow grid grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal overflow-auto">
+        <div className="ml-4 hidden md:block">
+          <Filters />
+        </div>
+        <div className="overflow-x-hidden px-8">
+          <div className="sticky top-0 z-10 flex justify-between bg-background py-1 pb-4 md:justify-end">
+            <div className="block md:hidden">
+              <FilterModal />
+            </div>
+            <SortBy />
           </div>
-          <div className="overflow-x-hidden px-8">
-            <div className="sticky top-0 z-10 flex justify-between bg-background py-1 pb-4 md:justify-end">
-              <div className="block md:hidden">
-                <FilterModal />
-              </div>
-              <SortBy />
-            </div>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-              {gameData.slice((currentPage-1) *gamesPerPage, currentPage*gamesPerPage)
-          
-                .map(game => (
-                  <div
-                    className="m-1 flex justify-center md:justify-normal"
-                    key={game.title}
-                  >
-                    <GameCard
-                      title={game.title}
-                      description={game.description}
-                      image={game.image ? game.image : Botw}
-                      rating={game.rating}
-                    />
-                  </div>
-                ))}
-            </div>
-            <div className="flex w-full justify-center">
-              <Pagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                gamesPerPage={gamesPerPage}
-                gameData={gameData}
-              />
-            </div>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
+            {gameData.slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
+              .map(game => (
+                <div
+                  className="m-1 flex justify-center md:justify-normal"
+                  key={game.title}
+                >
+                  <GameCard
+                    title={game.title}
+                    description={game.description}
+                    image={game.image ? game.image : Botw}
+                    rating={game.rating}
+                  />
+                </div>
+              ))}
+          </div>
+          <div className="flex w-full justify-center mt-2">
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              gamesPerPage={gamesPerPage}
+              gameData={gameData}
+            />
           </div>
         </div>
-        <Footer />
       </div>
-      
-    </>
+      <Footer />
+    </div>
   );
 }

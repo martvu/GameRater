@@ -12,7 +12,7 @@ type data = {
 export const gameData: data[] = [
   {
     title: 'The Legend of Zelda: Breath of the Wild',
-    description: 'Description for Game 1',
+    description: 'Description for Game 1. This is a very long description. The story is very good',
     image: Botw,
     rating: 4.3,
   },

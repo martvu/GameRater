@@ -19,18 +19,18 @@ export default function FilterItems({ listName, list }: Props) {
     <div>
       <h2 className="my-2 text-left font-semibold">{listName}</h2>
       <div className="flex flex-col ml-1">
-        {list.slice(0, numItemsToShow).map(item => (
-          <div className="flex items-center space-x-2 my-1">
-          <Checkbox id="filter-item" />
-          <label
-            htmlFor="filter-item"
-            className="text-sm text-left font-light leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            {item}
-          </label>
-        </div>
-        ))}
-      </div>
+      {list.slice(0, numItemsToShow).map((item, index) => (
+  <div className="flex items-center space-x-2 my-1" key={index}>
+    <Checkbox id={`filter-item-${item}`} />
+    <label
+      htmlFor={`filter-item-${item}`}
+      className="text-sm text-left font-light leading-none break-all peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+    >
+      {item}
+    </label>
+  </div>
+))}
+</div>
       {numItemsToShow < list.length ? (
         <Button
           variant={'text'}

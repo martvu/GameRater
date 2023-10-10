@@ -9,7 +9,7 @@ export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   return (
     <nav
-      className={`relative flex h-20 w-full items-center gap-10 lg:gap-20 ${
+      className={`relative flex h-20 w-full items-center gap-10 lg:gap-20 px-2 md:px-4 lg:px-8 ${
         showFullWidthSearch
           ? 'justify-center md:justify-between'
           : 'justify-between'
