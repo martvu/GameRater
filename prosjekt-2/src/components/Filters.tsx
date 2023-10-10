@@ -34,7 +34,7 @@ const Genres = [
   'Board Games',
   'Card Games',
   'Trivia',
-  'Superlongwordthatshouldbreaktheui'
+  'Superlongwordthatshouldbreaktheui',
 ];
 export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -45,13 +45,22 @@ export default function Filters() {
 
   return (
     <>
-      <div className={cn("flex flex-col h-full text-left items-start", !isCollapsed && "max-w-[160px]")}>
-        <Button variant="ghost" className='' onClick={toggleCollapse} >
+      <div
+        className={cn(
+          'flex h-full flex-col items-start text-left',
+          !isCollapsed && 'max-w-[160px]'
+        )}
+      >
+        <Button variant="ghost" className="" onClick={toggleCollapse}>
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-          {!isCollapsed && <span className='ml-2'>Hide</span>}
+          {!isCollapsed && <span className="ml-2">Hide</span>}
         </Button>
-        <div className="pl-5 block">
-          <h1 className={`text-md text-left mt-4 font-bold tracking-wider md:text-xl ${isCollapsed ? 'hidden' : ''}`}>
+        <div className="block pl-5">
+          <h1
+            className={`text-md mt-4 text-left font-bold tracking-wider md:text-xl ${
+              isCollapsed ? 'hidden' : ''
+            }`}
+          >
             Filters
           </h1>
           {!isCollapsed && (

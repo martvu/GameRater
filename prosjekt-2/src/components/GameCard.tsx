@@ -24,16 +24,16 @@ export function GameCard({ title, description, image, rating }: GameCardProps) {
           <img src={image} alt={title} />
         </div>
       </CardHeader>
-      <CardContent className='text-start px-3'>
-        <CardTitle className='text-xl my-2'>{title}</CardTitle>
-        <CardDescription className='line-clamp-2'>{description}</CardDescription>
+      <CardContent className="px-3 text-start">
+        <CardTitle className="my-2 text-xl">{title}</CardTitle>
+        <CardDescription className="line-clamp-2">
+          {description}
+        </CardDescription>
       </CardContent>
-      <CardFooter className="absolute px-3 pb-2 bottom-0 mt-auto left-0">
-        <div className='flex items-center'>
-          <Star className='text-yellow-400 mr-1 h-4' fill='#facc15'/>
-          <p>
-            {rating}
-          </p>
+      <CardFooter className="absolute bottom-0 left-0 mt-auto px-3 pb-2">
+        <div className="flex items-center">
+          <Star className="mr-1 h-4 text-yellow-400" fill="#facc15" />
+          <p>{rating}</p>
         </div>
       </CardFooter>
     </Card>

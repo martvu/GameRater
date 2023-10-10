@@ -14,9 +14,9 @@ export default function GameListPage() {
   const gamesPerPage = 12;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Nav />
-      <div className="flex-grow grid grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal overflow-auto">
+      <div className="grid flex-grow grid-cols-1 justify-center overflow-auto md:grid-cols-[auto,1fr] md:justify-normal">
         <div className="ml-4 hidden md:block">
           <Filters />
         </div>
@@ -28,7 +28,11 @@ export default function GameListPage() {
             <SortBy />
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-            {gameData.slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
+            {gameData
+              .slice(
+                (currentPage - 1) * gamesPerPage,
+                currentPage * gamesPerPage
+              )
               .map(game => (
                 <div
                   className="m-1 flex justify-center md:justify-normal"
@@ -43,7 +47,7 @@ export default function GameListPage() {
                 </div>
               ))}
           </div>
-          <div className="flex w-full justify-center mt-2">
+          <div className="mt-2 flex w-full justify-center">
             <Pagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}

@@ -41,7 +41,7 @@ export default function Pagination({
             <ChevronLeft className="h-4 w-4" />
           </Button>
         </li>
-        
+
         <li>
           <span className="mx-2">{`${currentPage} / ${totalPages}`}</span>
         </li>

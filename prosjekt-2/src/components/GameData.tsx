@@ -1,7 +1,6 @@
 import Botw from '../assets/botw.jpeg';
 import MarioWonder from '../assets/mariowonder.jpeg';
 
-
 type data = {
   title: string;
   description: string;
@@ -12,7 +11,8 @@ type data = {
 export const gameData: data[] = [
   {
     title: 'The Legend of Zelda: Breath of the Wild',
-    description: 'Description for Game 1. This is a very long description. The story is very good',
+    description:
+      'Description for Game 1. This is a very long description. The story is very good',
     image: Botw,
     rating: 4.3,
   },
@@ -46,4 +46,3 @@ export const gameData: data[] = [
   { title: 'Game 19', description: 'Description for Game 19', rating: 5 },
   { title: 'Game 20', description: 'Description for Game 20', rating: 5 },
 ];
-

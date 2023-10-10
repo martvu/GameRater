@@ -80,11 +80,11 @@
 }
 
 *::-webkit-scrollbar {
-  @apply bg-transparent w-2;
+  @apply w-2 bg-transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply bg-slate-500 rounded-full;
+  @apply rounded-full bg-slate-500;
 }
 
 #root {
