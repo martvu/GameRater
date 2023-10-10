@@ -1,16 +1,15 @@
 import Botw from '../assets/botw.jpeg';
 import MarioWonder from '../assets/mariowonder.jpeg';
-import { GameCard } from './GameCard';
-import Pagination from './Pagination';
+
 
 type data = {
-  title: string,
-  description: string,
-  image?: string,
-  rating: number
-}
+  title: string;
+  description: string;
+  image?: string;
+  rating: number;
+};
 
-const gameData : data[] = [
+export const gameData: data[] = [
   {
     title: 'The Legend of Zelda: Breath of the Wild',
     description: 'Description for Game 1',
@@ -23,7 +22,12 @@ const gameData : data[] = [
     image: MarioWonder,
     rating: 2.3,
   },
-  { title: 'Game 3', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', rating: 5 },
+  {
+    title: 'Game 3',
+    description:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+    rating: 5,
+  },
   { title: 'Game 4', description: 'Description for Game 4', rating: 5 },
   { title: 'Game 5', description: 'Description for Game 5', rating: 5 },
   { title: 'Game 6', description: 'Description for Game 6', rating: 5 },
@@ -43,22 +47,3 @@ const gameData : data[] = [
   { title: 'Game 20', description: 'Description for Game 20', rating: 5 },
 ];
 
-export default function GameList() {
-  return (
-    <div className="flex w-full flex-col">
-      <div className="flex flex-row flex-wrap justify-center ">
-        {gameData.map(game => (
-          <div className="m-1" key={game.title}>
-            <GameCard
-              title={game.title}
-              description={game.description}
-              image={game.image ? game.image : Botw}
-              rating={game.rating}
-            />
-          </div>
-        ))}
-      </div>
-      <Pagination/>
-    </div>
-  );
-}

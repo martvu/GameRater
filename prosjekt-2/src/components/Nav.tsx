@@ -1,23 +1,64 @@
 import { ModeToggle } from '@/components/theme/ModeToggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ArrowLeft, Search } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Nav() {
+  const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   return (
-    <nav className="relative flex h-24 w-full items-center justify-between">
-      <div className="flex w-28 items-center justify-between gap-2 px-2">
+    <nav
+      className={`relative flex h-20 w-full items-center gap-10 lg:gap-20 ${
+        showFullWidthSearch
+          ? 'justify-center md:justify-between'
+          : 'justify-between'
+      }`}
+    >
+      <div
+        className={`w-28 items-center justify-between gap-2 px-2 ${
+          showFullWidthSearch ? 'hidden md:flex' : 'flex'
+        }`}
+      >
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" alt="logo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <h1 className="text-green-600 font-semibold text-xl">GameRater</h1>
+        <h1 className="text-xl font-semibold text-green-600">GameRater</h1>
       </div>
-      <div className="hidden w-full max-w-sm items-center space-x-2 md:flex">
-        <Input type="input" placeholder="Search" />
+      <div
+        className={`w-full max-w-sm flex-grow items-center justify-center space-x-2 md:flex ${
+          showFullWidthSearch ? 'flex' : 'hidden md:flex'
+        }`}
+      >
+        {showFullWidthSearch && (
+          <Button
+            onClick={() => setShowFullWidthSearch(false)}
+            size="icon"
+            variant="ghost"
+            className="flex-shrink-0 rounded-2xl md:hidden"
+          >
+            <ArrowLeft />
+          </Button>
+        )}
+        <Input type="search" placeholder="Search" />
         <Button type="submit">Search</Button>
       </div>
-      <ModeToggle />
+      <div
+        className={`flex-shrink-0 md:gap-2 ${
+          showFullWidthSearch ? 'hidden md:flex' : 'flex'
+        }`}
+      >
+        <Button
+          onClick={() => setShowFullWidthSearch(true)}
+          size="icon"
+          variant="ghost"
+          className="rounded-2xl md:hidden"
+        >
+          <Search size={24} />
+        </Button>
+        <ModeToggle />
+      </div>
     </nav>
   );
 }

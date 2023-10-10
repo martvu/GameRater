@@ -18,7 +18,7 @@ interface GameCardProps {
 
 export function GameCard({ title, description, image, rating }: GameCardProps) {
   return (
-    <Card className="relative h-[300px] w-[240px] overflow-hidden">
+    <Card className="relative h-[300px] min-w-[240px] max-w-[300px] overflow-hidden">
       <CardHeader className="h-4/7 overflow-hidden p-0">
         <div className="h-full w-full duration-200 hover:scale-110">
           <img src={image} alt={title} />
@@ -28,7 +28,7 @@ export function GameCard({ title, description, image, rating }: GameCardProps) {
         <CardTitle className='text-xl my-2'>{title}</CardTitle>
         <CardDescription className='line-clamp-3'>{description}</CardDescription>
       </CardContent>
-      <CardFooter className="absolute px-3 bottom-0 mt-auto left-0">
+      <CardFooter className="absolute px-3 pb-2 bottom-0 mt-auto left-0">
         <div className='flex items-center'>
           <Star className='text-yellow-400 mr-1 h-4' fill='#facc15'/>
           <p>
