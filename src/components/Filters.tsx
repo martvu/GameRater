@@ -51,7 +51,7 @@ export default function Filters() {
           !isCollapsed && 'max-w-[160px]'
         )}
       >
-        <Button variant="ghost" className="" onClick={toggleCollapse}>
+        <Button variant="ghost" onClick={toggleCollapse}>
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           {!isCollapsed && <span className="ml-2">Hide</span>}
         </Button>
