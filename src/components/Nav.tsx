@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
@@ -15,17 +16,19 @@ export default function Nav() {
           : 'justify-between'
       }`}
     >
-      <div
-        className={`w-28 items-center justify-between gap-2 px-2 ${
-          showFullWidthSearch ? 'hidden md:flex' : 'flex'
-        }`}
-      >
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="logo" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <h1 className="text-xl font-semibold text-green-600">GameRater</h1>
-      </div>
+      <Link to="/">
+        <div
+          className={`w-28 items-center justify-between gap-2 px-2 ${
+            showFullWidthSearch ? 'hidden md:flex' : 'flex'
+          }`}
+        >
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" alt="logo" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <h1 className="text-xl font-semibold text-green-600">GameRater</h1>
+        </div>
+      </Link>
       <div
         className={`w-full max-w-sm flex-grow items-center justify-center space-x-2 md:flex ${
           showFullWidthSearch ? 'flex' : 'hidden md:flex'
