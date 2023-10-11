@@ -13,7 +13,7 @@ function BaseGameListPage() {
   const gamesPerPage = 12;
 
   return (
-    <div className="grid flex-grow grid-cols-1 justify-center overflow-auto md:grid-cols-[auto,1fr] md:justify-normal">
+    <div className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">
       <div className="ml-4 hidden md:block">
         <Filters />
       </div>

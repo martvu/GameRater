@@ -27,7 +27,7 @@ export function GameCard({
 }: GameCardProps) {
   return (
     <Link to={`/game/${id}`}>
-      <Card className="relative h-[300px] min-w-[240px] max-w-[300px] overflow-hidden">
+      <Card className="relative h-[320px] min-w-[240px] max-w-[300px] overflow-hidden">
         <CardHeader className="h-4/7 overflow-hidden p-0">
           <div className="h-full w-full duration-200 hover:scale-110">
             <img src={image} alt={title} />
