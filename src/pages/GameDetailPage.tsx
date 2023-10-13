@@ -1,10 +1,19 @@
 import withLayout from '@/lib/withLayout';
 import Botw from '../assets/botw.jpeg';
 import { useParams, Link } from 'react-router-dom';
-import { Data, gameData } from '@/components/GameData';
-import { Star } from 'lucide-react';
+import { reviews, Data, gameData } from '@/components/GameData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import Rating from '@/components/Rating';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import ReviewCard from '@/components/ReviewCard';
 
 type GameDetailParams = {
   id: string;
@@ -21,57 +30,86 @@ const BaseGameDetailPage = () => {
   }
 
   return (
-    <div className="flex justify-center p-4">
-      <div className="flex w-3/4 flex-wrap justify-center">
+    <div className="flex justify-center">
+      <div className="max-w-[1500px] grid grid-cols-1 gap-4 px-4">
         <Link to="/">
           <Button
             size="icon"
             variant="ghost"
-            className="flex-shrink-0 rounded-2xl"
+            className="rounded-2x flex-shrink-0"
           >
             <ArrowLeft />
           </Button>
         </Link>
-        <div className="max-w-1/2 flex h-[300px] min-w-[240px] flex-col items-center overflow-hidden">
-          <img
-            src={game.image || Botw}
-            alt={game.title}
-            className="max-h-full max-w-full object-cover"
-          />
-          <div className="mt-2 flex items-center text-yellow-400">
-            <p>Rating: </p>
-            <Star className="mr-1 h-4" fill="#facc15" />
-            <p>{game.rating}</p>
+        <div className="grid gap-2 lg:grid-cols-[auto,1fr]  ">
+          {/* Image, ratings, Write Review */}
+          <Card className="overflow-hidden p-0">
+            <CardHeader className="p-0">
+              <div className="flex w-full cursor-default p-0">
+                <img
+                  src={game.image || Botw}
+                  alt={game.title}
+                  className="w-full h-full max-h-[300px] object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="mt-2 flex items-center justify-center text-yellow-400">
+                <Rating rating={game.rating} numRatings={41} />
+              </div>
+            </CardHeader>
+            <CardFooter className="flex flex-col justify-center">
+              <Button className="mb-4 w-[200px]">Write Review</Button>
+            </CardFooter>
+          </Card>
+          {/* Title, Release Date, Platforms, Genres and Description */}
+          <Card className="pb-4 text-left">
+            <CardHeader className="flex flex-col items-start">
+              <CardTitle className=" text-4xl font-semibold">{game.title}</CardTitle>
+              <CardDescription className='py-2'>
+                <div className="flex flex-col justify-start">
+                  <div className="flex">
+                    <p>Release Date: 12.12.2017 </p>
+                  </div>
+                  <div className="mt-1 flex flex-row flex-wrap">
+                    <p className="mr-2">Platforms:</p>
+                    {game.platforms?.map(platform => (
+                      <li
+                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                        key={platform}
+                      >
+                        {platform}
+                      </li>
+                    ))}
+                  </div>
+                  <div className="mt-1 flex flex-row flex-wrap">
+                    <p className="mr-2">Genres:</p>
+                    {game.genres?.map(genre => (
+                      <li
+                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                        key={genre}
+                      >
+                        {genre}
+                      </li>
+                    ))}
+                  </div>
+                </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="py-4">
+              <p className="text-md text-muted-foreground">
+                {game.description}
+              </p>
+            </CardContent>
+          </Card>
+          {/* Reviews */}
+          <div className="flex w-full flex-col justify-center text-left col-span-1">
+            <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
+            {reviews.map(data => (
+              <div key={data.id} className="my-1">
+                <ReviewCard review={data} />
+              </div>
+            ))}
           </div>
-          <div className="mt-4 flex flex-col justify-start">
-            <div className="flex flex-row flex-wrap">
-              <p className="mr-2">Platforms:</p>
-              {game.platforms?.map(platform => (
-                <li
-                  className="list-none rounded-full border border-white px-2 text-sm"
-                  key={platform}
-                >
-                  {platform}
-                </li>
-              ))}
-            </div>
-
-            <div className="mt-2 flex flex-row flex-wrap">
-              <p className="mr-2">Genres:</p>
-              {game.genres?.map(genre => (
-                <li
-                  className="list-none rounded-lg border border-white px-2 text-sm"
-                  key={genre}
-                >
-                  {genre}
-                </li>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="flex w-1/3 flex-col items-start justify-center pl-4">
-          <h1 className="mb-4 text-2xl font-semibold">{game.title}</h1>
-          <p className="mb-4 text-lg">{game.description}</p>
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ export const gameData: Data[] = [
   {
     title: 'The Legend of Zelda: Breath of the Wild',
     description:
-      'Description for Game 1. This is a very long description. The story is very good',
+      'Description for Game 1. This is a very long description. The story is very good. The characters are good. The Worlds is greats',
     genres: ['Action', 'Adventure'],
     platforms: ['Nintendo Switch', 'Wii U'],
     image: Botw,
@@ -60,3 +60,9 @@ export const gameData: Data[] = [
   { title: 'Game 19', description: 'Description for Game 19', rating: 5 },
   { title: 'Game 20', description: 'Description for Game 20', rating: 5 },
 ];
+
+export const reviews = [
+  {id: 1, rating: 5, title: 'Great Game', description: 'This is a great game. I love it. I would recommend it to anyone.'},
+  {id: 2, rating: 4, title: 'Good Game', description: 'This is a good game. I like it. I would recommend it to anyone.'},
+  {id: 3, rating: 3, title: 'Okay Game', description: 'This is an okay game. I am not sure if I like it. I would recommend it to anyone.'},
+]
