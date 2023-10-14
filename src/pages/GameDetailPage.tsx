@@ -8,12 +8,12 @@ import Rating from '@/components/Rating';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import ReviewCard from '@/components/ReviewCard';
+import ReviewModal from '@/components/ReviewModal';
 
 type GameDetailParams = {
   id: string;
@@ -31,8 +31,10 @@ const BaseGameDetailPage = () => {
 
   return (
     <div className="flex justify-center">
+
+      {/* Back to home button*/}
       <div className="max-w-[1500px] grid grid-cols-1 gap-4 px-4">
-        <Link to="/">
+        <Link to="/" className="w-10" aria-label="back to home">
           <Button
             size="icon"
             variant="ghost"
@@ -41,7 +43,8 @@ const BaseGameDetailPage = () => {
             <ArrowLeft />
           </Button>
         </Link>
-        <div className="grid gap-2 lg:grid-cols-[auto,1fr]  ">
+        <div className="grid gap-2 lg:grid-cols-[auto,1fr]">
+
           {/* Image, ratings, Write Review */}
           <Card className="overflow-hidden p-0">
             <CardHeader className="p-0">
@@ -58,14 +61,15 @@ const BaseGameDetailPage = () => {
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
-              <Button className="mb-4 w-[200px]">Write Review</Button>
+              <ReviewModal />
             </CardFooter>
           </Card>
+
           {/* Title, Release Date, Platforms, Genres and Description */}
-          <Card className="pb-4 text-left">
+          <Card className="lg:w-[600px] pb-4 text-left">
             <CardHeader className="flex flex-col items-start">
               <CardTitle className=" text-4xl font-semibold">{game.title}</CardTitle>
-              <CardDescription className='py-2'>
+              <CardContent className='py-2'>
                 <div className="flex flex-col justify-start">
                   <div className="flex">
                     <p>Release Date: 12.12.2017 </p>
@@ -93,7 +97,7 @@ const BaseGameDetailPage = () => {
                     ))}
                   </div>
                 </div>
-              </CardDescription>
+              </CardContent>
             </CardHeader>
             <CardContent className="py-4">
               <p className="text-md text-muted-foreground">
@@ -102,7 +106,7 @@ const BaseGameDetailPage = () => {
             </CardContent>
           </Card>
           {/* Reviews */}
-          <div className="flex w-full flex-col justify-center text-left col-span-1">
+          <div className="lg:w-[500px] flex w-full flex-col justify-center text-left col-span-1">
             <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
             {reviews.map(data => (
               <div key={data.id} className="my-1">

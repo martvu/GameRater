@@ -1,4 +1,4 @@
-import { BasicRating } from './Rating';
+import { StarRating } from './Rating';
 import { Card, CardDescription, CardHeader } from './ui/card';
 
 interface Review {
@@ -22,12 +22,10 @@ export default function ReviewCard(review: ReviewCardProps) {
               </div>
             </div>
           </div>
-          <BasicRating rating={review.review.rating} />
+          <StarRating rating={review.review.rating} disabled={true}/>
         </CardHeader>
-        <CardDescription>
-          <div className="flex flex-row items-center gap-2">
-            <p className="text-sm">{review.review.description}</p>
-          </div>
+        <CardDescription className="flex flex-row items-center gap-2">
+            {review.review.description}
         </CardDescription>
       </Card>
     </div>

@@ -8,8 +8,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export default function SelectDemo() {
+export default function SortBy() {
+  
   return (
+    <>
     <Select>
       <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Sort By" />
@@ -17,20 +19,21 @@ export default function SelectDemo() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort By</SelectLabel>
-          <SelectItem className="cursor-pointer" value="apple">
+          <SelectItem className="cursor-pointer" value="release date">
             Release Date
           </SelectItem>
-          <SelectItem className="cursor-pointer" value="banana">
+          <SelectItem className="cursor-pointer" value="title">
             Title
           </SelectItem>
-          <SelectItem className="cursor-pointer" value="blueberry">
+          <SelectItem className="cursor-pointer" value="rating">
             Rating
           </SelectItem>
-          <SelectItem className="cursor-pointer" value="grapes">
+          <SelectItem className="cursor-pointer" value="popularity">
             Popularity
           </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
+    </>
   );
 }
