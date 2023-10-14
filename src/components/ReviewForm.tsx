@@ -55,13 +55,12 @@ export function ReviewForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     //Handle submit
-    
+
     //Reset form
     form.reset();
-    
+
     //refresh page
     console.log(values);
-
   }
   return (
     <Form {...form}>

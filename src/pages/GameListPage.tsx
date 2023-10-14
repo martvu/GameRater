@@ -17,16 +17,15 @@ function BaseGameListPage() {
       <div className="ml-4 hidden md:block">
         <Filters />
       </div>
-      
+
       <div className="overflow-x-hidden px-8">
-        <div className="sticky top-0 z-15 flex justify-between bg-background py-1 pb-4 md:justify-end">
+        <div className="z-15 sticky top-0 flex justify-between bg-background py-1 pb-4 md:justify-end">
           <div className="block md:hidden">
             <FilterModal />
           </div>
           <div className="z-100" onClick={e => e.preventDefault()}>
             <SortBy />
           </div>
-          
         </div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
           {gameData

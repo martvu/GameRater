@@ -31,9 +31,8 @@ const BaseGameDetailPage = () => {
 
   return (
     <div className="flex justify-center">
-
       {/* Back to home button*/}
-      <div className="max-w-[1500px] grid grid-cols-1 gap-4 px-4">
+      <div className="grid max-w-[1500px] grid-cols-1 gap-4 px-4">
         <Link to="/" className="w-10" aria-label="back to home">
           <Button
             size="icon"
@@ -44,7 +43,6 @@ const BaseGameDetailPage = () => {
           </Button>
         </Link>
         <div className="grid gap-2 lg:grid-cols-[auto,1fr]">
-
           {/* Image, ratings, Write Review */}
           <Card className="overflow-hidden p-0">
             <CardHeader className="p-0">
@@ -52,7 +50,7 @@ const BaseGameDetailPage = () => {
                 <img
                   src={game.image || Botw}
                   alt={game.title}
-                  className="w-full h-full max-h-[300px] object-cover"
+                  className="h-full max-h-[300px] w-full object-cover"
                   loading="lazy"
                 />
               </div>
@@ -66,10 +64,12 @@ const BaseGameDetailPage = () => {
           </Card>
 
           {/* Title, Release Date, Platforms, Genres and Description */}
-          <Card className="lg:w-[600px] pb-4 text-left">
+          <Card className="pb-4 text-left lg:w-[600px]">
             <CardHeader className="flex flex-col items-start">
-              <CardTitle className=" text-4xl font-semibold">{game.title}</CardTitle>
-              <CardContent className='py-2'>
+              <CardTitle className=" text-4xl font-semibold">
+                {game.title}
+              </CardTitle>
+              <CardContent className="py-2">
                 <div className="flex flex-col justify-start">
                   <div className="flex">
                     <p>Release Date: 12.12.2017 </p>
@@ -106,7 +106,7 @@ const BaseGameDetailPage = () => {
             </CardContent>
           </Card>
           {/* Reviews */}
-          <div className="lg:w-[500px] flex w-full flex-col justify-center text-left col-span-1">
+          <div className="col-span-1 flex w-full flex-col justify-center text-left lg:w-[500px]">
             <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
             {reviews.map(data => (
               <div key={data.id} className="my-1">

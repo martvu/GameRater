@@ -62,7 +62,95 @@ export const gameData: Data[] = [
 ];
 
 export const reviews = [
-  {id: 1, rating: 5, title: 'Great Game', description: 'This is a great game. I love it. I would recommend it to anyone.'},
-  {id: 2, rating: 4, title: 'Good Game', description: 'This is a good game. I like it. I would recommend it to anyone.'},
-  {id: 3, rating: 3, title: 'Okay Game', description: 'This is an okay game. I am not sure if I like it. I would recommend it to anyone. Long text to break the page dfsafkjsakjfdlsaj fdksja lfdjsal dfjksa ljfldsak lfj fdksajewioahvkdsnkc ewijaifdsknhfjkdasdjasøfkj køakø'},
-]
+  {
+    id: 1,
+    rating: 5,
+    title: 'Great Game',
+    description:
+      'This is a great game. I love it. I would recommend it to anyone.',
+  },
+  {
+    id: 2,
+    rating: 4,
+    title: 'Good Game',
+    description:
+      'This is a good game. I like it. I would recommend it to anyone.',
+  },
+  {
+    id: 3,
+    rating: 3,
+    title: 'Okay Game',
+    description:
+      'This is an okay game. I am not sure if I like it. I would recommend it to anyone. Long text to break the page dfsafkjsakjfdlsaj fdksja lfdjsal dfjksa ljfldsak lfj fdksajewioahvkdsnkc ewijaifdsknhfjkdasdjasøfkj køakø',
+  },
+  {
+    id: 4,
+    rating: 2,
+    title: 'Bad Game',
+    description:
+      'This is a bad game. I do not like it. I would not recommend it to anyone.',
+  },
+  {
+    id: 5,
+    rating: 1,
+    title: 'Terrible Game',
+    description:
+      'This is a terrible game. I hate it. I would not recommend it to anyone.',
+  },
+  {
+    id: 6,
+    rating: 5,
+    title: 'Great Game',
+    description:
+      'This is a great game. I love it. I would recommend it to anyone.',
+  },
+  {
+    id: 7,
+    rating: 4,
+    title: 'Good Game',
+    description:
+      'This is a good game. I like it. I would recommend it to anyone.',
+  },
+  {
+    id: 8,
+    rating: 3,
+    title: 'Okay Game',
+    description:
+      'This is an okay game. I am not sure if I like it. I would recommend it to anyone. Long text to break the page dfsafkjsakjfdlsaj fdksja lfdjsal dfjksa ljfldsak lfj fdksajewioahvkdsnkc ewijaifdsknhfjkdasdjasøfkj køakø',
+  },
+  {
+    id: 9,
+    rating: 2,
+    title: 'Bad Game',
+    description:
+      'This is a bad game. I do not like it. I would not recommend it to anyone.',
+  },
+  {
+    id: 10,
+    rating: 1,
+    title: 'Terrible Game',
+    description:
+      'This is a terrible game. I hate it. I would not recommend it to anyone.',
+  },
+  {
+    id: 11,
+    rating: 5,
+    title: 'Great Game',
+    description:
+      'This is a great game. I love it. I would recommend it to anyone.',
+  },
+  {
+    id: 12,
+    rating: 4,
+    title: 'Good Game',
+    description:
+      'This is a good game. I like it. I would recommend it to anyone.',
+  },
+  {
+    id: 13,
+    rating: 3,
+    title: 'Okay Game',
+    description:
+      'This is an okay game. I am not sure if I like it. I would recommend it to anyone. Long text to break the page dfsafkjsakjfdlsaj fdksja lfdjsal dfjksa ljfldsak lfj fdksajewioahvkdsnkc ewijaifdsknhfjkdasdjasøfkj køakø',
+  },
+];

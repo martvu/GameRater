@@ -13,7 +13,7 @@ export default function Rating({ rating, numRatings }: RatingProps) {
       {/*        <!-- Component: Basic Rating --> */}
       <div className="flex flex-col items-center gap-2">
         {/*          <!-- Rating --> */}
-        <StarRating rating={rating} disabled={true}/>
+        <StarRating rating={rating} disabled={true} />
         {/*          <!-- Helper text --> */}
         <span className="text-xs leading-6 text-muted-foreground">
           based on {numRatings} user ratings
@@ -24,8 +24,7 @@ export default function Rating({ rating, numRatings }: RatingProps) {
   );
 }
 
-
-export const StarRating = ({rating, disabled, onChange}: RatingProps) => {
+export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
   const [ratingValue, setRatingValue] = useState(rating || 0);
   const [hover, setHover] = useState(0);
 
@@ -37,7 +36,7 @@ export const StarRating = ({rating, disabled, onChange}: RatingProps) => {
       onChange(value);
     }
     setRatingValue(value);
-  }
+  };
   return (
     <>
       <div className="flex items-center font-light">
@@ -47,11 +46,11 @@ export const StarRating = ({rating, disabled, onChange}: RatingProps) => {
             <button
               type="button"
               key={index}
-              className={(
+              className={
                 index <= (hover || ratingValue)
                   ? 'text-yellow-400'
                   : 'text-muted-foreground'
-          )}
+              }
               onClick={() => handleClick(index)}
               onMouseEnter={() => setHover(index)}
               onMouseLeave={() => setHover(ratingValue)}
@@ -67,10 +66,8 @@ export const StarRating = ({rating, disabled, onChange}: RatingProps) => {
             </button>
           );
         })}
-        <span className='text-muted-foreground ml-2'>{rating}/5</span>
+        <span className="ml-2 text-muted-foreground">{rating}/5</span>
       </div>
-      
     </>
   );
 };
-

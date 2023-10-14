@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 const handleClick = (event: React.MouseEvent) => {
   event.preventDefault();
   event.stopPropagation();
-}
+};
 
 const Select = SelectPrimitive.Root;
 

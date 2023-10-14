@@ -34,6 +34,8 @@ export function GameCard({
       </CardHeader>
       <CardContent className="px-3 text-start">
         <Link to={`/game/${id}`}>
+          {' '}
+          {/* Flytta link hit fordi SortBy trykker gjennom på mobil*/}
           <CardTitle className="my-2 text-xl">{title}</CardTitle>
         </Link>
         <CardDescription className="line-clamp-2">

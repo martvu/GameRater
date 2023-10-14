@@ -22,10 +22,10 @@ export default function ReviewCard(review: ReviewCardProps) {
               </div>
             </div>
           </div>
-          <StarRating rating={review.review.rating} disabled={true}/>
+          <StarRating rating={review.review.rating} disabled={true} />
         </CardHeader>
         <CardDescription className="flex flex-row items-center gap-2">
-            {review.review.description}
+          {review.review.description}
         </CardDescription>
       </Card>
     </div>
