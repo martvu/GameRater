@@ -2,7 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { connect } from "mongoose";
 import Review from "../models/review.js";
-import Game from "../models/games.js";
+import Game from "../models/game.js";
 
 const MONGODB = "mongodb://it2810-48.idi.ntnu.no:27017/GameRater";
 
@@ -15,7 +15,7 @@ const typeDefs = `#graphql
     rating: Int
   }
   
-  type Games {
+  type Game {
     _id: String
     Title: String
     summary: String
@@ -33,7 +33,8 @@ const typeDefs = `#graphql
   type Query {
     getReview(ID: ID!): Review!
     getReviews(limit: Int): [Review!]!
-    getGames(limit: Int): [Games!]!
+    getGames(limit: Int): [Game!]!
+    getGame(ID: ID!): Game!
   }
 
   type Mutation {

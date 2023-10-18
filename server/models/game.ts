@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-interface IGames {
+interface IGame {
   id?: String,
   Title: String,
   summary: String,
@@ -8,7 +8,7 @@ interface IGames {
   genres: [String],
 }
 
-const GameSchema = new Schema<IGames>({
+const GameSchema = new Schema<IGame>({
   id: String,
   Title: { type: String, required: true },
   summary: { type: String, required: true },
@@ -16,6 +16,6 @@ const GameSchema = new Schema<IGames>({
   genres: { type: [String], required: true }
 });
 
-const Game = model<IGames>('games', GameSchema);
+const Game = model<IGame>('games', GameSchema);
 
 export default Game;
