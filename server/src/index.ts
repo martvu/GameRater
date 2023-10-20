@@ -14,13 +14,13 @@ const typeDefs = `#graphql
     content: String
     rating: Int
   }
-  
+
   type Game {
     _id: String
-    Title: String
+    name: String
     summary: String
-    Release Date: String
-    genres: [String]
+    first_release_date: String
+    cover_image_id: String
   }
 
   input ReviewInput {
@@ -55,7 +55,7 @@ const resolvers = {
     },
     async getGames(_, { limit }) {
       return Game.find().limit(limit);
-    }
+    },
   },
   Mutation: {
     async createReview(_, { reviewInput: { author, title, content, rating } }) {
