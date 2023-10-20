@@ -23,9 +23,7 @@ function BaseGameListPage() {
           <div className="block md:hidden">
             <FilterModal />
           </div>
-          <div className="z-100" onClick={e => e.preventDefault()}>
-            <SortBy />
-          </div>
+          <SortBy />
         </div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
           {gameData
