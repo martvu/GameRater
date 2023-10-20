@@ -38,3 +38,12 @@ In this project we use the following technologies for UI:
 
 - Tailwind CSS
 - shadcn
+
+# Server
+
+Run server with:
+```
+cd server
+npm start 
+```
+
