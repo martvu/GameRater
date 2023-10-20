@@ -4,7 +4,7 @@ import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 
-const Platforms = [
+export const Platforms = [
   'PC',
   'PS4',
   'PS5',
@@ -51,7 +51,11 @@ export default function Filters() {
           !isCollapsed && 'max-w-[160px]'
         )}
       >
-        <Button variant="ghost" onClick={toggleCollapse}>
+        <Button
+          className="hidden md:flex"
+          variant="ghost"
+          onClick={toggleCollapse}
+        >
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           {!isCollapsed && <span className="ml-2">Hide</span>}
         </Button>

@@ -17,8 +17,9 @@ function BaseGameListPage() {
       <div className="ml-4 hidden md:block">
         <Filters />
       </div>
+
       <div className="overflow-x-hidden px-8">
-        <div className="sticky top-0 z-10 flex justify-between bg-background py-1 pb-4 md:justify-end">
+        <div className="z-15 sticky top-0 flex justify-between bg-background py-1 pb-4 md:justify-end">
           <div className="block md:hidden">
             <FilterModal />
           </div>
