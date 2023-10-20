@@ -47,19 +47,26 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     async getReview(_, { ID }) {
-      const review = await Review.findById(ID);
-      return review;
+      return await Review.findById(ID);
     },
     async getReviews(_, { limit }) {
-      return Review.find().limit(limit);
+      return await Review.find().limit(limit);
     },
     async getGames(_, { limit }) {
-      return Game.find().limit(limit);
+      return await Game.find().limit(limit);
+    },
+    async getGame(_, { ID }) {
+      return await Game.findById(ID);
     },
   },
   Mutation: {
     async createReview(_, { reviewInput: { author, title, content, rating } }) {
-      const review = await new Review({ author, title, content, rating }).save();
+      const review = await new Review({
+        author,
+        title,
+        content,
+        rating,
+      }).save();
       return review;
     },
     async updateReview(
