@@ -1,10 +1,21 @@
 import withLayout from '@/lib/withLayout';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Botw from '../assets/botw.jpeg';
 import { useParams, Link } from 'react-router-dom';
-import { Data, gameData } from '@/components/GameData';
-import { Star } from 'lucide-react';
+import { reviews, Data, gameData } from '@/components/GameData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import Rating from '@/components/Rating';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import ReviewCard from '@/components/ReviewCard';
+import ReviewModal from '@/components/ReviewModal';
+import { useState } from 'react';
 
 type GameDetailParams = {
   id: string;
@@ -14,64 +25,139 @@ const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
   const index = id ? parseInt(id, 10) : NaN;
   const game: Data = gameData[index];
+  const [reviewData, setReviewData] = useState(reviews);
+  const [hasMore, setHasMore] = useState(true);
 
   // Check if the game data exists
   if (!game) {
     return <div>Game not found</div>;
   }
 
+  // Fetch more data
+  const fetchData = () => {
+    if (reviewData.length >= 20) {
+      setHasMore(false);
+      return;
+    }
+    // Replace with your data fetching logic
+    setTimeout(() => {
+      const mockData = getMoreMockData(); // Replace with your data fetching logic
+      if (mockData.length > 0) {
+        // Add the fetched data to the reviews state
+        setReviewData(prevReviews => [...prevReviews, ...mockData]);
+      } else {
+        // No more data available
+        setHasMore(false);
+      }
+    }, 1000);
+  };
+
+  const getMoreMockData = () => {
+    // Replace this with your data fetching logic
+    // For simplicity, we'll simulate adding more items to the mock data
+    const newData = Array.from({ length: 5 }, (_, index) => ({
+      id: reviewData.length + index + 1, // Unique ID
+      rating: Math.floor(Math.random() * 5) + 1, // Random rating between 1 and 5
+      title: `Review ${reviewData.length + index + 1}`,
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    }));
+    return newData;
+  };
   return (
-    <div className="flex justify-center p-4">
-      <div className="flex w-3/4 flex-wrap justify-center">
-        <Link to="/">
+    <div className="flex justify-center">
+      {/* Back to home button*/}
+      <div className="grid max-w-[1500px] grid-cols-1 gap-4 px-4">
+        <Link to="/" className="w-10" aria-label="back to home">
           <Button
             size="icon"
             variant="ghost"
-            className="flex-shrink-0 rounded-2xl"
+            className="rounded-2x flex-shrink-0"
           >
             <ArrowLeft />
           </Button>
         </Link>
-        <div className="max-w-1/2 flex h-[300px] min-w-[240px] flex-col items-center overflow-hidden">
-          <img
-            src={game.image || Botw}
-            alt={game.title}
-            className="max-h-full max-w-full object-cover"
-          />
-          <div className="mt-2 flex items-center text-yellow-400">
-            <p>Rating: </p>
-            <Star className="mr-1 h-4" fill="#facc15" />
-            <p>{game.rating}</p>
-          </div>
-          <div className="mt-4 flex flex-col justify-start">
-            <div className="flex flex-row flex-wrap">
-              <p className="mr-2">Platforms:</p>
-              {game.platforms?.map(platform => (
-                <li
-                  className="list-none rounded-full border border-white px-2 text-sm"
-                  key={platform}
-                >
-                  {platform}
-                </li>
-              ))}
-            </div>
+        <div className="grid gap-2 lg:grid-cols-[auto,1fr]">
+          {/* Image, ratings, Write Review */}
+          <Card className="overflow-hidden p-0 md:min-w-[400px] lg:min-w-[500px]">
+            <CardHeader className="p-0">
+              <div className="flex w-full cursor-default p-0">
+                <img
+                  src={game.image || Botw}
+                  alt={game.title}
+                  className="h-full max-h-[300px] w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="mt-2 flex items-center justify-center text-yellow-400">
+                <Rating rating={game.rating} numRatings={41} />
+              </div>
+            </CardHeader>
+            <CardFooter className="flex flex-col justify-center">
+              <ReviewModal />
+            </CardFooter>
+          </Card>
 
-            <div className="mt-2 flex flex-row flex-wrap">
-              <p className="mr-2">Genres:</p>
-              {game.genres?.map(genre => (
-                <li
-                  className="list-none rounded-lg border border-white px-2 text-sm"
-                  key={genre}
-                >
-                  {genre}
-                </li>
-              ))}
-            </div>
+          {/* Title, Release Date, Platforms, Genres and Description */}
+          <Card className="pb-4 text-left md:min-w-[400px] lg:min-w-[500px]">
+            <CardHeader className="flex flex-col items-start">
+              <CardTitle className=" text-4xl font-semibold">
+                {game.title}
+              </CardTitle>
+              <CardContent className="py-2">
+                <div className="flex flex-col justify-start">
+                  <div className="flex">
+                    <p>Release Date: 12.12.2017 </p>
+                  </div>
+                  <div className="mt-1 flex flex-row flex-wrap">
+                    <p className="mr-2">Platforms:</p>
+                    {game.platforms?.map(platform => (
+                      <li
+                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                        key={platform}
+                      >
+                        {platform}
+                      </li>
+                    ))}
+                  </div>
+                  <div className="mt-1 flex flex-row flex-wrap">
+                    <p className="mr-2">Genres:</p>
+                    {game.genres?.map(genre => (
+                      <li
+                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                        key={genre}
+                      >
+                        {genre}
+                      </li>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </CardHeader>
+            <CardContent className="py-4">
+              <p className="text-md text-muted-foreground">
+                {game.description}
+              </p>
+            </CardContent>
+          </Card>
+          {/* Reviews */}
+          <div className="flex justify-center col-span-1 h-full w-full md:col-span-2">
+            <InfiniteScroll
+              dataLength={reviewData.length}
+              next={fetchData}
+              hasMore={hasMore} // Replace with a condition based on your data source
+              loader={<p>Loading...</p>}
+              endMessage={<p>No more data to load.</p>}
+            >
+              <div className="w-full text-left">
+                <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
+                {reviewData.map(data => (
+                  <div key={data.id} className="my-2 max-w-[800px]">
+                    <ReviewCard review={data} />
+                  </div>
+                ))}
+              </div>
+            </InfiniteScroll>
           </div>
-        </div>
-        <div className="flex w-1/3 flex-col items-start justify-center pl-4">
-          <h1 className="mb-4 text-2xl font-semibold">{game.title}</h1>
-          <p className="mb-4 text-lg">{game.description}</p>
         </div>
       </div>
     </div>
