@@ -27,26 +27,28 @@ const typeDefs = `#graphql
 
   type Genre {
     _id: String
+    id: Int
     name: String
     slug: String
-    created_at: String
-    updated_at: String
+    created_at: Int
+    updated_at: Int
     url: String
     checksum: String
   }
 
   type Platform {
     _id: String
+    id: Int
     name: String
     alternative_name: String
     slug: String
-    category: String
-    created_at: String
-    updated_at: String
+    category: Int
+    created_at: Int
+    updated_at: Int
     url: String
-    platform_logo: String
-    versions: [String]
-    websites: [String]
+    platform_logo: Int
+    versions: [Int]
+    websites: [Int]
     checksum: String
   }
 
@@ -62,9 +64,9 @@ const typeDefs = `#graphql
     getReviews(limit: Int): [Review!]!
     getGame(ID: ID!): Game!
     getGames(limit: Int): [Game!]!
-    getGenre(ID: ID!): Genre!
+    getGenre(id: Int): Genre!
     getGenres(limit: Int): [Genre!]!
-    getPlatform(ID: ID!): Platform!
+    getPlatform(id: Int): Platform!
     getPlatforms(limit: Int): [Platform!]!
   }
 
@@ -89,14 +91,16 @@ const resolvers = {
     async getGames(_, { limit }) {
       return await Game.find().limit(limit);
     },
-    async getGenre(_, { ID }) {
-      return await Genre.findById(ID);
+    async getGenre(_, { id }) {
+      //return await Genre.findById(ID);
+      return await Genre.findOne({ id: id });
     },
     async getGenres(_, { limit }) {
       return await Genre.find().limit(limit);
     },
-    async getPlatform(_, { ID }) {
-      return await Platform.findById(ID);
+    async getPlatform(_, { id }) {
+      //return await Platform.findById(ID);
+      return await Platform.findOne({ id: id });
     },
     async getPlatforms(_, { limit }) {
       return await Platform.find().limit(limit);
