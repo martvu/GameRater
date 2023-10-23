@@ -3,6 +3,8 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { connect } from "mongoose";
 import Review from "../models/review.js";
 import Game from "../models/game.js";
+import Genre from "../models/genre.js";
+import Platform from "../models/platform.js";
 
 const MONGODB = "mongodb://it2810-48.idi.ntnu.no:27017/GameRater";
 
@@ -23,18 +25,47 @@ const typeDefs = `#graphql
     cover_image_id: String
   }
 
+  type Genre {
+    _id: String
+    name: String
+    slug: String
+    created_at: String
+    updated_at: String
+    url: String
+    checksum: String
+  }
+
+  type Platform {
+    _id: String
+    name: String
+    alternative_name: String
+    slug: String
+    category: String
+    created_at: String
+    updated_at: String
+    url: String
+    platform_logo: String
+    versions: [String]
+    websites: [String]
+    checksum: String
+  }
+
   input ReviewInput {
     author: String
     title: String
     content: String
     rating: Int
   }
-  
+
   type Query {
     getReview(ID: ID!): Review!
     getReviews(limit: Int): [Review!]!
-    getGames(limit: Int): [Game!]!
     getGame(ID: ID!): Game!
+    getGames(limit: Int): [Game!]!
+    getGenre(ID: ID!): Genre!
+    getGenres(limit: Int): [Genre!]!
+    getPlatform(ID: ID!): Platform!
+    getPlatforms(limit: Int): [Platform!]!
   }
 
   type Mutation {
@@ -52,11 +83,23 @@ const resolvers = {
     async getReviews(_, { limit }) {
       return await Review.find().limit(limit);
     },
+    async getGame(_, { ID }) {
+      return await Game.findById(ID);
+    },
     async getGames(_, { limit }) {
       return await Game.find().limit(limit);
     },
-    async getGame(_, { ID }) {
-      return await Game.findById(ID);
+    async getGenre(_, { ID }) {
+      return await Genre.findById(ID);
+    },
+    async getGenres(_, { limit }) {
+      return await Genre.find().limit(limit);
+    },
+    async getPlatform(_, { ID }) {
+      return await Platform.findById(ID);
+    },
+    async getPlatforms(_, { limit }) {
+      return await Platform.find().limit(limit);
     },
   },
   Mutation: {
