@@ -21,6 +21,8 @@ const typeDefs = `#graphql
     _id: String
     name: String
     summary: String
+    genres: [Int]
+    platforms: [Int]
     first_release_date: String
     cover_image_id: String
   }

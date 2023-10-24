@@ -4,6 +4,8 @@ interface IGame {
   id?: String;
   name: String;
   summary: String;
+  genres: Number[];
+  platforms: Number[];
   first_release_date: String;
   cover_image_id: String;
 }
@@ -13,6 +15,8 @@ const GameSchema = new Schema<IGame>(
     id: String,
     name: { type: String, required: true },
     summary: { type: String, required: true },
+    genres: { type: [Number], required: true },
+    platforms: { type: [Number], required: true },
     first_release_date: { type: String, required: true },
     cover_image_id: { type: String, required: true },
   },
