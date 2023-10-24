@@ -25,6 +25,12 @@ const GetGame = gql`
       summary
       cover_image_id
       first_release_date
+      platforms {
+        name
+      }
+      genres {
+        name
+      }
     }
   }
 `;
@@ -129,25 +135,25 @@ const BaseGameDetailPage = () => {
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Platforms:</p>
-                    {/* {game.platforms?.map(platform => (
+                    {data.getGame.platforms?.map(platform => (
                       <li
                         className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={platform}
+                        key={platform.name}
                       >
-                        {platform}
+                        {platform.name}
                       </li>
                     ))}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Genres:</p>
-                    {game.genres?.map(genre => (
+                    {data.getGame.genres?.map(genre => (
                       <li
                         className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={genre}
+                        key={genre.name}
                       >
-                        {genre}
+                        {genre.name}
                       </li>
-                    ))} */}
+                    ))}  
                   </div>
                 </div>
               </CardContent>
