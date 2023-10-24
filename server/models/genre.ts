@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 interface IGenre {
-  _id?: String;
+  _id: String;
   id: Number;
   name: String;
   slug: String;
@@ -12,7 +12,7 @@ interface IGenre {
 }
 
 const GenreSchema = new Schema<IGenre>({
-  _id: String,
+  _id: { type: String, required: true},
   id: { type: Number, required: true },
   name: { type: String, required: true },
   slug: { type: String, required: true },

@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 interface IPlatform {
-  _id?: String;
+  _id: String;
   id: Number;
   name: String;
   alternative_name: String;
@@ -17,7 +17,7 @@ interface IPlatform {
 }
 
 const PlatformSchema = new Schema<IPlatform>({
-  _id: String,
+  _id: { type: String, required: true},
   id: { type: Number, required: true },
   name: { type: String, required: true },
   alternative_name: { type: String, required: true },

@@ -19,6 +19,7 @@ const typeDefs = `#graphql
 
   type Game {
     _id: String
+    id: Int
     name: String
     summary: String
     genres: [Genre]
@@ -94,14 +95,12 @@ const resolvers = {
       return await Game.find().limit(limit);
     },
     async getGenre(_, { id }) {
-      //return await Genre.findById(ID);
       return await Genre.findOne({ id: id });
     },
     async getGenres(_, { limit }) {
       return await Genre.find().limit(limit);
     },
     async getPlatform(_, { id }) {
-      //return await Platform.findById(ID);
       return await Platform.findOne({ id: id });
     },
     async getPlatforms(_, { limit }) {

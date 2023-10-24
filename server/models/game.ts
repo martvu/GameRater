@@ -1,7 +1,8 @@
 import { Schema, model } from "mongoose";
 
 interface IGame {
-  id?: String;
+  _id: String;
+  id: Number;
   name: String;
   summary: String;
   genres: Number[];
@@ -12,7 +13,8 @@ interface IGame {
 
 const GameSchema = new Schema<IGame>(
   {
-    id: String,
+    _id: { type: String, required: true },
+    id: { type: Number, required: true },
     name: { type: String, required: true },
     summary: { type: String, required: true },
     genres: { type: [Number], required: true },
