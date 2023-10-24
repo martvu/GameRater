@@ -15,6 +15,8 @@ const typeDefs = `#graphql
     title: String
     content: String
     rating: Int
+    platform: Int
+    gameID: String
   }
 
   type Game {
@@ -60,6 +62,8 @@ const typeDefs = `#graphql
     title: String
     content: String
     rating: Int
+    platform: Int
+    gameID: String
   }
 
   type Query {
@@ -108,22 +112,24 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createReview(_, { reviewInput: { author, title, content, rating } }) {
+    async createReview(_, { reviewInput: { author, title, content, rating, platform, gameID } }) {
       const review = await new Review({
         author,
         title,
         content,
         rating,
+        platform,
+        gameID
       }).save();
       return review;
     },
     async updateReview(
       _,
-      { ID, reviewInput: { author, title, content, rating } }
+      { ID, reviewInput: { author, title, content, rating, platform, gameID } }
     ) {
       await Review.updateOne(
         { _id: ID },
-        { $set: { author, title, content, rating } }
+        { $set: { author, title, content, rating, platform, gameID } }
       );
       return ID;
     },

@@ -23,6 +23,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { useParams } from 'react-router-dom';
+
+const GET_GAME = gql`
+  query GetGame($id: ID!) {
+    getGame(ID: $id) {
+      name
+      platforms {
+        id
+        name
+      }
+    }
+  }
+`
+
+const CREATE_REVIEW = gql`
+  mutation CreateReview($reviewInput: ReviewInput!) {
+    createReview(reviewInput: $reviewInput) {
+      author
+      title
+      content
+      rating
+      platform
+    }
+  }
+`
+
+type GameDetailParams = {
+  id: string;
+};
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -41,6 +71,11 @@ const formSchema = z.object({
 });
 
 export function ReviewForm() {
+  const { id } = useParams<GameDetailParams>();
+  const { loading, error, data } = useQuery(GET_GAME, {
+    variables: { id: id },
+  });
+  const [createReview] = useMutation(CREATE_REVIEW);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,6 +90,22 @@ export function ReviewForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     //Handle submit
+    try {
+      createReview({
+        variables: {
+          reviewInput: {
+            title: values.title,
+            content: values.content,
+            rating: values.rating,
+            platform: parseInt(values.platform),
+            author: "me",
+            gameID: id,
+          },
+        },
+      });
+    } catch (error) {
+      console.log("Could not create review");
+    }
 
     //Reset form
     form.reset();
@@ -92,9 +143,9 @@ export function ReviewForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {Platforms.map(platform => (
-                      <SelectItem key={platform} value={platform}>
-                        {platform}
+                    {data.getGame.platforms.map(platform => (
+                      <SelectItem key={platform.name} value={platform.id}>
+                        {platform.name}
                       </SelectItem>
                     ))}
                   </SelectGroup>

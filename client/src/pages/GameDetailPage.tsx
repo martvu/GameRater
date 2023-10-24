@@ -17,11 +17,11 @@ import ReviewModal from '@/components/ReviewModal';
 import { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
-const GetGame = gql`
+const GET_GAME = gql`
   query GetGame($id: ID!) {
     getGame(ID: $id) {
       _id
-      name 
+      name
       summary
       cover_image_id
       first_release_date
@@ -40,7 +40,7 @@ type GameDetailParams = {
 
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
-  const { loading, error, data } = useQuery(GetGame, {
+  const { loading, error, data } = useQuery(GET_GAME, {
     variables: { id: id },
   });
 
@@ -153,7 +153,7 @@ const BaseGameDetailPage = () => {
                       >
                         {genre.name}
                       </li>
-                    ))}  
+                    ))}
                   </div>
                 </div>
               </CardContent>
