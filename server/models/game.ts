@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 interface IGame {
-  _id: String;
+  _id: Schema.Types.ObjectId;
   id: Number;
   name: String;
   summary: String;
@@ -13,7 +13,7 @@ interface IGame {
 
 const GameSchema = new Schema<IGame>(
   {
-    _id: { type: String, required: true },
+    _id: { type: Schema.Types.ObjectId, required: true },
     id: { type: Number, required: true },
     name: { type: String, required: true },
     summary: { type: String, required: true },

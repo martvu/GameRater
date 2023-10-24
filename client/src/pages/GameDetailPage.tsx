@@ -1,8 +1,7 @@
 import withLayout from '@/lib/withLayout';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Botw from '../assets/botw.jpeg';
 import { useParams, Link } from 'react-router-dom';
-import { reviews, Data, gameData } from '@/components/GameData';
+import { reviews } from '@/components/GameData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -16,20 +15,42 @@ import {
 import ReviewCard from '@/components/ReviewCard';
 import ReviewModal from '@/components/ReviewModal';
 import { useState } from 'react';
+import { useQuery, gql } from '@apollo/client';
 
+const GetGame = gql`
+  query GetGame($id: ID!) {
+    getGame(ID: $id) {
+      _id
+      name 
+      summary
+      cover_image_id
+      first_release_date
+      platforms {
+        name
+      }
+      genres {
+        name
+      }
+    }
+  }
+`;
 type GameDetailParams = {
   id: string;
 };
 
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
-  const index = id ? parseInt(id, 10) : NaN;
-  const game: Data = gameData[index];
+  const { loading, error, data } = useQuery(GetGame, {
+    variables: { id: id },
+  });
+
+  console.log(id)
   const [reviewData, setReviewData] = useState(reviews);
   const [hasMore, setHasMore] = useState(true);
 
+
   // Check if the game data exists
-  if (!game) {
+  if (!data?.getGame) {
     return <div>Game not found</div>;
   }
 
@@ -63,6 +84,10 @@ const BaseGameDetailPage = () => {
     }));
     return newData;
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+
   return (
     <div className="flex justify-center">
       {/* Back to home button*/}
@@ -82,14 +107,14 @@ const BaseGameDetailPage = () => {
             <CardHeader className="p-0">
               <div className="flex w-full cursor-default p-0">
                 <img
-                  src={game.image || Botw}
-                  alt={game.title}
+                  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.cover_image_id}.jpg`}
+                  alt={data.getGame.name}
                   className="h-full max-h-[300px] w-full object-cover"
                   loading="lazy"
                 />
               </div>
               <div className="mt-2 flex items-center justify-center text-yellow-400">
-                <Rating rating={game.rating} numRatings={41} />
+                <Rating rating={3} numRatings={41} />
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
@@ -101,7 +126,7 @@ const BaseGameDetailPage = () => {
           <Card className="pb-4 text-left md:min-w-[400px] lg:min-w-[500px]">
             <CardHeader className="flex flex-col items-start">
               <CardTitle className=" text-4xl font-semibold">
-                {game.title}
+                {data.getGame.name}
               </CardTitle>
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start">
@@ -110,32 +135,32 @@ const BaseGameDetailPage = () => {
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Platforms:</p>
-                    {game.platforms?.map(platform => (
+                    {data.getGame.platforms?.map(platform => (
                       <li
                         className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={platform}
+                        key={platform.name}
                       >
-                        {platform}
+                        {platform.name}
                       </li>
                     ))}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Genres:</p>
-                    {game.genres?.map(genre => (
+                    {data.getGame.genres?.map(genre => (
                       <li
                         className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={genre}
+                        key={genre.name}
                       >
-                        {genre}
+                        {genre.name}
                       </li>
-                    ))}
+                    ))}  
                   </div>
                 </div>
               </CardContent>
             </CardHeader>
             <CardContent className="py-4">
               <p className="text-md text-muted-foreground">
-                {game.description}
+                {data.getGame.summary}
               </p>
             </CardContent>
           </Card>
