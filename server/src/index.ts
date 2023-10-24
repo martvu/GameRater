@@ -21,8 +21,8 @@ const typeDefs = `#graphql
     _id: String
     name: String
     summary: String
-    genres: [Int]
-    platforms: [Int]
+    genres: [Genre]
+    platforms: [Platform]
     first_release_date: String
     cover_image_id: String
   }
@@ -131,6 +131,14 @@ const resolvers = {
     async deleteReview(_, { ID }) {
       await Review.deleteOne({ _id: ID });
       return ID;
+    },
+  },
+  Game: {
+    async genres(game) {
+      return await Genre.find({ id: { $in: game.genres } });
+    },
+    async platforms(game) {
+      return await Platform.find({ id: { $in: game.platforms } });
     },
   },
 };
