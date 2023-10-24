@@ -14,7 +14,7 @@ interface IGame {
 const GameSchema = new Schema<IGame>(
   {
     _id: { type: Schema.Types.ObjectId, required: true },
-    id: { type: String, required: true },
+    id: { type: Number, required: true },
     name: { type: String, required: true },
     summary: { type: String, required: true },
     genres: { type: [Number], required: true },
