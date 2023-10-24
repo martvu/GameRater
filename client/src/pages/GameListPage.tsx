@@ -14,6 +14,7 @@ const GET_GAMES = gql`
       summary
       cover_image_id
       name
+      _id
     }
   }
 `;
@@ -50,7 +51,7 @@ function BaseGameListPage() {
                 key={game.name}
               >
                 <GameCard
-                  id={index} // or some  unique identifier
+                  id={game._id} // or some  unique identifier
                   title={game.name}
                   summary={game.summary}
                   image_id={game.cover_image_id}
