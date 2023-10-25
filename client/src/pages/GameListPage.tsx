@@ -42,10 +42,12 @@ function BaseGameListPage() {
           </div>
           <SortBy />
         </div>
+        <div className='text-muted-foreground'>
+        </div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
           {data.getGames
             .slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
-            .map((game, index) => (
+            .map((game) => (
               <div
                 className="m-1 flex justify-center md:justify-normal"
                 key={game.name}

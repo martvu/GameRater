@@ -15,7 +15,7 @@ const typeDefs = `#graphql
     title: String
     content: String
     rating: Int
-    platform: Int
+    platform: String
     gameID: String
   }
 
@@ -28,6 +28,7 @@ const typeDefs = `#graphql
     platforms: [Platform]
     first_release_date: String
     cover_image_id: String
+    reviews: [Review]
   }
 
   type Genre {
@@ -62,7 +63,7 @@ const typeDefs = `#graphql
     title: String
     content: String
     rating: Int
-    platform: Int
+    platform: String
     gameID: String
   }
 
@@ -121,6 +122,10 @@ const resolvers = {
         platform,
         gameID
       }).save();
+      // Update the corresponding game's reviews array or create it if it doesn't exist
+      await Game.findByIdAndUpdate(gameID, {
+        $addToSet: { reviews: review._id },
+      });
       return review;
     },
     async updateReview(
@@ -145,6 +150,9 @@ const resolvers = {
     async platforms(game) {
       return await Platform.find({ id: { $in: game.platforms } });
     },
+    async reviews(game) {
+      return await Review.find({ _id: { $in: game.reviews} });
+    }
   },
 };
 

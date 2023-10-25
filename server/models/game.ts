@@ -9,6 +9,7 @@ interface IGame {
   platforms: Number[];
   first_release_date: String;
   cover_image_id: String;
+  reviews?: String[];
 }
 
 const GameSchema = new Schema<IGame>(
@@ -21,6 +22,7 @@ const GameSchema = new Schema<IGame>(
     platforms: { type: [Number], required: true },
     first_release_date: { type: String, required: true },
     cover_image_id: { type: String, required: true },
+    reviews: { type: [String], required: false },
   },
   {
     collection: "igdb", // Specify the collection name explicitly

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Platforms } from '@/components/Filters';
+
 import {
   Form,
   FormControl,
@@ -97,22 +97,28 @@ export function ReviewForm() {
             title: values.title,
             content: values.content,
             rating: values.rating,
-            platform: parseInt(values.platform),
+            platform: values.platform,
             author: "me",
             gameID: id,
           },
         },
+        onCompleted: () => {
+          console.log("Review created");
+        }
       });
     } catch (error) {
       console.log("Could not create review");
     }
-
     //Reset form
     form.reset();
-
-    //refresh page
+    //Refresh page
+    window.location.reload();
     console.log(values);
   }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -143,8 +149,8 @@ export function ReviewForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {data.getGame.platforms.map(platform => (
-                      <SelectItem key={platform.name} value={platform.id}>
+                    {data.getGame.platforms.map((platform) => (
+                      <SelectItem key={platform.name} value={platform.name}>
                         {platform.name}
                       </SelectItem>
                     ))}
