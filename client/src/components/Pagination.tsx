@@ -13,7 +13,8 @@ export default function Pagination({
   gamesPerPage,
   gameData,
 }: PaginationProps) {
-  const totalPages = Math.ceil(gameData.length / gamesPerPage);
+  const totalResults = gameData.length;
+  const totalPages = Math.ceil(totalResults / gamesPerPage);
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -61,3 +62,5 @@ export default function Pagination({
     </nav>
   );
 }
+
+
