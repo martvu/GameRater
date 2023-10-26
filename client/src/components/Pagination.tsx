@@ -4,17 +4,17 @@ import { Button } from './ui/button';
 interface PaginationProps {
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
-  gamesPerPage: number;
-  gameData: unknown[];
+  itemsPerPage: number;
+  data: unknown[];
 }
 export default function Pagination({
   currentPage,
   setCurrentPage,
-  gamesPerPage,
-  gameData,
+  itemsPerPage,
+  data,
 }: PaginationProps) {
-  const totalResults = gameData.length;
-  const totalPages = Math.ceil(totalResults / gamesPerPage);
+  const totalResults = data.length;
+  const totalPages = Math.ceil(totalResults / itemsPerPage);
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -62,5 +62,3 @@ export default function Pagination({
     </nav>
   );
 }
-
-

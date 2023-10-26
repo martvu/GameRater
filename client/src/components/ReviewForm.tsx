@@ -36,7 +36,7 @@ const GET_GAME = gql`
       }
     }
   }
-`
+`;
 
 const CREATE_REVIEW = gql`
   mutation CreateReview($reviewInput: ReviewInput!) {
@@ -48,7 +48,7 @@ const CREATE_REVIEW = gql`
       platform
     }
   }
-`
+`;
 
 type GameDetailParams = {
   id: string;
@@ -58,7 +58,7 @@ const formSchema = z.object({
   title: z.string().min(2, {
     message: 'Username must be at least 2 characters.',
   }),
-  content: z.string().max(200).min(4),
+  content: z.string().max(1000).min(4),
   rating: z
     .number()
     .min(1, {
@@ -98,16 +98,16 @@ export function ReviewForm() {
             content: values.content,
             rating: values.rating,
             platform: values.platform,
-            author: "me",
+            author: 'me',
             gameID: id,
           },
         },
         onCompleted: () => {
-          console.log("Review created");
-        }
+          console.log('Review created');
+        },
       });
     } catch (error) {
-      console.log("Could not create review");
+      console.log('Could not create review');
     }
     //Reset form
     form.reset();
@@ -149,7 +149,7 @@ export function ReviewForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {data.getGame.platforms.map((platform) => (
+                    {data.getGame.platforms.map(platform => (
                       <SelectItem key={platform.name} value={platform.name}>
                         {platform.name}
                       </SelectItem>

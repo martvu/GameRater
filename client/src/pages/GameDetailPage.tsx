@@ -1,7 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams, Link } from 'react-router-dom';
-import { reviews } from '@/components/GameData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -16,9 +14,10 @@ import ReviewCard from '@/components/ReviewCard';
 import ReviewModal from '@/components/ReviewModal';
 import { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import Pagination from '@/components/Pagination';
 
 const GET_GAME = gql`
-  query GetGame($id: ID!) {
+  query GetGame($id: ID!, $limit: Int!) {
     getGame(ID: $id) {
       _id
       name
@@ -31,7 +30,7 @@ const GET_GAME = gql`
       genres {
         name
       }
-      reviews {
+      reviews(limit: $limit) {
         _id
         author
         title
@@ -50,11 +49,11 @@ type GameDetailParams = {
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME, {
-    variables: { id: id },
+    variables: { id: id, limit: 100 },
   });
 
-  console.log(id);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 5;
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
@@ -140,16 +139,20 @@ const BaseGameDetailPage = () => {
             </CardContent>
           </Card>
           {/* Reviews */}
-          <div className="flex h-full w-full justify-center col-span-1 lg:col-span-2">
-            
-            <div className="flex flex-col justify-center min-w-full lg:min-w-[700px] text-left">
+          <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
+            <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
               <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
               {data.getGame.reviews.length !== 0 ? (
-                data.getGame.reviews.map(review => (
-                  <div key={review._id} className="my-2">
-                    <ReviewCard review={review} />
-                  </div>
-                ))
+                data.getGame.reviews
+                  .slice(
+                    (currentPage - 1) * reviewsPerPage,
+                    currentPage * reviewsPerPage
+                  )
+                  .map(review => (
+                    <div key={review._id} className="my-2">
+                      <ReviewCard review={review} />
+                    </div>
+                  ))
               ) : (
                 <div className="flex flex-col items-center justify-center">
                   <p className="text-foreground">No reviews yet</p>
@@ -158,6 +161,12 @@ const BaseGameDetailPage = () => {
             </div>
           </div>
         </div>
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={reviewsPerPage}
+          data={data.getGame.reviews}
+        />
       </div>
     </div>
   );
