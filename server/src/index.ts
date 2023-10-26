@@ -28,7 +28,7 @@ const typeDefs = `#graphql
     platforms: [Platform]
     first_release_date: String
     cover_image_id: String
-    reviews: [Review]
+    reviews(limit: Int): [Review]
   }
 
   type Genre {
@@ -71,7 +71,7 @@ const typeDefs = `#graphql
     getReview(ID: ID!): Review!
     getReviews(limit: Int): [Review!]!
     getGame(ID: ID!): Game!
-    getGames(limit: Int): [Game!]!
+    getGames(limit: Int, offset: Int): [Game!]!
     getGenre(id: Int): Genre!
     getGenres(limit: Int): [Genre!]!
     getPlatform(id: Int): Platform!
@@ -96,8 +96,8 @@ const resolvers = {
     async getGame(_, { ID }) {
       return await Game.findById(ID);
     },
-    async getGames(_, { limit }) {
-      return await Game.find().limit(limit);
+    async getGames(_, { limit, offset }) {
+      return await Game.find().skip(offset).limit(limit);
     },
     async getGenre(_, { id }) {
       return await Genre.findOne({ id: id });
@@ -150,8 +150,8 @@ const resolvers = {
     async platforms(game) {
       return await Platform.find({ id: { $in: game.platforms } });
     },
-    async reviews(game) {
-      return await Review.find({ _id: { $in: game.reviews} });
+    async reviews(game, { limit }) {
+      return await Review.find({ _id: { $in: game.reviews} }).limit(limit);
     }
   },
 };

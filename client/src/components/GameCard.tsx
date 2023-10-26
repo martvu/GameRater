@@ -17,17 +17,15 @@ interface GameCardProps {
   rating: number;
 }
 
-export function GameCard({
-  id,
-  title,
-  image_id,
-  rating,
-}: GameCardProps) {
+export function GameCard({ id, title, image_id, rating }: GameCardProps) {
   return (
     <Card className="relative h-[320px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
       <CardHeader className="h-[220px] overflow-hidden">
         <div className="h-full w-full duration-200 hover:scale-110">
-          <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${image_id}.jpg`} alt={title} />
+          <img
+            src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${image_id}.jpg`}
+            alt={title}
+          />
         </div>
       </CardHeader>
       <CardContent className="px-3 text-start">

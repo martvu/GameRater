@@ -20,11 +20,11 @@ const GET_GAMES = gql`
 `;
 
 function BaseGameListPage() {
-  const { loading, error, data } = useQuery(GET_GAMES, {
-    variables: { limit: 100 },
-    });
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 12;
+  const { loading, error, data } = useQuery(GET_GAMES, {
+    variables: { limit: 100 },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
@@ -42,12 +42,11 @@ function BaseGameListPage() {
           </div>
           <SortBy />
         </div>
-        <div className='text-muted-foreground'>
-        </div>
+        <div className="text-muted-foreground"></div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
           {data.getGames
             .slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
-            .map((game) => (
+            .map(game => (
               <div
                 className="m-1 flex justify-center md:justify-normal"
                 key={game.name}
@@ -66,8 +65,8 @@ function BaseGameListPage() {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            gamesPerPage={gamesPerPage}
-            gameData={data.getGames}
+            itemsPerPage={gamesPerPage}
+            data={data.getGames}
           />
         </div>
       </div>
