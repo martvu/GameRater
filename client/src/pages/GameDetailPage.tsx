@@ -51,7 +51,6 @@ const BaseGameDetailPage = () => {
   const { loading, error, data } = useQuery(GET_GAME, {
     variables: { id: id, limit: 100 },
   });
-
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
   // Check if the game data exists

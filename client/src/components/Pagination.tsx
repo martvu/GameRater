@@ -44,7 +44,9 @@ export default function Pagination({
         </li>
 
         <li>
-          <span className="mx-2">{`${ totalPages === 0 ? "0" : currentPage} / ${totalPages}`}</span>
+          <span className="mx-2">{`${
+            totalPages === 0 ? '0' : currentPage
+          } / ${totalPages}`}</span>
         </li>
 
         <li>
