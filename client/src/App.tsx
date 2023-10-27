@@ -5,17 +5,23 @@ import GameListPage from './pages/GameListPage';
 import GameDetailPage from './pages/GameDetailPage';
 import { ReviewForm } from './components/ReviewForm';
 import { v4 as uuidv4 } from 'uuid';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [userID, setUserID] = useState<string>('');
+
   useEffect(() => {
     // Check if the UUID is already in localStorage
-    let userID: string | null = localStorage.getItem('userID');
+    const storedUserID: string | null = localStorage.getItem('userID');
     // If not, generate a new UUID and save it to localStorage
-    if (!userID) {
-      userID = uuidv4();
-      localStorage.setItem('userID', userID);
+    if (!storedUserID) {
+      const newUserID = uuidv4();
+      setUserID(newUserID);
+      localStorage.setItem('userID', newUserID);
+    } else {
+      setUserID(storedUserID);
     }
+    console.log(userID);
   }, []);
 
   return (
