@@ -5,18 +5,26 @@ import Review from "../models/review.js";
 import Game from "../models/game.js";
 import Genre from "../models/genre.js";
 import Platform from "../models/platform.js";
+import User from "../models/user.js";
 
 const MONGODB = "mongodb://it2810-48.idi.ntnu.no:27017/GameRater";
 
 const typeDefs = `#graphql
   type Review {
     _id: String
-    author: String
+    user: User
     title: String
     content: String
     rating: Int
     platform: String
     gameID: String
+  }
+
+  type User {
+    _id: String
+    username: String
+    favorites: [Game]
+    reviews: [Review]
   }
 
   type Game {
@@ -59,7 +67,7 @@ const typeDefs = `#graphql
   }
 
   input ReviewInput {
-    author: String
+    user: String
     title: String
     content: String
     rating: Int
@@ -67,9 +75,15 @@ const typeDefs = `#graphql
     gameID: String
   }
 
+  input UserInput {
+    username: String
+  }
+
   type Query {
     getReview(ID: ID!): Review!
     getReviews(limit: Int): [Review!]!
+    getUser(username: String!): User!
+    getUsers(limit: Int): [User!]!
     getGame(ID: ID!): Game!
     getGames(limit: Int, offset: Int): [Game!]!
     getGenre(id: Int): Genre!
@@ -82,6 +96,7 @@ const typeDefs = `#graphql
     createReview(reviewInput: ReviewInput): Review!
     updateReview(ID: ID!, reviewInput: ReviewInput): String!
     deleteReview(ID: ID!): String!
+    createUser(userInput: UserInput): User!
   }
   `;
 
@@ -92,6 +107,12 @@ const resolvers = {
     },
     async getReviews(_, { limit }) {
       return await Review.find().limit(limit);
+    },
+    async getUser(_, { username }) {
+      return await User.findOne({ username: username });
+    },
+    async getUsers(_, { limit }) {
+      return await User.find().limit(limit);
     },
     async getGame(_, { ID }) {
       return await Game.findById(ID);
@@ -113,9 +134,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createReview(_, { reviewInput: { author, title, content, rating, platform, gameID } }) {
+    async createReview(_, { reviewInput: { user, title, content, rating, platform, gameID } }) {
       const review = await new Review({
-        author,
+        user,
         title,
         content,
         rating,
@@ -126,21 +147,30 @@ const resolvers = {
       await Game.findByIdAndUpdate(gameID, {
         $addToSet: { reviews: review._id },
       });
+      await User.findByIdAndUpdate(user, {
+        $addToSet: { reviews: review._id },
+      });
       return review;
     },
     async updateReview(
       _,
-      { ID, reviewInput: { author, title, content, rating, platform, gameID } }
+      { ID, reviewInput: { user, title, content, rating, platform, gameID } }
     ) {
       await Review.updateOne(
         { _id: ID },
-        { $set: { author, title, content, rating, platform, gameID } }
+        { $set: { user, title, content, rating, platform, gameID } }
       );
       return ID;
     },
     async deleteReview(_, { ID }) {
       await Review.deleteOne({ _id: ID });
       return ID;
+    },
+    async createUser(_, { userInput: { username } }) {
+      const user = await new User({
+        username,
+      }).save();
+      return user;
     },
   },
   Game: {
@@ -153,6 +183,19 @@ const resolvers = {
     async reviews(game, { limit }) {
       return await Review.find({ _id: { $in: game.reviews} }).limit(limit);
     }
+  },
+  Review: {
+    async user(review) {
+      return await User.findById(review.user);
+    }
+  },
+  User: {
+    async favorites(user) {
+      return await Game.find({ _id: { $in: user.favorites } });
+    },
+    async reviews(user) {
+      return await Review.find({ _id: { $in: user.reviews } });
+    },
   },
 };
 

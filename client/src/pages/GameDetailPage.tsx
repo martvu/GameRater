@@ -32,7 +32,9 @@ const GET_GAME = gql`
       }
       reviews(limit: $limit) {
         _id
-        author
+        user {
+          username
+        }
         title
         content
         rating

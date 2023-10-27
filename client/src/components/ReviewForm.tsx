@@ -41,7 +41,7 @@ const GET_GAME = gql`
 const CREATE_REVIEW = gql`
   mutation CreateReview($reviewInput: ReviewInput!) {
     createReview(reviewInput: $reviewInput) {
-      author
+      user
       title
       content
       rating
@@ -98,7 +98,7 @@ export function ReviewForm() {
             content: values.content,
             rating: values.rating,
             platform: values.platform,
-            author: 'me',
+            user: '653b9f872b930cfcf48e9fdc',
             gameID: id,
           },
         },
@@ -112,7 +112,7 @@ export function ReviewForm() {
     //Reset form
     form.reset();
     //Refresh page
-    window.location.reload();
+    //window.location.reload();
     console.log(values);
   }
 
