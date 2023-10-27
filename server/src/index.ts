@@ -15,6 +15,8 @@ const typeDefs = `#graphql
     title: String
     content: String
     rating: Int
+    platform: String
+    gameID: String
   }
 
   type Game {
@@ -26,6 +28,7 @@ const typeDefs = `#graphql
     platforms: [Platform]
     first_release_date: String
     cover_image_id: String
+    reviews(limit: Int): [Review]
   }
 
   type Genre {
@@ -60,13 +63,15 @@ const typeDefs = `#graphql
     title: String
     content: String
     rating: Int
+    platform: String
+    gameID: String
   }
 
   type Query {
     getReview(ID: ID!): Review!
     getReviews(limit: Int): [Review!]!
     getGame(ID: ID!): Game!
-    getGames(limit: Int): [Game!]!
+    getGames(limit: Int, offset: Int): [Game!]!
     getGenre(id: Int): Genre!
     getGenres(limit: Int): [Genre!]!
     getPlatform(id: Int): Platform!
@@ -91,8 +96,8 @@ const resolvers = {
     async getGame(_, { ID }) {
       return await Game.findById(ID);
     },
-    async getGames(_, { limit }) {
-      return await Game.find().limit(limit);
+    async getGames(_, { limit, offset }) {
+      return await Game.find().skip(offset).limit(limit);
     },
     async getGenre(_, { id }) {
       return await Genre.findOne({ id: id });
@@ -108,22 +113,28 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createReview(_, { reviewInput: { author, title, content, rating } }) {
+    async createReview(_, { reviewInput: { author, title, content, rating, platform, gameID } }) {
       const review = await new Review({
         author,
         title,
         content,
         rating,
+        platform,
+        gameID
       }).save();
+      // Update the corresponding game's reviews array or create it if it doesn't exist
+      await Game.findByIdAndUpdate(gameID, {
+        $addToSet: { reviews: review._id },
+      });
       return review;
     },
     async updateReview(
       _,
-      { ID, reviewInput: { author, title, content, rating } }
+      { ID, reviewInput: { author, title, content, rating, platform, gameID } }
     ) {
       await Review.updateOne(
         { _id: ID },
-        { $set: { author, title, content, rating } }
+        { $set: { author, title, content, rating, platform, gameID } }
       );
       return ID;
     },
@@ -139,6 +150,9 @@ const resolvers = {
     async platforms(game) {
       return await Platform.find({ id: { $in: game.platforms } });
     },
+    async reviews(game, { limit }) {
+      return await Review.find({ _id: { $in: game.reviews} }).limit(limit);
+    }
   },
 };
 

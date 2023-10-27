@@ -6,6 +6,8 @@ interface IReview {
   title: String;
   content: String;
   rating: Number;
+  platform: String;
+  gameID: String;
 }
 
 const ReviewSchema = new Schema<IReview>({
@@ -14,6 +16,8 @@ const ReviewSchema = new Schema<IReview>({
   title: { type: String, required: true },
   content: { type: String, required: true },
   rating: { type: Number, require: true },
+  platform: { type: String, require: true },
+  gameID: { type: String, require: true },
 });
 
 const Review = model<IReview>("reviews", ReviewSchema);

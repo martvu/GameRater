@@ -4,16 +4,17 @@ import { Button } from './ui/button';
 interface PaginationProps {
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
-  gamesPerPage: number;
-  gameData: unknown[];
+  itemsPerPage: number;
+  data: unknown[];
 }
 export default function Pagination({
   currentPage,
   setCurrentPage,
-  gamesPerPage,
-  gameData,
+  itemsPerPage,
+  data,
 }: PaginationProps) {
-  const totalPages = Math.ceil(gameData.length / gamesPerPage);
+  const totalResults = data.length;
+  const totalPages = Math.ceil(totalResults / itemsPerPage);
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -43,7 +44,9 @@ export default function Pagination({
         </li>
 
         <li>
-          <span className="mx-2">{`${currentPage} / ${totalPages}`}</span>
+          <span className="mx-2">{`${
+            totalPages === 0 ? '0' : currentPage
+          } / ${totalPages}`}</span>
         </li>
 
         <li>
@@ -51,7 +54,7 @@ export default function Pagination({
             variant="ghost"
             onClick={nextPage}
             aria-label="Go to Next Page"
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || totalPages === 0}
           >
             <span>Next</span>
             <ChevronRight className="h-4 w-4" />

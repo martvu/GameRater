@@ -1,7 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams, Link } from 'react-router-dom';
-import { reviews } from '@/components/GameData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -16,12 +14,13 @@ import ReviewCard from '@/components/ReviewCard';
 import ReviewModal from '@/components/ReviewModal';
 import { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import Pagination from '@/components/Pagination';
 
-const GetGame = gql`
-  query GetGame($id: ID!) {
+const GET_GAME = gql`
+  query GetGame($id: ID!, $limit: Int!) {
     getGame(ID: $id) {
       _id
-      name 
+      name
       summary
       cover_image_id
       first_release_date
@@ -30,6 +29,15 @@ const GetGame = gql`
       }
       genres {
         name
+      }
+      reviews(limit: $limit) {
+        _id
+        author
+        title
+        content
+        rating
+        platform
+        gameID
       }
     }
   }
@@ -40,50 +48,15 @@ type GameDetailParams = {
 
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
-  const { loading, error, data } = useQuery(GetGame, {
-    variables: { id: id },
+  const { loading, error, data } = useQuery(GET_GAME, {
+    variables: { id: id, limit: 100 },
   });
-
-  console.log(id)
-  const [reviewData, setReviewData] = useState(reviews);
-  const [hasMore, setHasMore] = useState(true);
-
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 5;
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-
-  // Fetch more data
-  const fetchData = () => {
-    if (reviewData.length >= 20) {
-      setHasMore(false);
-      return;
-    }
-    // Replace with your data fetching logic
-    setTimeout(() => {
-      const mockData = getMoreMockData(); // Replace with your data fetching logic
-      if (mockData.length > 0) {
-        // Add the fetched data to the reviews state
-        setReviewData(prevReviews => [...prevReviews, ...mockData]);
-      } else {
-        // No more data available
-        setHasMore(false);
-      }
-    }, 1000);
-  };
-
-  const getMoreMockData = () => {
-    // Replace this with your data fetching logic
-    // For simplicity, we'll simulate adding more items to the mock data
-    const newData = Array.from({ length: 5 }, (_, index) => ({
-      id: reviewData.length + index + 1, // Unique ID
-      rating: Math.floor(Math.random() * 5) + 1, // Random rating between 1 and 5
-      title: `Review ${reviewData.length + index + 1}`,
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    }));
-    return newData;
-  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
@@ -153,7 +126,7 @@ const BaseGameDetailPage = () => {
                       >
                         {genre.name}
                       </li>
-                    ))}  
+                    ))}
                   </div>
                 </div>
               </CardContent>
@@ -165,25 +138,34 @@ const BaseGameDetailPage = () => {
             </CardContent>
           </Card>
           {/* Reviews */}
-          <div className="flex justify-center col-span-1 h-full w-full md:col-span-2">
-            <InfiniteScroll
-              dataLength={reviewData.length}
-              next={fetchData}
-              hasMore={hasMore} // Replace with a condition based on your data source
-              loader={<p>Loading...</p>}
-              endMessage={<p>No more data to load.</p>}
-            >
-              <div className="w-full text-left">
-                <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-                {reviewData.map(data => (
-                  <div key={data.id} className="my-2 max-w-[800px]">
-                    <ReviewCard review={data} />
-                  </div>
-                ))}
-              </div>
-            </InfiniteScroll>
+          <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
+            <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
+              <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
+              {data.getGame.reviews.length !== 0 ? (
+                data.getGame.reviews
+                  .slice(
+                    (currentPage - 1) * reviewsPerPage,
+                    currentPage * reviewsPerPage
+                  )
+                  .map(review => (
+                    <div key={review._id} className="my-2">
+                      <ReviewCard review={review} />
+                    </div>
+                  ))
+              ) : (
+                <div className="flex flex-col items-center justify-center">
+                  <p className="text-foreground">No reviews yet</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={reviewsPerPage}
+          data={data.getGame.reviews}
+        />
       </div>
     </div>
   );
