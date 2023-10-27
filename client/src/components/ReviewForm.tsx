@@ -112,7 +112,7 @@ export function ReviewForm() {
     //Reset form
     form.reset();
     //Refresh page
-    //window.location.reload();
+    window.location.reload();
     console.log(values);
   }
 

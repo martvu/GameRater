@@ -3,7 +3,7 @@ import { Card, CardDescription, CardHeader } from './ui/card';
 
 interface Review {
   id?: string;
-  author: string;
+  user: string;
   title: string;
   content: string;
   rating: number;

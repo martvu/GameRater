@@ -12,7 +12,7 @@ const MONGODB = "mongodb://it2810-48.idi.ntnu.no:27017/GameRater";
 const typeDefs = `#graphql
   type Review {
     _id: String
-    user: User
+    user: String
     title: String
     content: String
     rating: Int
@@ -184,11 +184,11 @@ const resolvers = {
       return await Review.find({ _id: { $in: game.reviews} }).limit(limit);
     }
   },
-  Review: {
+/*   Review: {
     async user(review) {
       return await User.findById(review.user);
     }
-  },
+  }, */
   User: {
     async favorites(user) {
       return await Game.find({ _id: { $in: user.favorites } });
