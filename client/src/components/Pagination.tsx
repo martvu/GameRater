@@ -44,7 +44,7 @@ export default function Pagination({
         </li>
 
         <li>
-          <span className="mx-2">{`${currentPage} / ${totalPages}`}</span>
+          <span className="mx-2">{`${ totalPages === 0 ? "0" : currentPage} / ${totalPages}`}</span>
         </li>
 
         <li>
@@ -52,7 +52,7 @@ export default function Pagination({
             variant="ghost"
             onClick={nextPage}
             aria-label="Go to Next Page"
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || totalPages === 0}
           >
             <span>Next</span>
             <ChevronRight className="h-4 w-4" />
