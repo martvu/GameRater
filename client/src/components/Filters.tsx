@@ -3,62 +3,17 @@ import { ChevronRight, ChevronLeft } from 'lucide-react'; // Make sure to instal
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
-import { useQuery, gql } from '@apollo/client';
 
-const GET_FILTERS = gql`
-  query GetPlatforms {
-    getPlatforms {
-      name
-    }
-  }
-`;
-export const Platforms = [
-  'PC',
-  'PS4',
-  'PS5',
-  'Xbox One',
-  'Xbox Series S/X',
-  'Nintendo Switch',
-  'Mobile',
-]; 
-
-/* const Genres = [
-  'Action',
-  'Action-Adventure',
-  'Adventure',
-  'Role-Playing',
-  'Simulation',
-  'Strategy',
-  'Sports',
-  'Puzzle',
-  'Idle',
-  'Racing',
-  'Educational',
-  'Fighting',
-  'Shooter',
-  'Platformer',
-  'Rhythm',
-  'Visual Novel',
-  'Board Games',
-  'Card Games',
-  'Trivia',
-  'Superlongwordthatshouldbreaktheui',
-]; */
 export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { loading, error, data } = useQuery(GET_FILTERS);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
-
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-
   return (
     <>
       <div
         className={cn(
-          'flex h-full flex-col items-start text-left min-h-screen max-h-[800px] overflow-y-auto',
+          'flex h-full max-h-[800px] min-h-screen flex-col items-start overflow-y-auto text-left',
           !isCollapsed && 'max-w-[210px]'
         )}
       >

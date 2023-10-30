@@ -19,15 +19,14 @@ interface FilterItemsProps {
   filterType: string;
 }
 
-export default function FilterItems( { filterType } : FilterItemsProps ) {
+export default function FilterItems({ filterType }: FilterItemsProps) {
   const { loading, error, data } = useQuery(GET_FILTERS);
   const [numItemsToShow, setNumItemsToShow] = useState(10);
 
-  console.log(filterType)
-  
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
-  const filterData = filterType === 'platforms' ? data.getPlatforms : data.getGenres
+  if (error) return <p>Error</p>;
+  const filterData =
+    filterType === 'platforms' ? data.getPlatforms : data.getGenres;
   const showMore = () => {
     setNumItemsToShow(numItemsToShow + 5);
   };
