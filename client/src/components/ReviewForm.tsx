@@ -27,7 +27,7 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
 const GET_GAME = gql`
-  query GetGame($id: ID!) {
+  query GetGamePlatforms($id: ID!) {
     getGame(ID: $id) {
       name
       platforms {
@@ -149,11 +149,13 @@ export function ReviewForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {data.getGame.platforms.map(platform => (
-                      <SelectItem key={platform.name} value={platform.name}>
-                        {platform.name}
-                      </SelectItem>
-                    ))}
+                    {data.getGame.platforms.map(
+                      (platform: { name: string }) => (
+                        <SelectItem key={platform.name} value={platform.name}>
+                          {platform.name}
+                        </SelectItem>
+                      )
+                    )}
                   </SelectGroup>
                 </SelectContent>
               </Select>

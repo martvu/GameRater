@@ -13,10 +13,12 @@ import {
 import ReviewCard from '@/components/ReviewCard';
 import ReviewModal from '@/components/ReviewModal';
 import { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
+import { Genre, Platform, Review } from '@/gql/graphql';
+import { graphql } from '../gql/';
 
-const GET_GAME = gql`
+const GET_GAME = graphql(`
   query GetGame($id: ID!, $limit: Int!) {
     getGame(ID: $id) {
       _id
@@ -41,7 +43,7 @@ const GET_GAME = gql`
       }
     }
   }
-`;
+`);
 type GameDetailParams = {
   id: string;
 };
@@ -49,7 +51,7 @@ type GameDetailParams = {
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME, {
-    variables: { id: id, limit: 100 },
+    variables: { id: id as string, limit: 100 },
   });
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
@@ -81,7 +83,7 @@ const BaseGameDetailPage = () => {
               <div className="flex w-full cursor-default p-0">
                 <img
                   src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.cover_image_id}.jpg`}
-                  alt={data.getGame.name}
+                  alt={data.getGame.name as string}
                   className="h-full max-h-[300px] w-full object-cover"
                   loading="lazy"
                 />
@@ -108,23 +110,25 @@ const BaseGameDetailPage = () => {
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Platforms:</p>
-                    {data.getGame.platforms?.map(platform => (
-                      <li
-                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={platform.name}
-                      >
-                        {platform.name}
-                      </li>
-                    ))}
+                    {data.getGame.platforms?.map(
+                      (platform: Platform | null) => (
+                        <li
+                          className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                          key={platform?.name}
+                        >
+                          {platform?.name}
+                        </li>
+                      )
+                    )}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Genres:</p>
-                    {data.getGame.genres?.map(genre => (
+                    {data.getGame.genres?.map((genre: Genre | null) => (
                       <li
                         className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={genre.name}
+                        key={genre?.name}
                       >
-                        {genre.name}
+                        {genre?.name}
                       </li>
                     ))}
                   </div>
@@ -141,15 +145,15 @@ const BaseGameDetailPage = () => {
           <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
             <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
               <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-              {data.getGame.reviews.length !== 0 ? (
+              {data.getGame.reviews?.length !== 0 ? (
                 data.getGame.reviews
-                  .slice(
+                  ?.slice(
                     (currentPage - 1) * reviewsPerPage,
                     currentPage * reviewsPerPage
                   )
-                  .map(review => (
-                    <div key={review._id} className="my-2">
-                      <ReviewCard review={review} />
+                  .map((review: Review | null) => (
+                    <div key={review?._id} className="my-2">
+                      <ReviewCard review={review as Review} />
                     </div>
                   ))
               ) : (
@@ -164,7 +168,7 @@ const BaseGameDetailPage = () => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           itemsPerPage={reviewsPerPage}
-          data={data.getGame.reviews}
+          data={data.getGame.reviews as Review[]}
         />
       </div>
     </div>

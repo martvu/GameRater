@@ -1,15 +1,7 @@
+import { Review } from '@/gql/graphql';
 import { StarRating } from './Rating';
 import { Card, CardDescription, CardHeader } from './ui/card';
 
-interface Review {
-  id?: string;
-  author: string;
-  title: string;
-  content: string;
-  rating: number;
-  platform: number;
-  gameID: string;
-}
 interface ReviewCardProps {
   review: Review;
 }
@@ -24,7 +16,7 @@ export default function ReviewCard(review: ReviewCardProps) {
             {review.review.platform}
           </p>
         </div>
-        <StarRating rating={review.review.rating} disabled={true} />
+        <StarRating rating={review.review.rating as number} disabled={true} />
       </CardHeader>
       <CardDescription className="flex max-w-[800px] flex-row items-center gap-2">
         {review.review.content}

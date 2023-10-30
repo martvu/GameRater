@@ -5,9 +5,11 @@ import SortBy from '@/components/SortBy';
 import Pagination from '@/components/Pagination';
 import { useState } from 'react';
 import withLayout from '@/lib/withLayout';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { Game } from '../gql/graphql';
+import { graphql } from '../gql/';
 
-const GET_GAMES = gql`
+const GET_GAMES = graphql(`
   query GetGames($limit: Int) {
     getGames(limit: $limit) {
       first_release_date
@@ -17,7 +19,7 @@ const GET_GAMES = gql`
       _id
     }
   }
-`;
+`);
 
 function BaseGameListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,20 +46,14 @@ function BaseGameListPage() {
         </div>
         <div className="text-muted-foreground"></div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-          {data.getGames
+          {data?.getGames
             .slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
-            .map(game => (
+            .map((game: Game) => (
               <div
                 className="m-1 flex justify-center md:justify-normal"
                 key={game.name}
               >
-                <GameCard
-                  id={game._id} // or some  unique identifier
-                  title={game.name}
-                  summary={game.summary}
-                  image_id={game.cover_image_id}
-                  rating={4.5}
-                />
+                <GameCard game={game} />
               </div>
             ))}
         </div>
@@ -66,7 +62,7 @@ function BaseGameListPage() {
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             itemsPerPage={gamesPerPage}
-            data={data.getGames}
+            data={data?.getGames as Game[]}
           />
         </div>
       </div>
