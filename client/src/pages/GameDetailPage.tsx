@@ -37,6 +37,7 @@ const GET_GAME = gql`
         rating
         platform
         gameID
+        user
       }
     }
   }
