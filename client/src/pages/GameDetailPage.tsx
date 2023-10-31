@@ -112,22 +112,25 @@ const BaseGameDetailPage = () => {
             <CardHeader className="flex flex-col items-start">
               <CardTitle className=" text-4xl font-semibold">
                 {data.getGame.name}
-                <div
-                  className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
-                    metascore !== undefined
-                      ? metascore > 75
-                        ? 'bg-green-600'
-                        : metascore > 35
-                        ? 'bg-yellow-600'
-                        : 'bg-red-600'
-                      : 'bg-gray-600'
-                  } h-7 w-7 px-1`}
-                >
-                  {metascore ?? 'N/A'}
-                </div>
               </CardTitle>
               <CardContent className="py-2">
-                <div className="flex flex-col justify-start">
+                <div className="flex flex-col justify-start gap-1">
+                  <div className="flex gap-2">
+                    <p>Metascore: </p>
+                    <span
+                      className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
+                        metascore !== undefined
+                          ? metascore > 75
+                            ? 'bg-green-600'
+                            : metascore > 35
+                            ? 'bg-yellow-600'
+                            : 'bg-red-600'
+                          : 'bg-gray-600'
+                      } h-7 w-7 px-1`}
+                    >
+                      {metascore ?? 'N/A'}
+                    </span>
+                  </div>
                   <div className="flex">
                     <p>Release Date: 12.12.2017 </p>
                   </div>
