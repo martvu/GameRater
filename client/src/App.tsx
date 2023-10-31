@@ -6,7 +6,6 @@ import GameDetailPage from './pages/GameDetailPage';
 import { ReviewForm } from './components/ReviewForm';
 
 function App() {
-
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

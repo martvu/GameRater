@@ -96,7 +96,7 @@ const typeDefs = `#graphql
     createReview(reviewInput: ReviewInput): Review!
     updateReview(ID: ID!, reviewInput: ReviewInput): String!
     deleteReview(ID: ID!): String!
-    createUser(userInput: UserInput): User!
+    signInOrCreateUser(userInput: UserInput): User!
   }
   `;
 
@@ -166,11 +166,16 @@ const resolvers = {
       await Review.deleteOne({ _id: ID });
       return ID;
     },
-    async createUser(_, { userInput: { username } }) {
-      const user = await new User({
-        username,
-      }).save();
-      return user;
+    async signInOrCreateUser(_, { userInput: { username } }) {
+      const user = await User.findOne({ username: username });
+      if (user) {
+        return user;
+      } else {
+        const newUser = await new User({
+          username,
+        }).save();
+        return newUser;
+      }
     },
   },
   Game: {

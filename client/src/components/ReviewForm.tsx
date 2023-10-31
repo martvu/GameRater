@@ -58,7 +58,7 @@ type GameDetailParams = {
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Title must be at least 2 characters.',
   }),
   content: z.string().max(1000).min(4),
   rating: z
@@ -73,7 +73,7 @@ const formSchema = z.object({
 });
 
 export function ReviewForm() {
-  const [user, setUser] = useRecoilState(userState);
+  const [user] = useRecoilState(userState);
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME, {
     variables: { id: id },
@@ -101,7 +101,7 @@ export function ReviewForm() {
             content: values.content,
             rating: values.rating,
             platform: values.platform,
-            user: user,
+            user: user.username,
             gameID: id,
           },
         },
