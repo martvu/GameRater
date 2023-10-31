@@ -17,6 +17,7 @@ import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
 import { gql } from '../gql/';
+import Metascore from '@/components/Metascore';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!) {
@@ -64,9 +65,6 @@ const BaseGameDetailPage = () => {
     return <div>Game not found</div>;
   }
   const rating = Number(data?.getAvgRating);
-  const metascore = data?.getGame.aggregated_rating
-    ? Number(data.getGame.aggregated_rating.toFixed())
-    : undefined;
   const numReviews = data?.getGame.reviews?.length;
   console.log(data.getGame.aggregated_rating);
   console.log(data.getGame.name);
@@ -117,19 +115,13 @@ const BaseGameDetailPage = () => {
                 <div className="flex flex-col justify-start gap-1">
                   <div className="flex gap-2">
                     <p>Metascore: </p>
-                    <span
-                      className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
-                        metascore !== undefined
-                          ? metascore > 75
-                            ? 'bg-green-600'
-                            : metascore > 35
-                            ? 'bg-yellow-600'
-                            : 'bg-red-600'
-                          : 'bg-gray-600'
-                      } h-7 w-7 px-1`}
-                    >
-                      {metascore ?? 'N/A'}
-                    </span>
+                    <Metascore
+                      metascore={
+                        data.getGame.aggregated_rating
+                          ? data.getGame.aggregated_rating
+                          : undefined
+                      }
+                    />
                   </div>
                   <div className="flex">
                     <p>Release Date: 12.12.2017 </p>

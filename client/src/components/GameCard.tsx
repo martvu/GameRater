@@ -10,6 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Game } from '@/gql/graphql';
 import { useQuery, gql } from '@apollo/client';
+import Metascore from './Metascore';
 
 interface GameCardProps {
   game: Game;
@@ -27,10 +28,6 @@ export function GameCard({ game }: GameCardProps) {
   });
 
   const rating = data?.getAvgRating;
-  const metascore = aggregated_rating
-    ? Number(aggregated_rating.toFixed())
-    : undefined;
-
   return (
     <Card className="relative h-[320px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
       <CardHeader className="h-[220px] overflow-hidden">
@@ -57,19 +54,9 @@ export function GameCard({ game }: GameCardProps) {
             <p>{rating === 0 ? '-' : rating}</p>
           </div>
           <div className="absolute right-0 flex items-center gap-2">
-            <div
-              className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
-                metascore !== undefined
-                  ? metascore > 75
-                    ? 'bg-green-600'
-                    : metascore > 35
-                    ? 'bg-yellow-600'
-                    : 'bg-red-600'
-                  : 'bg-gray-600'
-              } h-7 w-7 px-1`}
-            >
-              {metascore?.toFixed() ?? 'N/A'}
-            </div>
+            <Metascore
+              metascore={aggregated_rating ? aggregated_rating : undefined}
+            />
           </div>
         </div>
       </CardFooter>
