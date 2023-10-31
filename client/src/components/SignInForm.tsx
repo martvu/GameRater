@@ -15,7 +15,6 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
-import { useEffect } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
 const SIGN_IN_OR_CREATE_USER = gql`
@@ -39,9 +38,10 @@ const formSchema = z.object({
   }),
 });
 
-export function SignIn() {
+export function SignInForm() {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const [user, setUser] = useRecoilState(userState);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,9 +51,7 @@ export function SignIn() {
   });
 
   // 2. Define a submit handler.
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+ 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     //Handle submit
     try {
@@ -65,6 +63,7 @@ export function SignIn() {
         },
       });
       setUser(data.signInOrCreateUser);
+      localStorage.setItem('user', JSON.stringify(data.signInOrCreateUser));
       console.log(data);
     } catch (error) {
       console.log('Could not create user');
@@ -73,7 +72,7 @@ export function SignIn() {
     //Reset form
     form.reset();
     //Refresh page
-    window.location.reload();
+    //window.location.reload();
   }
 
   return (

@@ -11,8 +11,11 @@ import { userState } from '@/state/atoms';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
-  const [user] = useRecoilState(userState);
-  const signOutUser = useResetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
+  
+  function signOutUser()  {
+   setUser({ _id: '', username: '', favorites: [], reviews: [] })
+  }
   return (
     <nav
       className={`relative flex h-20 w-full items-center gap-10 px-2 md:px-4 lg:gap-20 lg:px-8 ${

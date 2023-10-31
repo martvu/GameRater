@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { SignIn } from './SignIn';
+import { SignInForm } from './SignInForm';
 
 export default function SignInModal() {
   return (
@@ -9,7 +9,7 @@ export default function SignInModal() {
         <Button className="">Sign In</Button>
       </DialogTrigger>
       <DialogContent className="overflow-auto">
-        <SignIn />
+        <SignInForm />
       </DialogContent>
     </Dialog>
   );
