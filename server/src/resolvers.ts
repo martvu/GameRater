@@ -21,6 +21,16 @@ export const resolvers: Resolvers = {
       const reviews = await Review.find().limit(limit);
       return reviews.map(review => review.toObject());
     },
+    getAvgRating: async (_, { gameID }) => {
+      const reviews = await Review.find({ gameID: gameID });
+      if (reviews.length === 0) {
+        return 0;
+      }
+      const totalRating = reviews.reduce((acc, review) => acc + review.rating.valueOf(), 0);
+      const averageRating = Number((totalRating / reviews.length).toFixed(1));
+      return averageRating;
+    },
+
     getGenre: async (_, { id }) => {
       const genre = await Genre.findOne( { id: id });
       return genre.toObject();

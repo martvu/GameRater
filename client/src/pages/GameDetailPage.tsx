@@ -20,12 +20,14 @@ import { gql } from '../gql/';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!) {
+    getAvgRating(gameID: $id)
     getGame(ID: $id) {
       _id
       name
       summary
       cover_image_id
       first_release_date
+      aggregated_rating
       platforms {
         name
       }
@@ -56,11 +58,18 @@ const BaseGameDetailPage = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
+
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-
+  const rating = Number(data?.getAvgRating);
+  const metascore = data?.getGame.aggregated_rating
+    ? Number(data.getGame.aggregated_rating.toFixed())
+    : undefined;
+  const numReviews = data?.getGame.reviews?.length;
+  console.log(data.getGame.aggregated_rating);
+  console.log(data.getGame.name);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
@@ -90,7 +99,7 @@ const BaseGameDetailPage = () => {
                 />
               </div>
               <div className="mt-2 flex items-center justify-center text-yellow-400">
-                <Rating rating={3} numRatings={41} />
+                <Rating rating={rating} numRatings={numReviews} />
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
@@ -103,6 +112,19 @@ const BaseGameDetailPage = () => {
             <CardHeader className="flex flex-col items-start">
               <CardTitle className=" text-4xl font-semibold">
                 {data.getGame.name}
+                <div
+                  className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
+                    metascore !== undefined
+                      ? metascore > 75
+                        ? 'bg-green-600'
+                        : metascore > 35
+                        ? 'bg-yellow-600'
+                        : 'bg-red-600'
+                      : 'bg-gray-600'
+                  } h-7 w-7 px-1`}
+                >
+                  {metascore ?? 'N/A'}
+                </div>
               </CardTitle>
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start">

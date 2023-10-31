@@ -12,6 +12,7 @@ import { gql } from '../gql/';
 const GET_GAMES = gql(`
   query GetGames($limit: Int) {
     getGames(limit: $limit) {
+      aggregated_rating
       first_release_date
       summary
       cover_image_id
@@ -30,7 +31,7 @@ function BaseGameListPage() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-
+  console.log(data);
   return (
     <div className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">
       <div className="ml-4 hidden md:block">

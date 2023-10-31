@@ -62,6 +62,7 @@ type Review {
     getReviews(limit: Int): [Review!]!
     getGame(ID: ID!): Game!
     getGames(limit: Int, offset: Int): [Game!]!
+    getAvgRating(gameID: ID!): Float!
     getGenre(id: Int): Genre!
     getGenres(limit: Int): [Genre!]!
     getPlatform(id: Int): Platform!

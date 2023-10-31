@@ -89,6 +89,7 @@ export type Platform = {
 
 export type Query = {
   __typename?: 'Query';
+  getAvgRating: Scalars['Float']['output'];
   getGame: Game;
   getGames: Array<Game>;
   getGenre: Genre;
@@ -97,6 +98,11 @@ export type Query = {
   getPlatforms: Array<Platform>;
   getReview: Review;
   getReviews: Array<Review>;
+};
+
+
+export type QueryGetAvgRatingArgs = {
+  gameID: Scalars['ID']['input'];
 };
 
 
@@ -312,6 +318,7 @@ export type PlatformResolvers<ContextType = any, ParentType extends ResolversPar
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  getAvgRating?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QueryGetAvgRatingArgs, 'gameID'>>;
   getGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<QueryGetGameArgs, 'ID'>>;
   getGames?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType, Partial<QueryGetGamesArgs>>;
   getGenre?: Resolver<ResolversTypes['Genre'], ParentType, ContextType, Partial<QueryGetGenreArgs>>;

@@ -9,18 +9,27 @@ import {
 } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Game } from '@/gql/graphql';
+import { useQuery, gql } from '@apollo/client';
 
 interface GameCardProps {
   game: Game;
 }
 
+const GET_AVG_RATING = gql`
+  query GetAvgRating($gameID: ID!) {
+    getAvgRating(gameID: $gameID)
+  }
+`;
 export function GameCard({ game }: GameCardProps) {
-  const {
-    _id,
-    name,
-    aggregated_rating: rating,
-    cover_image_id: image_id,
-  } = game;
+  const { _id, name, aggregated_rating, cover_image_id: image_id } = game;
+  const { data } = useQuery(GET_AVG_RATING, {
+    variables: { gameID: _id },
+  });
+
+  const rating = data?.getAvgRating;
+  const metascore = aggregated_rating
+    ? Number(aggregated_rating.toFixed())
+    : undefined;
 
   return (
     <Card className="relative h-[320px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
@@ -38,13 +47,30 @@ export function GameCard({ game }: GameCardProps) {
         <Link to={`/game/${_id}`}>
           {' '}
           {/* Flytta link hit fordi SortBy trykker gjennom på mobil*/}
-          <CardTitle className="my-2 text-xl">{name}</CardTitle>
+          <CardTitle className="my-2 text-lg">{name}</CardTitle>
         </Link>
       </CardContent>
-      <CardFooter className="absolute bottom-0 left-0 mt-auto px-3 pb-2">
-        <div className="flex items-center">
-          <Star className="mr-1 h-4 text-yellow-400" fill="#facc15" />
-          <p>{rating ?? '-'}</p>
+      <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
+        <div className="relative flex h-full w-full items-center">
+          <div className="absolute left-0 flex items-center">
+            <Star className="mr-1 h-4 text-yellow-400" fill="#facc15" />
+            <p>{rating === 0 ? '-' : rating}</p>
+          </div>
+          <div className="absolute right-0 flex items-center gap-2">
+            <div
+              className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
+                metascore !== undefined
+                  ? metascore > 75
+                    ? 'bg-green-600'
+                    : metascore > 35
+                    ? 'bg-yellow-600'
+                    : 'bg-red-600'
+                  : 'bg-gray-600'
+              } h-7 w-7 px-1`}
+            >
+              {metascore?.toFixed() ?? 'N/A'}
+            </div>
+          </div>
         </div>
       </CardFooter>
     </Card>

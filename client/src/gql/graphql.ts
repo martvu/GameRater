@@ -98,6 +98,7 @@ export type Platform = {
 
 export type Query = {
   __typename?: 'Query';
+  getAvgRating: Scalars['Float']['output'];
   getGame: Game;
   getGames: Array<Game>;
   getGenre: Genre;
@@ -106,6 +107,10 @@ export type Query = {
   getPlatforms: Array<Platform>;
   getReview: Review;
   getReviews: Array<Review>;
+};
+
+export type QueryGetAvgRatingArgs = {
+  gameID: Scalars['ID']['input'];
 };
 
 export type QueryGetGameArgs = {
@@ -161,6 +166,20 @@ export type ReviewInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GetFiltersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFiltersQuery = {
+  __typename?: 'Query';
+  getPlatforms: Array<{ __typename?: 'Platform'; name?: string | null }>;
+  getGenres: Array<{ __typename?: 'Genre'; name?: string | null }>;
+};
+
+export type GetAvgRatingQueryVariables = Exact<{
+  gameID: Scalars['ID']['input'];
+}>;
+
+export type GetAvgRatingQuery = { __typename?: 'Query'; getAvgRating: number };
+
 export type GetGamePlatformsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -201,6 +220,7 @@ export type GetGameQueryVariables = Exact<{
 
 export type GetGameQuery = {
   __typename?: 'Query';
+  getAvgRating: number;
   getGame: {
     __typename?: 'Game';
     _id?: string | null;
@@ -208,6 +228,7 @@ export type GetGameQuery = {
     summary?: string | null;
     cover_image_id?: string | null;
     first_release_date?: string | null;
+    aggregated_rating?: number | null;
     platforms?: Array<{
       __typename?: 'Platform';
       name?: string | null;
@@ -237,6 +258,7 @@ export type GetGamesQuery = {
   __typename?: 'Query';
   getGames: Array<{
     __typename?: 'Game';
+    aggregated_rating?: number | null;
     first_release_date?: string | null;
     summary?: string | null;
     cover_image_id?: string | null;
@@ -245,6 +267,83 @@ export type GetGamesQuery = {
   }>;
 };
 
+export const GetFiltersDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetFilters' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getPlatforms' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getGenres' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetFiltersQuery, GetFiltersQueryVariables>;
+export const GetAvgRatingDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAvgRating' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'gameID' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getAvgRating' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'gameID' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'gameID' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetAvgRatingQuery, GetAvgRatingQueryVariables>;
 export const GetGamePlatformsDocument = {
   kind: 'Document',
   definitions: [
@@ -395,6 +494,20 @@ export const GetGameDocument = {
         selections: [
           {
             kind: 'Field',
+            name: { kind: 'Name', value: 'getAvgRating' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'gameID' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+          },
+          {
+            kind: 'Field',
             name: { kind: 'Name', value: 'getGame' },
             arguments: [
               {
@@ -419,6 +532,10 @@ export const GetGameDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'first_release_date' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregated_rating' },
                 },
                 {
                   kind: 'Field',
@@ -525,6 +642,10 @@ export const GetGamesDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregated_rating' },
+                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'first_release_date' },
