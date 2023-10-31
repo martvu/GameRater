@@ -13,58 +13,45 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n  query GetGamePlatforms($id: ID!) {\n    getGame(ID: $id) {\n      name\n      platforms {\n        id\n        name\n      }\n    }\n  }\n':
-    types.GetGamePlatformsDocument,
-  '\n  mutation CreateReview($reviewInput: ReviewInput!) {\n    createReview(reviewInput: $reviewInput) {\n      author\n      title\n      content\n      rating\n      platform\n    }\n  }\n':
-    types.CreateReviewDocument,
-  '\n  query GetGame($id: ID!, $limit: Int!) {\n    getGame(ID: $id) {\n      _id\n      name\n      summary\n      cover_image_id\n      first_release_date\n      platforms {\n        name\n      }\n      genres {\n        name\n      }\n      reviews(limit: $limit) {\n        _id\n        author\n        title\n        content\n        rating\n        platform\n        gameID\n      }\n    }\n  }\n':
-    types.GetGameDocument,
-  '\n  query GetGames($limit: Int) {\n    getGames(limit: $limit) {\n      first_release_date\n      summary\n      cover_image_id\n      name\n      _id\n    }\n  }\n':
-    types.GetGamesDocument,
+    "\n  query GetGamePlatforms($id: ID!) {\n    getGame(ID: $id) {\n      name\n      platforms {\n        id\n        name\n      }\n    }\n  }\n": types.GetGamePlatformsDocument,
+    "\n  mutation CreateReview($reviewInput: ReviewInput!) {\n    createReview(reviewInput: $reviewInput) {\n      author\n      title\n      content\n      rating\n      platform\n    }\n  }\n": types.CreateReviewDocument,
+    "\n  query GetGame($id: ID!, $limit: Int!) {\n    getGame(ID: $id) {\n      _id\n      name\n      summary\n      cover_image_id\n      first_release_date\n      platforms {\n        name\n      }\n      genres {\n        name\n      }\n      reviews(limit: $limit) {\n        _id\n        author\n        title\n        content\n        rating\n        platform\n        gameID\n      }\n    }\n  }\n": types.GetGameDocument,
+    "\n  query GetGames($limit: Int) {\n    getGames(limit: $limit) {\n      first_release_date\n      summary\n      cover_image_id\n      name\n      _id\n    }\n  }\n": types.GetGamesDocument,
 };
 
 /**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  *
  *
  * @example
  * ```ts
- * const query = graphql(`query GetUser($id: ID!) { user(id: $id) { name } }`);
+ * const query = gql(`query GetUser($id: ID!) { user(id: $id) { name } }`);
  * ```
  *
  * The query argument is unknown!
  * Please regenerate the types.
  */
-export function graphql(source: string): unknown;
+export function gql(source: string): unknown;
 
 /**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(
-  source: '\n  query GetGamePlatforms($id: ID!) {\n    getGame(ID: $id) {\n      name\n      platforms {\n        id\n        name\n      }\n    }\n  }\n'
-): (typeof documents)['\n  query GetGamePlatforms($id: ID!) {\n    getGame(ID: $id) {\n      name\n      platforms {\n        id\n        name\n      }\n    }\n  }\n'];
+export function gql(source: "\n  query GetGamePlatforms($id: ID!) {\n    getGame(ID: $id) {\n      name\n      platforms {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetGamePlatforms($id: ID!) {\n    getGame(ID: $id) {\n      name\n      platforms {\n        id\n        name\n      }\n    }\n  }\n"];
 /**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(
-  source: '\n  mutation CreateReview($reviewInput: ReviewInput!) {\n    createReview(reviewInput: $reviewInput) {\n      author\n      title\n      content\n      rating\n      platform\n    }\n  }\n'
-): (typeof documents)['\n  mutation CreateReview($reviewInput: ReviewInput!) {\n    createReview(reviewInput: $reviewInput) {\n      author\n      title\n      content\n      rating\n      platform\n    }\n  }\n'];
+export function gql(source: "\n  mutation CreateReview($reviewInput: ReviewInput!) {\n    createReview(reviewInput: $reviewInput) {\n      author\n      title\n      content\n      rating\n      platform\n    }\n  }\n"): (typeof documents)["\n  mutation CreateReview($reviewInput: ReviewInput!) {\n    createReview(reviewInput: $reviewInput) {\n      author\n      title\n      content\n      rating\n      platform\n    }\n  }\n"];
 /**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(
-  source: '\n  query GetGame($id: ID!, $limit: Int!) {\n    getGame(ID: $id) {\n      _id\n      name\n      summary\n      cover_image_id\n      first_release_date\n      platforms {\n        name\n      }\n      genres {\n        name\n      }\n      reviews(limit: $limit) {\n        _id\n        author\n        title\n        content\n        rating\n        platform\n        gameID\n      }\n    }\n  }\n'
-): (typeof documents)['\n  query GetGame($id: ID!, $limit: Int!) {\n    getGame(ID: $id) {\n      _id\n      name\n      summary\n      cover_image_id\n      first_release_date\n      platforms {\n        name\n      }\n      genres {\n        name\n      }\n      reviews(limit: $limit) {\n        _id\n        author\n        title\n        content\n        rating\n        platform\n        gameID\n      }\n    }\n  }\n'];
+export function gql(source: "\n  query GetGame($id: ID!, $limit: Int!) {\n    getGame(ID: $id) {\n      _id\n      name\n      summary\n      cover_image_id\n      first_release_date\n      platforms {\n        name\n      }\n      genres {\n        name\n      }\n      reviews(limit: $limit) {\n        _id\n        author\n        title\n        content\n        rating\n        platform\n        gameID\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetGame($id: ID!, $limit: Int!) {\n    getGame(ID: $id) {\n      _id\n      name\n      summary\n      cover_image_id\n      first_release_date\n      platforms {\n        name\n      }\n      genres {\n        name\n      }\n      reviews(limit: $limit) {\n        _id\n        author\n        title\n        content\n        rating\n        platform\n        gameID\n      }\n    }\n  }\n"];
 /**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(
-  source: '\n  query GetGames($limit: Int) {\n    getGames(limit: $limit) {\n      first_release_date\n      summary\n      cover_image_id\n      name\n      _id\n    }\n  }\n'
-): (typeof documents)['\n  query GetGames($limit: Int) {\n    getGames(limit: $limit) {\n      first_release_date\n      summary\n      cover_image_id\n      name\n      _id\n    }\n  }\n'];
+export function gql(source: "\n  query GetGames($limit: Int) {\n    getGames(limit: $limit) {\n      first_release_date\n      summary\n      cover_image_id\n      name\n      _id\n    }\n  }\n"): (typeof documents)["\n  query GetGames($limit: Int) {\n    getGames(limit: $limit) {\n      first_release_date\n      summary\n      cover_image_id\n      name\n      _id\n    }\n  }\n"];
 
-export function graphql(source: string) {
+export function gql(source: string) {
   return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
-  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;

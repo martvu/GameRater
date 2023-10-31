@@ -16,9 +16,9 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
-import { graphql } from '../gql/';
+import { gql } from '../gql/';
 
-const GET_GAME = graphql(`
+const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!) {
     getGame(ID: $id) {
       _id

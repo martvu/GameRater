@@ -7,9 +7,9 @@ import { useState } from 'react';
 import withLayout from '@/lib/withLayout';
 import { useQuery } from '@apollo/client';
 import { Game } from '../gql/graphql';
-import { graphql } from '../gql/';
+import { gql } from '../gql/';
 
-const GET_GAMES = graphql(`
+const GET_GAMES = gql(`
   query GetGames($limit: Int) {
     getGames(limit: $limit) {
       first_release_date

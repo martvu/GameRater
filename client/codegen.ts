@@ -6,6 +6,12 @@ const config: CodegenConfig = {
   generates: {
     './src/gql/': {
       preset: 'client',
+      plugins: [],
+      overwrite: true,
+      presetConfig: {
+        gqlTagName: 'gql',
+        fragmentMasking: false,
+      },
     },
   },
 };
