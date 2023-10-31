@@ -25,6 +25,8 @@ import {
 } from '@/components/ui/select';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/state/atoms';
 
 const GET_GAME = gql`
   query GetGame($id: ID!) {
@@ -71,6 +73,7 @@ const formSchema = z.object({
 });
 
 export function ReviewForm() {
+  const [user, setUser] = useRecoilState(userState);
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME, {
     variables: { id: id },
@@ -98,7 +101,7 @@ export function ReviewForm() {
             content: values.content,
             rating: values.rating,
             platform: values.platform,
-            user: '653b9f872b930cfcf48e9fdc',
+            user: user,
             gameID: id,
           },
         },
