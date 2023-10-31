@@ -73,7 +73,7 @@ const formSchema = z.object({
 export function ReviewForm() {
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME_PLATFORMS, {
-    variables: { id: id as string},
+    variables: { id: id as string },
   });
   const [createReview] = useMutation(CREATE_REVIEW);
   // 1. Define your form.
@@ -149,13 +149,14 @@ export function ReviewForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {data?.getGame?.platforms?.map(
-                      (platform) => (
-                        <SelectItem key={platform?.name} value={platform?.name as string}>
-                          {platform?.name}
-                        </SelectItem>
-                      )
-                    )}
+                    {data?.getGame?.platforms?.map(platform => (
+                      <SelectItem
+                        key={platform?.name}
+                        value={platform?.name as string}
+                      >
+                        {platform?.name}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>

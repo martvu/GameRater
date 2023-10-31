@@ -29,7 +29,7 @@ function BaseGameListPage() {
   });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
+  if (error) return <p>Error</p>;
 
   return (
     <div className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">

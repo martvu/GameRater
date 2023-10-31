@@ -44,6 +44,7 @@ const GET_GAME = gql(`
     }
   }
 `);
+
 type GameDetailParams = {
   id: string;
 };
@@ -61,7 +62,7 @@ const BaseGameDetailPage = () => {
   }
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
+  if (error) return <p>Error</p>;
 
   return (
     <div className="flex justify-center">
