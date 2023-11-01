@@ -72,8 +72,6 @@ export function SignIn() {
     }
     //Reset form
     form.reset();
-    //Refresh page
-    window.location.reload();
   }
 
   return (

@@ -48,6 +48,7 @@ const CREATE_REVIEW = gql`
       content
       rating
       platform
+      gameID
     }
   }
 `;
