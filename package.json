@@ -1,0 +1,16 @@
+{
+  "name": "gamerater",
+  "version": "1.0.0",
+  "description": "A platform to rate games",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
