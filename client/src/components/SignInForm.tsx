@@ -40,7 +40,7 @@ const formSchema = z.object({
 
 export function SignInForm() {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
-  const [user, setUser] = useRecoilState(userState);
+  const [setUser] = useRecoilState(userState);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({

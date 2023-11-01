@@ -1,0 +1,90 @@
+type User {
+  _id: String
+  username: String
+  favorites: [Game]
+  reviews: [Review]
+}
+
+type Review {
+  _id: String
+  user: String
+  title: String
+  content: String
+  rating: Int
+  platform: String
+  gameID: String
+}
+
+type Game {
+  _id: String
+  id: Int
+  name: String
+  summary: String
+  genres: [Genre]
+  platforms: [Platform]
+  first_release_date: String
+  cover_image_id: String
+  reviews(limit: Int): [Review]
+  aggregated_rating: Float
+}
+
+type Genre {
+  _id: String
+  id: Int
+  name: String
+  slug: String
+  created_at: Int
+  updated_at: Int
+  url: String
+  checksum: String
+}
+
+type Platform {
+  _id: String
+  id: Int
+  name: String
+  alternative_name: String
+  slug: String
+  category: Int
+  created_at: Int
+  updated_at: Int
+  url: String
+  platform_logo: Int
+  versions: [Int]
+  websites: [Int]
+  checksum: String
+}
+
+input ReviewInput {
+  user: String
+  title: String
+  content: String
+  rating: Int
+  platform: String
+  gameID: String
+}
+
+input UserInput {
+  username: String
+}
+
+type Query {
+  getReview(ID: ID!): Review!
+  getReviews(limit: Int): [Review!]!
+  getUser(username: String!): User!
+  getUsers(limit: Int): [User!]!
+  getGame(ID: ID!): Game!
+  getGames(limit: Int, offset: Int): [Game!]!
+  getAvgRating(gameID: ID!): Float!
+  getGenre(id: Int): Genre!
+  getGenres(limit: Int): [Genre!]!
+  getPlatform(id: Int): Platform!
+  getPlatforms(limit: Int): [Platform!]!
+}
+
+type Mutation {
+  createReview(reviewInput: ReviewInput): Review!
+  updateReview(ID: ID!, reviewInput: ReviewInput): String!
+  deleteReview(ID: ID!): String!
+  signInOrCreateUser(userInput: UserInput): User!
+}

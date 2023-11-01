@@ -13,17 +13,22 @@ import {
 import ReviewCard from '@/components/ReviewCard';
 import ReviewModal from '@/components/ReviewModal';
 import { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
+import { Genre, Platform, Review } from '@/gql/graphql';
+import { gql } from '../gql/';
+import Metascore from '@/components/Metascore';
 
-const GET_GAME = gql`
+const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!) {
+    getAvgRating(gameID: $id)
     getGame(ID: $id) {
       _id
       name
       summary
-      cover_image_id
-      first_release_date
+      imageId: cover_image_id
+      releaseDate: first_release_date
+      aggregatedRating: aggregated_rating
       platforms {
         name
       }
@@ -41,7 +46,8 @@ const GET_GAME = gql`
       }
     }
   }
-`;
+`);
+
 type GameDetailParams = {
   id: string;
 };
@@ -49,17 +55,21 @@ type GameDetailParams = {
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME, {
-    variables: { id: id, limit: 100 },
+    variables: { id: id as string, limit: 100 },
   });
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
+
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-
+  const rating = Number(data?.getAvgRating);
+  const numReviews = data?.getGame.reviews?.length;
+  console.log(data.getGame.aggregatedRating);
+  console.log(data.getGame.name);
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
+  if (error) return <p>Error</p>;
 
   return (
     <div className="flex justify-center">
@@ -80,14 +90,14 @@ const BaseGameDetailPage = () => {
             <CardHeader className="p-0">
               <div className="flex w-full cursor-default p-0">
                 <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.cover_image_id}.jpg`}
-                  alt={data.getGame.name}
+                  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
+                  alt={data.getGame.name as string}
                   className="h-full max-h-[300px] w-full object-cover"
                   loading="lazy"
                 />
               </div>
               <div className="mt-2 flex items-center justify-center text-yellow-400">
-                <Rating rating={3} numRatings={41} />
+                <Rating rating={rating} numRatings={numReviews} />
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
@@ -102,29 +112,41 @@ const BaseGameDetailPage = () => {
                 {data.getGame.name}
               </CardTitle>
               <CardContent className="py-2">
-                <div className="flex flex-col justify-start">
+                <div className="flex flex-col justify-start gap-1">
+                  <div className="flex gap-2">
+                    <p>Metascore: </p>
+                    <Metascore
+                      metascore={
+                        data.getGame.aggregatedRating
+                          ? data.getGame.aggregatedRating
+                          : undefined
+                      }
+                    />
+                  </div>
                   <div className="flex">
                     <p>Release Date: 12.12.2017 </p>
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Platforms:</p>
-                    {data.getGame.platforms?.map(platform => (
-                      <li
-                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={platform.name}
-                      >
-                        {platform.name}
-                      </li>
-                    ))}
+                    {data.getGame.platforms?.map(
+                      (platform: Platform | null) => (
+                        <li
+                          className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                          key={platform?.name}
+                        >
+                          {platform?.name}
+                        </li>
+                      )
+                    )}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Genres:</p>
-                    {data.getGame.genres?.map(genre => (
+                    {data.getGame.genres?.map((genre: Genre | null) => (
                       <li
                         className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={genre.name}
+                        key={genre?.name}
                       >
-                        {genre.name}
+                        {genre?.name}
                       </li>
                     ))}
                   </div>
@@ -141,15 +163,15 @@ const BaseGameDetailPage = () => {
           <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
             <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
               <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-              {data.getGame.reviews.length !== 0 ? (
+              {data.getGame.reviews?.length !== 0 ? (
                 data.getGame.reviews
-                  .slice(
+                  ?.slice(
                     (currentPage - 1) * reviewsPerPage,
                     currentPage * reviewsPerPage
                   )
-                  .map(review => (
-                    <div key={review._id} className="my-2">
-                      <ReviewCard review={review} />
+                  .map((review: Review | null) => (
+                    <div key={review?._id} className="my-2">
+                      <ReviewCard review={review as Review} />
                     </div>
                   ))
               ) : (
@@ -164,7 +186,7 @@ const BaseGameDetailPage = () => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           itemsPerPage={reviewsPerPage}
-          data={data.getGame.reviews}
+          data={data.getGame.reviews as Review[]}
         />
       </div>
     </div>

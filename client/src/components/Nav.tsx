@@ -6,7 +6,7 @@ import { ArrowLeft, Search } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SignInModal from './SignInModal';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
 
 export default function Nav() {
@@ -15,6 +15,7 @@ export default function Nav() {
   
   function signOutUser()  {
    setUser({ _id: '', username: '', favorites: [], reviews: [] })
+   localStorage.removeItem('user')
   }
   return (
     <nav
