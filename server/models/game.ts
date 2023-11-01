@@ -11,6 +11,7 @@ interface IGame {
   cover_image_id: String;
   reviews?: String[];
   aggregated_rating?: Number;
+  aggregated_rating_count?: Number;
 }
 
 const GameSchema = new Schema<IGame>(
@@ -25,12 +26,10 @@ const GameSchema = new Schema<IGame>(
     cover_image_id: { type: String, required: true },
     reviews: { type: [String], required: false },
     aggregated_rating: { type: Number, required: false },
+    aggregated_rating_count: { type: Number, required: false },
   },
-  {
-    collection: "igdb", // Specify the collection name explicitly
-  }
 );
 
-const Game = model<IGame>("igdb", GameSchema);
+const Game = model<IGame>("games", GameSchema);
 
 export default Game;

@@ -26,6 +26,7 @@ type Game {
   cover_image_id: String
   reviews(limit: Int): [Review]
   aggregated_rating: Float
+  aggregated_rating_count: Int
 }
 
 type Genre {

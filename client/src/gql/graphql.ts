@@ -20,6 +20,7 @@ export type Game = {
   __typename?: 'Game';
   _id?: Maybe<Scalars['String']['output']>;
   aggregated_rating?: Maybe<Scalars['Float']['output']>;
+  aggregated_rating_count?: Maybe<Scalars['Int']['output']>;
   cover_image_id?: Maybe<Scalars['String']['output']>;
   first_release_date?: Maybe<Scalars['String']['output']>;
   genres?: Maybe<Array<Maybe<Genre>>>;

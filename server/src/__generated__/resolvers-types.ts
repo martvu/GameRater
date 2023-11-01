@@ -20,6 +20,7 @@ export type Game = {
   __typename?: 'Game';
   _id?: Maybe<Scalars['String']['output']>;
   aggregated_rating?: Maybe<Scalars['Float']['output']>;
+  aggregated_rating_count?: Maybe<Scalars['Int']['output']>;
   cover_image_id?: Maybe<Scalars['String']['output']>;
   first_release_date?: Maybe<Scalars['String']['output']>;
   genres?: Maybe<Array<Maybe<Genre>>>;
@@ -305,6 +306,7 @@ export type ResolversParentTypes = ResolversObject<{
 export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   aggregated_rating?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  aggregated_rating_count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   cover_image_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   first_release_date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   genres?: Resolver<Maybe<Array<Maybe<ResolversTypes['Genre']>>>, ParentType, ContextType>;
