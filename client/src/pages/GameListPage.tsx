@@ -5,19 +5,22 @@ import SortBy from '@/components/SortBy';
 import Pagination from '@/components/Pagination';
 import { useState } from 'react';
 import withLayout from '@/lib/withLayout';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { Game } from '../gql/graphql';
+import { gql } from '../gql/';
 
-const GET_GAMES = gql`
+const GET_GAMES = gql(`
   query GetGames($limit: Int) {
     getGames(limit: $limit) {
+      _id
+      aggregated_rating
       first_release_date
       summary
       cover_image_id
       name
-      _id
     }
   }
-`;
+`);
 
 function BaseGameListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,8 +30,8 @@ function BaseGameListPage() {
   });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
-
+  if (error) return <p>Error</p>;
+  console.log(data);
   return (
     <div className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">
       <div className="ml-4 hidden md:block">
@@ -44,20 +47,14 @@ function BaseGameListPage() {
         </div>
         <div className="text-muted-foreground"></div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-          {data.getGames
+          {data?.getGames
             .slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
-            .map(game => (
+            .map((game: Game) => (
               <div
                 className="m-1 flex justify-center md:justify-normal"
                 key={game.name}
               >
-                <GameCard
-                  id={game._id} // or some  unique identifier
-                  title={game.name}
-                  summary={game.summary}
-                  image_id={game.cover_image_id}
-                  rating={4.5}
-                />
+                <GameCard game={game} />
               </div>
             ))}
         </div>
@@ -66,7 +63,7 @@ function BaseGameListPage() {
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             itemsPerPage={gamesPerPage}
-            data={data.getGames}
+            data={data?.getGames as Game[]}
           />
         </div>
       </div>

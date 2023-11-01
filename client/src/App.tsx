@@ -1,7 +1,7 @@
 import './index.css';
 import { ThemeProvider } from './components/theme/ThemeProvider';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import GameListPage from './pages/gameListPage';
+import GameListPage from './pages/GameListPage';
 import GameDetailPage from './pages/GameDetailPage';
 import { ReviewForm } from './components/ReviewForm';
 function App() {

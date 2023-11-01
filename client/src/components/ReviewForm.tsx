@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-
 import {
   Form,
   FormControl,
@@ -23,11 +22,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { gql } from '../gql/';
 
-const GET_GAME = gql`
-  query GetGame($id: ID!) {
+const GET_GAME_PLATFORMS = gql(`
+  query GetGamePlatforms($id: ID!) {
     getGame(ID: $id) {
       name
       platforms {
@@ -36,9 +36,9 @@ const GET_GAME = gql`
       }
     }
   }
-`;
+`);
 
-const CREATE_REVIEW = gql`
+const CREATE_REVIEW = gql(`
   mutation CreateReview($reviewInput: ReviewInput!) {
     createReview(reviewInput: $reviewInput) {
       author
@@ -48,7 +48,7 @@ const CREATE_REVIEW = gql`
       platform
     }
   }
-`;
+`);
 
 type GameDetailParams = {
   id: string;
@@ -72,8 +72,8 @@ const formSchema = z.object({
 
 export function ReviewForm() {
   const { id } = useParams<GameDetailParams>();
-  const { loading, error, data } = useQuery(GET_GAME, {
-    variables: { id: id },
+  const { loading, error, data } = useQuery(GET_GAME_PLATFORMS, {
+    variables: { id: id as string },
   });
   const [createReview] = useMutation(CREATE_REVIEW);
   // 1. Define your form.
@@ -149,9 +149,12 @@ export function ReviewForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {data.getGame.platforms.map(platform => (
-                      <SelectItem key={platform.name} value={platform.name}>
-                        {platform.name}
+                    {data?.getGame?.platforms?.map(platform => (
+                      <SelectItem
+                        key={platform?.name}
+                        value={platform?.name as string}
+                      >
+                        {platform?.name}
                       </SelectItem>
                     ))}
                   </SelectGroup>

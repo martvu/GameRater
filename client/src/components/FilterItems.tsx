@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { Checkbox } from './ui/checkbox';
 import { Button } from './ui/button';
-import { useQuery, gql } from '@apollo/client';
-
-const GET_FILTERS = gql`
-  query GetPlatforms {
+import { useQuery } from '@apollo/client';
+import { gql } from '../gql/';
+const GET_FILTERS = gql(`
+  query GetFilters {
     getPlatforms {
       name
     }
@@ -13,7 +13,7 @@ const GET_FILTERS = gql`
       name
     }
   }
-`;
+`);
 
 interface FilterItemsProps {
   filterType: string;
@@ -26,7 +26,7 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
   const filterData =
-    filterType === 'platforms' ? data.getPlatforms : data.getGenres;
+    filterType === 'platforms' ? data?.getPlatforms : data?.getGenres;
   const showMore = () => {
     setNumItemsToShow(numItemsToShow + 5);
   };
@@ -35,7 +35,7 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
     <div>
       <h2 className="my-2 text-left font-semibold"></h2>
       <div className="ml-1 flex flex-col">
-        {filterData.slice(0, numItemsToShow).map(item => (
+        {filterData?.slice(0, numItemsToShow).map(item => (
           <div className="my-1 flex items-center space-x-2" key={item.name}>
             <Checkbox id={`filter-item-${item.name}`} />
             <label
@@ -47,7 +47,7 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
           </div>
         ))}
       </div>
-      {numItemsToShow < data.getPlatforms.length ? (
+      {data?.getPlatforms && numItemsToShow < data.getPlatforms.length ? (
         <Button
           variant={'text'}
           onClick={showMore}
