@@ -226,9 +226,9 @@ export type GetGameQuery = {
     _id?: string | null;
     name?: string | null;
     summary?: string | null;
-    cover_image_id?: string | null;
-    first_release_date?: string | null;
-    aggregated_rating?: number | null;
+    imageId?: string | null;
+    releaseDate?: string | null;
+    aggregatedRating?: number | null;
     platforms?: Array<{
       __typename?: 'Platform';
       name?: string | null;
@@ -258,12 +258,12 @@ export type GetGamesQuery = {
   __typename?: 'Query';
   getGames: Array<{
     __typename?: 'Game';
+    _id?: string | null;
     aggregated_rating?: number | null;
     first_release_date?: string | null;
     summary?: string | null;
     cover_image_id?: string | null;
     name?: string | null;
-    _id?: string | null;
   }>;
 };
 
@@ -527,14 +527,17 @@ export const GetGameDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'summary' } },
                 {
                   kind: 'Field',
+                  alias: { kind: 'Name', value: 'imageId' },
                   name: { kind: 'Name', value: 'cover_image_id' },
                 },
                 {
                   kind: 'Field',
+                  alias: { kind: 'Name', value: 'releaseDate' },
                   name: { kind: 'Name', value: 'first_release_date' },
                 },
                 {
                   kind: 'Field',
+                  alias: { kind: 'Name', value: 'aggregatedRating' },
                   name: { kind: 'Name', value: 'aggregated_rating' },
                 },
                 {
@@ -642,6 +645,7 @@ export const GetGamesDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'aggregated_rating' },
@@ -656,7 +660,6 @@ export const GetGamesDocument = {
                   name: { kind: 'Name', value: 'cover_image_id' },
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
               ],
             },
           },

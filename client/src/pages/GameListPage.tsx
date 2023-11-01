@@ -12,12 +12,12 @@ import { gql } from '../gql/';
 const GET_GAMES = gql(`
   query GetGames($limit: Int) {
     getGames(limit: $limit) {
+      _id
       aggregated_rating
       first_release_date
       summary
       cover_image_id
       name
-      _id
     }
   }
 `);

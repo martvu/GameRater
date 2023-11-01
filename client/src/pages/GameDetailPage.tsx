@@ -26,9 +26,9 @@ const GET_GAME = gql(`
       _id
       name
       summary
-      cover_image_id
-      first_release_date
-      aggregated_rating
+      imageId: cover_image_id
+      releaseDate: first_release_date
+      aggregatedRating: aggregated_rating
       platforms {
         name
       }
@@ -66,7 +66,7 @@ const BaseGameDetailPage = () => {
   }
   const rating = Number(data?.getAvgRating);
   const numReviews = data?.getGame.reviews?.length;
-  console.log(data.getGame.aggregated_rating);
+  console.log(data.getGame.aggregatedRating);
   console.log(data.getGame.name);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -90,7 +90,7 @@ const BaseGameDetailPage = () => {
             <CardHeader className="p-0">
               <div className="flex w-full cursor-default p-0">
                 <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.cover_image_id}.jpg`}
+                  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
                   alt={data.getGame.name as string}
                   className="h-full max-h-[300px] w-full object-cover"
                   loading="lazy"
@@ -117,8 +117,8 @@ const BaseGameDetailPage = () => {
                     <p>Metascore: </p>
                     <Metascore
                       metascore={
-                        data.getGame.aggregated_rating
-                          ? data.getGame.aggregated_rating
+                        data.getGame.aggregatedRating
+                          ? data.getGame.aggregatedRating
                           : undefined
                       }
                     />

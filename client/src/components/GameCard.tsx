@@ -22,9 +22,14 @@ const GET_AVG_RATING = gql`
   }
 `;
 export function GameCard({ game }: GameCardProps) {
-  const { _id, name, aggregated_rating, cover_image_id: image_id } = game;
+  const {
+    _id: id,
+    name,
+    aggregated_rating: aggregatedRating,
+    cover_image_id: imageId,
+  } = game;
   const { data } = useQuery(GET_AVG_RATING, {
-    variables: { gameID: _id },
+    variables: { gameID: id },
   });
 
   const rating = data?.getAvgRating;
@@ -32,16 +37,16 @@ export function GameCard({ game }: GameCardProps) {
     <Card className="relative h-[320px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
       <CardHeader className="h-[220px] overflow-hidden">
         <div className="h-full w-full duration-200 hover:scale-110">
-          {image_id && (
+          {imageId && (
             <img
-              src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${image_id}.jpg`}
+              src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`}
               alt={name as string}
             />
           )}
         </div>
       </CardHeader>
       <CardContent className="px-3 text-start">
-        <Link to={`/game/${_id}`}>
+        <Link to={`/game/${id}`}>
           {' '}
           {/* Flytta link hit fordi SortBy trykker gjennom på mobil*/}
           <CardTitle className="my-2 text-lg">{name}</CardTitle>
@@ -55,7 +60,7 @@ export function GameCard({ game }: GameCardProps) {
           </div>
           <div className="absolute right-0 flex items-center gap-2">
             <Metascore
-              metascore={aggregated_rating ? aggregated_rating : undefined}
+              metascore={aggregatedRating ? aggregatedRating : undefined}
             />
           </div>
         </div>
