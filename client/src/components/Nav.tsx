@@ -12,10 +12,10 @@ import { userState } from '@/state/atoms';
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   const [user, setUser] = useRecoilState(userState);
-  
-  function signOutUser()  {
-   setUser({ _id: '', username: '', favorites: [], reviews: [] })
-   localStorage.removeItem('user')
+
+  function signOutUser() {
+    setUser({ _id: '', username: '', favorites: [], reviews: [] });
+    localStorage.removeItem('user');
   }
   return (
     <nav

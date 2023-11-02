@@ -49,7 +49,9 @@ export function GameCard({ game }: GameCardProps) {
         <Link to={`/game/${id}`}>
           {' '}
           {/* Flytta link hit fordi SortBy trykker gjennom på mobil*/}
-          <CardTitle className="my-2 text-lg">{name}</CardTitle>
+          <CardTitle className="my-2 line-clamp-2 max-w-[240px] text-lg">
+            {name}
+          </CardTitle>
         </Link>
       </CardContent>
       <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
