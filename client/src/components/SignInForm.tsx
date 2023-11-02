@@ -40,7 +40,7 @@ const formSchema = z.object({
 
 export function SignInForm() {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
-  const [setUser] = useRecoilState(userState);
+  const setUser = useRecoilState(userState)[1];
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,7 +51,6 @@ export function SignInForm() {
   });
 
   // 2. Define a submit handler.
- 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     //Handle submit
     try {

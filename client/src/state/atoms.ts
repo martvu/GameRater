@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { User } from '../gql/graphql';
 
 const user = localStorage.getItem('user');
 const defaultUser = {
@@ -8,7 +9,7 @@ const defaultUser = {
   reviews: [],
 };
 
-export const userState = atom({
+export const userState = atom<User>({
   key: 'userState',
   default: user ? JSON.parse(user) : defaultUser,
 });
