@@ -52,7 +52,7 @@ export type GameReviewsArgs = {
 export type Games = {
   __typename?: 'Games';
   count: Scalars['Int']['output'];
-  games: Array<Game>;
+  games?: Maybe<Array<Maybe<Game>>>;
 };
 
 export type Genre = {
@@ -189,6 +189,12 @@ export type ReviewInput = {
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Reviews = {
+  __typename?: 'Reviews';
+  count: Scalars['Int']['output'];
+  reviews?: Maybe<Array<Maybe<Review>>>;
+};
+
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['String']['output']>;
@@ -199,12 +205,6 @@ export type User = {
 
 export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Reviews = {
-  __typename?: 'Reviews';
-  count: Scalars['Int']['output'];
-  reviews?: Maybe<Array<Maybe<Review>>>;
 };
 
 export type GetFiltersQueryVariables = Exact<{ [key: string]: never }>;
@@ -301,16 +301,20 @@ export type GetGameQuery = {
       __typename?: 'Genre';
       name?: string | null;
     } | null> | null;
-    reviews?: Array<{
-      __typename?: 'Review';
-      _id?: string | null;
-      author?: string | null;
-      title?: string | null;
-      content?: string | null;
-      rating?: number | null;
-      platform?: string | null;
-      gameID?: string | null;
-    } | null> | null;
+    reviews?: {
+      __typename?: 'Reviews';
+      count: number;
+      reviews?: Array<{
+        __typename?: 'Review';
+        _id?: string | null;
+        user?: string | null;
+        title?: string | null;
+        content?: string | null;
+        rating?: number | null;
+        platform?: string | null;
+        gameID?: string | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -324,7 +328,7 @@ export type GetGamesQuery = {
   getGames: {
     __typename?: 'Games';
     count: number;
-    games: Array<{
+    games?: Array<{
       __typename?: 'Game';
       _id?: string | null;
       aggregated_rating?: number | null;
@@ -332,7 +336,7 @@ export type GetGamesQuery = {
       summary?: string | null;
       cover_image_id?: string | null;
       name?: string | null;
-    }>;
+    } | null> | null;
   };
 };
 
@@ -737,29 +741,44 @@ export const GetGameDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'count' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'author' },
+                        name: { kind: 'Name', value: 'reviews' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: '_id' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'user' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'title' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'content' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'rating' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'platform' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'gameID' },
+                            },
+                          ],
+                        },
                       },
-                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'content' },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'rating' },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'platform' },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'gameID' },
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'user' } },
                     ],
                   },
                 },

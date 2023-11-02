@@ -39,7 +39,7 @@ const GET_GAME = gql(`
         count 
         reviews {
           _id
-          author
+          user
           title
           content
           rating
@@ -188,7 +188,7 @@ const BaseGameDetailPage = () => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={
-            Math.round((data.getGame.reviews?.count || 1) / reviewsPerPage) || 1
+            Math.ceil((data.getGame.reviews?.count || 1) / reviewsPerPage) || 1
           }
         />
       </div>

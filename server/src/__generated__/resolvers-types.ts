@@ -40,7 +40,7 @@ export type GameReviewsArgs = {
 export type Games = {
   __typename?: 'Games';
   count: Scalars['Int']['output'];
-  games: Array<Game>;
+  games?: Maybe<Array<Maybe<Game>>>;
 };
 
 export type Genre = {
@@ -192,6 +192,12 @@ export type ReviewInput = {
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Reviews = {
+  __typename?: 'Reviews';
+  count: Scalars['Int']['output'];
+  reviews?: Maybe<Array<Maybe<Review>>>;
+};
+
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['String']['output']>;
@@ -202,12 +208,6 @@ export type User = {
 
 export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Reviews = {
-  __typename?: 'Reviews';
-  count: Scalars['Int']['output'];
-  reviews?: Maybe<Array<Maybe<Review>>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -337,7 +337,7 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type GamesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Games'] = ResolversParentTypes['Games']> = ResolversObject<{
   count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
+  games?: Resolver<Maybe<Array<Maybe<ResolversTypes['Game']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -402,23 +402,17 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type ReviewsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reviews'] = ResolversParentTypes['Reviews']> = ResolversObject<{
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  reviews?: Resolver<Maybe<Array<Maybe<ResolversTypes['Review']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   favorites?: Resolver<Maybe<Array<Maybe<ResolversTypes['Game']>>>, ParentType, ContextType>;
   reviews?: Resolver<Maybe<Array<Maybe<ResolversTypes['Review']>>>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type ReviewsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reviews'] = ResolversParentTypes['Reviews']> = ResolversObject<{
-  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  reviews?: Resolver<Maybe<Array<Maybe<ResolversTypes['Review']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type ReviewsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reviews'] = ResolversParentTypes['Reviews']> = ResolversObject<{
-  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  reviews?: Resolver<Maybe<Array<Maybe<ResolversTypes['Review']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -430,7 +424,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Platform?: PlatformResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Review?: ReviewResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
   Reviews?: ReviewsResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 }>;
 

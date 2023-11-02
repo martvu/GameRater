@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Generated files
-__generated__
+#**/__generated__/
