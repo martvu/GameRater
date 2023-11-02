@@ -11,7 +11,7 @@ export const resolvers: Resolvers = {
     },
     getGames: async (_, { limit, offset }) => {
       const games = await Game.find().skip(offset).limit(limit);
-      return games.map(game => game.toObject());
+      return {games: games.map(game => game.toObject()), count: await Game.countDocuments()};
     },
     getReview: async (_, { ID }) => {
       const review = await Review.findById(ID);
@@ -35,7 +35,7 @@ export const resolvers: Resolvers = {
       const genre = await Genre.findOne( { id: id });
       return genre.toObject();
     },
-    
+
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
       return genres.map(genre => genre.toObject());

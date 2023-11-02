@@ -57,11 +57,16 @@ type Review {
     gameID: String
   }
 
+type Games {
+    games: [Game!]!
+    count: Int!
+  }
+
   type Query {
     getReview(ID: ID!): Review!
     getReviews(limit: Int): [Review!]!
     getGame(ID: ID!): Game!
-    getGames(limit: Int, offset: Int): [Game!]!
+    getGames(limit: Int, offset: Int): Games!
     getAvgRating(gameID: ID!): Float!
     getGenre(id: Int): Genre!
     getGenres(limit: Int): [Genre!]!

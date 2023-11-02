@@ -35,6 +35,12 @@ export type GameReviewsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Games = {
+  __typename?: 'Games';
+  count: Scalars['Int']['output'];
+  games: Array<Game>;
+};
+
 export type Genre = {
   __typename?: 'Genre';
   _id?: Maybe<Scalars['String']['output']>;
@@ -91,7 +97,7 @@ export type Query = {
   __typename?: 'Query';
   getAvgRating: Scalars['Float']['output'];
   getGame: Game;
-  getGames: Array<Game>;
+  getGames: Games;
   getGenre: Genre;
   getGenres: Array<Genre>;
   getPlatform: Platform;
@@ -241,6 +247,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Game: ResolverTypeWrapper<Game>;
+  Games: ResolverTypeWrapper<Games>;
   Genre: ResolverTypeWrapper<Genre>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -257,6 +264,7 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
   Float: Scalars['Float']['output'];
   Game: Game;
+  Games: Games;
   Genre: Genre;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
@@ -279,6 +287,12 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   platforms?: Resolver<Maybe<Array<Maybe<ResolversTypes['Platform']>>>, ParentType, ContextType>;
   reviews?: Resolver<Maybe<Array<Maybe<ResolversTypes['Review']>>>, ParentType, ContextType, Partial<GameReviewsArgs>>;
   summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GamesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Games'] = ResolversParentTypes['Games']> = ResolversObject<{
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -320,7 +334,7 @@ export type PlatformResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   getAvgRating?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QueryGetAvgRatingArgs, 'gameID'>>;
   getGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<QueryGetGameArgs, 'ID'>>;
-  getGames?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType, Partial<QueryGetGamesArgs>>;
+  getGames?: Resolver<ResolversTypes['Games'], ParentType, ContextType, Partial<QueryGetGamesArgs>>;
   getGenre?: Resolver<ResolversTypes['Genre'], ParentType, ContextType, Partial<QueryGetGenreArgs>>;
   getGenres?: Resolver<Array<ResolversTypes['Genre']>, ParentType, ContextType, Partial<QueryGetGenresArgs>>;
   getPlatform?: Resolver<ResolversTypes['Platform'], ParentType, ContextType, Partial<QueryGetPlatformArgs>>;
@@ -342,6 +356,7 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Game?: GameResolvers<ContextType>;
+  Games?: GamesResolvers<ContextType>;
   Genre?: GenreResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Platform?: PlatformResolvers<ContextType>;
