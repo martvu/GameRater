@@ -15,6 +15,11 @@ type Review {
   gameID: String
 }
 
+type Reviews {
+  reviews: [Review]
+  count: Int!
+}
+
 type Game {
   _id: String
   id: Int
@@ -24,7 +29,7 @@ type Game {
   platforms: [Platform]
   first_release_date: String
   cover_image_id: String
-  reviews(limit: Int): [Review]
+  reviews(limit: Int, offset: Int): Reviews
   aggregated_rating: Float
   aggregated_rating_count: Int
 }

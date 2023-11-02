@@ -20,7 +20,7 @@ import { gql } from '../gql/';
 import Metascore from '@/components/Metascore';
 
 const GET_GAME = gql(`
-  query GetGame($id: ID!, $limit: Int!) {
+  query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
     getAvgRating(gameID: $id)
     getGame(ID: $id) {
       _id
@@ -35,14 +35,17 @@ const GET_GAME = gql(`
       genres {
         name
       }
-      reviews(limit: $limit) {
-        _id
-        title
-        content
-        rating
-        platform
-        gameID
-        user
+      reviews(limit: $limit, offset: $offset) {
+        count 
+        reviews {
+          _id
+          author
+          title
+          content
+          rating
+          platform
+          gameID
+        }
       }
     }
   }
@@ -54,20 +57,21 @@ type GameDetailParams = {
 
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
-  const { loading, error, data } = useQuery(GET_GAME, {
-    variables: { id: id as string, limit: 100 },
-  });
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
+  const { loading, error, data } = useQuery(GET_GAME, {
+    variables: {
+      id: id as string,
+      limit: reviewsPerPage,
+      offset: (currentPage - 1) * reviewsPerPage,
+    },
+  });
 
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
   const rating = Number(data?.getAvgRating);
-  const numReviews = data?.getGame.reviews?.length;
-  console.log(data.getGame.aggregatedRating);
-  console.log(data.getGame.name);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
@@ -97,7 +101,10 @@ const BaseGameDetailPage = () => {
                 />
               </div>
               <div className="mt-2 flex items-center justify-center text-yellow-400">
-                <Rating rating={rating} numRatings={numReviews} />
+                <Rating
+                  rating={rating}
+                  numRatings={data.getGame.reviews?.count || 0}
+                />
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
@@ -163,17 +170,12 @@ const BaseGameDetailPage = () => {
           <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
             <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
               <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-              {data.getGame.reviews?.length !== 0 ? (
-                data.getGame.reviews
-                  ?.slice(
-                    (currentPage - 1) * reviewsPerPage,
-                    currentPage * reviewsPerPage
-                  )
-                  .map((review: Review | null) => (
-                    <div key={review?._id} className="my-2">
-                      <ReviewCard review={review as Review} />
-                    </div>
-                  ))
+              {data.getGame.reviews?.reviews?.length !== 0 ? (
+                data.getGame.reviews?.reviews?.map((review: Review | null) => (
+                  <div key={review?._id} className="my-2">
+                    <ReviewCard review={review as Review} />
+                  </div>
+                ))
               ) : (
                 <div className="flex flex-col items-center justify-center">
                   <p className="text-foreground">No reviews yet</p>
@@ -185,8 +187,9 @@ const BaseGameDetailPage = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          itemsPerPage={reviewsPerPage}
-          data={data.getGame.reviews as Review[]}
+          pages={
+            Math.round((data.getGame.reviews?.count || 1) / reviewsPerPage) || 1
+          }
         />
       </div>
     </div>

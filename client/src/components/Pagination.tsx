@@ -1,66 +1,122 @@
-import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface PaginationProps {
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
-  itemsPerPage: number;
-  data: unknown[];
+  pages: number;
 }
 export default function Pagination({
   currentPage,
   setCurrentPage,
-  itemsPerPage,
-  data,
+  pages,
 }: PaginationProps) {
-  const totalResults = data.length;
-  const totalPages = Math.ceil(totalResults / itemsPerPage);
+  interface PageButtonProps {
+    pageNumber: number;
+  }
 
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+  const PageButton = ({ pageNumber }: PageButtonProps) => {
+    const isActive = currentPage === pageNumber;
+    return (
+      <Button
+        variant={isActive ? 'outline' : 'ghost'}
+        className="border-primary"
+        size="page"
+        onClick={() => setCurrentPage(pageNumber)}
+        aria-label={`go to page ${pageNumber}`}
+      >
+        {pageNumber}
+      </Button>
+    );
   };
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  return (
-    <nav role="navigation" aria-label="Pagination Navigation">
-      <ul className="flex list-none items-center justify-center text-sm md:gap-1">
-        <li>
+  if (pages > 1)
+    return (
+      <nav aria-label="pagination">
+        <div className="flex flex-wrap justify-center">
           <Button
-            variant="ghost"
-            onClick={prevPage}
-            aria-label="Go to Previous Page"
+            size="page"
             disabled={currentPage === 1}
-          >
-            <span className="order-2">Prev</span>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-        </li>
-
-        <li>
-          <span className="mx-2">{`${
-            totalPages === 0 ? '0' : currentPage
-          } / ${totalPages}`}</span>
-        </li>
-
-        <li>
-          <Button
+            onClick={() => setCurrentPage(currentPage - 1)}
             variant="ghost"
-            onClick={nextPage}
-            aria-label="Go to Next Page"
-            disabled={currentPage === totalPages || totalPages === 0}
+            aria-label="go to previous page"
           >
-            <span>Next</span>
-            <ChevronRight className="h-4 w-4" />
+            «
           </Button>
-        </li>
-      </ul>
-    </nav>
-  );
+          {pages <= 7 ? (
+            Array<number>(pages)
+              .fill(1)
+              .map((_, index) => {
+                return <PageButton pageNumber={index + 1} key={index} />;
+              })
+          ) : currentPage <= 4 ? (
+            <>
+              <PageButton pageNumber={1} />
+              <PageButton pageNumber={2} />
+              <PageButton pageNumber={3} />
+              <PageButton pageNumber={4} />
+              <PageButton pageNumber={5} />
+              <Button
+                size="page"
+                variant="ghost"
+                disabled
+                aria-label="more pages"
+              >
+                ...
+              </Button>
+              <PageButton pageNumber={pages} />
+            </>
+          ) : currentPage >= pages - 3 ? (
+            <>
+              <PageButton pageNumber={1} />
+              <Button
+                size="page"
+                variant="ghost"
+                disabled
+                aria-label="more pages"
+              >
+                ...
+              </Button>
+              <PageButton pageNumber={pages - 4} />
+              <PageButton pageNumber={pages - 3} />
+              <PageButton pageNumber={pages - 2} />
+              <PageButton pageNumber={pages - 1} />
+              <PageButton pageNumber={pages} />
+            </>
+          ) : (
+            <>
+              <PageButton pageNumber={1} />
+              <Button
+                size="page"
+                variant="ghost"
+                disabled
+                aria-label="more pages"
+              >
+                ...
+              </Button>
+              <PageButton pageNumber={currentPage - 1} />
+              <PageButton pageNumber={currentPage} />
+              <PageButton pageNumber={currentPage + 1} />
+              <Button
+                size="page"
+                variant="ghost"
+                disabled
+                aria-label="more pages"
+              >
+                ...
+              </Button>
+              <PageButton pageNumber={pages} />
+            </>
+          )}
+          <Button
+            size="page"
+            disabled={currentPage === pages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            variant="ghost"
+            aria-label="go to next page"
+          >
+            »
+          </Button>
+        </div>
+      </nav>
+    );
 }

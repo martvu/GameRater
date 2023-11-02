@@ -27,7 +27,7 @@ export const resolvers: Resolvers = {
     },
     getGames: async (_, { limit, offset }) => {
       const games = await Game.find().skip(offset).limit(limit);
-      return games.map(game => game.toObject());
+      return {games: games.map(game => game.toObject()), count: await Game.countDocuments()};
     },
     getAvgRating: async (_, { gameID }) => {
       const reviews = await Review.find({ gameID: gameID });
@@ -42,7 +42,6 @@ export const resolvers: Resolvers = {
       const genre = await Genre.findOne( { id: id });
       return genre.toObject();
     },
-    
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
       return genres.map(genre => genre.toObject());
@@ -84,6 +83,7 @@ export const resolvers: Resolvers = {
     },
     deleteReview: async(_, { ID }) =>{
       await Review.deleteOne({ _id: ID });
+      await Game.updateOne({}, { $pull: { reviews: ID } });
       return ID;
     },
     signInOrCreateUser: async(_, { userInput: { username } }) => {
@@ -105,9 +105,10 @@ export const resolvers: Resolvers = {
     platforms: async(game) => {
       return await Platform.find({ id: { $in: game.platforms } });
     },
-    reviews: async(game, { limit }: { limit: number }) => {
-      const reviews = await Review.find({ _id: { $in: game.reviews} }).limit(limit);
-      return reviews.map(review => ({ ...review.toObject(), _id: review._id.toString() }));
+    reviews: async(game, { limit, offset }: { limit: number, offset: number }) => {
+      const reviews = await Review.find({ _id: { $in: game.reviews} }).skip(offset).limit(limit);
+      const count = await Review.countDocuments({ _id: { $in: game.reviews} });
+      return {reviews: reviews.map(review => ({ ...review.toObject(), _id: review._id.toString() })), count: count};
     }
   },
   User: {
