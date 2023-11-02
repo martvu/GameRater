@@ -59,7 +59,7 @@ function BaseGameListPage() {
             </div>
           ))}
         </div>
-        <div className="mt-2 flex w-full justify-center">
+        <div className="my-2 flex w-full justify-center">
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
