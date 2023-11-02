@@ -10,23 +10,26 @@ import { Game } from '../gql/graphql';
 import { gql } from '../gql/';
 
 const GET_GAMES = gql(`
-  query GetGames($limit: Int) {
-    getGames(limit: $limit) {
-      _id
-      aggregated_rating
-      first_release_date
-      summary
-      cover_image_id
-      name
+  query GetGames($limit: Int, $offset: Int) {
+    getGames(limit: $limit, offset: $offset) {
+      count
+      games{
+        _id
+        aggregated_rating
+        first_release_date
+        summary
+        cover_image_id
+        name
+      }
     }
   }
 `);
 
 function BaseGameListPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const gamesPerPage = 12;
+  const limit = 24;
   const { loading, error, data } = useQuery(GET_GAMES, {
-    variables: { limit: 100 },
+    variables: { limit, offset: limit * (currentPage - 1) },
   });
 
   if (loading) return <p>Loading...</p>;
@@ -47,23 +50,20 @@ function BaseGameListPage() {
         </div>
         <div className="text-muted-foreground"></div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-          {data?.getGames
-            .slice((currentPage - 1) * gamesPerPage, currentPage * gamesPerPage)
-            .map((game: Game) => (
-              <div
-                className="m-1 flex justify-center md:justify-normal"
-                key={game.name}
-              >
-                <GameCard game={game} />
-              </div>
-            ))}
+          {data?.getGames.games.map((game: Game) => (
+            <div
+              className="m-1 flex justify-center md:justify-normal"
+              key={game.name}
+            >
+              <GameCard game={game} />
+            </div>
+          ))}
         </div>
-        <div className="mt-2 flex w-full justify-center">
+        <div className="my-2 flex w-full justify-center">
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            itemsPerPage={gamesPerPage}
-            data={data?.getGames as Game[]}
+            pages={Math.round((data?.getGames.count || 1) / limit) || 1}
           />
         </div>
       </div>
