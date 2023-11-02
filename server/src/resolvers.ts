@@ -77,6 +77,7 @@ export const resolvers: Resolvers = {
     },
     deleteReview: async(_, { ID }) =>{
       await Review.deleteOne({ _id: ID });
+      await Game.updateOne({}, { $pull: { reviews: ID } });
       return ID;
     },
   },
@@ -87,9 +88,10 @@ export const resolvers: Resolvers = {
     platforms: async(game) => {
       return await Platform.find({ id: { $in: game.platforms } });
     },
-    reviews: async(game, { limit }: { limit: number }) => {
-      const reviews = await Review.find({ _id: { $in: game.reviews} }).limit(limit);
-      return reviews.map(review => ({ ...review.toObject(), _id: review._id.toString() }));
+    reviews: async(game, { limit, offset }: { limit: number, offset: number }) => {
+      const reviews = await Review.find({ _id: { $in: game.reviews} }).skip(offset).limit(limit);
+      const count = await Review.countDocuments({ _id: { $in: game.reviews} });
+      return {reviews: reviews.map(review => ({ ...review.toObject(), _id: review._id.toString() })), count: count};
     }
   },
 };

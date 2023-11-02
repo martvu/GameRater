@@ -50,15 +50,14 @@ function BaseGameListPage() {
         </div>
         <div className="text-muted-foreground"></div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-          {data?.getGames.games
-            .map((game: Game) => (
-              <div
-                className="m-1 flex justify-center md:justify-normal"
-                key={game.name}
-              >
-                <GameCard game={game} />
-              </div>
-            ))}
+          {data?.getGames.games.map((game: Game) => (
+            <div
+              className="m-1 flex justify-center md:justify-normal"
+              key={game.name}
+            >
+              <GameCard game={game} />
+            </div>
+          ))}
         </div>
         <div className="mt-2 flex w-full justify-center">
           <Pagination

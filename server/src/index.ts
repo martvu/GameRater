@@ -1,10 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { connect } from "mongoose";
-import Review from "../models/review.js";
-import Game from "../models/game.js";
-import Genre from "../models/genre.js";
-import Platform from "../models/platform.js";
 import { readFileSync } from "fs";
 import { resolvers } from "./resolvers.js";
 
