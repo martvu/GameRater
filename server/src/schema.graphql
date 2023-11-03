@@ -79,13 +79,18 @@ type Games {
   count: Int!
 }
 
+input GameSortInput {
+  field: String
+  order: String
+}
+
 type Query {
   getReview(ID: ID!): Review!
   getReviews(limit: Int): [Review!]!
   getUser(username: String!): User!
   getUsers(limit: Int): [User!]!
   getGame(ID: ID!): Game!
-  getGames(limit: Int, offset: Int): Games!
+  getGames(limit: Int, offset: Int, sortBy: GameSortInput): Games!
   getAvgRating(gameID: ID!): Float!
   getGenre(id: Int): Genre!
   getGenres(limit: Int): [Genre!]!

@@ -61,7 +61,7 @@ export default function Nav() {
         >
           <Search size={24} />
         </Button>
-        <SignInOutButton/>
+        <SignInOutButton />
         <ModeToggle />
       </div>
     </nav>
