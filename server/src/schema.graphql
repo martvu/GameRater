@@ -1,6 +1,13 @@
+type User {
+  _id: String
+  username: String
+  favorites: [Game]
+  reviews: [Review]
+}
+
 type Review {
   _id: String
-  author: String
+  user: String
   title: String
   content: String
   rating: Int
@@ -24,6 +31,7 @@ type Game {
   cover_image_id: String
   reviews(limit: Int, offset: Int): Reviews
   aggregated_rating: Float
+  aggregated_rating_count: Int
 }
 
 type Genre {
@@ -54,7 +62,7 @@ type Platform {
 }
 
 input ReviewInput {
-  author: String
+  user: String
   title: String
   content: String
   rating: Int
@@ -62,14 +70,20 @@ input ReviewInput {
   gameID: String
 }
 
+input UserInput {
+  username: String
+}
+
 type Games {
-  games: [Game!]!
+  games: [Game]
   count: Int!
 }
 
 type Query {
   getReview(ID: ID!): Review!
   getReviews(limit: Int): [Review!]!
+  getUser(username: String!): User!
+  getUsers(limit: Int): [User!]!
   getGame(ID: ID!): Game!
   getGames(limit: Int, offset: Int): Games!
   getAvgRating(gameID: ID!): Float!
@@ -83,4 +97,5 @@ type Mutation {
   createReview(reviewInput: ReviewInput): Review!
   updateReview(ID: ID!, reviewInput: ReviewInput): String!
   deleteReview(ID: ID!): String!
+  signInOrCreateUser(userInput: UserInput): User!
 }

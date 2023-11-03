@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
@@ -60,6 +61,7 @@ export default function Nav() {
         >
           <Search size={24} />
         </Button>
+        <SignInOutButton/>
         <ModeToggle />
       </div>
     </nav>

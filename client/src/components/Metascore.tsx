@@ -12,7 +12,7 @@ export default function Metascore({ metascore }: MetascoreProps) {
             : metascore > 35
             ? 'bg-yellow-600'
             : 'bg-red-600'
-          : 'bg-gray-600'
+          : 'hidden'
       } h-7 w-7 px-1`}
     >
       {metascore?.toFixed() ?? 'N/A'}

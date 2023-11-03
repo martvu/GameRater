@@ -24,6 +24,8 @@ import {
 } from '@/components/ui/select';
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/state/atoms';
 import { gql } from '../gql/';
 
 const GET_GAME_PLATFORMS = gql(`
@@ -41,11 +43,12 @@ const GET_GAME_PLATFORMS = gql(`
 const CREATE_REVIEW = gql(`
   mutation CreateReview($reviewInput: ReviewInput!) {
     createReview(reviewInput: $reviewInput) {
-      author
+      user
       title
       content
       rating
       platform
+      gameID
     }
   }
 `);
@@ -56,7 +59,7 @@ type GameDetailParams = {
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Title must be at least 2 characters.',
   }),
   content: z.string().max(1000).min(4),
   rating: z
@@ -71,6 +74,7 @@ const formSchema = z.object({
 });
 
 export function ReviewForm() {
+  const [user] = useRecoilState(userState);
   const { id } = useParams<GameDetailParams>();
   const { loading, error, data } = useQuery(GET_GAME_PLATFORMS, {
     variables: { id: id as string },
@@ -98,7 +102,7 @@ export function ReviewForm() {
             content: values.content,
             rating: values.rating,
             platform: values.platform,
-            author: 'me',
+            user: user.username,
             gameID: id,
           },
         },

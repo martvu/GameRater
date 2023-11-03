@@ -12,6 +12,7 @@ export default function ReviewCard(review: ReviewCardProps) {
       <CardHeader>
         <div className="flex flex-col">
           <p className="text-lg font-semibold">{review.review.title}</p>
+          <p className="text-sm text-muted-foreground">{review.review.user}</p>
           <p className="text-sm text-muted-foreground">
             {review.review.platform}
           </p>

@@ -50,12 +50,12 @@ function BaseGameListPage() {
         </div>
         <div className="text-muted-foreground"></div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
-          {data?.getGames.games.map((game: Game) => (
+          {data?.getGames.games?.map((game: Game | null | undefined) => (
             <div
               className="m-1 flex justify-center md:justify-normal"
-              key={game.name}
+              key={game?._id}
             >
-              <GameCard game={game} />
+              {game && <GameCard game={game} />}
             </div>
           ))}
         </div>
@@ -63,7 +63,7 @@ function BaseGameListPage() {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            pages={Math.round((data?.getGames.count || 1) / limit) || 1}
+            pages={Math.ceil((data?.getGames.count || 1) / limit) || 1}
           />
         </div>
       </div>
