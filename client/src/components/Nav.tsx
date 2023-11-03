@@ -5,18 +5,10 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SignInModal from './SignInModal';
-import { useRecoilState } from 'recoil';
-import { userState } from '@/state/atoms';
+import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
-  const [user, setUser] = useRecoilState(userState);
-
-  function signOutUser() {
-    setUser({ _id: '', username: '', favorites: [], reviews: [] });
-    localStorage.removeItem('user');
-  }
   return (
     <nav
       className={`relative flex h-20 w-full items-center gap-10 px-2 md:px-4 lg:gap-20 lg:px-8 ${
@@ -69,14 +61,7 @@ export default function Nav() {
         >
           <Search size={24} />
         </Button>
-        {user.username === '' ? (
-          <SignInModal />
-        ) : (
-          <div className="flex items-center gap-3">
-            <h1>{user.username}</h1>
-            <Button onClick={signOutUser}>Sign Out</Button>
-          </div>
-        )}
+        <SignInOutButton/>
         <ModeToggle />
       </div>
     </nav>

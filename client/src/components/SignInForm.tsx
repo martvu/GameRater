@@ -42,7 +42,6 @@ export function SignInForm() {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const setUser = useRecoilState(userState)[1];
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,9 +49,7 @@ export function SignInForm() {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    //Handle submit
     try {
       const { data } = await signInOrCreateUser({
         variables: {
@@ -68,10 +65,7 @@ export function SignInForm() {
       console.log('Could not create user');
       console.log(error);
     }
-    //Reset form
     form.reset();
-    //Refresh page
-    //window.location.reload();
   }
 
   return (
@@ -98,5 +92,3 @@ export function SignInForm() {
     </Form>
   );
 }
-
-//
