@@ -2,59 +2,55 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectLabel,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { sortByState } from '@/state/sortByState';
+import { useRecoilState } from 'recoil';
 
-type SortByProps = {
-  onSort: (field: string, order: string) => void;
-};
+export default function SortBy() {
+  const setSortBy = useRecoilState(sortByState)[1];
 
-export default function SortBy({ onSort }: SortByProps) {
-  function handleSortSelection(sortBy: string) {
-    if (sortBy === 'release date asc') {
-      onSort('first_release_date', 'asc');
+  function handleSortSelection(value: string) {
+    if (value === 'Release Date Desc') {
+      setSortBy({ field: 'first_release_date', order: 'desc' });
     }
-    if (sortBy === 'release date desc') {
-      onSort('first_release_date', 'desc');
+    if (value === 'Release Date Asc') {
+      setSortBy({ field: 'first_release_date', order: 'asc' });
     }
-    if (sortBy === 'name') {
-      onSort('name', 'asc');
+    if (value === 'Name') {
+      setSortBy({ field: 'name', order: 'asc' });
     }
-    if (sortBy === 'metascore') {
-      onSort('aggregated_rating', 'desc');
+    if (value === 'Metascore') {
+      setSortBy({ field: 'aggregated_rating', order: 'desc' });
     }
-    if (sortBy === 'user_rating') {
-      onSort('user_rating', 'desc');
+    if (value === 'User Rating') {
+      setSortBy({ field: 'user_rating', order: 'desc' });
     }
     console.log('Hello sort');
     // Store the selected value in localStorage
-    localStorage.setItem('selectedSortBy', sortBy);
+    localStorage.setItem('selectedSortBy', value);
   }
 
   return (
-    <Select onValueChange={sortBy => handleSortSelection(sortBy)}>
+    <Select onValueChange={value => handleSortSelection(value)}>
       <SelectTrigger className="w-[150px]">
-        <SelectValue placeholder="Sort By" />
+        <SelectValue placeholder="Sort By">
+          {localStorage.getItem('selectedSortBy') === ''
+            ? 'Sort By'
+            : localStorage.getItem('selectedSortBy')}
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem className="cursor-pointer" value="release date asc">
-            Release Date (ASC)
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="release date desc">
-            Release Date (DESC)
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="name">
-            Title
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="metascore">
-            Metascore
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="user_rating">
-            User Rating
-          </SelectItem>
+          <SelectLabel>Sort By</SelectLabel>
+          <SelectItem value="Release Date Desc">Release Date Desc</SelectItem>
+          <SelectItem value="Release Date Asc">Release Date Asc</SelectItem>
+          <SelectItem value="Name">Name</SelectItem>
+          <SelectItem value="Metascore">Metascore</SelectItem>
+          <SelectItem value="User Rating">User Rating</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

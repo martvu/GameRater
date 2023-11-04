@@ -3,16 +3,8 @@ import Filters from '@/components/Filters';
 import SortBy from '@/components/SortBy';
 import GamesList from '@/components/GamesList';
 import withLayout from '@/lib/withLayout';
-import { useRecoilState } from 'recoil';
-import { sortByState } from '../state/sortByState';
 
 function BaseGameListPage() {
-  const setSortBy = useRecoilState(sortByState)[1];
-  // Function to handle sorting
-  const handleSort = (field: string, order: string) => {
-    setSortBy({ field, order });
-  };
-
   return (
     <div className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">
       <div className="ml-4 hidden md:block">
@@ -23,7 +15,7 @@ function BaseGameListPage() {
           <div className="block md:hidden">
             <FilterModal />
           </div>
-          <SortBy onSort={handleSort} />
+          <SortBy />
         </div>
         <div className="text-muted-foreground"></div>
         <GamesList />

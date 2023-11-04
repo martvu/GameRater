@@ -31,7 +31,7 @@ export const resolvers: Resolvers = {
       // Apply sorting if sortBy is provided
       if (sortBy) {
         const { field, order } = sortBy;
-        query = query.sort({ [field]: order === 'asc' ? 1 : -1 });
+        query = query.collation({ locale: 'en', strength: 1}).sort({ [field]: order === 'asc' ? 1 : -1 });
       }
     
       const count = await Game.countDocuments();
