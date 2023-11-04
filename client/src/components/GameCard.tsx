@@ -9,18 +9,20 @@ import {
 } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Game } from '@/gql/graphql';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { gql } from '../gql/';
 import Metascore from './Metascore';
 
 interface GameCardProps {
   game: Game;
 }
 
-const GET_AVG_RATING = gql`
+const GET_AVG_RATING = gql(`
   query GetAvgRating($gameID: ID!) {
     getAvgRating(gameID: $gameID)
   }
-`;
+`);
+
 export function GameCard({ game }: GameCardProps) {
   const {
     _id: id,
@@ -29,27 +31,24 @@ export function GameCard({ game }: GameCardProps) {
     cover_image_id: imageId,
   } = game;
   const { data } = useQuery(GET_AVG_RATING, {
-    variables: { gameID: id },
+    variables: { gameID: id as string },
   });
 
   const rating = data?.getAvgRating;
+  const coverImageUrl = imageId
+    ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
+    : ('' as string);
+
   return (
     <Card className="relative h-[320px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
       <CardHeader className="h-[220px] overflow-hidden">
         <div className="h-full w-full duration-200 hover:scale-110">
-          {imageId && (
-            <img
-              src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`}
-              alt={name as string}
-            />
-          )}
+          {imageId && <img src={coverImageUrl} alt={name as string} />}
         </div>
       </CardHeader>
       <CardContent className="px-3 text-start">
-        <Link to={`/game/${id}`}>
-          {' '}
-          {/* Flytta link hit fordi SortBy trykker gjennom på mobil*/}
-          <CardTitle className="my-2 line-clamp-2 max-w-[240px] text-lg">
+        <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
+          <CardTitle className="my-2 line-clamp-2 max-w-[240px] text-lg hover:opacity-80">
             {name}
           </CardTitle>
         </Link>
