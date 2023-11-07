@@ -27,16 +27,18 @@ export const resolvers: Resolvers = {
     },
     getGames: async (_, { limit, offset, sortBy }) => {
       let query = Game.find();
-    
+
       // Apply sorting if sortBy is provided
       if (sortBy) {
         const { field, order } = sortBy;
-        query = query.collation({ locale: 'en', strength: 1}).sort({ [field]: order === 'asc' ? 1 : -1 });
+        query = query
+          .collation({ locale: "en", strength: 1 })
+          .sort({ [field]: order === "asc" ? 1 : -1 });
       }
-    
+
       const count = await Game.countDocuments();
       const games = await query.skip(offset).limit(limit);
-    
+
       return { games: games.map((game) => game.toObject()), count };
     },
     getAvgRating: async (_, { gameID }) => {
@@ -85,7 +87,7 @@ export const resolvers: Resolvers = {
 
       // Calculate the average rating of reviews
       const reviews = await Review.find({ gameID: gameID });
-      
+
       // Calculate the new average rating
       let totalRating = reviews.reduce(
         (acc, review) => acc + review.rating.valueOf(),
@@ -99,7 +101,7 @@ export const resolvers: Resolvers = {
         $addToSet: { reviews: review._id },
         //Update the games user_rating
         user_rating: newAverageRating,
-      }); 
+      });
       return { ...review.toObject(), _id: review._id.toString() };
     },
     updateReview: async (
@@ -127,6 +129,30 @@ export const resolvers: Resolvers = {
         }).save();
         return newUser.toObject();
       }
+    },
+    addFavorites: async (_, { username, gameID }) => {
+      const user = await User.findOne({ username });
+      if(!user) {
+        throw new Error('User not found');
+      }
+
+      if(!user.favorites.includes(gameID)) {
+        user.favorites.push(gameID);
+        await user.save();
+      }
+      return user.toObject();
+    },
+    removeFavorites: async (_, { username, gameID }) => {
+      const user = await User.findOne({ username });
+      if(!user) {
+        throw new Error('User not found');
+      }
+
+      if(user.favorites.includes(gameID)) {
+        user.favorites = user.favorites.filter(id => id !== gameID);
+        await user.save();
+      }
+      return user.toObject();
     },
   },
   Game: {

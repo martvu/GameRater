@@ -11,7 +11,7 @@ export default function Rating({ rating, numRatings }: RatingProps) {
   return (
     <>
       {/*        <!-- Component: Basic Rating --> */}
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center">
         {/*          <!-- Rating --> */}
         <StarRating rating={rating} disabled={true} />
         {/*          <!-- Helper text --> */}
@@ -61,12 +61,12 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
               disabled={disabled}
             >
               <span className="text-2xl font-light">
-                {index <= rating ? '★' : '☆'} {/* Filled star or empty star */}{' '}
+                {index <= ratingValue ? '★' : '☆'} {/* Filled star or empty star */}{' '}
               </span>
             </button>
           );
         })}
-        <span className="ml-2 text-muted-foreground">{rating}/5</span>
+        <span className="ml-2 text-muted-foreground">{ratingValue}/5</span>
       </div>
     </>
   );

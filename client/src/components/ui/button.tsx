@@ -39,6 +39,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         styled: 'bg-accent text-accent-foreground hover:bg-accent/90',
         text: 'justify-start hover:text-gray-400',
+        none: '',
       },
       size: {
         default: 'h-10 px-4 py-2',
@@ -46,6 +47,7 @@ const buttonVariants = cva(
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
         page: 'h-12 w-10',
+        round: 'h-10 w-10 rounded-full',
       },
     },
     defaultVariants: {

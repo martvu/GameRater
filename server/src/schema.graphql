@@ -1,6 +1,6 @@
 type User {
   _id: String
-  username: String
+  username: String 
   favorites: [Game]
   reviews: [Review]
 }
@@ -103,4 +103,6 @@ type Mutation {
   updateReview(ID: ID!, reviewInput: ReviewInput): String!
   deleteReview(ID: ID!): String!
   signInOrCreateUser(userInput: UserInput): User!
+  addFavorites(username: String!, gameID: String!): User!
+  removeFavorites(username: String!, gameID: String!): User!
 }

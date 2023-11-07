@@ -18,6 +18,7 @@ import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
 import { gql } from '../gql/';
 import Metascore from '@/components/Metascore';
+import FavoriteHeart from '@/components/FavoriteHeart';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
@@ -88,15 +89,15 @@ const BaseGameDetailPage = () => {
             <ArrowLeft />
           </Button>
         </Link>
-        <div className="grid gap-2 lg:grid-cols-[auto,1fr]">
+        <div className="grid gap-2 md:grid-cols-[auto,1fr]">
           {/* Image, ratings, Write Review */}
-          <Card className="overflow-hidden p-0 md:min-w-[400px] lg:min-w-[500px]">
+          <Card className="overflow-hidden p-0">
             <CardHeader className="p-0">
               <div className="flex w-full cursor-default p-0">
                 <img
                   src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
                   alt={data.getGame.name as string}
-                  className="h-full max-h-[300px] w-full object-cover"
+                  className="h-full max-h-[374px] w-full object-contain"
                   loading="lazy"
                 />
               </div>
@@ -118,6 +119,7 @@ const BaseGameDetailPage = () => {
               <CardTitle className=" text-4xl font-semibold">
                 {data.getGame.name}
               </CardTitle>
+              <FavoriteHeart game={data.getGame} />
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start gap-1">
                   <div className="flex gap-2">
