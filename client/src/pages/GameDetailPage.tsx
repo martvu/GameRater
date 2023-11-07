@@ -27,7 +27,7 @@ const GET_GAME = gql(`
       name
       summary
       imageId: cover_image_id
-      releaseDate: first_release_date
+      first_release_date
       aggregatedRating: aggregated_rating
       platforms {
         name
@@ -36,7 +36,7 @@ const GET_GAME = gql(`
         name
       }
       reviews(limit: $limit, offset: $offset) {
-        count 
+        count
         reviews {
           _id
           user
@@ -74,6 +74,17 @@ const BaseGameDetailPage = () => {
   const rating = Number(data?.getAvgRating);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
+
+  const formatDate = (unixTimestampStr: string): string => {
+    const date = new Date(Number(unixTimestampStr) * 1000);
+    return date.toLocaleDateString('de-DE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  };
+
+  const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
     <div className="flex justify-center">
@@ -131,7 +142,7 @@ const BaseGameDetailPage = () => {
                     />
                   </div>
                   <div className="flex">
-                    <p>Release Date: 12.12.2017 </p>
+                    <p>Release Date: {releaseDate}</p>
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Platforms:</p>

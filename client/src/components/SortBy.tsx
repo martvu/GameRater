@@ -35,9 +35,12 @@ export default function SortBy() {
   }
 
   return (
-    <Select onValueChange={value => handleSortSelection(value)} value={localStorage.getItem('selectedSortBy') || ''}>
+    <Select
+      onValueChange={value => handleSortSelection(value)}
+      value={localStorage.getItem('selectedSortBy') || ''}
+    >
       <SelectTrigger className="w-[150px]">
-        <SelectValue placeholder="Sort By"/>
+        <SelectValue placeholder="Sort By" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
