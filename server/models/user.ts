@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IUser {
   username: String;
@@ -12,6 +12,6 @@ const UserSchema = new Schema<IUser>({
   reviews: { type: [String], required: true },
 });
 
-const User = model<IUser>("users", UserSchema);
+const User = model<IUser>('users', UserSchema);
 
 export default User;

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IReview {
   id?: String;
@@ -20,6 +20,6 @@ const ReviewSchema = new Schema<IReview>({
   gameID: { type: String, require: true },
 });
 
-const Review = model<IReview>("reviews", ReviewSchema);
+const Review = model<IReview>('reviews', ReviewSchema);
 
 export default Review;

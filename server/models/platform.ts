@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IPlatform {
   _id: Schema.Types.ObjectId;
@@ -17,7 +17,7 @@ interface IPlatform {
 }
 
 const PlatformSchema = new Schema<IPlatform>({
-  _id: { type: Schema.Types.ObjectId, required: true},
+  _id: { type: Schema.Types.ObjectId, required: true },
   id: { type: Number, required: true },
   name: { type: String, required: true },
   alternative_name: { type: String, required: true },
@@ -30,8 +30,8 @@ const PlatformSchema = new Schema<IPlatform>({
   versions: { type: [Number], required: true },
   websites: { type: [Number], required: true },
   checksum: { type: String, required: true },
-  });
+});
 
-const Platform = model<IPlatform>("platforms", PlatformSchema);
+const Platform = model<IPlatform>('platforms', PlatformSchema);
 
 export default Platform;
