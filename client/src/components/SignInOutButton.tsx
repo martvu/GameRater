@@ -1,4 +1,4 @@
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms.ts';
 import SignInModal from '@/components/SignInModal.tsx';
 import { Button } from '@/components/ui/button.tsx';
