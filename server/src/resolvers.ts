@@ -1,33 +1,33 @@
-import Game from '../models/game.js';
-import Genre from '../models/genre.js';
-import Platform from '../models/platform.js';
-import Review from '../models/review.js';
-import User from '../models/user.js';
-import { Resolvers } from './__generated__/resolvers-types';
+import Game from "../models/game.js";
+import Genre from "../models/genre.js";
+import Platform from "../models/platform.js";
+import Review from "../models/review.js";
+import User from "../models/user.js";
+import { Resolvers } from "./__generated__/resolvers-types";
 
 export const resolvers: Resolvers = {
   Query: {
     getUser: async (_, { username }) => {
-      return await User.findOne( { username: username });
+      return await User.findOne({ username: username });
     },
     getUsers: async (_, { limit }) => {
       const users = await User.find().limit(limit);
-      return users.map(user => user.toObject());
+      return users.map((user) => user.toObject());
     },
     getReview: async (_, { ID }) => {
       const review = await Review.findById(ID);
-        return review.toObject();
+      return review.toObject();
     },
     getReviews: async (_, { limit }) => {
       const reviews = await Review.find().limit(limit);
-      return reviews.map(review => review.toObject());
+      return reviews.map((review) => review.toObject());
     },
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
     },
     getGames: async (_, { limit, offset }) => {
       const games = await Game.find().skip(offset).limit(limit);
-      return {games: games.map(game => game.toObject()), count: await Game.countDocuments()};
+      return { games: games.map(game => game.toObject()), count: await Game.countDocuments() };
     },
     getAvgRating: async (_, { gameID }) => {
       const reviews = await Review.find({ gameID: gameID });
@@ -39,7 +39,7 @@ export const resolvers: Resolvers = {
       return averageRating;
     },
     getGenre: async (_, { id }) => {
-      const genre = await Genre.findOne( { id: id });
+      const genre = await Genre.findOne({ id: id });
       return genre.toObject();
     },
     getGenres: async (_, { limit }) => {
@@ -47,12 +47,27 @@ export const resolvers: Resolvers = {
       return genres.map(genre => genre.toObject());
     },
     getPlatform: async (_, { id }) => {
-      const platform = await Platform.findOne( { id: id });
+      const platform = await Platform.findOne({ id: id });
       return platform.toObject();
     },
     getPlatforms: async (_, { limit }) => {
       const platforms = await Platform.find().limit(limit);
       return platforms.map(platform => platform.toObject());
+    },
+    search: async (_, { query, limit, offset }) => {
+      try {
+        const regex = new RegExp(query, 'i'); // 'i' for case-insensitive
+        const games = await Game.find({ name: { $regex: regex } }).skip(offset).limit(limit);
+        const count = await Game.countDocuments({ name: { $regex: regex } });
+
+        return {
+          games: games.map(game => game.toObject()),
+          count
+        };
+      } catch (error) {
+        console.error(error);
+        throw new Error('Error executing search query');
+      }
     },
   },
   Mutation: {
@@ -119,4 +134,5 @@ export const resolvers: Resolvers = {
       return await Review.find({ _id: { $in: user.reviews } });
     },
   },
+
 };

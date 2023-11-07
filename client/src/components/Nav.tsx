@@ -3,12 +3,20 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();  // Prevent the default form submission behavior
+
+    navigate(query === '' || query === null ? "/" : `/search/${encodeURIComponent(query)}`);  // Navigate to the new URL
+  };
   return (
     <nav
       className={`relative flex h-20 w-full items-center gap-10 px-2 md:px-4 lg:gap-20 lg:px-8 ${
@@ -45,9 +53,17 @@ export default function Nav() {
             <ArrowLeft />
           </Button>
         )}
-        <Input type="search" placeholder="Search" />
-        <Button type="submit">Search</Button>
-      </div>
+        <form onSubmit={handleSubmit} className="flex gap-5">
+          <Input
+            type="search"
+            placeholder="Search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <Button type="submit">
+            Search
+          </Button>
+        </form></div>
       <div
         className={`flex-shrink-0 md:gap-2 ${
           showFullWidthSearch ? 'hidden md:flex' : 'flex'
