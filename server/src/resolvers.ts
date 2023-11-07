@@ -1,9 +1,9 @@
-import Game from "../models/game.js";
-import Genre from "../models/genre.js";
-import Platform from "../models/platform.js";
-import Review from "../models/review.js";
-import User from "../models/user.js";
-import { Resolvers } from "./__generated__/resolvers-types";
+import Game from '../models/game.js';
+import Genre from '../models/genre.js';
+import Platform from '../models/platform.js';
+import Review from '../models/review.js';
+import User from '../models/user.js';
+import { Resolvers } from './__generated__/resolvers-types';
 
 export const resolvers: Resolvers = {
   Query: {
@@ -12,7 +12,7 @@ export const resolvers: Resolvers = {
     },
     getUsers: async (_, { limit }) => {
       const users = await User.find().limit(limit);
-      return users.map((user) => user.toObject());
+      return users.map(user => user.toObject());
     },
     getReview: async (_, { ID }) => {
       const review = await Review.findById(ID);
@@ -20,24 +20,26 @@ export const resolvers: Resolvers = {
     },
     getReviews: async (_, { limit }) => {
       const reviews = await Review.find().limit(limit);
-      return reviews.map((review) => review.toObject());
+      return reviews.map(review => review.toObject());
     },
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
     },
     getGames: async (_, { limit, offset, sortBy }) => {
       let query = Game.find();
-    
+
       // Apply sorting if sortBy is provided
       if (sortBy) {
         const { field, order } = sortBy;
-        query = query.collation({ locale: 'en', strength: 1}).sort({ [field]: order === 'asc' ? 1 : -1 });
+        query = query
+          .collation({ locale: 'en', strength: 1 })
+          .sort({ [field]: order === 'asc' ? 1 : -1 });
       }
-    
+
       const count = await Game.countDocuments();
       const games = await query.skip(offset).limit(limit);
-    
-      return { games: games.map((game) => game.toObject()), count };
+
+      return { games: games.map(game => game.toObject()), count };
     },
     getAvgRating: async (_, { gameID }) => {
       const reviews = await Review.find({ gameID: gameID });
@@ -57,7 +59,7 @@ export const resolvers: Resolvers = {
     },
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
-      return genres.map((genre) => genre.toObject());
+      return genres.map(genre => genre.toObject());
     },
     getPlatform: async (_, { id }) => {
       const platform = await Platform.findOne({ id: id });
@@ -65,7 +67,7 @@ export const resolvers: Resolvers = {
     },
     getPlatforms: async (_, { limit }) => {
       const platforms = await Platform.find().limit(limit);
-      return platforms.map((platform) => platform.toObject());
+      return platforms.map(platform => platform.toObject());
     },
   },
   Mutation: {
@@ -85,7 +87,7 @@ export const resolvers: Resolvers = {
 
       // Calculate the average rating of reviews
       const reviews = await Review.find({ gameID: gameID });
-      
+
       // Calculate the new average rating
       let totalRating = reviews.reduce(
         (acc, review) => acc + review.rating.valueOf(),
@@ -99,7 +101,7 @@ export const resolvers: Resolvers = {
         $addToSet: { reviews: review._id },
         //Update the games user_rating
         user_rating: newAverageRating,
-      }); 
+      });
       return { ...review.toObject(), _id: review._id.toString() };
     },
     updateReview: async (
@@ -130,10 +132,10 @@ export const resolvers: Resolvers = {
     },
   },
   Game: {
-    genres: async (game) => {
+    genres: async game => {
       return await Genre.find({ id: { $in: game.genres } });
     },
-    platforms: async (game) => {
+    platforms: async game => {
       return await Platform.find({ id: { $in: game.platforms } });
     },
     reviews: async (
@@ -145,7 +147,7 @@ export const resolvers: Resolvers = {
         .limit(limit);
       const count = await Review.countDocuments({ _id: { $in: game.reviews } });
       return {
-        reviews: reviews.map((review) => ({
+        reviews: reviews.map(review => ({
           ...review.toObject(),
           _id: review._id.toString(),
         })),
