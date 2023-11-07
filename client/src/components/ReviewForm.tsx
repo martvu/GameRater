@@ -98,8 +98,8 @@ export function ReviewForm() {
       createReview({
         variables: {
           reviewInput: {
-            title: values.title,
-            content: values.content,
+            title: values.title.trim(),
+            content: values.content.trim(),
             rating: values.rating,
             platform: values.platform,
             user: user.username,

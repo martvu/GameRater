@@ -68,13 +68,13 @@ const BaseGameDetailPage = () => {
     },
   });
 
+  const rating = Number(data?.getAvgRating);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-  const rating = Number(data?.getAvgRating);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
 
   return (
     <div className="flex justify-center">
@@ -133,7 +133,7 @@ const BaseGameDetailPage = () => {
                     />
                   </div>
                   <div className="flex">
-                    <p>Release Date: 12.12.2017 </p>
+                    <p></p>
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2">Platforms:</p>

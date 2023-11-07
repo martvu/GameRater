@@ -54,7 +54,7 @@ export function SignInForm() {
       const { data } = await signInOrCreateUser({
         variables: {
           userInput: {
-            username: values.username,
+            username: values.username.trim(),
           },
         },
       });

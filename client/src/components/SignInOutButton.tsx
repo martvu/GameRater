@@ -7,8 +7,8 @@ export function SignInOutButton() {
   const [user, setUser] = useRecoilState(userState);
 
   function signOutUser() {
-    setUser({ _id: '', username: '', favorites: [], reviews: [] });
     localStorage.removeItem('user');
+    setUser({ _id: '', username: '', favorites: [], reviews: [] });
     console.log('User signed out');
   }
 

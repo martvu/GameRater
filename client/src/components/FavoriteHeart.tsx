@@ -7,7 +7,7 @@ import { Game } from '@/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { gql } from '../gql';
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
-import SignInModal from './SignInModal';
+import SignInAlertModal from './SignInAlertModal';
 
 const ADD_FAVORITES = gql(`
   mutation AddFavorites($username: String!, $gameID: String!) {
@@ -104,16 +104,7 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
           </Button>
         </DialogTrigger>
         <DialogContent className="overflow-auto">
-          {user.username === '' ? (
-            <div className="flex flex-col items-center space-y-2">
-              <p>You need to sign in to add game to favorites</p>
-              <SignInModal />
-            </div>
-          ) : (
-            <div>
-              <p>Successfully signed in!</p>
-            </div>
-          )}
+          <SignInAlertModal message={'Please sign in to favorite this game!'} />
         </DialogContent>
       </Dialog>
     );
