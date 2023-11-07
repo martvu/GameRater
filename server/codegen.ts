@@ -1,5 +1,5 @@
-import type { CodegenConfig } from '@graphql-codegen/cli'
- 
+import type { CodegenConfig } from '@graphql-codegen/cli';
+
 const config: CodegenConfig = {
   schema: './src/schema.graphql',
   generates: {
@@ -10,5 +10,5 @@ const config: CodegenConfig = {
       },
     },
   },
-}
-export default config
+};
+export default config;

@@ -1,6 +1,6 @@
 type User {
   _id: String
-  username: String 
+  username: String
   favorites: [Game]
   reviews: [Review]
 }
