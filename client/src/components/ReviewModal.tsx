@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ReviewForm } from './ReviewForm';
-import { userState } from '@/state/atoms';
+import { userState } from '@/state/userState';
 import { useRecoilState } from 'recoil';
 import SignInModal from './SignInModal';
 

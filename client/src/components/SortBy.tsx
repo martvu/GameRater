@@ -2,33 +2,58 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
   SelectLabel,
+  SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { sortByState } from '@/state/sortByState';
+import { useRecoilState } from 'recoil';
 
 export default function SortBy() {
+  const setSortBy = useRecoilState(sortByState)[1];
+
+  function handleSortSelection(value: string) {
+    if (value === 'Release Date Desc') {
+      setSortBy({ field: 'first_release_date', order: 'desc' });
+    }
+    if (value === 'Release Date Asc') {
+      setSortBy({ field: 'first_release_date', order: 'asc' });
+    }
+    if (value === 'Name A-Z') {
+      setSortBy({ field: 'name', order: 'asc' });
+    }
+    if (value === 'Name Z-A') {
+      setSortBy({ field: 'name', order: 'desc' });
+    }
+    if (value === 'Metascore') {
+      setSortBy({ field: 'aggregated_rating', order: 'desc' });
+    }
+    if (value === 'User Rating') {
+      setSortBy({ field: 'user_rating', order: 'desc' });
+    }
+    console.log('Hello sort');
+    // Store the selected value in localStorage
+    localStorage.setItem('selectedSortBy', value);
+  }
+
   return (
-    <Select>
+    <Select
+      onValueChange={value => handleSortSelection(value)}
+      value={localStorage.getItem('selectedSortBy') || ''}
+    >
       <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Sort By" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort By</SelectLabel>
-          <SelectItem className="cursor-pointer" value="release date">
-            Release Date
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="title">
-            Title
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="rating">
-            Rating
-          </SelectItem>
-          <SelectItem className="cursor-pointer" value="popularity">
-            Popularity
-          </SelectItem>
+          <SelectItem value="Release Date Desc">Release Date Desc</SelectItem>
+          <SelectItem value="Release Date Asc">Release Date Asc</SelectItem>
+          <SelectItem value="Name A-Z">Name A-Z</SelectItem>
+          <SelectItem value="Name Z-A">Name Z-A</SelectItem>
+          <SelectItem value="Metascore">Metascore</SelectItem>
+          <SelectItem value="User Rating">User Rating</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
