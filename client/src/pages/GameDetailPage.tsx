@@ -75,9 +75,6 @@ const BaseGameDetailPage = () => {
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-  const rating = Number(data?.getAvgRating);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
 
   const formatDate = (unixTimestampStr: string): string => {
     const date = new Date(Number(unixTimestampStr) * 1000);
