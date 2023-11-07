@@ -5,6 +5,11 @@ import Review from "../models/review.js";
 import User from "../models/user.js";
 import { Resolvers } from "./__generated__/resolvers-types";
 
+interface GameQueryFilters {
+  'platforms.name'?: { $in: string[] };
+  'genres.name'?: { $in: string[] };
+  name?: { $regex: RegExp };
+}
 export const resolvers: Resolvers = {
   Query: {
     getUser: async (_, { username }) => {
@@ -24,10 +29,6 @@ export const resolvers: Resolvers = {
     },
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
-    },
-    getGames: async (_, { limit, offset }) => {
-      const games = await Game.find().skip(offset).limit(limit);
-      return { games: games.map(game => game.toObject()), count: await Game.countDocuments() };
     },
     getAvgRating: async (_, { gameID }) => {
       const reviews = await Review.find({ gameID: gameID });
@@ -54,15 +55,33 @@ export const resolvers: Resolvers = {
       const platforms = await Platform.find().limit(limit);
       return platforms.map(platform => platform.toObject());
     },
-    search: async (_, { query, limit, offset }) => {
+    search: async (
+      _,
+      { query, limit, offset, platforms, genres }
+    ) => {
+      const searchQuery: GameQueryFilters = {};
+      if (query) {
+        searchQuery.name = { $regex: new RegExp(query, 'i') };
+      }
+      if (platforms && platforms.length > 0) {
+        searchQuery['platforms.name'] = { $in: platforms };
+      }
+      if (genres && genres.length > 0) {
+        searchQuery['genres.name'] = { $in: genres };
+      }
+      console.log("Query: ", searchQuery);
+
       try {
-        const regex = new RegExp(query, 'i'); // 'i' for case-insensitive
-        const games = await Game.find({ name: { $regex: regex } }).skip(offset).limit(limit);
-        const count = await Game.countDocuments({ name: { $regex: regex } });
+        const games = await Game.find(searchQuery)
+          .skip(offset)
+          .limit(limit)
+          .exec(); // Adding exec to return a true Promise
+
+        const count = await Game.countDocuments(searchQuery).exec(); // Same here
 
         return {
-          games: games.map(game => game.toObject()),
-          count
+          games: games.map((game) => game.toObject()),
+          count,
         };
       } catch (error) {
         console.error(error);

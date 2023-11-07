@@ -3,7 +3,9 @@ import { Plus, Minus } from 'lucide-react';
 import { Checkbox } from './ui/checkbox';
 import { Button } from './ui/button';
 import { useQuery } from '@apollo/client';
-import { gql } from '../gql/';
+import { gql } from '@/gql';
+import { useRecoilState } from 'recoil';
+import { selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
 const GET_FILTERS = gql(`
   query GetFilters {
     getPlatforms {
@@ -16,12 +18,14 @@ const GET_FILTERS = gql(`
 `);
 
 interface FilterItemsProps {
-  filterType: string;
+  filterType: 'platforms' | 'genres';
 }
 
 export default function FilterItems({ filterType }: FilterItemsProps) {
   const { loading, error, data } = useQuery(GET_FILTERS);
   const [numItemsToShow, setNumItemsToShow] = useState(10);
+  const [selectedPlatforms, setSelectedPlatforms] = useRecoilState(selectedPlatformsState);
+  const [selectedGenres, setSelectedGenres] = useRecoilState(selectedGenresState);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -30,6 +34,21 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
   const showMore = () => {
     setNumItemsToShow(numItemsToShow + 5);
   };
+  const handleCheckboxChange = (filterName: string, isChecked: boolean) => {
+    if (filterType === 'platforms') {
+      setSelectedPlatforms(
+        isChecked
+          ? [...selectedPlatforms, filterName]
+          : selectedPlatforms.filter(name => name !== filterName)
+      );
+    } else {
+      setSelectedGenres(
+        isChecked
+          ? [...selectedGenres, filterName]
+          : selectedGenres.filter(name => name !== filterName)
+      );
+    }
+  };
   const showLess = () => setNumItemsToShow(5); // Reset to showing 5 items
   return (
     <div>
@@ -37,7 +56,18 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
       <div className="ml-1 flex flex-col">
         {filterData?.slice(0, numItemsToShow).map(item => (
           <div className="my-1 flex items-center space-x-2" key={item.name}>
-            <Checkbox id={`filter-item-${item.name}`} />
+            <Checkbox
+              id={`filter-item-${item.name}`}
+              onCheckedChange={(checked) => {
+                if (typeof item.name === 'string')
+                  handleCheckboxChange(item.name, checked.valueOf() as boolean);
+              }}
+              checked={
+                filterType === 'platforms'
+                  ? selectedPlatforms.includes(item.name ?? '')
+                  : selectedGenres.includes(item.name ?? '')
+              }
+            />
             <label
               htmlFor={`filter-item-${item.name}`}
               className="break-all text-left text-sm font-light leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
