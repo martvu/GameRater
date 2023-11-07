@@ -79,7 +79,8 @@ export function ReviewForm() {
   const { loading, error, data } = useQuery(GET_GAME_PLATFORMS, {
     variables: { id: id as string },
   });
-  const [createReview] = useMutation(CREATE_REVIEW);
+  const [createReview] = useMutation(CREATE_REVIEW, {
+    refetchQueries: [ 'GetGame'], awaitRefetchQueries: true,});
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -109,15 +110,15 @@ export function ReviewForm() {
         onCompleted: () => {
           console.log('Review created');
         },
+        onError: error => {
+          alert('Could not create review')
+          console.log(error);
+        }
       });
     } catch (error) {
       console.log('Could not create review');
     }
-    //Reset form
     form.reset();
-    //Refresh page
-    window.location.reload();
-    console.log(values);
   }
 
   if (loading) return <p>Loading...</p>;

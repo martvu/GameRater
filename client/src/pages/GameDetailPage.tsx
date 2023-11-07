@@ -19,6 +19,8 @@ import { Genre, Platform, Review } from '@/gql/graphql';
 import { gql } from '../gql/';
 import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/state/userState';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
@@ -58,6 +60,7 @@ type GameDetailParams = {
 
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
+  const user = useRecoilValue(userState);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
   const { loading, error, data } = useQuery(GET_GAME, {
@@ -85,6 +88,10 @@ const BaseGameDetailPage = () => {
     });
   };
 
+  const hasWrittenReview = data?.getGame.reviews?.reviews?.some(
+    (review: Review | null) => review?.user === user.username
+  );
+  console.log(hasWrittenReview)
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
@@ -120,7 +127,13 @@ const BaseGameDetailPage = () => {
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
-              <ReviewModal />
+              {hasWrittenReview ? (
+                <Button className="mb-4 w-[200px]" disabled={true}>
+                  Review written
+                </Button>
+              ) : (
+                <ReviewModal />
+              )}
             </CardFooter>
           </Card>
 
