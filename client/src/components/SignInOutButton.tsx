@@ -5,12 +5,11 @@ import { Button } from '@/components/ui/button.tsx';
 
 export function SignInOutButton() {
 
-  const [user] = useRecoilState(userState);
-  const resetUserState = useResetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
 
   function signOutUser() {
     localStorage.removeItem('user');
-    resetUserState();
+    setUser({_id: '', username: '', favorites: [], reviews: []});
   }
 
   return (
