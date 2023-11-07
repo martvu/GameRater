@@ -20,8 +20,11 @@ export default function SortBy() {
     if (value === 'Release Date Asc') {
       setSortBy({ field: 'first_release_date', order: 'asc' });
     }
-    if (value === 'Name') {
+    if (value === 'Name A-Z') {
       setSortBy({ field: 'name', order: 'asc' });
+    }
+    if (value === 'Name Z-A') {
+      setSortBy({ field: 'name', order: 'desc' });
     }
     if (value === 'Metascore') {
       setSortBy({ field: 'aggregated_rating', order: 'desc' });
@@ -35,16 +38,20 @@ export default function SortBy() {
   }
 
   return (
-    <Select onValueChange={value => handleSortSelection(value)} value={localStorage.getItem('selectedSortBy') || ''}>
+    <Select
+      onValueChange={value => handleSortSelection(value)}
+      value={localStorage.getItem('selectedSortBy') || ''}
+    >
       <SelectTrigger className="w-[150px]">
-        <SelectValue placeholder="Sort By"/>
+        <SelectValue placeholder="Sort By" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort By</SelectLabel>
           <SelectItem value="Release Date Desc">Release Date Desc</SelectItem>
           <SelectItem value="Release Date Asc">Release Date Asc</SelectItem>
-          <SelectItem value="Name">Name</SelectItem>
+          <SelectItem value="Name A-Z">Name A-Z</SelectItem>
+          <SelectItem value="Name Z-A">Name Z-A</SelectItem>
           <SelectItem value="Metascore">Metascore</SelectItem>
           <SelectItem value="User Rating">User Rating</SelectItem>
         </SelectGroup>

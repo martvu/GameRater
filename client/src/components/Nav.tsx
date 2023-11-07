@@ -7,17 +7,21 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { defaultSortBy, sortByState } from '@/state/sortByState';
+import { pageState } from '@/state/pageState';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
-  const setSortBy = useRecoilState(sortByState)[1];
+  const setSortBy = useSetRecoilState(sortByState);
+  const setCurrentPage = useSetRecoilState(pageState);
 
   function resetPage() {
     window.scrollTo(0, 0);
     setSortBy(defaultSortBy);
+    setCurrentPage(1);
     localStorage.setItem('selectedSortBy', '');
+    localStorage.setItem('currentPage', '1');
   }
 
   return (
