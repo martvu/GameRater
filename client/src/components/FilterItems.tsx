@@ -7,7 +7,7 @@ import { selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
 import { Genre, Platform } from '@/gql/graphql';
 
 interface FilterItemsProps {
-  filters: Platform[]| Genre[];
+  filters: Platform[] | Genre[];
   filterType: 'platforms' | 'genres';
 }
 
@@ -18,7 +18,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   );
   const [selectedGenres, setSelectedGenres] =
     useRecoilState(selectedGenresState);
-  
+
   const showMore = () => {
     setNumItemsToShow(numItemsToShow + 10);
   };
@@ -39,8 +39,8 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
     }
   };
 
-  const showLess = () => setNumItemsToShow(10); 
-  
+  const showLess = () => setNumItemsToShow(10);
+
   return (
     <div>
       <h2 className="my-2 text-left font-semibold capitalize">{filterType}</h2>
@@ -87,7 +87,9 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
           <Minus className="inline-block h-6" />
           <span>Show Less</span>
         </Button>
-      ) : <div></div>}
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

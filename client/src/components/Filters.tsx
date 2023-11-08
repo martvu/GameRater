@@ -3,7 +3,7 @@ import { ChevronRight, ChevronLeft } from 'lucide-react'; // Make sure to instal
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
-import { useRecoilValue} from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { genresListState, platformsListState } from '@/state/atoms';
 
 export default function Filters() {
@@ -23,7 +23,7 @@ export default function Filters() {
         )}
       >
         <Button
-          className="hidden md:flex m-1"
+          className="m-1 hidden md:flex"
           variant="ghost"
           onClick={toggleCollapse}
           aria-label="toggle filters"
