@@ -14,33 +14,41 @@ export default function SortBy() {
   const setSortBy = useRecoilState(sortByState)[1];
 
   function handleSortSelection(value: string) {
+    let sortByObject = { field: 'first_release_date', order: 'desc' };
     if (value === 'Release Date Desc') {
-      setSortBy({ field: 'first_release_date', order: 'desc' });
+      sortByObject = { field: 'first_release_date', order: 'desc' };
+      setSortBy(sortByObject);
     }
     if (value === 'Release Date Asc') {
-      setSortBy({ field: 'first_release_date', order: 'asc' });
+      sortByObject = { field: 'first_release_date', order: 'asc' };
+      setSortBy(sortByObject);
     }
     if (value === 'Name A-Z') {
-      setSortBy({ field: 'name', order: 'asc' });
+      sortByObject = { field: 'name', order: 'asc' };
+      setSortBy(sortByObject);
     }
     if (value === 'Name Z-A') {
-      setSortBy({ field: 'name', order: 'desc' });
+      sortByObject = { field: 'name', order: 'desc' };
+      setSortBy(sortByObject);
     }
     if (value === 'Metascore') {
-      setSortBy({ field: 'aggregated_rating', order: 'desc' });
+      sortByObject = { field: 'aggregated_rating', order: 'desc' };
+      setSortBy(sortByObject);
     }
     if (value === 'User Rating') {
-      setSortBy({ field: 'user_rating', order: 'desc' });
+      sortByObject = { field: 'user_rating', order: 'desc' };
+      setSortBy(sortByObject);
     }
     console.log('Hello sort');
     // Store the selected value in localStorage
-    localStorage.setItem('selectedSortBy', value);
+    localStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
+    localStorage.setItem('selectedSortLabel', value);
   }
 
   return (
     <Select
       onValueChange={value => handleSortSelection(value)}
-      value={localStorage.getItem('selectedSortBy') || ''}
+      value={localStorage.getItem('selectedSortLabel') || ''}
     >
       <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Sort By" />
