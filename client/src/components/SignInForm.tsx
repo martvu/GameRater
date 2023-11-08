@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/state/userState';
+import { userState } from '@/state/atoms';
 import { gql, useMutation } from '@apollo/client';
 
 const SIGN_IN_OR_CREATE_USER = gql`

@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 import { useQuery } from '@apollo/client';
 import { gql } from '@/gql';
 import { useRecoilState } from 'recoil';
-import { selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
+import { selectedGenresState, selectedPlatformsState } from '@/state/atoms';
 import Loading from './Loading';
 const GET_FILTERS = gql(`
   query GetFilters {

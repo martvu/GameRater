@@ -91,11 +91,11 @@ export const resolvers: Resolvers = {
       try {
 
         // Execute the query with pagination to retrieve games
-        const games = await Game.find(filters).sortQuery
+        const games = await sortQuery.find(filters)
           .skip(offset)
           .limit(limit)
           .exec();
-    
+        
         // Use the cloned countQuery to get the count of all documents that match the filter
         const count = await Game.find(filters).countDocuments().exec();
     

@@ -8,8 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
 import { useSetRecoilState } from 'recoil';
-import { defaultSortBy, sortByState } from '@/state/sortByState';
-import { pageState } from '@/state/pageState';
+import { defaultSortBy, sortByState } from '@/state/atoms';
+import { pageState } from '@/state/atoms';
 
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
