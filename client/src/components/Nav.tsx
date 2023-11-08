@@ -8,7 +8,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
 import { useSetRecoilState } from 'recoil';
-import { defaultSortBy, selectedGenresState, selectedPlatformsState, sortByState } from '@/state/atoms';
+import {
+  defaultSortBy,
+  selectedGenresState,
+  selectedPlatformsState,
+  sortByState,
+} from '@/state/atoms';
 import { pageState } from '@/state/atoms';
 import { useRecoilState } from 'recoil';
 import { searchQueryState } from '@/state/atoms';
@@ -20,12 +25,16 @@ export default function Nav() {
   const navigate = useNavigate();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();  // Prevent the default form submission behavior
+    event.preventDefault(); // Prevent the default form submission behavior
     setSelectedPlatforms([]);
     setSelectedGenres([]);
     localStorage.removeItem('selectedPlatforms');
     localStorage.removeItem('selectedGenres');
-    navigate(searchQuery === '' || searchQuery === null ? "/" : `/search/${encodeURIComponent(searchQuery)}`);  // Navigate to the new URL
+    navigate(
+      searchQuery === '' || searchQuery === null
+        ? '/'
+        : `/search/${encodeURIComponent(searchQuery)}`
+    ); // Navigate to the new URL
   };
   const setSortBy = useSetRecoilState(sortByState);
   const setCurrentPage = useSetRecoilState(pageState);
@@ -90,19 +99,18 @@ export default function Nav() {
               <ArrowLeft />
             </Button>
           )}
-        <form onSubmit={handleSubmit} className="flex gap-5">
+          <form onSubmit={handleSubmit} className="flex gap-5">
             <Label htmlFor="search" className="sr-only" />
-          <Input
-            type="search"
-            className='w-[150px] lg:w-[300px]'
-            placeholder="Search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-            <Button type="submit">
-            Search
-          </Button>
-          </form></div>
+            <Input
+              type="search"
+              className="w-[150px] lg:w-[300px]"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+            <Button type="submit">Search</Button>
+          </form>
+        </div>
         <div
           className={`flex-shrink-0 md:gap-2 ${
             showFullWidthSearch ? 'hidden md:flex' : 'flex'

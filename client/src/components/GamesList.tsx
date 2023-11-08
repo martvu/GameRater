@@ -73,7 +73,7 @@ export default function GamesList() {
       setSortBy(JSON.parse(sortByFromStorage));
     }
   }, []);
-  
+
   useEffect(() => {
     if (data) {
       setGenres(data.getFilters?.genres as Genre[]);

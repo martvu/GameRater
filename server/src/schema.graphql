@@ -63,7 +63,6 @@ type Platform {
   gamesCount: Int
 }
 
-
 type Games {
   games: [Game]
   count: Int!
