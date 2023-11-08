@@ -59,7 +59,21 @@ export const resolvers: Resolvers = {
       _,
       { query, limit, offset, platforms, genres }
     ) => {
-      // Start with a base query
+
+      const filters: GameQueryFilters = {};
+
+      if(query) {
+        filters.name = { $regex: new RegExp(query, 'i') };
+      }
+      if(platforms && platforms.length > 0) {
+        filters['platforms'] = { $all: platforms };
+      }
+      if(genres && genres.length > 0) {
+        filters['genres'] = { $all: genres };
+      }
+
+      console.log("Query", filters)
+     /*  // Start with a base query
       let baseQuery = Game.find();
     
       // Apply text search if 'query' is provided
@@ -75,21 +89,21 @@ export const resolvers: Resolvers = {
       // Apply filtering based on genres
       if (genres && genres.length > 0) {
         baseQuery = baseQuery.where('genres').all(genres);
-      }
+      } */
     
       try {
-        // Clone the baseQuery to use for the count
+       /*  // Clone the baseQuery to use for the count
         const CountQuery = baseQuery.toConstructor();
     
-        const countQuery = new CountQuery
+        const countQuery = new CountQuery */
         // Execute the query with pagination to retrieve games
-        const games = await baseQuery
+        const games = await Game.find(filters)
           .skip(offset)
           .limit(limit)
           .exec();
     
         // Use the cloned countQuery to get the count of all documents that match the filter
-        const count = await countQuery.countDocuments().exec();
+        const count = await Game.find(filters).countDocuments().exec();
     
         return {
           games: games.map((game) => game.toObject()),
