@@ -21,9 +21,8 @@ export default function Nav() {
     setSortBy(defaultSortBy);
     setCurrentPage(1);
     localStorage.setItem('selectedSortBy', '');
-    localStorage.removeItem('selectedSortLabel')
+    localStorage.removeItem('selectedSortLabel');
     localStorage.setItem('currentPage', '1');
-
   }
 
   return (

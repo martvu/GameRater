@@ -24,7 +24,12 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
   const { loading, error, data } = useQuery(GET_FILTERS);
   const [numItemsToShow, setNumItemsToShow] = useState(10);
 
-  if (loading) return <div className="w-[210px]"><Loading /></div>;
+  if (loading)
+    return (
+      <div className="w-[210px]">
+        <Loading />
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
 
   const filterData =

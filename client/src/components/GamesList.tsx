@@ -33,7 +33,6 @@ export default function GamesList() {
     variables: { limit, offset: limit * (currentPage - 1), sortBy: sortBy },
   });
 
-  const test = true
   useEffect(() => {
     const sortByFromStorage = localStorage.getItem('selectedSortBy');
     if (sortByFromStorage) {
@@ -41,7 +40,7 @@ export default function GamesList() {
     }
   }, []);
   if (loading) return <Loading />;
-  if (error) return <div>Error: { error.message }</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <main>

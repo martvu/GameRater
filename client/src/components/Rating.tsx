@@ -61,7 +61,8 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
               disabled={disabled}
             >
               <span className="text-2xl font-light">
-                {index <= ratingValue ? '★' : '☆'} {/* Filled star or empty star */}{' '}
+                {index <= ratingValue ? '★' : '☆'}{' '}
+                {/* Filled star or empty star */}{' '}
               </span>
             </button>
           );

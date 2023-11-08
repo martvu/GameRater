@@ -15,7 +15,7 @@ export default function ReviewModal() {
       </DialogTrigger>
       <DialogContent className="overflow-auto">
         {user.username === '' ? (
-          <SignInAlertModal message={"Please sign in to review this game!"}/>
+          <SignInAlertModal message={'Please sign in to review this game!'} />
         ) : (
           <ReviewForm />
         )}

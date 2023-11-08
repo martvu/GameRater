@@ -92,7 +92,7 @@ const BaseGameDetailPage = () => {
   const hasWrittenReview = data?.getGame.reviews?.reviews?.some(
     (review: Review | null) => review?.user === user.username
   );
-  console.log(hasWrittenReview)
+  console.log(hasWrittenReview);
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
