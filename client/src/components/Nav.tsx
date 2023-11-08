@@ -3,16 +3,39 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
 import { useSetRecoilState } from 'recoil';
-import { defaultSortBy, sortByState } from '@/state/sortByState';
-import { pageState } from '@/state/pageState';
-
+import {
+  defaultSortBy,
+  selectedGenresState,
+  selectedPlatformsState,
+  sortByState,
+} from '@/state/atoms';
+import { pageState } from '@/state/atoms';
+import { useRecoilState } from 'recoil';
+import { searchQueryState } from '@/state/atoms';
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
+  const setSelectedPlatforms = useSetRecoilState(selectedPlatformsState);
+  const setSelectedGenres = useSetRecoilState(selectedGenresState);
+  const navigate = useNavigate();
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    setSelectedPlatforms([]);
+    setSelectedGenres([]);
+    localStorage.removeItem('selectedPlatforms');
+    localStorage.removeItem('selectedGenres');
+    navigate(
+      searchQuery === '' || searchQuery === null
+        ? '/'
+        : `/search/${encodeURIComponent(searchQuery)}`
+    ); // Navigate to the new URL
+  };
   const setSortBy = useSetRecoilState(sortByState);
   const setCurrentPage = useSetRecoilState(pageState);
 
@@ -20,9 +43,15 @@ export default function Nav() {
     window.scrollTo(0, 0);
     setSortBy(defaultSortBy);
     setCurrentPage(1);
+    setSelectedPlatforms([]);
+    setSelectedGenres([]);
+    setSearchQuery('');
     localStorage.setItem('selectedSortBy', '');
     localStorage.removeItem('selectedSortLabel');
     localStorage.setItem('currentPage', '1');
+    localStorage.removeItem('selectedPlatforms');
+    localStorage.removeItem('selectedGenres');
+    localStorage.removeItem('searchQuery');
   }
 
   return (
@@ -70,9 +99,17 @@ export default function Nav() {
               <ArrowLeft />
             </Button>
           )}
-          <Label htmlFor="search" className="sr-only" />
-          <Input type="search" placeholder="Search" />
-          <Button type="submit">Search</Button>
+          <form onSubmit={handleSubmit} className="flex gap-5">
+            <Label htmlFor="search" className="sr-only" />
+            <Input
+              type="search"
+              className="w-[150px] lg:w-[300px]"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+            <Button type="submit">Search</Button>
+          </form>
         </div>
         <div
           className={`flex-shrink-0 md:gap-2 ${

@@ -25,7 +25,7 @@ import {
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/state/userState';
+import { userState } from '@/state/atoms';
 import { gql } from '../gql/';
 import Loading from './Loading';
 

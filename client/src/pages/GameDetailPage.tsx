@@ -20,7 +20,7 @@ import { gql } from '../gql/';
 import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { useRecoilValue } from 'recoil';
-import { userState } from '@/state/userState';
+import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
 
 const GET_GAME = gql(`

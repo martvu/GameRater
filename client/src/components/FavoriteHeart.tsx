@@ -2,7 +2,7 @@ import { Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/state/userState';
+import { userState } from '@/state/atoms';
 import { Game } from '@/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { gql } from '../gql';

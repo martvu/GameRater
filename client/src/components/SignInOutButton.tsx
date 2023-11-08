@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { userState } from '@/state/userState';
+import { userState } from '@/state/atoms';
 import SignInModal from '@/components/SignInModal.tsx';
 import { Button } from '@/components/ui/button.tsx';
 

@@ -11,7 +11,7 @@ function BaseGameListPage() {
         <Filters />
       </div>
       <div className="overflow-x-hidden px-8">
-        <div className="z-15 sticky top-0 flex justify-between bg-background py-1 pb-4 md:justify-end">
+        <div className="z-15 sticky top-0 flex items-center justify-between bg-background py-1 pb-4 md:justify-end">
           <div className="block md:hidden">
             <FilterModal />
           </div>
@@ -25,4 +25,5 @@ function BaseGameListPage() {
 }
 
 const GameListPage = withLayout(BaseGameListPage);
+
 export default GameListPage;

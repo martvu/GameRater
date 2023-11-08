@@ -43,6 +43,7 @@ type Genre {
   updated_at: Int
   url: String
   checksum: String
+  gamesCount: Int
 }
 
 type Platform {
@@ -59,6 +60,17 @@ type Platform {
   versions: [Int]
   websites: [Int]
   checksum: String
+  gamesCount: Int
+}
+
+type Games {
+  games: [Game]
+  count: Int!
+}
+
+type Filters {
+  genres: [Genre]
+  platforms: [Platform]
 }
 
 input ReviewInput {
@@ -73,12 +85,6 @@ input ReviewInput {
 input UserInput {
   username: String
 }
-
-type Games {
-  games: [Game]
-  count: Int!
-}
-
 input GameSortInput {
   field: String
   order: String
@@ -90,12 +96,25 @@ type Query {
   getUser(username: String!): User!
   getUsers(limit: Int): [User!]!
   getGame(ID: ID!): Game!
-  getGames(limit: Int, offset: Int, sortBy: GameSortInput): Games!
   getAvgRating(gameID: ID!): Float!
   getGenre(id: Int): Genre!
   getGenres(limit: Int): [Genre!]!
+  getFilters(
+    limit: Int
+    platforms: [Int]
+    genres: [Int]
+    query: String
+  ): Filters
   getPlatform(id: Int): Platform!
   getPlatforms(limit: Int): [Platform!]!
+  search(
+    query: String
+    limit: Int!
+    offset: Int!
+    platforms: [Int]
+    genres: [Int]
+    sortBy: GameSortInput
+  ): Games!
 }
 
 type Mutation {

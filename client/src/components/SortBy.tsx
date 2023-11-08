@@ -7,8 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { pageState } from '@/state/pageState';
-import { sortByState } from '@/state/sortByState';
+import { pageState } from '@/state/atoms';
+import { sortByState } from '@/state/atoms';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function SortBy() {

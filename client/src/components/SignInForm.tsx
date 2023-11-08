@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/state/userState';
+import { userState } from '@/state/atoms';
 import { gql, useMutation } from '@apollo/client';
 
 const SIGN_IN_OR_CREATE_USER = gql`
@@ -33,9 +33,14 @@ const SIGN_IN_OR_CREATE_USER = gql`
 `;
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
+  username: z
+    .string()
+    .min(2, {
+      message: 'Username must be at least 2 characters.',
+    })
+    .max(15, {
+      message: 'Username must be at most 15 characters.',
+    }),
 });
 
 export function SignInForm() {
@@ -70,24 +75,31 @@ export function SignInForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormDescription className="w-60">
+          We just need your username, and you're good to go!
+        </FormDescription>
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="Your username" {...field} />
-              </FormControl>
+              <div className="flex items-center gap-4">
+                <FormControl>
+                  <Input
+                    placeholder="Your username"
+                    {...field}
+                    className="h-10 max-w-[200px]"
+                    maxLength={15}
+                  />
+                </FormControl>
+                <Button type="submit">Sign In</Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormDescription>
-          We just need your username. No need for a password.
-        </FormDescription>
-        <Button type="submit">Sign In</Button>
       </form>
     </Form>
   );

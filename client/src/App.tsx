@@ -13,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/game/:id" element={<GameDetailPage />} />
             <Route path="/" element={<GameListPage />} />
+            <Route path="search/:keyword" element={<GameListPage />} />
             <Route path="/review" element={<ReviewForm />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
