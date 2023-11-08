@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Router>
+        <Router basename="/project2">
           <Routes>
             <Route path="/game/:id" element={<GameDetailPage />} />
             <Route path="/" element={<GameListPage />} />

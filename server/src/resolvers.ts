@@ -110,8 +110,6 @@ export const resolvers: Resolvers = {
         filters['genres'] = { $in: genres };
       }
 
-      console.log('Query', filters);
-
       try {
         let sortQuery = Game.find();
 
@@ -121,20 +119,20 @@ export const resolvers: Resolvers = {
           sortQuery = sortQuery
             .collation({ locale: 'en', strength: 1 })
             .sort({ [field]: order === 'asc' ? 1 : -1 });
-          // Execute the query with pagination to retrieve games
-          const games = await sortQuery
-            .find(filters)
-            .skip(offset)
-            .limit(limit)
-            .exec();
-          // Count the total number of games matching the query
-          const count = await Game.find(filters).countDocuments().exec();
-
-          return {
-            games: games.map(game => game.toObject()),
-            count,
-          };
         }
+        // Execute the query with pagination to retrieve games
+        const games = await sortQuery
+          .find(filters)
+          .skip(offset)
+          .limit(limit)
+          .exec();
+        // Count the total number of games matching the query
+        const count = await Game.find(filters).countDocuments().exec();
+
+        return {
+          games: games.map(game => game.toObject()),
+          count,
+        };
       } catch (error) {
         console.error(error);
         throw new Error('Error executing search query');

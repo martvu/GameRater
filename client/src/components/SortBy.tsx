@@ -41,7 +41,7 @@ export default function SortBy() {
       sortByObject = { field: 'user_rating', order: 'desc' };
       setSortBy(sortByObject);
     }
-    console.log('Hello sort');
+  
     // Store the selected value in localStorage
     localStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
     localStorage.setItem('selectedSortLabel', value);

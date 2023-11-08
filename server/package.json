@@ -7,7 +7,7 @@
     "generate": "graphql-codegen",
     "compile": "npm run generate && tsc",
     "start": "npm run compile && node ./dist/src/index.js",
-    "migrate": "ts-node dist/migrations/index-migration.js",
+    "deploy": "forever start --minUptime 2000 --spinSleepTime 5 ./dist/src/index.js",
     "lint": "eslint src/**/*.ts --fix"
   },
   "keywords": [],
