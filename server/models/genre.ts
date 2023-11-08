@@ -12,7 +12,7 @@ interface IGenre {
 }
 
 const GenreSchema = new Schema<IGenre>({
-  _id: { type: Schema.Types.ObjectId, required: true},
+  _id: { type: Schema.Types.ObjectId, required: true },
   id: { type: Number, required: true },
   name: { type: String, required: true },
   slug: { type: String, required: true },
@@ -20,7 +20,7 @@ const GenreSchema = new Schema<IGenre>({
   updated_at: { type: Number, required: true },
   url: { type: String, required: true },
   checksum: { type: String, required: true },
-  });
+});
 
 const Genre = model<IGenre>("genres", GenreSchema);
 

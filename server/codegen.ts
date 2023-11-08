@@ -1,14 +1,14 @@
-import type { CodegenConfig } from '@graphql-codegen/cli'
- 
+import type { CodegenConfig } from "@graphql-codegen/cli";
+
 const config: CodegenConfig = {
-  schema: './src/schema.graphql',
+  schema: "./src/schema.graphql",
   generates: {
-    './src/__generated__/resolvers-types.ts': {
-      plugins: ['typescript', 'typescript-resolvers'],
+    "./src/__generated__/resolvers-types.ts": {
+      plugins: ["typescript", "typescript-resolvers"],
       config: {
         useIndexSignature: true,
       },
     },
   },
-}
-export default config
+};
+export default config;
