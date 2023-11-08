@@ -102,18 +102,13 @@ export const resolvers: Resolvers = {
       // Apply filters if provided
       if (query) {
         filters.name = { $regex: new RegExp(query, 'i') };
-        console.log('search');
       }
       if (platforms && platforms.length > 0) {
         filters['platforms'] = { $in: platforms };
-        console.log('platforms');
       }
       if (genres && genres.length > 0) {
         filters['genres'] = { $in: genres };
-        console.log('genres');
       }
-
-      console.log('Query', filters);
 
       try {
         let sortQuery = Game.find();
