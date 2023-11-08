@@ -1,4 +1,5 @@
 import { ModeToggle } from '@/components/theme/ModeToggle';
+import Logo from '@/assets/logo.webp';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -75,7 +76,7 @@ export default function Nav() {
               onClick={resetPage}
             >
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="logo" />
+                <AvatarImage src={Logo} alt="GameRater logo" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <h1 className="text-xl font-semibold text-green-400">
