@@ -16,7 +16,7 @@ export default function Rating({ rating, numRatings }: RatingProps) {
         <StarRating rating={rating} disabled={true} />
         {/*          <!-- Helper text --> */}
         <span className="text-xs leading-6 text-muted-foreground">
-          based on {numRatings} user ratings
+          Based on {numRatings} user {numRatings === 1 ? 'rating' : 'ratings'}
         </span>
       </div>
       {/*        <!-- End Basic Rating --> */}

@@ -130,7 +130,7 @@ const BaseGameDetailPage = () => {
             <CardFooter className="flex flex-col justify-center">
               {hasWrittenReview ? (
                 <Button className="mb-4 w-[200px]" disabled={true}>
-                  Review written
+                  Review Submitted
                 </Button>
               ) : (
                 <ReviewModal />

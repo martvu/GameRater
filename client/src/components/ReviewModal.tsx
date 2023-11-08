@@ -11,7 +11,7 @@ export default function ReviewModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="mb-4 w-[200px]">Write Review</Button>
+        <Button className="mb-4 w-[200px]">Add Review</Button>
       </DialogTrigger>
       <DialogContent className="overflow-auto">
         {user.username === '' ? (
