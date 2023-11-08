@@ -95,7 +95,7 @@ type Query {
   getGenres(limit: Int): [Genre!]!
   getPlatform(id: Int): Platform!
   getPlatforms(limit: Int): [Platform!]!
-  search(query: String, limit: Int!, offset: Int!, platforms: [String], genres: [String]): Games!
+  search(query: String, limit: Int!, offset: Int!, platforms: [Int], genres: [Int]): Games!
 }
 
 type Mutation {

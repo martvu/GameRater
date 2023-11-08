@@ -9,9 +9,11 @@ import { selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
 const GET_FILTERS = gql(`
   query GetFilters {
     getPlatforms {
+      id
       name
     }
     getGenres {
+      id
       name
     }
   }
@@ -34,18 +36,18 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
   const showMore = () => {
     setNumItemsToShow(numItemsToShow + 5);
   };
-  const handleCheckboxChange = (filterName: string, isChecked: boolean) => {
+  const handleCheckboxChange = (filterId: number, isChecked: boolean) => {
     if (filterType === 'platforms') {
       setSelectedPlatforms(
         isChecked
-          ? [...selectedPlatforms, filterName]
-          : selectedPlatforms.filter(name => name !== filterName)
+          ? [...selectedPlatforms, filterId]
+          : selectedPlatforms.filter(id => id !== filterId)
       );
     } else {
       setSelectedGenres(
         isChecked
-          ? [...selectedGenres, filterName]
-          : selectedGenres.filter(name => name !== filterName)
+          ? [...selectedGenres, filterId]
+          : selectedGenres.filter(name => name !== filterId)
       );
     }
   };
@@ -59,13 +61,13 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
             <Checkbox
               id={`filter-item-${item.name}`}
               onCheckedChange={(checked) => {
-                if (typeof item.name === 'string')
-                  handleCheckboxChange(item.name, checked.valueOf() as boolean);
+                if (typeof item.id === 'number')
+                  handleCheckboxChange(item.id, checked.valueOf() as boolean);
               }}
               checked={
                 filterType === 'platforms'
-                  ? selectedPlatforms.includes(item.name ?? '')
-                  : selectedGenres.includes(item.name ?? '')
+                  ? selectedPlatforms.includes(item.id ?? 0)
+                  : selectedGenres.includes(item.id ?? 0)
               }
             />
             <label

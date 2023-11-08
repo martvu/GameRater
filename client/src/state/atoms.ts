@@ -16,10 +16,10 @@ export const userState = atom<User>({
 
 export const selectedPlatformsState = atom({
   key: 'selectedPlatformsState',
-  default: [] as string[],
+  default: [] as number[],
 });
 
 export const selectedGenresState = atom({
   key: 'selectedGenresState',
-  default: [] as string[],
+  default: [] as number[],
 });

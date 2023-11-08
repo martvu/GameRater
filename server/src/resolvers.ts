@@ -59,26 +59,38 @@ export const resolvers: Resolvers = {
       _,
       { query, limit, offset, platforms, genres }
     ) => {
-      const searchQuery: GameQueryFilters = {};
+      // Start with a base query
+      let baseQuery = Game.find();
+    
+      // Apply text search if 'query' is provided
       if (query) {
-        searchQuery.name = { $regex: new RegExp(query, 'i') };
+        baseQuery = baseQuery.where('name').regex(new RegExp(query, 'i'));
       }
+    
+      // Apply filtering based on platforms
       if (platforms && platforms.length > 0) {
-        searchQuery['platforms.name'] = { $in: platforms };
+        baseQuery = baseQuery.where('platforms').all(platforms);
       }
+    
+      // Apply filtering based on genres
       if (genres && genres.length > 0) {
-        searchQuery['genres.name'] = { $in: genres };
+        baseQuery = baseQuery.where('genres').all(genres);
       }
-      console.log("Query: ", searchQuery);
-
+    
       try {
-        const games = await Game.find(searchQuery)
+        // Clone the baseQuery to use for the count
+        const CountQuery = baseQuery.toConstructor();
+    
+        const countQuery = new CountQuery
+        // Execute the query with pagination to retrieve games
+        const games = await baseQuery
           .skip(offset)
           .limit(limit)
-          .exec(); // Adding exec to return a true Promise
-
-        const count = await Game.countDocuments(searchQuery).exec(); // Same here
-
+          .exec();
+    
+        // Use the cloned countQuery to get the count of all documents that match the filter
+        const count = await countQuery.countDocuments().exec();
+    
         return {
           games: games.map((game) => game.toObject()),
           count,
@@ -87,7 +99,7 @@ export const resolvers: Resolvers = {
         console.error(error);
         throw new Error('Error executing search query');
       }
-    },
+    },    
   },
   Mutation: {
     createReview: async(_, { reviewInput: { user, title, content, rating, platform, gameID } }) => {
