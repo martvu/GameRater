@@ -1,9 +1,9 @@
-import Game from "../models/game.js";
-import Genre from "../models/genre.js";
-import Platform from "../models/platform.js";
-import Review from "../models/review.js";
-import User from "../models/user.js";
-import { Resolvers } from "./__generated__/resolvers-types";
+import Game from '../models/game.js';
+import Genre from '../models/genre.js';
+import Platform from '../models/platform.js';
+import Review from '../models/review.js';
+import User from '../models/user.js';
+import { Resolvers } from './__generated__/resolvers-types';
 
 interface GameQueryFilters {
   platforms?: { $in: number[] };
@@ -17,7 +17,7 @@ export const resolvers: Resolvers = {
     },
     getUsers: async (_, { limit }) => {
       const users = await User.find().limit(limit);
-      return users.map((user) => user.toObject());
+      return users.map(user => user.toObject());
     },
     getReview: async (_, { ID }) => {
       const review = await Review.findById(ID);
@@ -25,7 +25,7 @@ export const resolvers: Resolvers = {
     },
     getReviews: async (_, { limit }) => {
       const reviews = await Review.find().limit(limit);
-      return reviews.map((review) => review.toObject());
+      return reviews.map(review => review.toObject());
     },
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
@@ -52,7 +52,7 @@ export const resolvers: Resolvers = {
     },
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
-      return genres.map((genre) => genre.toObject());
+      return genres.map(genre => genre.toObject());
     },
     getFilters: async (_, { limit, platforms, genres, query }) => {
       const filters: GameQueryFilters = {};
@@ -94,7 +94,7 @@ export const resolvers: Resolvers = {
     },
     getPlatforms: async (_, { limit }) => {
       const platforms = await Platform.find().limit(limit);
-      return platforms.map((platform) => platform.toObject());
+      return platforms.map(platform => platform.toObject());
     },
     search: async (_, { query, limit, offset, platforms, genres, sortBy }) => {
       const filters: GameQueryFilters = {};
@@ -102,12 +102,15 @@ export const resolvers: Resolvers = {
       // Apply filters if provided
       if (query) {
         filters.name = { $regex: new RegExp(query, 'i') };
+        console.log('search');
       }
       if (platforms && platforms.length > 0) {
         filters['platforms'] = { $in: platforms };
+        console.log('platforms');
       }
       if (genres && genres.length > 0) {
         filters['genres'] = { $in: genres };
+        console.log('genres');
       }
 
       console.log('Query', filters);
@@ -121,20 +124,20 @@ export const resolvers: Resolvers = {
           sortQuery = sortQuery
             .collation({ locale: 'en', strength: 1 })
             .sort({ [field]: order === 'asc' ? 1 : -1 });
-          // Execute the query with pagination to retrieve games
-          const games = await sortQuery
-            .find(filters)
-            .skip(offset)
-            .limit(limit)
-            .exec();
-          // Count the total number of games matching the query
-          const count = await Game.find(filters).countDocuments().exec();
-
-          return {
-            games: games.map(game => game.toObject()),
-            count,
-          };
         }
+        // Execute the query with pagination to retrieve games
+        const games = await sortQuery
+          .find(filters)
+          .skip(offset)
+          .limit(limit)
+          .exec();
+        // Count the total number of games matching the query
+        const count = await Game.find(filters).countDocuments().exec();
+
+        return {
+          games: games.map(game => game.toObject()),
+          count,
+        };
       } catch (error) {
         console.error(error);
         throw new Error('Error executing search query');
@@ -144,7 +147,7 @@ export const resolvers: Resolvers = {
   Mutation: {
     createReview: async (
       _,
-      { reviewInput: { user, title, content, rating, platform, gameID } },
+      { reviewInput: { user, title, content, rating, platform, gameID } }
     ) => {
       const review = await new Review({
         user,
@@ -183,11 +186,11 @@ export const resolvers: Resolvers = {
     },
     updateReview: async (
       _,
-      { ID, reviewInput: { user, title, content, rating, platform, gameID } },
+      { ID, reviewInput: { user, title, content, rating, platform, gameID } }
     ) => {
       await Review.updateOne(
         { _id: ID },
-        { $set: { user, title, content, rating, platform, gameID } },
+        { $set: { user, title, content, rating, platform, gameID } }
       );
       return ID;
     },
@@ -233,22 +236,22 @@ export const resolvers: Resolvers = {
     },
   },
   Game: {
-    genres: async(game) =>{
+    genres: async game => {
       return await Genre.find({ id: { $in: game.genres } });
     },
-    platforms: async(game) => {
+    platforms: async game => {
       return await Platform.find({ id: { $in: game.platforms } });
     },
     reviews: async (
       game,
-      { limit, offset }: { limit: number; offset: number },
+      { limit, offset }: { limit: number; offset: number }
     ) => {
       const reviews = await Review.find({ _id: { $in: game.reviews } })
         .skip(offset)
         .limit(limit);
       const count = await Review.countDocuments({ _id: { $in: game.reviews } });
       return {
-        reviews: reviews.map((review) => ({
+        reviews: reviews.map(review => ({
           ...review.toObject(),
           _id: review._id.toString(),
         })),
@@ -275,4 +278,3 @@ export const resolvers: Resolvers = {
     },
   },
 };
-
