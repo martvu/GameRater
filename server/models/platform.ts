@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IPlatform {
   _id: Schema.Types.ObjectId;
@@ -32,6 +32,6 @@ const PlatformSchema = new Schema<IPlatform>({
   checksum: { type: String, required: true },
 });
 
-const Platform = model<IPlatform>("platforms", PlatformSchema);
+const Platform = model<IPlatform>('platforms', PlatformSchema);
 
 export default Platform;

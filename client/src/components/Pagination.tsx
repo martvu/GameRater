@@ -14,6 +14,11 @@ export default function Pagination({
     pageNumber: number;
   }
 
+  function handlePageChange(pageNumber: number) {
+    setCurrentPage(pageNumber);
+    localStorage.setItem('currentPage', pageNumber.toString());
+  }
+
   const PageButton = ({ pageNumber }: PageButtonProps) => {
     const isActive = currentPage === pageNumber;
     return (
@@ -21,7 +26,7 @@ export default function Pagination({
         variant={isActive ? 'outline' : 'ghost'}
         className="border-primary"
         size="page"
-        onClick={() => setCurrentPage(pageNumber)}
+        onClick={() => handlePageChange(pageNumber)}
         aria-label={`go to page ${pageNumber}`}
       >
         {pageNumber}
@@ -36,7 +41,7 @@ export default function Pagination({
           <Button
             size="page"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => handlePageChange(currentPage - 1)}
             variant="ghost"
             aria-label="go to previous page"
           >
@@ -110,7 +115,7 @@ export default function Pagination({
           <Button
             size="page"
             disabled={currentPage === pages}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            onClick={() => handlePageChange(currentPage + 1)}
             variant="ghost"
             aria-label="go to next page"
           >

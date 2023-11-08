@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IGenre {
   _id: Schema.Types.ObjectId;
@@ -22,6 +22,6 @@ const GenreSchema = new Schema<IGenre>({
   checksum: { type: String, required: true },
 });
 
-const Genre = model<IGenre>("genres", GenreSchema);
+const Genre = model<IGenre>('genres', GenreSchema);
 
 export default Genre;

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IGame {
   _id: Schema.Types.ObjectId;
@@ -12,6 +12,7 @@ interface IGame {
   reviews?: String[];
   aggregated_rating?: Number;
   aggregated_rating_count?: Number;
+  user_rating?: Number;
 }
 
 const GameSchema = new Schema<IGame>({
@@ -26,8 +27,9 @@ const GameSchema = new Schema<IGame>({
   reviews: { type: [String], required: false },
   aggregated_rating: { type: Number, required: false },
   aggregated_rating_count: { type: Number, required: false },
+  user_rating: { type: Number, required: false },
 });
 
-const Game = model<IGame>("games", GameSchema);
+const Game = model<IGame>('games', GameSchema);
 
 export default Game;
