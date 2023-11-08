@@ -27,6 +27,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/userState';
 import { gql } from '../gql/';
+import Loading from './Loading';
 
 const GET_GAME_PLATFORMS = gql(`
   query GetGamePlatforms($id: ID!) {
@@ -121,8 +122,8 @@ export function ReviewForm() {
     form.reset();
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
+  if (loading) return <Loading />;
+  if (error) return <p>Error : {error.message}</p>;
 
   return (
     <Form {...form}>

@@ -21,6 +21,7 @@ import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/state/userState';
+import Loading from '@/components/Loading';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
@@ -72,8 +73,8 @@ const BaseGameDetailPage = () => {
   });
 
   const rating = Number(data?.getAvgRating);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
