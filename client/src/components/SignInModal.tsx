@@ -8,7 +8,7 @@ export default function SignInModal() {
       <DialogTrigger asChild>
         <Button className="">Sign In</Button>
       </DialogTrigger>
-      <DialogContent className="overflow-auto">
+      <DialogContent className="overflow-auto max-w-[350px]">
         <SignInForm />
       </DialogContent>
     </Dialog>

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { GameSortInput, User } from '../gql/graphql';
+import { GameSortInput, Genre, Platform, User } from '../gql/graphql';
 
 const user = localStorage.getItem('user');
 const defaultUser = {
@@ -42,3 +42,17 @@ export const sortByState = atom<GameSortInput>({
   default: sortBy ? JSON.parse(sortBy) : defaultSortBy,
 });
 
+export const searchQueryState = atom({
+  key: 'searchQueryState',
+  default: '',
+});
+
+export const genresListState = atom({
+  key: 'genresListState',
+  default: [] as Genre[],
+});
+
+export const platformsListState = atom({
+  key: 'platformsListState',
+  default: [] as Platform[],
+});

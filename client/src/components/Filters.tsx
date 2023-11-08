@@ -3,22 +3,27 @@ import { ChevronRight, ChevronLeft } from 'lucide-react'; // Make sure to instal
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
+import { useRecoilValue} from 'recoil';
+import { genresListState, platformsListState } from '@/state/atoms';
 
 export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
+  const genres = useRecoilValue(genresListState);
+  const platforms = useRecoilValue(platformsListState);
+
   return (
     <>
       <div
         className={cn(
-          'flex h-full max-h-[800px] min-h-screen flex-col items-start overflow-y-auto text-left',
+          'flex h-full min-h-screen flex-col items-start overflow-y-auto text-left',
           !isCollapsed && 'max-w-[210px]'
         )}
       >
         <Button
-          className="hidden md:flex"
+          className="hidden md:flex m-1"
           variant="ghost"
           onClick={toggleCollapse}
           aria-label="toggle filters"
@@ -36,8 +41,8 @@ export default function Filters() {
           </h1>
           {!isCollapsed && (
             <>
-              <FilterItems filterType="platforms" />
-              <FilterItems filterType="genres" />
+              <FilterItems filters={platforms} filterType="platforms" />
+              <FilterItems filters={genres} filterType="genres" />
             </>
           )}
         </div>
