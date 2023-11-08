@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/state/atoms';
+import { userState } from '@/state/userState';
 import { gql, useMutation } from '@apollo/client';
 
 const SIGN_IN_OR_CREATE_USER = gql`
@@ -54,7 +54,7 @@ export function SignInForm() {
       const { data } = await signInOrCreateUser({
         variables: {
           userInput: {
-            username: values.username,
+            username: values.username.trim(),
           },
         },
       });
