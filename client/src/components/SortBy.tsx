@@ -7,11 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { pageState } from '@/state/pageState';
 import { sortByState } from '@/state/sortByState';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function SortBy() {
   const setSortBy = useRecoilState(sortByState)[1];
+  const setCurrentPage = useSetRecoilState(pageState);
 
   function handleSortSelection(value: string) {
     let sortByObject = { field: 'first_release_date', order: 'desc' };
@@ -43,6 +45,10 @@ export default function SortBy() {
     // Store the selected value in localStorage
     localStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
     localStorage.setItem('selectedSortLabel', value);
+
+    // Reset the page to 1
+    setCurrentPage(1);
+    localStorage.setItem('currentPage', '1');
   }
 
   return (
