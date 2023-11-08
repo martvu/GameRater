@@ -18,6 +18,10 @@ import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
 import { gql } from '../gql/';
 import Metascore from '@/components/Metascore';
+import FavoriteHeart from '@/components/FavoriteHeart';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/state/userState';
+import Loading from '@/components/Loading';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
@@ -57,6 +61,7 @@ type GameDetailParams = {
 
 const BaseGameDetailPage = () => {
   const { id } = useParams<GameDetailParams>();
+  const user = useRecoilValue(userState);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
   const { loading, error, data } = useQuery(GET_GAME, {
@@ -67,13 +72,13 @@ const BaseGameDetailPage = () => {
     },
   });
 
+  const rating = Number(data?.getAvgRating);
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-  const rating = Number(data?.getAvgRating);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
 
   const formatDate = (unixTimestampStr: string): string => {
     const date = new Date(Number(unixTimestampStr) * 1000);
@@ -84,6 +89,10 @@ const BaseGameDetailPage = () => {
     });
   };
 
+  const hasWrittenReview = data?.getGame.reviews?.reviews?.some(
+    (review: Review | null) => review?.user === user.username
+  );
+  console.log(hasWrittenReview);
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
@@ -99,15 +108,15 @@ const BaseGameDetailPage = () => {
             <ArrowLeft />
           </Button>
         </Link>
-        <div className="grid gap-2 lg:grid-cols-[auto,1fr]">
+        <div className="grid gap-2 md:grid-cols-[auto,1fr]">
           {/* Image, ratings, Write Review */}
-          <Card className="overflow-hidden p-0 md:min-w-[400px] lg:min-w-[500px]">
+          <Card className="overflow-hidden p-0">
             <CardHeader className="p-0">
               <div className="flex w-full cursor-default p-0">
                 <img
                   src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
                   alt={data.getGame.name as string}
-                  className="h-full max-h-[300px] w-full object-cover"
+                  className="h-full max-h-[374px] w-full object-contain"
                   loading="lazy"
                 />
               </div>
@@ -119,7 +128,13 @@ const BaseGameDetailPage = () => {
               </div>
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
-              <ReviewModal />
+              {hasWrittenReview ? (
+                <Button className="mb-4 w-[200px]" disabled={true}>
+                  Review Submitted
+                </Button>
+              ) : (
+                <ReviewModal />
+              )}
             </CardFooter>
           </Card>
 
@@ -129,6 +144,7 @@ const BaseGameDetailPage = () => {
               <CardTitle className=" text-4xl font-semibold">
                 {data.getGame.name}
               </CardTitle>
+              <FavoriteHeart game={data.getGame} />
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start gap-1">
                   <div className="flex gap-2">

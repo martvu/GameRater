@@ -6,6 +6,8 @@ import { useRecoilState } from 'recoil';
 import { sortByState } from '@/state/sortByState';
 import { pageState } from '@/state/pageState';
 import Pagination from './Pagination';
+import { useEffect } from 'react';
+import Loading from './Loading';
 
 const GET_GAMES = gql(`
   query GetGames($limit: Int, $offset: Int, $sortBy: GameSortInput) {
@@ -25,14 +27,20 @@ const GET_GAMES = gql(`
 
 export default function GamesList() {
   const [currentPage, setCurrentPage] = useRecoilState(pageState);
-  const sortBy = useRecoilState(sortByState)[0];
+  const [sortBy, setSortBy] = useRecoilState(sortByState);
   const limit = 24;
   const { loading, error, data } = useQuery(GET_GAMES, {
     variables: { limit, offset: limit * (currentPage - 1), sortBy: sortBy },
   });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  useEffect(() => {
+    const sortByFromStorage = localStorage.getItem('selectedSortBy');
+    if (sortByFromStorage) {
+      setSortBy(JSON.parse(sortByFromStorage)); // Assuming this is the setter from useRecoilState
+    }
+  }, []);
+  if (loading) return <Loading />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <main>

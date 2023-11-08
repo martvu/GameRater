@@ -27,6 +27,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/userState';
 import { gql } from '../gql/';
+import Loading from './Loading';
 
 const GET_GAME_PLATFORMS = gql(`
   query GetGamePlatforms($id: ID!) {
@@ -79,7 +80,10 @@ export function ReviewForm() {
   const { loading, error, data } = useQuery(GET_GAME_PLATFORMS, {
     variables: { id: id as string },
   });
-  const [createReview] = useMutation(CREATE_REVIEW);
+  const [createReview] = useMutation(CREATE_REVIEW, {
+    refetchQueries: ['GetGame'],
+    awaitRefetchQueries: true,
+  });
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -98,8 +102,8 @@ export function ReviewForm() {
       createReview({
         variables: {
           reviewInput: {
-            title: values.title,
-            content: values.content,
+            title: values.title.trim(),
+            content: values.content.trim(),
             rating: values.rating,
             platform: values.platform,
             user: user.username,
@@ -109,19 +113,19 @@ export function ReviewForm() {
         onCompleted: () => {
           console.log('Review created');
         },
+        onError: error => {
+          alert('Could not create review');
+          console.log(error);
+        },
       });
     } catch (error) {
       console.log('Could not create review');
     }
-    //Reset form
     form.reset();
-    //Refresh page
-    window.location.reload();
-    console.log(values);
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
+  if (loading) return <Loading />;
+  if (error) return <p>Error : {error.message}</p>;
 
   return (
     <Form {...form}>

@@ -4,6 +4,7 @@ import { Checkbox } from './ui/checkbox';
 import { Button } from './ui/button';
 import { useQuery } from '@apollo/client';
 import { gql } from '../gql/';
+import Loading from './Loading';
 const GET_FILTERS = gql(`
   query GetFilters {
     getPlatforms {
@@ -23,8 +24,14 @@ export default function FilterItems({ filterType }: FilterItemsProps) {
   const { loading, error, data } = useQuery(GET_FILTERS);
   const [numItemsToShow, setNumItemsToShow] = useState(10);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (loading)
+    return (
+      <div className="w-[210px]">
+        <Loading />
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
+
   const filterData =
     filterType === 'platforms' ? data?.getPlatforms : data?.getGenres;
   const showMore = () => {

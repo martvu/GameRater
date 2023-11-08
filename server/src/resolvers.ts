@@ -83,9 +83,6 @@ export const resolvers: Resolvers = {
         platform,
         gameID,
       }).save();
-      // Update the corresponding game's reviews array or create it if it doesn't exist
-
-      // Calculate the average rating of reviews
       const reviews = await Review.find({ gameID: gameID });
 
       // Calculate the new average rating
@@ -102,6 +99,15 @@ export const resolvers: Resolvers = {
         //Update the games user_rating
         user_rating: newAverageRating,
       });
+
+      const userDoc = await User.findOne({ username: user });
+      if (userDoc) {
+        await User.findByIdAndUpdate(userDoc._id, {
+          $addToSet: { reviews: review._id },
+        });
+      } else {
+        throw new Error('User not found');
+      }
       return { ...review.toObject(), _id: review._id.toString() };
     },
     updateReview: async (
@@ -129,6 +135,30 @@ export const resolvers: Resolvers = {
         }).save();
         return newUser.toObject();
       }
+    },
+    addFavorites: async (_, { username, gameID }) => {
+      const user = await User.findOne({ username });
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      if (!user.favorites.includes(gameID)) {
+        user.favorites.push(gameID);
+        await user.save();
+      }
+      return user.toObject();
+    },
+    removeFavorites: async (_, { username, gameID }) => {
+      const user = await User.findOne({ username });
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      if (user.favorites.includes(gameID)) {
+        user.favorites = user.favorites.filter(id => id !== gameID);
+        await user.save();
+      }
+      return user.toObject();
     },
   },
   Game: {
