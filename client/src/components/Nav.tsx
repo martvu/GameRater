@@ -21,7 +21,10 @@ export default function Nav() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();  // Prevent the default form submission behavior
-
+    setSelectedPlatforms([]);
+    setSelectedGenres([]);
+    localStorage.removeItem('selectedPlatforms');
+    localStorage.removeItem('selectedGenres');
     navigate(searchQuery === '' || searchQuery === null ? "/" : `/search/${encodeURIComponent(searchQuery)}`);  // Navigate to the new URL
   };
   const setSortBy = useSetRecoilState(sortByState);
@@ -40,7 +43,6 @@ export default function Nav() {
     localStorage.removeItem('selectedPlatforms');
     localStorage.removeItem('selectedGenres');
     localStorage.removeItem('searchQuery');
-
   }
 
   return (
