@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { Checkbox } from './ui/checkbox';
 import { Button } from './ui/button';
-import { useRecoilState } from 'recoil';
-import { selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { pageState, selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
 import { Genre, Platform } from '@/gql/graphql';
 
 interface FilterItemsProps {
@@ -18,7 +18,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   );
   const [selectedGenres, setSelectedGenres] =
     useRecoilState(selectedGenresState);
-
+  const setCurrentPage = useSetRecoilState(pageState);
   const showMore = () => {
     setNumItemsToShow(numItemsToShow + 10);
   };
@@ -37,6 +37,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
           : selectedGenres.filter(id => id !== filterId)
       );
     }
+    setCurrentPage(1); // Reset page to 1 when a filter is selected
   };
 
   const showLess = () => setNumItemsToShow(10);
