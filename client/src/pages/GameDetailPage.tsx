@@ -100,16 +100,15 @@ const BaseGameDetailPage = () => {
     <div className="flex justify-center">
       {/* Back to home button*/}
       <div className="grid max-w-[1200px] grid-cols-1 gap-4 px-4">
-       
-          <Button
-            size="icon"
-            variant="ghost"
-            className="rounded-2x flex-shrink-0"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft />
-          </Button>
-        
+        <Button
+          size="icon"
+          variant="ghost"
+          className="rounded-2x flex-shrink-0"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+        </Button>
+
         <div className="grid gap-2 md:grid-cols-[auto,1fr]">
           {/* Image, ratings, Write Review */}
           <Card className="overflow-hidden p-0">

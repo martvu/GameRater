@@ -107,7 +107,9 @@ export default function Nav() {
               className="w-[150px] lg:w-[300px]"
               placeholder="Search"
               value={searchQuery}
-              onChange={e => { setSearchQuery(e.target.value)}}
+              onChange={e => {
+                setSearchQuery(e.target.value);
+              }}
             />
             <Button type="submit">Search</Button>
           </form>

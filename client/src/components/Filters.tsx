@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft } from 'lucide-react'; 
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { gql } from '@/gql';
 import { useQuery } from '@apollo/client';
 import Loading from './Loading';
-import { Platform } from '@/gql/graphql';
+import { Genre, Platform } from '@/gql/graphql';
+import { useRecoilValue } from 'recoil';
+import { genresListState, platformsListState } from '@/state/atoms';
+import { platform } from 'os';
 
 const GET_FILTERS = gql(`
   query GetFilters {
@@ -25,6 +28,9 @@ const GET_FILTERS = gql(`
 
 export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const genreList = useRecoilValue(genresListState);
+  const platformList = useRecoilValue(platformsListState);
+
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
@@ -56,12 +62,21 @@ export default function Filters() {
   // Sort the platforms
   // Create a copy of the platforms array before sorting
   const platformsCopy: Platform[] = [...(data?.getPlatforms ?? [])];
-
+  const genresCopy: Genre[] = [...(data?.getGenres ?? [])];
   // Now sort the copied array
   const sortedPlatforms: Platform[] = platformsCopy.sort(sortByPreference);
-  const filteredPlatforms = sortedPlatforms.filter(platform => platform.gamesCount > 0);
-  const filteredGenres = data?.getGenres.filter(genre => genre.gamesCount > 0) ?? [];
 
+  // Filter only platforms in platformList
+  const filteredPlatforms = sortedPlatforms.filter(platform => {
+    if (platformList.length === 0) return true;
+    return platformList.includes(platform.id as number);
+  });
+
+  const filteredGenres = genresCopy.filter(genre => {
+    if (genreList.length === 0) return true;
+    return genreList.includes(genre.id as number);
+  });
+  console.log(filteredPlatforms);
 
   if (loading) {
     return (
@@ -100,8 +115,8 @@ export default function Filters() {
           </h1>
           {!isCollapsed && data && (
             <>
-              <FilterItems filters={sortedPlatforms} filterType="platforms" />
-              <FilterItems filters={data.getGenres} filterType="genres" />
+              <FilterItems filters={filteredPlatforms} filterType="platforms" />
+              <FilterItems filters={filteredGenres} filterType="genres" />
             </>
           )}
         </div>

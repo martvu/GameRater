@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { gql } from '../gql/';
 import { GameCard } from './GameCard';
 import { Game } from '@/gql/graphql';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   genresListState,
   platformsListState,
@@ -31,6 +31,10 @@ const GET_GAMES = gql(`
         cover_image_id
         name
       }
+      filters {
+        genres 
+        platforms
+      }
     }
 
   }
@@ -45,6 +49,8 @@ export default function GamesList() {
   const user = useRecoilValue(userState);
   const [showFavorites, setShowFavorites] = useState(false);
   const [showReviewedGames, setShowReviewedGames] = useState(false);
+  const setGenresList = useSetRecoilState(genresListState);
+  const setPlatformsList = useSetRecoilState(platformsListState);
   const limit = 24;
 
   // Ensure that keyword is a string, even if it's an empty string.
@@ -78,6 +84,13 @@ export default function GamesList() {
       setSortBy(JSON.parse(sortByFromStorage));
     }
   }, []);
+
+  useEffect(() => {
+    if (data?.search.filters) {
+      setGenresList(data.search.filters.genres as number[]);
+      setPlatformsList(data.search.filters.platforms as number[]);
+    }
+  }, [data?.search.filters]);
 
   useEffect(() => {
     // Scroll to top of the page

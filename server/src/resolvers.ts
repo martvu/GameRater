@@ -10,6 +10,7 @@ interface GameQueryFilters {
   genres?: { $in: number[] };
   name?: { $regex: RegExp };
 }
+
 export const resolvers: Resolvers = {
   Query: {
     getUser: async (_, { username }) => {
@@ -79,9 +80,13 @@ export const resolvers: Resolvers = {
       }
     ) => {
       const filters: GameQueryFilters = {};
+      let distinctGenres: number[] = [];
+      let distinctPlatforms: number[] = [];
       // Apply filters if provided
       if (query) {
         filters.name = { $regex: new RegExp(query, 'i') };
+        distinctPlatforms = await Game.distinct('platforms', filters).exec();
+        distinctGenres = await Game.distinct('genres', filters).exec();
       }
       if (platforms && platforms.length > 0) {
         filters['platforms'] = { $in: platforms };
@@ -89,6 +94,7 @@ export const resolvers: Resolvers = {
       if (genres && genres.length > 0) {
         filters['genres'] = { $in: genres };
       }
+
       // If showFavorites is true, filter by user's favorite games
       let combinedGameIds = [];
       if (showFavorites && userId) {
@@ -138,6 +144,10 @@ export const resolvers: Resolvers = {
         return {
           games: games.map(game => game.toObject()),
           count,
+          filters: {
+            platforms: distinctPlatforms,
+            genres: distinctGenres,
+          },
         };
       } catch (error) {
         console.error(error);

@@ -49,10 +49,10 @@ export const searchQueryState = atom({
 
 export const genresListState = atom({
   key: 'genresListState',
-  default: [] as Genre[],
+  default: [] as number[],
 });
 
 export const platformsListState = atom({
   key: 'platformsListState',
-  default: [] as Platform[],
+  default: [] as number[],
 });

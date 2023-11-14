@@ -3,7 +3,11 @@ import { Plus, Minus } from 'lucide-react';
 import { Checkbox } from './ui/checkbox';
 import { Button } from './ui/button';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { pageState, selectedGenresState, selectedPlatformsState } from '@/state/atoms.ts';
+import {
+  pageState,
+  selectedGenresState,
+  selectedPlatformsState,
+} from '@/state/atoms.ts';
 import { Genre, Platform } from '@/gql/graphql';
 
 interface FilterItemsProps {

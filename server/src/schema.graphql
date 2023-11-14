@@ -66,6 +66,12 @@ type Platform {
 type Games {
   games: [Game]
   count: Int!
+  filters: FiltersID
+}
+
+type FiltersID {
+  genres: [Int]
+  platforms: [Int]
 }
 
 type Filters {
