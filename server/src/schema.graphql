@@ -99,21 +99,18 @@ type Query {
   getAvgRating(gameID: ID!): Float!
   getGenre(id: Int): Genre!
   getGenres(limit: Int): [Genre!]!
-  getFilters(
-    limit: Int
-    platforms: [Int]
-    genres: [Int]
-    query: String
-  ): Filters
   getPlatform(id: Int): Platform!
   getPlatforms(limit: Int): [Platform!]!
   search(
+    userId: String
     query: String
     limit: Int!
     offset: Int!
     platforms: [Int]
     genres: [Int]
     sortBy: GameSortInput
+    showFavorites: Boolean
+    showReviewedGames: Boolean
   ): Games!
 }
 

@@ -1,24 +1,27 @@
 import { useQuery } from '@apollo/client';
 import { gql } from '../gql/';
 import { GameCard } from './GameCard';
-import { Game, Genre, Platform } from '@/gql/graphql';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { Game } from '@/gql/graphql';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   genresListState,
   platformsListState,
   selectedGenresState,
   selectedPlatformsState,
   sortByState,
+  userState,
 } from '@/state/atoms';
 import { pageState } from '@/state/atoms';
 import Pagination from './Pagination';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
+import { Button } from './ui/button';
+import { Heart, Star } from 'lucide-react';
 
 const GET_GAMES = gql(`
-  query Search($query: String, $limit: Int!, $offset: Int!, $sortBy: GameSortInput, $platforms: [Int!], $genres: [Int!]) {
-    search(query: $query, limit: $limit, offset: $offset, sortBy: $sortBy, platforms: $platforms, genres: $genres) {
+  query Search($userId: String, $showFavorites: Boolean, $showReviewedGames: Boolean, $query: String, $limit: Int!, $offset: Int!, $sortBy: GameSortInput, $platforms: [Int!], $genres: [Int!]) {
+    search(userId: $userId, showFavorites: $showFavorites, showReviewedGames: $showReviewedGames, query: $query, limit: $limit, offset: $offset, sortBy: $sortBy, platforms: $platforms, genres: $genres) {
       count
       games{
         _id
@@ -29,18 +32,7 @@ const GET_GAMES = gql(`
         name
       }
     }
-    getFilters(platforms: $platforms, genres: $genres, query: $query) {
-      genres {
-        id
-        name
-        gamesCount
-      }
-      platforms {
-        id
-        name
-        gamesCount
-      }
-    }
+
   }
 `);
 
@@ -50,12 +42,12 @@ export default function GamesList() {
   const [sortBy, setSortBy] = useRecoilState(sortByState);
   const selectedPlatforms = useRecoilValue(selectedPlatformsState);
   const selectedGenres = useRecoilValue(selectedGenresState);
-  const setGenres = useSetRecoilState(genresListState);
-  const setPlatforms = useSetRecoilState(platformsListState);
+  const user = useRecoilValue(userState);
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [showReviewedGames, setShowReviewedGames] = useState(false);
   const limit = 24;
 
   // Ensure that keyword is a string, even if it's an empty string.
-
   const { loading, error, data } = useQuery(GET_GAMES, {
     variables: {
       limit,
@@ -64,8 +56,21 @@ export default function GamesList() {
       platforms: selectedPlatforms,
       genres: selectedGenres,
       query: keyword,
+      userId: user?._id,
+      showFavorites,
+      showReviewedGames,
     },
   });
+
+  function handleShowFavorites() {
+    setShowFavorites(!showFavorites);
+    setCurrentPage(1);
+  }
+
+  function handleShowReviewedGames() {
+    setShowReviewedGames(!showReviewedGames);
+    setCurrentPage(1);
+  }
 
   useEffect(() => {
     const sortByFromStorage = localStorage.getItem('selectedSortBy');
@@ -75,19 +80,42 @@ export default function GamesList() {
   }, []);
 
   useEffect(() => {
-    if (data) {
-      setGenres(data.getFilters?.genres as Genre[]);
-      setPlatforms(data.getFilters?.platforms as Platform[]);
-    }
-  }, [data, setGenres, setPlatforms]);
+    // Scroll to top of the page
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   if (loading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <main>
-      <div className="mb-2 flex text-muted-foreground opacity-80">
-        <p className="text-sm">{data?.search.count} results</p>
+      <div className="mb-2 flex items-center gap-2 text-muted-foreground opacity-80">
+        <p className="w-[100px] text-left text-sm">
+          {data?.search.count} results
+        </p>
+        {/* Show favorites and reviewed buttons if user is signed in */}
+        {user._id && (
+          <>
+            <Button
+              className="flex gap-1"
+              size="sm"
+              variant={showFavorites ? 'destructive' : 'secondary'}
+              onClick={handleShowFavorites}
+            >
+              <p>Favorites</p>
+              <Heart size={16} />
+            </Button>
+            <Button
+              className="flex gap-1"
+              size="sm"
+              variant={showReviewedGames ? 'destructive' : 'secondary'}
+              onClick={handleShowReviewedGames}
+            >
+              <p>Reviewed</p>
+              <Star size={16} />{' '}
+            </Button>
+          </>
+        )}
       </div>
       <ul className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
         {data?.search.games?.map((game: Game | null | undefined) => (

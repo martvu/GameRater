@@ -6,8 +6,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RecoilRoot } from 'recoil';
 
 const client = new ApolloClient({
-  //uri: 'http://localhost:4000/graphql',
-  uri: 'http://it2810-48.idi.ntnu.no:4000/graphql',
+  uri: 'http://localhost:4000/graphql',
+  //uri: 'http://it2810-48.idi.ntnu.no:4000/graphql',
   cache: new InMemoryCache(),
 });
 
