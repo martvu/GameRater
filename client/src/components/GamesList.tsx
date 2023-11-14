@@ -54,7 +54,7 @@ export default function GamesList() {
   const limit = 24;
 
   // Ensure that keyword is a string, even if it's an empty string.
-  const { loading, error, data } = useQuery(GET_GAMES, {
+  const { loading, error, data, refetch } = useQuery(GET_GAMES, {
     variables: {
       limit,
       offset: limit * (currentPage - 1),
@@ -77,6 +77,10 @@ export default function GamesList() {
     setShowReviewedGames(!showReviewedGames);
     setCurrentPage(1);
   }
+
+  useEffect(() => {
+    refetch();
+  }, [showFavorites, refetch]);
 
   useEffect(() => {
     const sortByFromStorage = localStorage.getItem('selectedSortBy');

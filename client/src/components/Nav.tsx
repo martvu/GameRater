@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search } from 'lucide-react';
 import { FormEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
 import { useSetRecoilState } from 'recoil';
@@ -18,7 +18,9 @@ import {
 import { pageState } from '@/state/atoms';
 import { useRecoilState } from 'recoil';
 import { searchQueryState } from '@/state/atoms';
+
 export default function Nav() {
+  const { keyword } = useParams<{ keyword?: string }>();
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const setSelectedPlatforms = useSetRecoilState(selectedPlatformsState);
@@ -26,11 +28,7 @@ export default function Nav() {
   const navigate = useNavigate();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    setSelectedPlatforms([]);
-    setSelectedGenres([]);
-    localStorage.removeItem('selectedPlatforms');
-    localStorage.removeItem('selectedGenres');
+    event.preventDefault();
     navigate(
       searchQuery === '' || searchQuery === null
         ? '/'
@@ -105,7 +103,7 @@ export default function Nav() {
             <Input
               type="search"
               className="w-[150px] lg:w-[300px]"
-              placeholder="Search"
+              placeholder={keyword || 'Search'}
               value={searchQuery}
               onChange={e => {
                 setSearchQuery(e.target.value);

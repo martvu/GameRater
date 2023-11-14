@@ -45,11 +45,8 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
 
   async function toggleFavorite() {
     if (isUpdating) return;
-
     setIsUpdating(true);
-
     if (!user.username) {
-      console.log('User not signed in');
       setIsUpdating(false);
       return;
     }
@@ -64,7 +61,6 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
 
     // Optimistically update the UI
     setUser({ ...user, favorites: updatedFavorites });
-    console.log(updatedFavorites);
 
     try {
       await (isFavorite ? removeFavorite : addFavorites)({
@@ -74,8 +70,7 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
         },
       });
     } catch (error) {
-      console.log('Could not update favorites');
-      console.log(error);
+      console.log('Could not update favorites', error);
       setUser(user);
     } finally {
       setIsUpdating(false);

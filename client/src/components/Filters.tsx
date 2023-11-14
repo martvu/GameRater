@@ -8,8 +8,12 @@ import { useQuery } from '@apollo/client';
 import Loading from './Loading';
 import { Genre, Platform } from '@/gql/graphql';
 import { useRecoilValue } from 'recoil';
-import { genresListState, platformsListState } from '@/state/atoms';
-import { platform } from 'os';
+import {
+  genresListState,
+  platformsListState,
+  selectedGenresState,
+  selectedPlatformsState,
+} from '@/state/atoms';
 
 const GET_FILTERS = gql(`
   query GetFilters {
@@ -30,6 +34,8 @@ export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const genreList = useRecoilValue(genresListState);
   const platformList = useRecoilValue(platformsListState);
+  const selectedGenres = useRecoilValue(selectedGenresState);
+  const selectedPlatforms = useRecoilValue(selectedPlatformsState);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -69,14 +75,19 @@ export default function Filters() {
   // Filter only platforms in platformList
   const filteredPlatforms = sortedPlatforms.filter(platform => {
     if (platformList.length === 0) return true;
-    return platformList.includes(platform.id as number);
+    return (
+      platformList.includes(platform.id as number) ||
+      selectedPlatforms.includes(platform.id as number)
+    );
   });
 
   const filteredGenres = genresCopy.filter(genre => {
     if (genreList.length === 0) return true;
-    return genreList.includes(genre.id as number);
+    return (
+      genreList.includes(genre.id as number) ||
+      selectedGenres.includes(genre.id as number)
+    );
   });
-  console.log(filteredPlatforms);
 
   if (loading) {
     return (
