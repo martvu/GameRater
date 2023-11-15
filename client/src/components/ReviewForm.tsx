@@ -111,11 +111,11 @@ export function ReviewForm() {
           },
         },
         onCompleted: () => {
+          // can be replaced with a toast
           console.log('Review created');
         },
-        onError: error => {
+        onError: () => {
           alert('Could not create review');
-          console.log(error);
         },
       });
     } catch (error) {

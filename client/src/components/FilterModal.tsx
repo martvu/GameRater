@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogTrigger,
@@ -18,7 +19,9 @@ export default function FilterModal() {
       <DialogContent className="sm:max-w-[425px]">
         <Filters />
         <DialogFooter>
-          <Button type="submit">Apply Filter</Button>
+          <DialogClose asChild>
+            <Button type="submit">Apply Filter</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

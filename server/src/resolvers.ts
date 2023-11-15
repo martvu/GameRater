@@ -10,6 +10,7 @@ interface GameQueryFilters {
   genres?: { $in: number[] };
   name?: { $regex: RegExp };
 }
+
 export const resolvers: Resolvers = {
   Query: {
     getUser: async (_, { username }) => {
@@ -52,41 +53,8 @@ export const resolvers: Resolvers = {
     },
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
+      genres.sort((a, b) => a.name.localeCompare(b.name as string));
       return genres.map(genre => genre.toObject());
-    },
-    getFilters: async (_, { limit, platforms, genres, query }) => {
-      const filters: GameQueryFilters = {};
-
-      if (query) {
-        filters.name = { $regex: new RegExp(query, 'i') };
-      }
-      if (platforms && platforms.length > 0) {
-        filters['platforms'] = { $in: platforms };
-      }
-      if (genres && genres.length > 0) {
-        filters['genres'] = { $in: genres };
-      }
-      try {
-        const games = await Game.find(filters).limit(limit);
-        // Extract unique genre and platform IDs from the matching games
-        const uniqueGenreIds = [...new Set(games.flatMap(game => game.genres))];
-        const uniquePlatformIds = [
-          ...new Set(games.flatMap(game => game.platforms)),
-        ];
-        // Fetch the genre and platform objects based on the unique IDs
-        const genres = await Genre.find({ id: { $in: uniqueGenreIds } });
-        const platforms = await Platform.find({
-          id: { $in: uniquePlatformIds },
-        });
-
-        return {
-          genres: genres.map(genre => genre.toObject()),
-          platforms: platforms.map(platform => platform.toObject()),
-        };
-      } catch (error) {
-        console.error(error);
-        throw new Error('Error executing search query');
-      }
     },
     getPlatform: async (_, { id }) => {
       const platform = await Platform.findOne({ id: id });
@@ -94,14 +62,31 @@ export const resolvers: Resolvers = {
     },
     getPlatforms: async (_, { limit }) => {
       const platforms = await Platform.find().limit(limit);
+      platforms.reverse();
       return platforms.map(platform => platform.toObject());
     },
-    search: async (_, { query, limit, offset, platforms, genres, sortBy }) => {
+    search: async (
+      _,
+      {
+        userId,
+        query,
+        limit,
+        offset,
+        platforms,
+        genres,
+        sortBy,
+        showFavorites,
+        showReviewedGames,
+      }
+    ) => {
       const filters: GameQueryFilters = {};
-
+      let distinctGenres: number[] = [];
+      let distinctPlatforms: number[] = [];
       // Apply filters if provided
       if (query) {
         filters.name = { $regex: new RegExp(query, 'i') };
+        distinctPlatforms = await Game.distinct('platforms', filters).exec();
+        distinctGenres = await Game.distinct('genres', filters).exec();
       }
       if (platforms && platforms.length > 0) {
         filters['platforms'] = { $in: platforms };
@@ -110,6 +95,33 @@ export const resolvers: Resolvers = {
         filters['genres'] = { $in: genres };
       }
 
+      // If showFavorites is true, filter by user's favorite games
+      let combinedGameIds = [];
+      if (showFavorites && userId) {
+        const user = await User.findOne({ _id: userId });
+        if (user && user.favorites) {
+          combinedGameIds.push(...user.favorites);
+        }
+      }
+      if (showReviewedGames && userId) {
+        const user = await User.findOne({ _id: userId });
+        const reviews = await Review.find({ user: user.username });
+        const reviewedGameIds = reviews.map(review => review.gameID);
+        if (
+          user &&
+          user.reviews &&
+          reviewedGameIds &&
+          reviewedGameIds.length > 0
+        ) {
+          combinedGameIds.push(...reviewedGameIds);
+        }
+      }
+      // Remove duplicate IDs
+      combinedGameIds = [...new Set(combinedGameIds)];
+      console.log(combinedGameIds);
+      if (combinedGameIds.length > 0) {
+        filters['_id'] = { $in: combinedGameIds };
+      }
       try {
         let sortQuery = Game.find();
 
@@ -132,6 +144,10 @@ export const resolvers: Resolvers = {
         return {
           games: games.map(game => game.toObject()),
           count,
+          filters: {
+            platforms: distinctPlatforms,
+            genres: distinctGenres,
+          },
         };
       } catch (error) {
         console.error(error);

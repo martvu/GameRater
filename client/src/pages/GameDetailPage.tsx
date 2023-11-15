@@ -1,5 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -64,6 +64,7 @@ const BaseGameDetailPage = () => {
   const user = useRecoilValue(userState);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
+  const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_GAME, {
     variables: {
       id: id as string,
@@ -98,16 +99,16 @@ const BaseGameDetailPage = () => {
   return (
     <div className="flex justify-center">
       {/* Back to home button*/}
-      <div className="grid max-w-[1500px] grid-cols-1 gap-4 px-4">
-        <Link to="/" className="w-10" aria-label="back to home">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="rounded-2x flex-shrink-0"
-          >
-            <ArrowLeft />
-          </Button>
-        </Link>
+      <div className="grid max-w-[1200px] grid-cols-1 gap-4 px-4">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="rounded-2x flex-shrink-0"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+        </Button>
+
         <div className="grid gap-2 md:grid-cols-[auto,1fr]">
           {/* Image, ratings, Write Review */}
           <Card className="overflow-hidden p-0">

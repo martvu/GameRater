@@ -65,10 +65,8 @@ export function SignInForm() {
       });
       setUser(data.signInOrCreateUser);
       localStorage.setItem('user', JSON.stringify(data.signInOrCreateUser));
-      console.log(data);
     } catch (error) {
-      console.log('Could not create user');
-      console.log(error);
+      console.log('Could not create user', error);
     }
     form.reset();
   }
