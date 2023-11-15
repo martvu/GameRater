@@ -84,7 +84,14 @@ export const resolvers: Resolvers = {
       let distinctPlatforms: number[] = [];
       // Apply filters if provided
       if (query) {
-        filters.name = { $regex: new RegExp(query, 'i') };
+        // Split the query into individual keywords
+        const keywords = query.split(' ').filter(keyword => keyword.length > 0);
+        // Create a regex pattern that matches documents containing all keywords
+        const regexPattern = keywords
+          .map(keyword => `(?=.*${keyword})`)
+          .join('');
+        filters.name = { $regex: new RegExp(regexPattern, 'i') };
+        // Get distinct platforms and genres matching the query
         distinctPlatforms = await Game.distinct('platforms', filters).exec();
         distinctGenres = await Game.distinct('genres', filters).exec();
       }
@@ -103,6 +110,7 @@ export const resolvers: Resolvers = {
           combinedGameIds.push(...user.favorites);
         }
       }
+      // If showReviewedGames is true, filter by user's reviewed games
       if (showReviewedGames && userId) {
         const user = await User.findOne({ _id: userId });
         const reviews = await Review.find({ user: user.username });
