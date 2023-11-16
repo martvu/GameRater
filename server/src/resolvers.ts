@@ -104,10 +104,12 @@ export const resolvers: Resolvers = {
 
       // If showFavorites is true, filter by user's favorite games
       let combinedGameIds = [];
+      let hasFavoritesOrReviews = false;
       if (showFavorites && userId) {
         const user = await User.findOne({ _id: userId });
-        if (user && user.favorites) {
+        if (user && user.favorites && user.favorites.length > 0) {
           combinedGameIds.push(...user.favorites);
+          hasFavoritesOrReviews = true;
         }
       }
       // If showReviewedGames is true, filter by user's reviewed games
@@ -122,17 +124,23 @@ export const resolvers: Resolvers = {
           reviewedGameIds.length > 0
         ) {
           combinedGameIds.push(...reviewedGameIds);
+          hasFavoritesOrReviews = true;
         }
       }
-      // Remove duplicate IDs
-      combinedGameIds = [...new Set(combinedGameIds)];
-      console.log(combinedGameIds);
-      if (combinedGameIds.length > 0) {
-        filters['_id'] = { $in: combinedGameIds };
+      // If user has favorites or reviews, filter by those
+      if (hasFavoritesOrReviews) {
+        // Remove duplicate IDs
+        combinedGameIds = [...new Set(combinedGameIds)];
+        if (combinedGameIds.length > 0) {
+          filters['_id'] = { $in: combinedGameIds };
+        }
+        // Return no results if specifically requested data is not available
+      } else if (showFavorites || showReviewedGames) {
+        return { games: [], count: 0, filters: { platforms: [], genres: [] } };
       }
+
       try {
         let sortQuery = Game.find();
-
         // Apply sorting if sortBy is provided
         if (sortBy) {
           const { field, order } = sortBy;
