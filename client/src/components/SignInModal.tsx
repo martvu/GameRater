@@ -6,7 +6,7 @@ export default function SignInModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="">Sign In</Button>
+        <Button data-testid="modal-sign-in-button">Sign In</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] overflow-auto">
         <SignInForm />

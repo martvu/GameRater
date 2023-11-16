@@ -19,7 +19,7 @@ import { useParams } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Heart, Star } from 'lucide-react';
 
-const GET_GAMES = gql(`
+export const GET_GAMES = gql(`
   query Search($userId: String, $showFavorites: Boolean, $showReviewedGames: Boolean, $query: String, $limit: Int!, $offset: Int!, $sortBy: GameSortInput, $platforms: [Int!], $genres: [Int!]) {
     search(userId: $userId, showFavorites: $showFavorites, showReviewedGames: $showReviewedGames, query: $query, limit: $limit, offset: $offset, sortBy: $sortBy, platforms: $platforms, genres: $genres) {
       count
@@ -118,6 +118,7 @@ export default function GamesList() {
               size="sm"
               variant={showFavorites ? 'destructive' : 'secondary'}
               onClick={handleShowFavorites}
+              data-testid="favorites-filter-button"
             >
               <p>Favorites</p>
               <Heart size={16} />

@@ -5,6 +5,13 @@ interface PaginationProps {
   setCurrentPage: (currentPage: number) => void;
   pages: number;
 }
+
+/**
+ * Pagination component
+ * @param {number} currentPage - The current page
+ * @param {function} setCurrentPage - Callback function when page is changed
+ * @param {number} pages - The total number of pages
+ */
 export default function Pagination({
   currentPage,
   setCurrentPage,

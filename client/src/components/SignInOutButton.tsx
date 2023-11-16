@@ -16,7 +16,7 @@ export function SignInOutButton() {
   ) : (
     <div className="flex items-center gap-3">
       <h1>{user.username}</h1>
-      <Button onClick={signOutUser}>Sign Out</Button>
+      <Button data-testid="sign-out-btn" onClick={signOutUser}>Sign Out</Button>
     </div>
   );
 }

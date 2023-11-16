@@ -23,7 +23,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
 
-const GET_GAME = gql(`
+export const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
     getAvgRating(gameID: $id)
     getGame(ID: $id) {

@@ -7,6 +7,13 @@ interface RatingProps {
   onChange?: (rating: number) => void;
 }
 
+/**
+ * Rating component
+ * @param {number} rating - The rating of the game
+ * @param {number} numRatings - The number of ratings
+ * @param {boolean} disabled - Whether the rating is disabled
+ * @param {function} onChange - Callback function when rating is changed
+ */
 export default function Rating({ rating, numRatings }: RatingProps) {
   return (
     <>
@@ -24,6 +31,12 @@ export default function Rating({ rating, numRatings }: RatingProps) {
   );
 }
 
+/**
+ * StarRating component
+ * @param {number} rating - The rating of the game
+ * @param {boolean} disabled - Whether the rating is disabled
+ * @param {function} onChange - Callback function when rating is changed
+ */
 export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
   const [ratingValue, setRatingValue] = useState(rating || 0);
   const [hover, setHover] = useState(0);
@@ -48,7 +61,7 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
               key={index}
               className={
                 index <= (hover || ratingValue)
-                  ? 'text-yellow-400'
+                  ? 'text-red-400'
                   : 'text-muted-foreground'
               }
               onClick={() => handleClick(index)}
