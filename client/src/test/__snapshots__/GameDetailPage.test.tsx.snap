@@ -1,0 +1,546 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GameDetailPage Component > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="flex min-h-screen flex-col"
+  >
+    <header>
+      <nav
+        class="relative flex h-20 w-full items-center gap-10 px-2 md:px-4 lg:gap-20 lg:px-8 justify-between"
+      >
+        <a
+          aria-label="Return to Home Page"
+          href="/"
+        >
+          <div
+            class="w-28 items-center justify-between gap-2 px-2 flex"
+          >
+            <button
+              class="inline-flex items-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 justify-start hover:text-gray-400 h-10 px-4 py-2 hover:opacity-80"
+            >
+              <span
+                class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+              >
+                <span
+                  class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                >
+                  CN
+                </span>
+              </span>
+              <h1
+                class="text-xl font-semibold text-green-400"
+              >
+                GameRater
+              </h1>
+            </button>
+          </div>
+        </a>
+        <div
+          class="w-full max-w-sm flex-grow items-center justify-center space-x-2 md:flex hidden md:flex"
+        >
+          <form
+            class="flex gap-5"
+          >
+            <label
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sr-only"
+              for="search"
+            />
+            <input
+              class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[150px] lg:w-[300px]"
+              placeholder="Search"
+              type="search"
+              value=""
+            />
+            <button
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2"
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+        <div
+          class="flex-shrink-0 md:gap-2 flex"
+        >
+          <button
+            class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl md:hidden"
+          >
+            <svg
+              class="lucide lucide-search"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="8"
+              />
+              <path
+                d="m21 21-4.3-4.3"
+              />
+            </svg>
+          </button>
+          <button
+            aria-controls="radix-:r0:"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2"
+            data-state="closed"
+            data-testid="modal-sign-in-button"
+            type="button"
+          >
+            Sign In
+          </button>
+          <button
+            class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl"
+          >
+            <svg
+              class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="4"
+              />
+              <path
+                d="M12 2v2"
+              />
+              <path
+                d="M12 20v2"
+              />
+              <path
+                d="m4.93 4.93 1.41 1.41"
+              />
+              <path
+                d="m17.66 17.66 1.41 1.41"
+              />
+              <path
+                d="M2 12h2"
+              />
+              <path
+                d="M20 12h2"
+              />
+              <path
+                d="m6.34 17.66-1.41 1.41"
+              />
+              <path
+                d="m19.07 4.93-1.41 1.41"
+              />
+            </svg>
+            <svg
+              class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
+              />
+            </svg>
+            <span
+              class="sr-only"
+            >
+              Toggle theme
+            </span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <div
+      class="flex-grow"
+    >
+      <div
+        class="flex justify-center"
+      >
+        <div
+          class="grid max-w-[1200px] grid-cols-1 gap-4 px-4"
+        >
+          <button
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2x flex-shrink-0"
+          >
+            <svg
+              class="lucide lucide-arrow-left"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 19-7-7 7-7"
+              />
+              <path
+                d="M19 12H5"
+              />
+            </svg>
+          </button>
+          <div
+            class="grid gap-2 md:grid-cols-[auto,1fr]"
+          >
+            <div
+              class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden p-0"
+            >
+              <div
+                class="flex flex-col p-0"
+              >
+                <div
+                  class="flex w-full cursor-default p-0"
+                >
+                  <img
+                    alt="Example Game"
+                    class="h-full max-h-[374px] w-full object-contain"
+                    loading="lazy"
+                    src="https://images.igdb.com/igdb/image/upload/t_cover_big/image1.jpg"
+                  />
+                </div>
+                <div
+                  class="mt-2 flex items-center justify-center text-yellow-400"
+                >
+                  <div
+                    class="flex flex-col items-center"
+                  >
+                    <div
+                      class="flex items-center font-light"
+                    >
+                      <button
+                        class="text-red-400"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        class="text-red-400"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        class="text-red-400"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        class="text-red-400"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        class="text-muted-foreground"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ☆  
+                        </span>
+                      </button>
+                      <span
+                        class="ml-2 text-muted-foreground"
+                      >
+                        4.5/5
+                      </span>
+                    </div>
+                    <span
+                      class="text-xs leading-6 text-muted-foreground"
+                    >
+                      Based on 2 user ratings
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="items-center pt-0 flex flex-col justify-center"
+              >
+                <button
+                  aria-controls="radix-:r3:"
+                  aria-expanded="false"
+                  aria-haspopup="dialog"
+                  class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2 mb-4 w-[200px]"
+                  data-state="closed"
+                  type="button"
+                >
+                  Add Review
+                </button>
+              </div>
+            </div>
+            <div
+              class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm pb-4 text-left md:min-w-[400px] lg:min-w-[500px]"
+            >
+              <div
+                class="flex flex-col items-start"
+              >
+                <h3
+                  class="tracking-tight text-4xl font-semibold"
+                >
+                  Example Game
+                </h3>
+                <button
+                  aria-controls="radix-:r6:"
+                  aria-expanded="false"
+                  aria-haspopup="dialog"
+                  class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full z-10"
+                  data-state="closed"
+                  type="button"
+                >
+                  <svg
+                    class="none"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="py-2"
+                >
+                  <div
+                    class="flex flex-col justify-start gap-1"
+                  >
+                    <div
+                      class="flex gap-2"
+                    >
+                      <p>
+                        Metascore: 
+                      </p>
+                      <div
+                        class="flex items-center justify-center rounded-md border border-white text-sm text-white bg-green-600 h-7 w-7 px-1"
+                      >
+                        85
+                      </div>
+                    </div>
+                    <div
+                      class="flex"
+                    >
+                      <p>
+                        Release Date: 03.05.2021
+                      </p>
+                    </div>
+                    <div
+                      class="mt-1 flex flex-row flex-wrap"
+                    >
+                      <p
+                        class="mr-2"
+                      >
+                        Platforms:
+                      </p>
+                      <li
+                        class="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                      >
+                        PC
+                      </li>
+                    </div>
+                    <div
+                      class="mt-1 flex flex-row flex-wrap"
+                    >
+                      <p
+                        class="mr-2"
+                      >
+                        Genres:
+                      </p>
+                      <li
+                        class="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                      >
+                        Adventure
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-4"
+              >
+                <p
+                  class="text-md text-muted-foreground"
+                >
+                  This is an example game summary.
+                </p>
+              </div>
+            </div>
+            <div
+              class="col-span-1 flex h-full w-full justify-center lg:col-span-2"
+            >
+              <div
+                class="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]"
+              >
+                <h1
+                  class="text-2xl font-bold text-foreground"
+                >
+                  Reviews
+                </h1>
+                <div
+                  class="my-2"
+                >
+                  <div
+                    class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm"
+                  >
+                    <div
+                      class="flex flex-col"
+                    >
+                      <div
+                        class="flex flex-col"
+                      >
+                        <p
+                          class="text-lg font-semibold"
+                        >
+                          Great Game
+                        </p>
+                        <p
+                          class="text-sm text-muted-foreground"
+                        >
+                          user1
+                        </p>
+                        <p
+                          class="text-sm text-muted-foreground"
+                        >
+                          PC
+                        </p>
+                      </div>
+                      <div
+                        class="flex items-center font-light"
+                      >
+                        <button
+                          class="text-red-400"
+                          disabled=""
+                          type="button"
+                        >
+                          <span
+                            class="text-2xl font-light"
+                          >
+                            ★  
+                          </span>
+                        </button>
+                        <button
+                          class="text-red-400"
+                          disabled=""
+                          type="button"
+                        >
+                          <span
+                            class="text-2xl font-light"
+                          >
+                            ★  
+                          </span>
+                        </button>
+                        <button
+                          class="text-red-400"
+                          disabled=""
+                          type="button"
+                        >
+                          <span
+                            class="text-2xl font-light"
+                          >
+                            ★  
+                          </span>
+                        </button>
+                        <button
+                          class="text-red-400"
+                          disabled=""
+                          type="button"
+                        >
+                          <span
+                            class="text-2xl font-light"
+                          >
+                            ★  
+                          </span>
+                        </button>
+                        <button
+                          class="text-red-400"
+                          disabled=""
+                          type="button"
+                        >
+                          <span
+                            class="text-2xl font-light"
+                          >
+                            ★  
+                          </span>
+                        </button>
+                        <span
+                          class="ml-2 text-muted-foreground"
+                        >
+                          5/5
+                        </span>
+                      </div>
+                    </div>
+                    <p
+                      class="text-sm text-muted-foreground flex max-w-[800px] flex-row items-center gap-2"
+                    >
+                      This is a great game because...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer
+      class="mt-5 h-16 w-full border-t text-slate-400"
+    >
+      <div
+        class="container mx-auto px-6 pt-5 text-left text-sm"
+      >
+        Copyright 2023 GameRater
+      </div>
+    </footer>
+  </div>
+</DocumentFragment>
+`;

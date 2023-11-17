@@ -24,6 +24,17 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('GameDetailPage Component', () => {
+  it('matches the snapshot', async () => {
+    const { asFragment } = testPageRender(<GameDetailPage />, { mocks });
+
+    // Wait for any asynchronous operations to complete
+    await waitFor(() => {
+      expect(screen.getByText('Example Game')).toBeInTheDocument();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+  
   it('renders the GamesList component with mocked GraphQL data', async () => {
     testPageRender(<GameDetailPage />, { mocks });
     // Wait for the mocked data to be displayed
