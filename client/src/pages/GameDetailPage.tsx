@@ -1,5 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -93,7 +93,6 @@ const BaseGameDetailPage = () => {
   const hasWrittenReview = data?.getGame.reviews?.reviews?.some(
     (review: Review | null) => review?.user === user.username
   );
-  console.log(hasWrittenReview);
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (

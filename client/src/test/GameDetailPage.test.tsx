@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import GameDetailPage from '@/pages/GameDetailPage';
 import { vi, describe, it } from 'vitest';
 import { allMocks as mocks } from '../mocks/mockQueries';
@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 
 beforeAll(() => {
   // Mock `window.scrollTo` to accept any arguments
-  window.scrollTo = vi.fn((x?: number | ScrollToOptions, y?: number) => {});
+  window.scrollTo = vi.fn(() => {});
 });
 
 // Mock 'react-router-dom'
@@ -34,7 +34,7 @@ describe('GameDetailPage Component', () => {
 
     expect(asFragment()).toMatchSnapshot();
   });
-  
+
   it('renders the GamesList component with mocked GraphQL data', async () => {
     testPageRender(<GameDetailPage />, { mocks });
     // Wait for the mocked data to be displayed

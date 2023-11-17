@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import GameListPage from '@/pages/GameListPage';
 import { vi, describe, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
@@ -7,7 +7,7 @@ import { testPageRender } from './test-utils';
 
 beforeAll(() => {
   // Mock `window.scrollTo` to accept any arguments
-  window.scrollTo = vi.fn((x?: number | ScrollToOptions, y?: number) => {});
+  window.scrollTo = vi.fn(() => {});
 });
 
 // Mock 'react-router-dom'

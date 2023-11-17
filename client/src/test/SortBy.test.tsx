@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import SortBy from '@/components/SortBy';
 import * as recoil from 'recoil';
 
@@ -25,8 +24,8 @@ describe('SortBy Component', () => {
   let localStorageMock: LocalStorageMock;
   beforeEach(() => {
     localStorageMock = {
-      getItem: vi.fn((key: string) => null),
-      setItem: vi.fn((key: string, value: string) => {}),
+      getItem: vi.fn(() => null),
+      setItem: vi.fn(() => {}),
       clear: vi.fn(),
     };
     Object.defineProperty(window, 'localStorage', { value: localStorageMock });
