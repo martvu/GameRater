@@ -3,24 +3,30 @@ import Filters from '@/components/Filters';
 import SortBy from '@/components/SortBy';
 import GamesList from '@/components/GamesList';
 import withLayout from '@/lib/withLayout';
+import UserFilters from '@/components/UserFilters';
 
 function BaseGameListPage() {
   return (
-    <div className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">
-      <div className="ml-4 hidden md:block">
-        <Filters />
+    <main className="grid flex-grow grid-cols-1 justify-center pt-16 md:grid-cols-[auto,1fr] md:justify-normal">
+      <div className="hidden px-2 md:block">
+        <aside className="fixed top-16 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 pt-2 md:sticky md:block ">
+          <Filters />
+        </aside>
       </div>
-      <div className="overflow-x-hidden px-8">
-        <div className="z-15 sticky top-0 flex items-center justify-between bg-background py-1 pb-4 md:justify-end">
+      <div className="pl-2 pr-4 pt-4">
+        {/* Adjust left padding to slightly more than filter width */}
+        <div className="z-10 flex items-center justify-between bg-background pb-2">
           <div className="block md:hidden">
             <FilterModal />
           </div>
+          <UserFilters />
           <SortBy />
         </div>
-        <div className="text-muted-foreground"></div>
-        <GamesList />
+        <div className="overflow-y-auto">
+          <GamesList />
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

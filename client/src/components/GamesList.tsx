@@ -8,16 +8,16 @@ import {
   platformsListState,
   selectedGenresState,
   selectedPlatformsState,
+  showFavoritesState,
+  showReviewedGamesState,
   sortByState,
   userState,
 } from '@/state/atoms';
 import { pageState } from '@/state/atoms';
 import Pagination from './Pagination';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Heart, Star } from 'lucide-react';
 
 const GET_GAMES = gql(`
   query Search($userId: String, $showFavorites: Boolean, $showReviewedGames: Boolean, $query: String, $limit: Int!, $offset: Int!, $sortBy: GameSortInput, $platforms: [Int!], $genres: [Int!]) {
@@ -36,7 +36,6 @@ const GET_GAMES = gql(`
         platforms
       }
     }
-
   }
 `);
 
@@ -47,8 +46,8 @@ export default function GamesList() {
   const selectedPlatforms = useRecoilValue(selectedPlatformsState);
   const selectedGenres = useRecoilValue(selectedGenresState);
   const user = useRecoilValue(userState);
-  const [showFavorites, setShowFavorites] = useState(false);
-  const [showReviewedGames, setShowReviewedGames] = useState(false);
+  const showFavorites = useRecoilValue(showFavoritesState);
+  const showReviewedGames = useRecoilValue(showReviewedGamesState);
   const setGenresList = useSetRecoilState(genresListState);
   const setPlatformsList = useSetRecoilState(platformsListState);
   const limit = 24;
@@ -68,19 +67,9 @@ export default function GamesList() {
     },
   });
 
-  function handleShowFavorites() {
-    setShowFavorites(!showFavorites);
-    setCurrentPage(1);
-  }
-
-  function handleShowReviewedGames() {
-    setShowReviewedGames(!showReviewedGames);
-    setCurrentPage(1);
-  }
-
   useEffect(() => {
     refetch();
-  }, [showFavorites, refetch]);
+  }, [showFavorites, showReviewedGames, refetch]);
 
   useEffect(() => {
     const sortByFromStorage = localStorage.getItem('selectedSortBy');
@@ -105,45 +94,24 @@ export default function GamesList() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <main>
-      <div className="mb-2 flex items-center gap-2 text-muted-foreground opacity-80">
+    <main className="mt-1">
+      <div className="flex items-center gap-2 pb-4 text-muted-foreground opacity-80">
         <p className="w-[100px] text-left text-sm">
           {data?.search.count} results
         </p>
-        {/* Show favorites and reviewed buttons if user is signed in */}
-        {user._id && (
-          <>
-            <Button
-              className="flex gap-1"
-              size="sm"
-              variant={showFavorites ? 'destructive' : 'secondary'}
-              onClick={handleShowFavorites}
-            >
-              <p>Favorites</p>
-              <Heart size={16} />
-            </Button>
-            <Button
-              className="flex gap-1"
-              size="sm"
-              variant={showReviewedGames ? 'destructive' : 'secondary'}
-              onClick={handleShowReviewedGames}
-            >
-              <p>Reviewed</p>
-              <Star size={16} />{' '}
-            </Button>
-          </>
-        )}
       </div>
       <ul className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] justify-center gap-4">
         {data?.search.games?.map((game: Game | null | undefined) => (
-          <li
-            className="m-1 flex justify-center md:justify-normal"
-            key={game?._id}
-          >
+          <li className="m-1 flex justify-center" key={game?._id}>
             {game && <GameCard game={game} />}
           </li>
         ))}
       </ul>
+      {data?.search.games?.length === 0 && (
+        <div className="flex w-full flex-col items-center justify-center">
+          <p className="text-foreground">No games found</p>
+        </div>
+      )}
       <div className="my-2 flex w-full justify-center">
         <Pagination
           currentPage={currentPage}

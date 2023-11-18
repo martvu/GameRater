@@ -47,8 +47,8 @@ export function GameCard({ game }: GameCardProps) {
     : ('' as string);
 
   return (
-    <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
-      <Card className="relative h-[400px] min-w-[240px] max-w-[300px] overflow-hidden p-0 duration-300 hover:scale-105">
+    <Card className="relative h-[400px] min-w-[240px] max-w-[300px] overflow-hidden p-0 duration-300 hover:scale-105">
+      <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
         <CardHeader className="h-[320px] overflow-hidden">
           <div className="min-h-[320px] w-full">
             {imageId && (
@@ -74,23 +74,23 @@ export function GameCard({ game }: GameCardProps) {
             </Tooltip>
           </TooltipProvider>
         </CardContent>
-        <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
-          <div className="relative flex h-full w-full items-center">
-            <div className="absolute left-0 flex items-center">
-              <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />
-              <p>{rating === 0 ? '-' : rating}</p>
-            </div>
-            <div className="absolute right-10 flex items-center gap-2">
-              <Metascore
-                metascore={aggregatedRating ? aggregatedRating : undefined}
-              />
-            </div>
-            <div className="absolute right-0">
-              <FavoriteHeart game={game} />
-            </div>
+      </Link>
+      <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
+        <div className="relative flex h-full w-full items-center">
+          <div className="absolute left-0 flex items-center">
+            <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />
+            <p>{rating === 0 ? '-' : rating}</p>
           </div>
-        </CardFooter>
-      </Card>
-    </Link>
+          <div className="absolute right-10 flex items-center gap-2">
+            <Metascore
+              metascore={aggregatedRating ? aggregatedRating : undefined}
+            />
+          </div>
+          <div className="absolute right-0">
+            <FavoriteHeart game={game} />
+          </div>
+        </div>
+      </CardFooter>
+    </Card>
   );
 }

@@ -9,6 +9,7 @@ import {
   selectedPlatformsState,
 } from '@/state/atoms.ts';
 import { Genre, Platform } from '@/gql/graphql';
+import { Label } from './ui/label';
 
 interface FilterItemsProps {
   filters: Platform[] | Genre[];
@@ -45,10 +46,11 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   };
 
   const showLess = () => setNumItemsToShow(10);
-
   return (
     <div>
-      <h2 className="my-2 text-left font-semibold capitalize">{filterType}</h2>
+      <h2 className="my-2 text-left font-semibold capitalize text-foreground">
+        {filterType}
+      </h2>
       <div className="ml-1 flex flex-col">
         {filters?.slice(0, numItemsToShow).map(item => (
           <div className="my-1 flex items-center space-x-2" key={item?.name}>
@@ -64,13 +66,20 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
                   : selectedGenres.includes(item?.id ?? 0)
               }
             />
-            <label
+            <Label
               htmlFor={`filter-item-${item?.name}`}
-              className="break-all text-left text-sm font-light leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className={`text-left font-normal tracking-tight ${
+                (filterType === 'platforms' &&
+                  selectedPlatforms.includes(item?.id ?? 0)) ||
+                (filterType === 'genres' &&
+                  selectedGenres.includes(item?.id ?? 0))
+                  ? 'text-foreground'
+                  : 'text-muted-foreground'
+              }`}
             >
               {item?.name}
               {/* {item?.gamesCount && ` (${item?.gamesCount})`} */}
-            </label>
+            </Label>
           </div>
         ))}
       </div>
@@ -83,7 +92,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
           <Plus className="inline-block h-6" />
           <span>Show More</span>
         </Button>
-      ) : numItemsToShow > 10 ? (
+      ) : numItemsToShow > 10 && filters.length > 10 ? (
         <Button
           variant={'text'}
           onClick={showLess}

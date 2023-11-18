@@ -1,5 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -73,7 +73,6 @@ const BaseGameDetailPage = () => {
     },
   });
 
-  const rating = Number(data?.getAvgRating);
   if (loading) return <Loading />;
   if (error) return <p>Error: {error.message}</p>;
   // Check if the game data exists
@@ -93,14 +92,14 @@ const BaseGameDetailPage = () => {
   const hasWrittenReview = data?.getGame.reviews?.reviews?.some(
     (review: Review | null) => review?.user === user.username
   );
-  console.log(hasWrittenReview);
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
-    <div className="flex justify-center">
-      {/* Back to home button*/}
+    <div className="flex justify-center pt-20">
+      {/* Back button */}
       <div className="grid max-w-[1200px] grid-cols-1 gap-4 px-4">
         <Button
+          aria-label="Back to previous page"
           size="icon"
           variant="ghost"
           className="rounded-2x flex-shrink-0"
@@ -109,47 +108,54 @@ const BaseGameDetailPage = () => {
           <ArrowLeft />
         </Button>
 
-        <div className="grid gap-2 md:grid-cols-[auto,1fr]">
+        <main className="grid gap-2 md:grid-cols-[auto,1fr]">
           {/* Image, ratings, Write Review */}
-          <Card className="overflow-hidden p-0">
-            <CardHeader className="p-0">
-              <div className="flex w-full cursor-default p-0">
-                <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
-                  alt={data.getGame.name as string}
-                  className="h-full max-h-[374px] w-full object-contain"
-                  loading="lazy"
-                />
-              </div>
-              <div className="mt-2 flex items-center justify-center text-yellow-400">
-                <Rating
-                  rating={rating}
-                  numRatings={data.getGame.reviews?.count || 0}
-                />
-              </div>
-            </CardHeader>
-            <CardFooter className="flex flex-col justify-center">
-              {hasWrittenReview ? (
-                <Button className="mb-4 w-[200px]" disabled={true}>
-                  Review Submitted
-                </Button>
-              ) : (
-                <ReviewModal />
-              )}
-            </CardFooter>
-          </Card>
+          <section className="flex flex-col items-center justify-center gap-4">
+            <Card className="w-auto overflow-hidden p-0">
+              <CardHeader className="p-0  h-[364px] w-[264px] ">
+                <div className="relative flex cursor-default p-0">
+                  <div className="absolute right-2 top-2">
+                    <FavoriteHeart variant="secondary" game={data.getGame} />
+                  </div>
+                  <img
+                    src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
+                    alt={data.getGame.name as string}
+                    className="object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                
+              </CardHeader>
+              <CardContent className='pt-0'>
+              <div className=" flex items-center justify-center text-yellow-400">
+                  <Rating
+                    rating={data?.getAvgRating}
+                    numRatings={data.getGame.reviews?.count || 0}
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col justify-center">
+                {hasWrittenReview ? (
+                  <Button className="mb-4 w-[200px]" disabled={true}>
+                    Review Submitted
+                  </Button>
+                ) : (
+                  <ReviewModal />
+                )}
+              </CardFooter>
+            </Card>
+          </section>
 
           {/* Title, Release Date, Platforms, Genres and Description */}
-          <Card className="pb-4 text-left md:min-w-[400px] lg:min-w-[500px]">
+          <Card className="border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]">
             <CardHeader className="flex flex-col items-start">
               <CardTitle className=" text-4xl font-semibold">
                 {data.getGame.name}
               </CardTitle>
-              <FavoriteHeart game={data.getGame} />
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start gap-1">
                   <div className="flex gap-2">
-                    <p>Metascore: </p>
+                    <p className="text-muted-foreground">Metascore: </p>
                     <Metascore
                       metascore={
                         data.getGame.aggregatedRating
@@ -159,14 +165,16 @@ const BaseGameDetailPage = () => {
                     />
                   </div>
                   <div className="flex">
-                    <p>Release Date: {releaseDate}</p>
+                    <p className="text-muted-foreground">
+                      Release Date: {releaseDate}
+                    </p>
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
-                    <p className="mr-2">Platforms:</p>
+                    <p className="mr-2 text-muted-foreground">Platforms:</p>
                     {data.getGame.platforms?.map(
                       (platform: Platform | null) => (
                         <li
-                          className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                          className="mb-1 mr-1 list-none rounded-lg border border-primary px-2 text-sm"
                           key={platform?.name}
                         >
                           {platform?.name}
@@ -175,10 +183,10 @@ const BaseGameDetailPage = () => {
                     )}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
-                    <p className="mr-2">Genres:</p>
+                    <p className="mr-2 text-muted-foreground">Genres:</p>
                     {data.getGame.genres?.map((genre: Genre | null) => (
                       <li
-                        className="mr-1 list-none rounded-lg border border-primary px-2 text-sm"
+                        className="mb-1 mr-1 list-none rounded-lg border border-primary px-2 text-sm"
                         key={genre?.name}
                       >
                         {genre?.name}
@@ -189,11 +197,10 @@ const BaseGameDetailPage = () => {
               </CardContent>
             </CardHeader>
             <CardContent className="py-4">
-              <p className="text-md text-muted-foreground">
-                {data.getGame.summary}
-              </p>
+              <p className="text-md">{data.getGame.summary}</p>
             </CardContent>
           </Card>
+
           {/* Reviews */}
           <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
             <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
@@ -211,7 +218,7 @@ const BaseGameDetailPage = () => {
               )}
             </div>
           </div>
-        </div>
+        </main>
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
