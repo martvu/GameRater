@@ -101,6 +101,7 @@ export default function Nav() {
           <form onSubmit={handleSubmit} className="flex gap-5">
             <Label htmlFor="search" className="sr-only" />
             <Input
+              data-testid="search-input"
               type="search"
               className="w-[150px] lg:w-[300px]"
               placeholder={keyword || 'Search'}

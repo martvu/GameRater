@@ -53,6 +53,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
         {filters?.slice(0, numItemsToShow).map(item => (
           <div className="my-1 flex items-center space-x-2" key={item?.name}>
             <Checkbox
+              data-testid={`filter-item-${item?.name}`}
               id={`filter-item-${item?.name}`}
               onCheckedChange={checked => {
                 if (typeof item?.id === 'number')

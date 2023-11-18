@@ -47,7 +47,7 @@ export function GameCard({ game }: GameCardProps) {
     : ('' as string);
 
   return (
-    <Card className="relative h-[400px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
+    <Card data-testid="game-card" className="relative h-[400px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
       <CardHeader className="h-[320px] overflow-hidden">
         <div className="min-h-[320px] w-full duration-700 hover:scale-105">
           {imageId && (
@@ -64,6 +64,7 @@ export function GameCard({ game }: GameCardProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
+                data-testid="game-card-link"
                 to={`/game/${id}`}
                 aria-label={`Link to ${name} detail page`}
               >

@@ -26,3 +26,7 @@ dist-ssr
 # Generated files
 src/gql
 coverage
+
+# Cypress specific
+cypress/screenshots
+cypress/videos

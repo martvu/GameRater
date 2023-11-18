@@ -56,7 +56,7 @@ export default function SortBy() {
       onValueChange={value => handleSortSelection(value)}
       value={localStorage.getItem('selectedSortLabel') || ''}
     >
-      <SelectTrigger className="w-[150px]">
+      <SelectTrigger data-testid="sort-by-select" className="w-[150px]">
         <SelectValue placeholder="Sort By" />
       </SelectTrigger>
       <SelectContent>
