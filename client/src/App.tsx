@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import GameListPage from './pages/GameListPage';
 import GameDetailPage from './pages/GameDetailPage';
 import { ReviewForm } from './components/ReviewForm';
+import { Toaster } from '@/components/ui/toaster.tsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           </Routes>
         </Router>
       </ThemeProvider>
+      <Toaster />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -16,7 +16,7 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
-import { gql } from '../gql/';
+import { gql } from '@/gql';
 import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { useRecoilValue } from 'recoil';
@@ -130,7 +130,7 @@ const BaseGameDetailPage = () => {
             </CardHeader>
             <CardFooter className="flex flex-col justify-center">
               {hasWrittenReview ? (
-                <Button className="mb-4 w-[200px]" disabled={true}>
+                <Button className="mb-4 w-[200px]" disabled>
                   Review Submitted
                 </Button>
               ) : (
