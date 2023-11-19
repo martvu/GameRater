@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, Search, XCircle } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
 import { useSetRecoilState } from 'recoil';
 import {
@@ -101,10 +100,16 @@ export default function Nav() {
           )}
           <form onSubmit={handleSubmit} className="flex">
             <Label htmlFor="search" className="sr-only" />
-            <div className="relative w-[200px] md:w-[200px] lg:w-[400px]">
+            <div
+              className={`relative ${
+                showFullWidthSearch
+                  ? 'w-full'
+                  : 'w-[200px] md:w-[300px] lg:w-[400px]'
+              }`}
+            >
               <Input
                 type="text"
-                className="w-full rounded-l-xl rounded-r-none bg-muted shadow-inner md:w-full lg:w-full"
+                className="w-full rounded-xl shadow-inner bg-muted pr-24 md:w-full lg:w-full"
                 placeholder={keyword || 'Search'}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
@@ -118,19 +123,19 @@ export default function Nav() {
                     setSearchQuery('');
                     navigate('/');
                   }}
-                  className="absolute bottom-0 right-1 top-0 flex items-center justify-center"
+                  className="absolute bottom-0 right-10 top-0 flex items-center justify-center"
                 >
                   <XCircle size={18} />
                 </Button>
               )}
+              <Button
+                variant="search"
+                type="submit"
+                className="absolute right-0 top-0 px-3 active:opacity-90 rounded-l-none rounded-r-xl"
+              >
+                <Search />
+              </Button>
             </div>
-            <Button
-              variant="secondary"
-              type="submit"
-              className="z-30 rounded-l-none rounded-r-xl"
-            >
-              <Search />
-            </Button>
           </form>
         </div>
         <div
