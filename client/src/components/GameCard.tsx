@@ -47,10 +47,10 @@ export function GameCard({ game }: GameCardProps) {
     : ('' as string);
 
   return (
-    <Card className="relative h-[400px] min-w-[240px] max-w-[300px] overflow-hidden p-0 duration-300 hover:scale-105">
+    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[400px] sm:min-w-[260px]">
       <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
-        <CardHeader className="h-[320px] overflow-hidden">
-          <div className="min-h-[320px] w-full">
+        <CardHeader className="h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
+          <div className="">
             {imageId && (
               <img
                 src={coverImageUrl}
@@ -64,12 +64,12 @@ export function GameCard({ game }: GameCardProps) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <CardTitle className="my-1 line-clamp-1 max-w-[240px] py-1 text-lg duration-300 hover:opacity-50 ">
+                <CardTitle className="my-1 line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:max-w-[240px] sm:text-lg ">
                   {name}
                 </CardTitle>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{name}</p>
+                <p className="text-xs md:text-sm">{name}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
