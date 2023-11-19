@@ -113,6 +113,7 @@ export function ReviewForm() {
         onCompleted: () => {
           // can be replaced with a toast
           console.log('Review created');
+          form.reset();
         },
         onError: () => {
           alert('Could not create review');
@@ -121,7 +122,7 @@ export function ReviewForm() {
     } catch (error) {
       console.log('Could not create review');
     }
-    form.reset();
+    
   }
 
   if (loading) return <Loading />;

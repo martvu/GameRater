@@ -2,7 +2,7 @@ import SignInModal from './SignInModal';
 
 interface SignInAlertModalProps {
   message: string;
-  onSignInSuccess: () => void;
+  onSignInSuccess?: () => void;
 }
 
 export default function SignInAlertModal({ message, onSignInSuccess }: SignInAlertModalProps) {

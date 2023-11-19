@@ -271,18 +271,34 @@ export const resolvers: Resolvers = {
     },
     reviews: async (
       game,
-      { limit, offset }: { limit: number; offset: number }
+      {
+        limit,
+        offset,
+        username,
+      }: { limit: number; offset: number; username: string }
     ) => {
       const reviews = await Review.find({ _id: { $in: game.reviews } })
         .skip(offset)
         .limit(limit);
       const count = await Review.countDocuments({ _id: { $in: game.reviews } });
+
+      // Check if the user has written a review
+      let userHasReviewed = false;
+      if (username) {
+        const userReview = await Review.findOne({
+          gameID: game._id,
+          user: username, // Assuming 'user' field in Review model stores userID
+        });
+        userHasReviewed = !!userReview;
+      }
+
       return {
         reviews: reviews.map(review => ({
           ...review.toObject(),
           _id: review._id.toString(),
         })),
         count: count,
+        userHasReviewed,
       };
     },
   },

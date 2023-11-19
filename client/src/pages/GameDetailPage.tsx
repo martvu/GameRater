@@ -24,7 +24,7 @@ import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
 
 const GET_GAME = gql(`
-  query GetGame($id: ID!, $limit: Int!, $offset: Int!) {
+  query GetGame($id: ID!, $limit: Int!, $offset: Int!, $username: String) {
     getAvgRating(gameID: $id)
     getGame(ID: $id) {
       _id
@@ -39,7 +39,7 @@ const GET_GAME = gql(`
       genres {
         name
       }
-      reviews(limit: $limit, offset: $offset) {
+      reviews(limit: $limit, offset: $offset, username: $username) {
         count
         reviews {
           _id
@@ -50,6 +50,7 @@ const GET_GAME = gql(`
           platform
           gameID
         }
+        userHasReviewed
       }
     }
   }
@@ -70,6 +71,7 @@ const BaseGameDetailPage = () => {
       id: id as string,
       limit: reviewsPerPage,
       offset: (currentPage - 1) * reviewsPerPage,
+      username: user?.username,
     },
   });
 
@@ -89,9 +91,7 @@ const BaseGameDetailPage = () => {
     });
   };
 
-  const hasWrittenReview = data?.getGame.reviews?.reviews?.some(
-    (review: Review | null) => review?.user === user.username
-  );
+  const hasWrittenReview = data?.getGame.reviews?.userHasReviewed || false;
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
