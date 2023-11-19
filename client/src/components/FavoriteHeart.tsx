@@ -106,7 +106,7 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
   }
   return (
     <Button
-      onClick={(e)=> {
+      onClick={e => {
         e.preventDefault();
         toggleFavorite();
       }}

@@ -116,6 +116,7 @@ export function ReviewForm() {
           title: 'Review created successfully',
           description: `Your review for ${data?.getGame?.name} has been created.`,
         });
+        form.reset();
       },
       onError: () => {
         toast({
@@ -125,7 +126,6 @@ export function ReviewForm() {
         });
       },
     }).catch(error => console.log('Could not create review', error));
-    form.reset();
   }
 
   if (loading) return <Loading />;
