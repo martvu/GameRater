@@ -109,7 +109,7 @@ export default function Nav() {
             >
               <Input
                 type="text"
-                className="w-full rounded-xl shadow-inner bg-muted pr-24 md:w-full lg:w-full"
+                className="w-full rounded-xl bg-muted pr-24 shadow-inner md:w-full lg:w-full"
                 placeholder={keyword || 'Search'}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
@@ -131,7 +131,7 @@ export default function Nav() {
               <Button
                 variant="search"
                 type="submit"
-                className="absolute right-0 top-0 px-3 active:opacity-90 rounded-l-none rounded-r-xl"
+                className="absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
               >
                 <Search />
               </Button>

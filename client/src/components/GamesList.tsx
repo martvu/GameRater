@@ -100,7 +100,7 @@ export default function GamesList() {
           {data?.search.count} results
         </p>
       </div>
-      <ul className="grid grid-cols-[repeat(auto-fill,minmax(175px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] justify-center gap-1 sm:gap-4">
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(175px,1fr))] justify-center gap-1 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] sm:gap-4">
         {data?.search.games?.map((game: Game | null | undefined) => (
           <li className="m-1 flex justify-center" key={game?._id}>
             {game && <GameCard game={game} />}

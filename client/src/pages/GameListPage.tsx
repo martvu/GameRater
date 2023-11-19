@@ -13,7 +13,7 @@ function BaseGameListPage() {
           <Filters />
         </aside>
       </div>
-      <div className="pl-2 pr-2 sm:pr-4 pt-4">
+      <div className="pl-2 pr-2 pt-4 sm:pr-4">
         {/* Adjust left padding to slightly more than filter width */}
         <div className="z-10 flex items-center justify-between gap-1 bg-background pb-2">
           <div className="block md:hidden">

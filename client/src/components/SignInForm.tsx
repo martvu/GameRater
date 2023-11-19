@@ -47,7 +47,7 @@ interface SignInFormProps {
   onClose: () => void;
 }
 
-export function SignInForm({ onClose } : SignInFormProps) {
+export function SignInForm({ onClose }: SignInFormProps) {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const setUser = useRecoilState(userState)[1];
 

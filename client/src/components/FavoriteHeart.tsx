@@ -90,7 +90,7 @@ export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
 
   const handleSignInSuccess = () => {
     setIsDialogOpen(false);
-  }
+  };
 
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
@@ -112,7 +112,10 @@ export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
       </Button>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
-          <SignInAlertModal message={'Please sign in to favorite this game!'} onSignInSuccess={handleSignInSuccess}/>
+          <SignInAlertModal
+            message={'Please sign in to favorite this game!'}
+            onSignInSuccess={handleSignInSuccess}
+          />
         </DialogContent>
       </Dialog>
     </>

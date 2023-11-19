@@ -112,7 +112,7 @@ const BaseGameDetailPage = () => {
           {/* Image, ratings, Write Review */}
           <section className="flex flex-col items-center justify-center gap-4">
             <Card className="w-auto overflow-hidden p-0">
-              <CardHeader className="p-0  h-[364px] w-[264px] ">
+              <CardHeader className="h-[364px]  w-[264px] p-0 ">
                 <div className="relative flex cursor-default p-0">
                   <div className="absolute right-2 top-2">
                     <FavoriteHeart variant="secondary" game={data.getGame} />
@@ -124,10 +124,9 @@ const BaseGameDetailPage = () => {
                     loading="lazy"
                   />
                 </div>
-                
               </CardHeader>
-              <CardContent className='pt-0'>
-              <div className=" flex items-center justify-center text-yellow-400">
+              <CardContent className="pt-0">
+                <div className=" flex items-center justify-center text-yellow-400">
                   <Rating
                     rating={data?.getAvgRating}
                     numRatings={data.getGame.reviews?.count || 0}

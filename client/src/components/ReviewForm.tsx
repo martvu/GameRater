@@ -122,7 +122,6 @@ export function ReviewForm() {
     } catch (error) {
       console.log('Could not create review');
     }
-    
   }
 
   if (loading) return <Loading />;

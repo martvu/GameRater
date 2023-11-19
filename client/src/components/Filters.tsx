@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft, Filter } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';

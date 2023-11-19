@@ -5,7 +5,10 @@ interface SignInAlertModalProps {
   onSignInSuccess?: () => void;
 }
 
-export default function SignInAlertModal({ message, onSignInSuccess }: SignInAlertModalProps) {
+export default function SignInAlertModal({
+  message,
+  onSignInSuccess,
+}: SignInAlertModalProps) {
   return (
     <div className="flex flex-col items-center space-y-2">
       <p>{message}</p>

@@ -41,7 +41,8 @@ const buttonVariants = cva(
         text: 'justify-start hover:text-gray-400',
         none: '',
         invert: 'bg-secondary-foreground text-secondary',
-        search: 'bg-transparent text-secondary-foreground hover:text-muted-foreground',
+        search:
+          'bg-transparent text-secondary-foreground hover:text-muted-foreground',
       },
       size: {
         default: 'h-10 px-4 py-2',
