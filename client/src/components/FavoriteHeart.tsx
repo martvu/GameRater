@@ -106,7 +106,10 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
   }
   return (
     <Button
-      onClick={toggleFavorite}
+      onClick={e => {
+        e.preventDefault();
+        toggleFavorite();
+      }}
       className="z-10"
       variant="ghost"
       size="round"
