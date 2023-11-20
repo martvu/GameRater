@@ -103,6 +103,7 @@ export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
   return (
     <>
       <Button
+        data-testid="favorite-btn"
         onClick={toggleFavorite}
         className="z-10"
         variant={variant || 'ghost'}

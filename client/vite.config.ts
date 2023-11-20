@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    setupFiles: ["src/setupTests.ts"],
-    environment: "jsdom",
+    setupFiles: ['src/setupTests.ts'],
+    environment: 'jsdom',
     coverage: {
-      provider: "v8",
-    }
+      provider: 'v8',
+    },
   },
   base: '/project2',
   resolve: {
