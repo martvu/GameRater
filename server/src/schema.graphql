@@ -18,6 +18,7 @@ type Review {
 type Reviews {
   reviews: [Review]
   count: Int!
+  userHasReviewed: Boolean!
 }
 
 type Game {
@@ -29,7 +30,7 @@ type Game {
   platforms: [Platform]
   first_release_date: String
   cover_image_id: String
-  reviews(limit: Int, offset: Int): Reviews
+  reviews(limit: Int, offset: Int, username: String): Reviews
   aggregated_rating: Float
   aggregated_rating_count: Int
 }

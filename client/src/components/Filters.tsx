@@ -5,7 +5,6 @@ import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { gql } from '@/gql';
 import { useQuery } from '@apollo/client';
-import Loading from './Loading';
 import { Genre, Platform } from '@/gql/graphql';
 import { useRecoilValue } from 'recoil';
 import {
@@ -14,6 +13,7 @@ import {
   selectedGenresState,
   selectedPlatformsState,
 } from '@/state/atoms';
+import { ScrollArea } from './ui/scroll-area';
 
 const GET_FILTERS = gql(`
   query GetFilters {
@@ -90,11 +90,7 @@ export default function Filters() {
   });
 
   if (loading) {
-    return (
-      <div className="h-screen w-[210px]">
-        <Loading />
-      </div>
-    );
+    return <div className="h-screen w-[210px]"></div>;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -103,34 +99,45 @@ export default function Filters() {
     <>
       <div
         className={cn(
-          'flex h-full min-h-screen flex-col items-start overflow-y-auto text-left',
-          !isCollapsed && 'w-[210px]'
+          'flex h-full flex-col items-start overflow-y-auto text-left',
+          !isCollapsed && 'w-full'
         )}
       >
         <Button
-          className="m-1 hidden md:flex"
+          className={`z-50 m-1 hidden md:flex ${isCollapsed ? '' : ''}`}
           variant="ghost"
           onClick={toggleCollapse}
           aria-label="toggle filters"
         >
-          {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-          {!isCollapsed && <span className="ml-2">Hide</span>}
-        </Button>
-        <div className="block pl-5">
-          <h1
-            className={`text-md mt-4 text-left font-bold tracking-wider md:text-xl ${
-              isCollapsed ? 'hidden' : ''
-            }`}
-          >
-            Filters
-          </h1>
-          {!isCollapsed && data && (
+          {isCollapsed ? (
             <>
-              <FilterItems filters={filteredPlatforms} filterType="platforms" />
-              <FilterItems filters={filteredGenres} filterType="genres" />
+              <ChevronRight size={18} />
             </>
+          ) : (
+            <ChevronLeft size={18} />
           )}
-        </div>
+          {!isCollapsed && <span className="z-50 ml-2">Hide filters</span>}
+        </Button>
+        <ScrollArea className={cn('h-full pb-4 pr-2', isCollapsed && 'hidden')}>
+          <div className="block pl-5">
+            <h1
+              className={`mt-4 text-left font-bold tracking-wider text-foreground text-xl${
+                isCollapsed ? 'hidden' : ''
+              }`}
+            >
+              Filter By
+            </h1>
+            {!isCollapsed && data && (
+              <>
+                <FilterItems
+                  filters={filteredPlatforms}
+                  filterType="platforms"
+                />
+                <FilterItems filters={filteredGenres} filterType="genres" />
+              </>
+            )}
+          </div>
+        </ScrollArea>
       </div>
     </>
   );

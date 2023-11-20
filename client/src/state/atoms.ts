@@ -56,3 +56,13 @@ export const platformsListState = atom({
   key: 'platformsListState',
   default: [] as number[],
 });
+
+export const showFavoritesState = atom({
+  key: 'showFavoritesState',
+  default: false,
+});
+
+export const showReviewedGamesState = atom({
+  key: 'showReviewedGamesState',
+  default: false,
+});

@@ -44,7 +44,11 @@ const formSchema = z.object({
     }),
 });
 
-export function SignInForm() {
+interface SignInFormProps {
+  onClose: () => void;
+}
+
+export function SignInForm({ onClose }: SignInFormProps) {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const setUser = useRecoilState(userState)[1];
 
@@ -58,6 +62,7 @@ export function SignInForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      onClose();
       const { data } = await signInOrCreateUser({
         variables: {
           userInput: {
@@ -84,7 +89,7 @@ export function SignInForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormDescription className="w-60">
           We just need your username, and you're good to go!
         </FormDescription>

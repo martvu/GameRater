@@ -1,15 +1,29 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { SignInForm } from './SignInForm';
+import { useState } from 'react';
 
-export default function SignInModal() {
+interface SignInModalProps {
+  onSignInSuccess?: () => void;
+}
+
+export default function SignInModal({ onSignInSuccess }: SignInModalProps) {
+  const [open, setOpen] = useState(false);
+
+  const closeDialog = () => {
+    setOpen(false);
+    if (onSignInSuccess) {
+      onSignInSuccess();
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="">Sign In</Button>
+        <Button variant="outline">Sign In</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] overflow-auto">
-        <SignInForm />
+        <SignInForm onClose={closeDialog} />
       </DialogContent>
     </Dialog>
   );

@@ -118,14 +118,14 @@ export function ReviewForm() {
         });
         form.reset();
       },
-      onError: () => {
+      onError: error => {
         toast({
           variant: 'destructive',
           title: 'Could not create review',
-          description: 'Please try again.',
+          description: error.message || 'Please try again.',
         });
       },
-    }).catch(error => console.log('Could not create review', error));
+    });
   }
 
   if (loading) return <Loading />;
