@@ -42,7 +42,7 @@ const buttonVariants = cva(
         none: '',
         invert: 'bg-secondary-foreground text-secondary',
         search:
-          'bg-transparent text-secondary-foreground hover:text-muted-foreground',
+          'bg-transparent text-secondary-foreground hover:text-muted-foreground transition duration-300 ease-in-out',
       },
       size: {
         default: 'h-10 px-4 py-2',

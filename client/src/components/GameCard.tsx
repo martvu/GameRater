@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import imageNotFound from '@/assets/img-fallback.svg';
 
 import {
   Card,
@@ -41,21 +42,25 @@ export function GameCard({ game }: GameCardProps) {
     variables: { gameID: id as string },
   });
 
+  const handleImageError = (e) => {
+    e.target.src = imageNotFound; // Set the source to your fallback image
+  };
   const rating = data?.getAvgRating;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
     : ('' as string);
 
   return (
-    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[260px]">
+    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] p-0 duration-300 overflow-hidden hover:scale-105 sm:h-[410px] sm:min-w-[260px]">
       <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
         <CardHeader className="mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
-          <div className="">
+          <div className="flex flex-1 items-center justify-center">
             {imageId && (
               <img
                 src={coverImageUrl}
                 alt={name as string}
-                className="object-cover"
+                className="object-cover fill-green-300"
+                onError={handleImageError}
               />
             )}
           </div>
