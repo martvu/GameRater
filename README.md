@@ -90,19 +90,31 @@ npm run coverage
 
 ## End-to-end testing
 
-End-to-end testing is done with Cypress. To start the server in "test" mode, run the following in server folder:
+End-to-end testing is done with Cypress. For testing, we use a test database, so the server must be started in "test" mode and client must run in dev mode. 
+
+To start the server in "test" mode, run the following in server folder:
 ```
-npm test
+npm testserver
 ```
 
-This will start the server using our test database. To start cypress, run the following from the root folder:
+Then in another terminal, run the following in client folder:
 
 ```
-cd client
+npm run dev
+```
+
+And finally in another terminal run the following in client folder to run the tests in the terminal:
+```
+npm run cypress:run
+```
+
+To run the tests in the Cypress GUI, run the following from client folder:
+
+```
 npm run cypress:open
 ```
 
-This will open the Cypress GUI. From here, click "E2E Testing", then start E2E testing in preferred browser. Both client and server must be running for the tests to work.
+This will open the Cypress GUI. From here, click "E2E Testing", then start E2E testing in preferred browser. 
 
 ## API testing
 
