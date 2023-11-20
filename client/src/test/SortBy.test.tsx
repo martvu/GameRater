@@ -1,10 +1,30 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import SortBy from '@/components/SortBy';
 import * as recoil from 'recoil';
 import userEvent from '@testing-library/user-event';
+import { RecoilRoot } from 'recoil';
 
-// TypeScript type for the mock
+/* Need to mock PointerEvent for the SortBy component tests to work 
+because Radix UI uses PointerEvent */
+class MockPointerEvent extends Event {
+  button: number;
+  ctrlKey: boolean;
+  pointerType: string;
+
+  constructor(type: string, props: PointerEventInit) {
+    super(type, props);
+    this.button = props.button || 0;
+    this.ctrlKey = props.ctrlKey || false;
+    this.pointerType = props.pointerType || 'mouse';
+  }
+}
+window.PointerEvent = MockPointerEvent as any;
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
+window.HTMLElement.prototype.releasePointerCapture = vi.fn();
+window.HTMLElement.prototype.hasPointerCapture = vi.fn();
+
+// Mock localStorage
 type LocalStorageMock = {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;
@@ -40,9 +60,51 @@ describe('SortBy Component', () => {
     localStorageMock.clear();
   });
 
-  it('renders correctly', () => {
-    render(<SortBy />);
-    expect(screen.getByText('Sort By')).toBeInTheDocument();
+  it('renders correctly', async () => {
+    render(
+      <RecoilRoot>
+        <SortBy />
+      </RecoilRoot>
+    );
   });
 
+  it('should open the select menu when clicked', async () => {
+    render(
+      <RecoilRoot>
+        <SortBy />
+      </RecoilRoot>
+    );
+    const trigger = screen.getByTestId('sort-by-select');
+    await userEvent.click(trigger);
+    expect(screen.getByText('Release Date Desc')).toBeInTheDocument();
+  });
+
+  it('should change the selected value when clicked', async () => {
+    render(
+      <RecoilRoot>
+        <SortBy />
+      </RecoilRoot>
+    );
+    const trigger = screen.getByTestId('sort-by-select');
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await userEvent.click(screen.getByTestId('release-date-desc'));
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(trigger);
+    await userEvent.click(screen.getByTestId('release-date-asc'));
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(trigger);
+    await userEvent.click(screen.getByTestId('a-z'));
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(trigger);
+    await userEvent.click(screen.getByTestId('z-a'));
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(trigger);
+    await userEvent.click(screen.getByTestId('metascore'));
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(trigger);
+    await userEvent.click(screen.getByTestId('user-rating'));
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    
+  });
 });
