@@ -23,7 +23,6 @@ describe('Rating Component', () => {
   // Additional tests if needed...
 });
 
-
 describe('StarRating Component', () => {
   it('renders correctly with initial rating', () => {
     render(<StarRating rating={3} numRatings={100} disabled={false} />);
@@ -64,12 +63,11 @@ describe('StarRating Component', () => {
 
   it('reverts to original rating on mouse leave', async () => {
     render(<StarRating rating={2} disabled={false} />);
-  
+
     const starToHover = screen.getAllByText('☆')[0];
     await userEvent.hover(starToHover);
     await userEvent.unhover(starToHover);
-  
+
     expect(screen.getAllByText('★')).toHaveLength(2); // Check if it reverts to original rating
   });
-  
 });

@@ -155,8 +155,6 @@ export default function Nav() {
           <div>
             <UserNav />
           </div>
-
-          {/* <SignInOutButton /> */}
           <div className="mr-1">
             <ModeToggle />
           </div>

@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import SortBy from '@/components/SortBy';
 import * as recoil from 'recoil';
+import userEvent from '@testing-library/user-event';
 
 // TypeScript type for the mock
 type LocalStorageMock = {
@@ -15,8 +16,12 @@ vi.mock('recoil', async () => {
   const actual: typeof recoil = await vi.importActual('recoil');
   return {
     ...actual, // Include all actual module exports
-    useRecoilState: vi.fn<[], [unknown, (val: unknown) => void]>().mockReturnValue([{}, vi.fn()]),
-    useSetRecoilState: vi.fn<[], (val: unknown) => void>().mockReturnValue(vi.fn()),
+    useRecoilState: vi
+      .fn<[], [unknown, (val: unknown) => void]>()
+      .mockReturnValue([{}, vi.fn()]),
+    useSetRecoilState: vi
+      .fn<[], (val: unknown) => void>()
+      .mockReturnValue(vi.fn()),
   };
 });
 
@@ -39,4 +44,5 @@ describe('SortBy Component', () => {
     render(<SortBy />);
     expect(screen.getByText('Sort By')).toBeInTheDocument();
   });
+
 });

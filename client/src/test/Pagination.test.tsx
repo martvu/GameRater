@@ -1,12 +1,11 @@
 import Pagination from '@/components/Pagination';
 import { render, screen, fireEvent } from '@testing-library/react';
-import {describe, it, vi} from 'vitest';
+import { describe, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
-describe("Pagination", () => {
-  it("should render correctly", () => {
-    render(<Pagination currentPage={1} setCurrentPage={()=>{}} pages={5}/>);
-    screen.debug();
+describe('Pagination', () => {
+  it('should render correctly', () => {
+    render(<Pagination currentPage={1} setCurrentPage={() => {}} pages={5} />);
     const pageButtons = screen.getAllByRole('button');
     // 5 pages + 2 for previous and next buttons
     expect(pageButtons).toHaveLength(7);
@@ -14,7 +13,13 @@ describe("Pagination", () => {
 
   it('calls setCurrentPage with the correct page number', () => {
     const setCurrentPageMock = vi.fn();
-    render(<Pagination currentPage={1} setCurrentPage={setCurrentPageMock} pages={5} />);
+    render(
+      <Pagination
+        currentPage={1}
+        setCurrentPage={setCurrentPageMock}
+        pages={5}
+      />
+    );
     const secondPageButton = screen.getByLabelText('go to page 2');
     fireEvent.click(secondPageButton);
     expect(setCurrentPageMock).toHaveBeenCalledWith(2);
@@ -22,7 +27,9 @@ describe("Pagination", () => {
 
   it('increments page number on next button click', async () => {
     const setCurrentPage = vi.fn();
-    render(<Pagination currentPage={1} setCurrentPage={setCurrentPage} pages={5} />);
+    render(
+      <Pagination currentPage={1} setCurrentPage={setCurrentPage} pages={5} />
+    );
 
     const nextButton = screen.getByLabelText('go to next page');
     await userEvent.click(nextButton);
@@ -32,7 +39,9 @@ describe("Pagination", () => {
 
   it('decrements page number on previous button click', async () => {
     const setCurrentPage = vi.fn();
-    render(<Pagination currentPage={2} setCurrentPage={setCurrentPage} pages={5} />);
+    render(
+      <Pagination currentPage={2} setCurrentPage={setCurrentPage} pages={5} />
+    );
 
     const prevButton = screen.getByLabelText('go to previous page');
     await userEvent.click(prevButton);

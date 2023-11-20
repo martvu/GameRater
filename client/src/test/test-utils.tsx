@@ -10,7 +10,10 @@ interface TestPageRenderOptions {
   initialRoutes?: string[];
 }
 
-export function testPageRender(ui: React.ReactElement, options: TestPageRenderOptions) {
+export function testPageRender(
+  ui: React.ReactElement,
+  options: TestPageRenderOptions
+) {
   return render(
     <MockedProvider mocks={options.mocks} addTypename={false}>
       <RecoilRoot>
@@ -20,6 +23,6 @@ export function testPageRender(ui: React.ReactElement, options: TestPageRenderOp
           </MemoryRouter>
         </ThemeProvider>
       </RecoilRoot>
-    </MockedProvider>,
+    </MockedProvider>
   );
 }

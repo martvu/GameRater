@@ -53,7 +53,9 @@ describe('GameDetailPage Component', () => {
     userEvent.click(addReviewButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Please sign in to review this game!')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please sign in to review this game!')
+      ).toBeInTheDocument();
     });
   });
 });

@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import GameListPage from '@/pages/GameListPage';
 import { vi, describe, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
@@ -46,23 +46,35 @@ describe('GameListPage Component', () => {
   });
 
   it('signs in and renders correctly', async () => {
+
+    
     testPageRender(<GameListPage />, { mocks });
     await userEvent.click(screen.getByText('Sign In'));
     await userEvent.type(screen.getByLabelText('Username'), 'testuser{enter}');
+    await userEvent.click(screen.getByText('T'));
+  
     await waitFor(() => {
       expect(screen.getByText('testuser')).toBeInTheDocument();
-      expect(screen.getByText('Sign Out')).toBeInTheDocument();
-      expect(screen.getByTestId('sign-out-btn')).toBeInTheDocument();
+      expect(screen.getByText('Sign out')).toBeInTheDocument();
+      expect(screen.getByText('T')).toBeInTheDocument();
       expect(screen.getByText('Example Game')).toBeInTheDocument();
       expect(screen.getByText('Favorites')).toBeInTheDocument();
       expect(screen.getByText('Reviewed')).toBeInTheDocument();
     });
   });
 
-  // NOT WORKING
-  it('gets sign in prompt when trying to favorite a game', async () => {
-    testPageRender(<GameListPage />, { mocks });
-   
-  });
 
+  // NOT WORKING
+  /* it('gets sign in prompt when trying to favorite a game', async () => {
+    await act(async () => {
+      testPageRender(<GameListPage />, { mocks });
+  
+      await userEvent.click(screen.getByTestId('favorite-btn'));
+  
+      // Wait for expected outcome after the click
+      await waitFor(() => {
+        expect(screen.getByText('Please sign in to favorite this game!')).toBeInTheDocument();
+      });
+    });
+  }); */
 });

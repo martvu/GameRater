@@ -174,25 +174,21 @@ const BaseGameDetailPage = () => {
                     <p className="mr-2 text-muted-foreground">Platforms:</p>
                     {data.getGame.platforms?.map(
                       (platform: Platform | null) => (
-                        <>
-                          <li
-                            className="mb-1 mr-1 list-none"
-                            key={platform?.name}
-                          >
-                            <Badge variant="secondary">{platform?.name}</Badge>
-                          </li>
-                        </>
+                        <li
+                          className="mb-1 mr-1 list-none"
+                          key={platform?.name}
+                        >
+                          <Badge variant="secondary">{platform?.name}</Badge>
+                        </li>
                       )
                     )}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2 text-muted-foreground">Genres:</p>
                     {data.getGame.genres?.map((genre: Genre | null) => (
-                      <>
-                        <li className="mb-1 mr-1 list-none" key={genre?.name}>
-                          <Badge variant="secondary">{genre?.name}</Badge>
-                        </li>
-                      </>
+                      <li className="mb-1 mr-1 list-none" key={genre?.name}>
+                        <Badge variant="secondary">{genre?.name}</Badge>
+                      </li>
                     ))}
                   </div>
                 </div>

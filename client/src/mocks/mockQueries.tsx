@@ -1,6 +1,6 @@
-import { GET_GAMES } from "@/components/GamesList";
-import { GET_GAME } from "@/pages/GameDetailPage";
-import { gql } from "@apollo/client";
+import { GET_GAMES } from '@/components/GamesList';
+import { GET_GAME } from '@/pages/GameDetailPage';
+import { gql } from '@apollo/client';
 
 const getGamesMock = {
   request: {
@@ -108,7 +108,7 @@ const getFiltersMock = {
       ],
       getPlatforms: [
         { id: 1, name: 'Platform 1', gamesCount: 15 },
-        { id: 3, name: 'Platform 3', gamesCount: 25}
+        { id: 3, name: 'Platform 3', gamesCount: 25 },
       ],
     },
   },
@@ -171,6 +171,7 @@ const getGameMock = {
       id: '1', // Example game ID
       limit: 5, // Example limit
       offset: 0, // Example offset
+      username: '', // Example username
     },
   },
   result: {
@@ -203,8 +204,17 @@ const getGameMock = {
               platform: 'PC',
               gameID: '1',
             },
-            // ... other reviews
+            {
+              _id: 'review2',
+              user: 'user2',
+              title: 'Good Game',
+              content: 'This is a good game because...',
+              rating: 4,
+              platform: 'PC',
+              gameID: '1',
+            }
           ],
+          userHasReviewed: false,
         },
       },
     },
@@ -229,4 +239,4 @@ export {
   getFiltersMock,
   getAvgRatingMock,
   signInMock,
-}
+};
