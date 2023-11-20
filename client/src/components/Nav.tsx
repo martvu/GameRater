@@ -3,10 +3,9 @@ import Logo from '@/assets/logo.webp';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search } from 'lucide-react';
+import { ArrowLeft, Search, XCircle } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { SignInOutButton } from '@/components/SignInOutButton.tsx';
 import { Label } from './ui/label';
 import { useSetRecoilState } from 'recoil';
 import {
@@ -18,6 +17,7 @@ import {
 import { pageState } from '@/state/atoms';
 import { useRecoilState } from 'recoil';
 import { searchQueryState } from '@/state/atoms';
+import { UserNav } from './UserNav';
 
 export default function Nav() {
   const { keyword } = useParams<{ keyword?: string }>();
@@ -54,9 +54,9 @@ export default function Nav() {
   }
 
   return (
-    <header>
+    <header className="fixed top-0 z-40 flex h-16 w-full items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <nav
-        className={`relative flex h-20 w-full items-center gap-10 px-2 md:px-4 lg:gap-20 lg:px-8 ${
+        className={`flex w-full items-center ${
           showFullWidthSearch
             ? 'justify-center md:justify-between'
             : 'justify-between'
@@ -77,7 +77,7 @@ export default function Nav() {
                 <AvatarImage src={Logo} alt="GameRater logo" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <h1 className="text-xl font-semibold text-green-400">
+              <h1 className="ml-1 text-xl font-bold tracking-wide text-primary">
                 GameRater
               </h1>
             </Button>
@@ -98,23 +98,49 @@ export default function Nav() {
               <ArrowLeft />
             </Button>
           )}
-          <form onSubmit={handleSubmit} className="flex gap-5">
+          <form onSubmit={handleSubmit} className="flex">
             <Label htmlFor="search" className="sr-only" />
-            <Input
-              data-testid="search-input"
-              type="search"
-              className="w-[150px] lg:w-[300px]"
-              placeholder={keyword || 'Search'}
-              value={searchQuery}
-              onChange={e => {
-                setSearchQuery(e.target.value);
-              }}
-            />
-            <Button type="submit">Search</Button>
+            <div
+              className={`relative ${
+                showFullWidthSearch
+                  ? 'w-full'
+                  : 'w-[200px] md:w-[300px] lg:w-[400px]'
+              }`}
+            >
+              <Input
+                data-testid="search-input"
+                type="text"
+                className="w-full rounded-xl bg-muted pr-24 shadow-inner md:w-full lg:w-full"
+                placeholder={keyword || 'Search'}
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="round"
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('');
+                    navigate('/');
+                  }}
+                  className="absolute bottom-0 right-10 top-0 flex items-center justify-center"
+                >
+                  <XCircle size={18} />
+                </Button>
+              )}
+              <Button
+                variant="search"
+                type="submit"
+                className="absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
+              >
+                <Search />
+              </Button>
+            </div>
           </form>
         </div>
         <div
-          className={`flex-shrink-0 md:gap-2 ${
+          className={`flex-shrink-0 items-center md:gap-2 ${
             showFullWidthSearch ? 'hidden md:flex' : 'flex'
           }`}
         >
@@ -126,8 +152,14 @@ export default function Nav() {
           >
             <Search size={24} />
           </Button>
-          <SignInOutButton />
-          <ModeToggle />
+          <div>
+            <UserNav />
+          </div>
+
+          {/* <SignInOutButton /> */}
+          <div className="mr-1">
+            <ModeToggle />
+          </div>
         </div>
       </nav>
     </header>

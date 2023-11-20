@@ -84,7 +84,14 @@ export const resolvers: Resolvers = {
       let distinctPlatforms: number[] = [];
       // Apply filters if provided
       if (query) {
-        filters.name = { $regex: new RegExp(query, 'i') };
+        // Split the query into individual keywords
+        const keywords = query.split(' ').filter(keyword => keyword.length > 0);
+        // Create a regex pattern that matches documents containing all keywords
+        const regexPattern = keywords
+          .map(keyword => `(?=.*${keyword})`)
+          .join('');
+        filters.name = { $regex: new RegExp(regexPattern, 'i') };
+        // Get distinct platforms and genres matching the query
         distinctPlatforms = await Game.distinct('platforms', filters).exec();
         distinctGenres = await Game.distinct('genres', filters).exec();
       }
@@ -97,12 +104,15 @@ export const resolvers: Resolvers = {
 
       // If showFavorites is true, filter by user's favorite games
       let combinedGameIds = [];
+      let hasFavoritesOrReviews = false;
       if (showFavorites && userId) {
         const user = await User.findOne({ _id: userId });
-        if (user && user.favorites) {
+        if (user && user.favorites && user.favorites.length > 0) {
           combinedGameIds.push(...user.favorites);
+          hasFavoritesOrReviews = true;
         }
       }
+      // If showReviewedGames is true, filter by user's reviewed games
       if (showReviewedGames && userId) {
         const user = await User.findOne({ _id: userId });
         const reviews = await Review.find({ user: user.username });
@@ -114,17 +124,23 @@ export const resolvers: Resolvers = {
           reviewedGameIds.length > 0
         ) {
           combinedGameIds.push(...reviewedGameIds);
+          hasFavoritesOrReviews = true;
         }
       }
-      // Remove duplicate IDs
-      combinedGameIds = [...new Set(combinedGameIds)];
-      console.log(combinedGameIds);
-      if (combinedGameIds.length > 0) {
-        filters['_id'] = { $in: combinedGameIds };
+      // If user has favorites or reviews, filter by those
+      if (hasFavoritesOrReviews) {
+        // Remove duplicate IDs
+        combinedGameIds = [...new Set(combinedGameIds)];
+        if (combinedGameIds.length > 0) {
+          filters['_id'] = { $in: combinedGameIds };
+        }
+        // Return no results if specifically requested data is not available
+      } else if (showFavorites || showReviewedGames) {
+        return { games: [], count: 0, filters: { platforms: [], genres: [] } };
       }
+
       try {
         let sortQuery = Game.find();
-
         // Apply sorting if sortBy is provided
         if (sortBy) {
           const { field, order } = sortBy;
@@ -255,18 +271,34 @@ export const resolvers: Resolvers = {
     },
     reviews: async (
       game,
-      { limit, offset }: { limit: number; offset: number }
+      {
+        limit,
+        offset,
+        username,
+      }: { limit: number; offset: number; username: string }
     ) => {
       const reviews = await Review.find({ _id: { $in: game.reviews } })
         .skip(offset)
         .limit(limit);
       const count = await Review.countDocuments({ _id: { $in: game.reviews } });
+
+      // Check if the user has written a review
+      let userHasReviewed = false;
+      if (username) {
+        const userReview = await Review.findOne({
+          gameID: game._id,
+          user: username, // Assuming 'user' field in Review model stores userID
+        });
+        userHasReviewed = !!userReview;
+      }
+
       return {
         reviews: reviews.map(review => ({
           ...review.toObject(),
           _id: review._id.toString(),
         })),
         count: count,
+        userHasReviewed,
       };
     },
   },

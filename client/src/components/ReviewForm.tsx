@@ -28,6 +28,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
 import { gql } from '../gql/';
 import Loading from './Loading';
+import { useToast } from '@/components/ui/use-toast.ts';
 
 const GET_GAME_PLATFORMS = gql(`
   query GetGamePlatforms($id: ID!) {
@@ -84,6 +85,7 @@ export function ReviewForm() {
     refetchQueries: ['GetGame'],
     awaitRefetchQueries: true,
   });
+  const { toast } = useToast();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -98,30 +100,32 @@ export function ReviewForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     //Handle submit
-    try {
-      createReview({
-        variables: {
-          reviewInput: {
-            title: values.title.trim(),
-            content: values.content.trim(),
-            rating: values.rating,
-            platform: values.platform,
-            user: user.username,
-            gameID: id,
-          },
+    createReview({
+      variables: {
+        reviewInput: {
+          title: values.title.trim(),
+          content: values.content.trim(),
+          rating: values.rating,
+          platform: values.platform,
+          user: user.username,
+          gameID: id,
         },
-        onCompleted: () => {
-          // can be replaced with a toast
-          console.log('Review created');
-        },
-        onError: () => {
-          alert('Could not create review');
-        },
-      });
-    } catch (error) {
-      console.log('Could not create review');
-    }
-    form.reset();
+      },
+      onCompleted: () => {
+        toast({
+          title: 'Review created successfully',
+          description: `Your review for ${data?.getGame?.name} has been created.`,
+        });
+        form.reset();
+      },
+      onError: error => {
+        toast({
+          variant: 'destructive',
+          title: 'Could not create review',
+          description: error.message || 'Please try again.',
+        });
+      },
+    });
   }
 
   if (loading) return <Loading />;

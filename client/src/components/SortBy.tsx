@@ -9,11 +9,13 @@ import {
 } from '@/components/ui/select';
 import { pageState } from '@/state/atoms';
 import { sortByState } from '@/state/atoms';
+import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function SortBy() {
   const setSortBy = useRecoilState(sortByState)[1];
   const setCurrentPage = useSetRecoilState(pageState);
+  const [selectOpen, setOpen] = useState(false);
 
   function handleSortSelection(value: string) {
     let sortByObject = { field: 'first_release_date', order: 'desc' };
@@ -52,11 +54,21 @@ export default function SortBy() {
   }
 
   return (
+    // Need a setTimout to prevent the select from clicking through on touch devices
     <Select
+      open={selectOpen}
+      onOpenChange={() => {
+        setTimeout(() => {
+          setOpen(!selectOpen);
+        }, 1);
+      }}
       onValueChange={value => handleSortSelection(value)}
       value={localStorage.getItem('selectedSortLabel') || ''}
     >
-      <SelectTrigger data-testid="sort-by-select" className="w-[150px]">
+      <SelectTrigger
+        data-testid="sort-by-select"
+        className="w-[150px] hover:bg-accent"
+      >
         <SelectValue placeholder="Sort By" />
       </SelectTrigger>
       <SelectContent>

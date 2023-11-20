@@ -9,7 +9,7 @@ export default function Metascore({ metascore }: MetascoreProps) {
         metascore !== undefined
           ? metascore > 75
             ? 'bg-green-600'
-            : metascore > 35
+            : metascore > 50
             ? 'bg-yellow-600'
             : 'bg-red-600'
           : 'hidden'

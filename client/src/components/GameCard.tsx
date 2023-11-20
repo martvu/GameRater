@@ -47,38 +47,34 @@ export function GameCard({ game }: GameCardProps) {
     : ('' as string);
 
   return (
-    <Card data-testid="game-card" className="relative h-[400px] min-w-[240px] max-w-[300px] overflow-hidden p-0">
-      <CardHeader className="h-[320px] overflow-hidden">
-        <div className="min-h-[320px] w-full duration-700 hover:scale-105">
-          {imageId && (
-            <img
-              src={coverImageUrl}
-              alt={name as string}
-              className="object-cover"
-            />
-          )}
-        </div>
-      </CardHeader>
-      <CardContent className="relative px-3 text-start">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                data-testid="game-card-link"
-                to={`/game/${id}`}
-                aria-label={`Link to ${name} detail page`}
-              >
-                <CardTitle className="my-1 line-clamp-1 max-w-[240px] py-1 text-lg duration-300 hover:opacity-50 ">
+    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[260px]">
+      <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
+        <CardHeader className="mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
+          <div className="">
+            {imageId && (
+              <img
+                src={coverImageUrl}
+                alt={name as string}
+                className="object-cover"
+              />
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="relative px-3 text-start">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <CardTitle className="my-1 line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:max-w-[240px] sm:text-lg ">
                   {name}
                 </CardTitle>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{name}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </CardContent>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs md:text-sm">{name}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </CardContent>
+      </Link>
       <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
         <div className="relative flex h-full w-full items-center">
           <div className="absolute left-0 flex items-center">

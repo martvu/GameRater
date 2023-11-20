@@ -30,3 +30,5 @@ coverage
 # Cypress specific
 cypress/screenshots
 cypress/videos
+# Generated test files
+coverage
