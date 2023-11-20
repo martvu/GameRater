@@ -9,7 +9,7 @@ function BaseGameListPage() {
   return (
     <main className="grid flex-grow grid-cols-1 justify-center pt-16 md:grid-cols-[auto,1fr] md:justify-normal">
       <div className="hidden px-2 md:block">
-        <aside className="fixed top-16 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 pt-2 md:sticky md:block ">
+        <aside className="fixed top-16 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 pt-3 md:sticky md:block ">
           <Filters />
         </aside>
       </div>

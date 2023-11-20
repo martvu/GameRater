@@ -47,9 +47,9 @@ export function GameCard({ game }: GameCardProps) {
     : ('' as string);
 
   return (
-    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[400px] sm:min-w-[260px]">
+    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[260px]">
       <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
-        <CardHeader className="h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
+        <CardHeader className="mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
           <div className="">
             {imageId && (
               <img

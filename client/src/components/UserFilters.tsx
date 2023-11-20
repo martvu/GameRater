@@ -33,7 +33,7 @@ export default function UserFilters() {
           <Button
             aria-label="Toggle favorites"
             className="flex gap-1"
-            size="sm"
+            size="md"
             variant={showFavorites ? 'invert' : 'secondary'}
             onClick={handleShowFavorites}
           >
@@ -46,7 +46,7 @@ export default function UserFilters() {
           <Button
             aria-label="Toggle reviewed games"
             className="flex gap-1"
-            size="sm"
+            size="md"
             variant={showReviewedGames ? 'invert' : 'secondary'}
             onClick={handleShowReviewedGames}
           >

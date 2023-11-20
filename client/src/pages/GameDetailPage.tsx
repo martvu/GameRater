@@ -16,12 +16,13 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
-import { gql } from '../gql/';
+import { gql } from '@/gql';
 import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
+import { Badge } from '@/components/ui/badge';
 
 const GET_GAME = gql(`
   query GetGame($id: ID!, $limit: Int!, $offset: Int!, $username: String) {
@@ -135,7 +136,7 @@ const BaseGameDetailPage = () => {
               </CardContent>
               <CardFooter className="flex flex-col justify-center">
                 {hasWrittenReview ? (
-                  <Button className="mb-4 w-[200px]" disabled={true}>
+                  <Button className="mb-4 w-[200px]" disabled>
                     Review Submitted
                   </Button>
                 ) : (
@@ -153,43 +154,45 @@ const BaseGameDetailPage = () => {
               </CardTitle>
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start gap-1">
-                  <div className="flex gap-2">
-                    <p className="text-muted-foreground">Metascore: </p>
-                    <Metascore
-                      metascore={
-                        data.getGame.aggregatedRating
-                          ? data.getGame.aggregatedRating
-                          : undefined
-                      }
-                    />
-                  </div>
-                  <div className="flex">
-                    <p className="text-muted-foreground">
-                      Release Date: {releaseDate}
-                    </p>
+                  {data.getGame.aggregatedRating ? (
+                    <div className="flex items-center gap-2">
+                      <p className="text-muted-foreground">Metascore: </p>
+                      <Metascore
+                        metascore={
+                          data.getGame.aggregatedRating
+                            ? data.getGame.aggregatedRating
+                            : undefined
+                        }
+                      />
+                    </div>
+                  ) : null}
+                  <div className="mt-1 flex items-center gap-2">
+                    <p className="text-muted-foreground">Release Date:</p>
+                    <p className="text-sm font-semibold">{releaseDate}</p>
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2 text-muted-foreground">Platforms:</p>
                     {data.getGame.platforms?.map(
                       (platform: Platform | null) => (
-                        <li
-                          className="mb-1 mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                          key={platform?.name}
-                        >
-                          {platform?.name}
-                        </li>
+                        <>
+                          <li
+                            className="mb-1 mr-1 list-none"
+                            key={platform?.name}
+                          >
+                            <Badge variant="secondary">{platform?.name}</Badge>
+                          </li>
+                        </>
                       )
                     )}
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2 text-muted-foreground">Genres:</p>
                     {data.getGame.genres?.map((genre: Genre | null) => (
-                      <li
-                        className="mb-1 mr-1 list-none rounded-lg border border-primary px-2 text-sm"
-                        key={genre?.name}
-                      >
-                        {genre?.name}
-                      </li>
+                      <>
+                        <li className="mb-1 mr-1 list-none" key={genre?.name}>
+                          <Badge variant="secondary">{genre?.name}</Badge>
+                        </li>
+                      </>
                     ))}
                   </div>
                 </div>

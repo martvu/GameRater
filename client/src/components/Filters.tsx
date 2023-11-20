@@ -104,7 +104,7 @@ export default function Filters() {
         )}
       >
         <Button
-          className={`z-50 ml-1 mt-1 hidden md:flex ${isCollapsed ? '' : ''}`}
+          className={`z-50 m-1 hidden md:flex ${isCollapsed ? '' : ''}`}
           variant="ghost"
           onClick={toggleCollapse}
           aria-label="toggle filters"
