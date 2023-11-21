@@ -31,6 +31,7 @@ export default function UserFilters() {
       {user._id && (
         <>
           <Button
+            data-testid="toggle-favorites-btn"
             aria-label="Toggle favorites"
             className="flex gap-1"
             size="md"
