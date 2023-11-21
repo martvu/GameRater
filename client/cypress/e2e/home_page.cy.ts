@@ -15,12 +15,44 @@ describe('Navigation', () => {
 });
 
 describe('Sort Games', () => {
-  it('sorts games by release date', () => {
+  it('sorts games by release date ascending', () => {
+    // Sort by release date ascending
     cy.visit('/');
     cy.get('[data-testid="sort-by-select"]').click(); // Adjust based on your dropdown selector
     cy.contains('Release Date Asc').click(); // Adjust based on sorting options
-    // Add assertions to verify sorting
+    // Check that the first game is South Park Rally
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.contains('South Park Rally');
+  });
 
+  it('sorts games by release date descending', () => {
+    // Sort by release date descending
+    cy.visit('/');
+    cy.get('[data-testid="sort-by-select"]').click();
+    cy.contains('Release Date Desc').click();
+    // Check that the first game is The Wolf Among Us 2
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.contains('The Wolf Among Us 2');
+  });
+
+  it('sorts games by name A-Z', () => {
+    // Sort by name A-Z
+    cy.visit('/');
+    cy.get('[data-testid="sort-by-select"]').click();
+    cy.contains('Name A-Z').click();
+    // Check that the first game is .Detuned
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.contains('.Detuned');
+  });
+
+  it('sorts games by name Z-A', () => {
+    // Sort by name Z-A
+    cy.visit('/');
+    cy.get('[data-testid="sort-by-select"]').click();
+    cy.contains('Name Z-A').click();
+    // Check that the first game is Zwei: The Ilvard Insurrection
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.contains('Zwei: The Ilvard Insurrection');
   });
 });
 
