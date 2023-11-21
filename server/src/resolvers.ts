@@ -16,10 +16,6 @@ export const resolvers: Resolvers = {
     getUser: async (_, { username }) => {
       return await User.findOne({ username: username });
     },
-    getUsers: async (_, { limit }) => {
-      const users = await User.find().limit(limit);
-      return users.map(user => user.toObject());
-    },
     getReview: async (_, { ID }) => {
       const review = await Review.findById(ID);
       return review.toObject();
