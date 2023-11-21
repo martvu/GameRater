@@ -94,7 +94,7 @@ End-to-end testing is done with Cypress. For testing, we use a test database, so
 
 To start the server in "test" mode, run the following in server folder:
 ```
-npm testserver
+npm run testserver
 ```
 
 Then in another terminal, run the following in client folder:
