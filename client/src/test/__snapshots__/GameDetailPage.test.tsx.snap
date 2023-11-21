@@ -259,6 +259,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                       >
                         <svg
                           class="none"
+                          data-testid="heart-icon"
                           fill="none"
                           height="24"
                           stroke="currentColor"

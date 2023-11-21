@@ -9,7 +9,7 @@ import { gql } from '../gql';
 import { Dialog, DialogContent } from './ui/dialog';
 import SignInAlertModal from './SignInAlertModal';
 
-const ADD_FAVORITES = gql(`
+export const ADD_FAVORITES = gql(`
   mutation AddFavorites($username: String!, $gameID: String!) {
     addFavorites(username: $username, gameID: $gameID) {
       _id
@@ -21,7 +21,7 @@ const ADD_FAVORITES = gql(`
   }
 `);
 
-const REMOVE_FAVORITES = gql(`
+export const REMOVE_FAVORITES = gql(`
   mutation RemoveFavorites($username: String!, $gameID: String!) {
     removeFavorites(username: $username, gameID: $gameID) {
       _id
@@ -109,7 +109,7 @@ export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
         variant={variant || 'ghost'}
         size="round"
       >
-        <Heart className={isFavorite ? 'fill-red-600 text-red-600' : 'none'} />
+        <Heart data-testid="heart-icon" className={isFavorite ? 'fill-red-600 text-red-600' : 'none'} />
       </Button>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>

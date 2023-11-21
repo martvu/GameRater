@@ -22,7 +22,6 @@ vi.mock('react-router-dom', async () => {
     useParams: vi.fn(() => ({ keyword: 'mockedKeyword' })),
   };
 });
-// Mocks for GraphQL, useParams, etc.
 
 describe('GameListPage Component', () => {
   it('matches the snapshot', async () => {
@@ -37,6 +36,7 @@ describe('GameListPage Component', () => {
   });
   it('renders the GamesList component with mocked GraphQL data', async () => {
     testPageRender(<GameListPage />, { mocks });
+    screen.debug();
     // Wait for the mocked data to be displayed
     await waitFor(() => {
       expect(screen.getByText('Example Game')).toBeInTheDocument();
@@ -45,9 +45,7 @@ describe('GameListPage Component', () => {
     });
   });
 
-  it('signs in and renders correctly', async () => {
-
-    
+ it('signs in and renders correctly', async () => {
     testPageRender(<GameListPage />, { mocks });
     await userEvent.click(screen.getByText('Sign In'));
     await userEvent.type(screen.getByLabelText('Username'), 'testuser{enter}');
@@ -61,20 +59,24 @@ describe('GameListPage Component', () => {
       expect(screen.getByText('Favorites')).toBeInTheDocument();
       expect(screen.getByText('Reviewed')).toBeInTheDocument();
     });
-  });
+  }); 
 
 
   // NOT WORKING
   /* it('gets sign in prompt when trying to favorite a game', async () => {
+    testPageRender(<GameListPage />, { mocks });
+    await userEvent.click(screen.getAllByTestId('favorite-btn')[0]);
     await act(async () => {
-      testPageRender(<GameListPage />, { mocks });
-  
-      await userEvent.click(screen.getByTestId('favorite-btn'));
+      
+      screen.debug();
+      expect(screen.getByText('Sign In')).toBeInTheDocument();
+      
   
       // Wait for expected outcome after the click
       await waitFor(() => {
         expect(screen.getByText('Please sign in to favorite this game!')).toBeInTheDocument();
       });
     });
-  }); */
+  });  */
+  
 });

@@ -1,3 +1,4 @@
+import { ADD_FAVORITES, REMOVE_FAVORITES } from '@/components/FavoriteHeart';
 import { GET_GAMES } from '@/components/GamesList';
 import { GET_GAME } from '@/pages/GameDetailPage';
 import { gql } from '@apollo/client';
@@ -222,7 +223,41 @@ const getGameMock = {
   // Optionally, you can add an `error` field to mock a failure scenario
 };
 
+const addFavoritesMock = {
+  request: {
+    query: ADD_FAVORITES,
+    variables: { username: 'testUser', gameID: '1' },
+  },
+  result: {
+    data: {
+      addFavorites: {
+        _id: '1',
+        username: 'testUser',
+        favorites: [{ _id: '1' }],
+      },
+    },
+  },
+};
+
+const removeFavoritesMock = {
+  request: {
+    query: REMOVE_FAVORITES,
+    variables: { username: 'testUser', gameID: '1' },
+  },
+  result: {
+    data: {
+      removeFavorites: {
+        _id: '1',
+        username: 'testUser',
+        favorites: [],
+      },
+    },
+  },
+};
+
 const allMocks = [
+  addFavoritesMock,
+  removeFavoritesMock,
   getGamesMock,
   getFiltersMock,
   getAvgRatingMock,
