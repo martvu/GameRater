@@ -117,6 +117,7 @@ export default function Nav() {
               />
               {searchQuery && (
                 <Button
+                  data-testid="empty-search-input"
                   variant="ghost"
                   size="round"
                   type="button"

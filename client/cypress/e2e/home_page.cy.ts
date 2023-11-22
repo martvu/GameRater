@@ -1,12 +1,15 @@
 describe('The Home Page', () => {
   it('successfully loads', () => {
+    // Checks that the home page loads successfully and that there are 10000 games
     cy.visit('/');
     cy.contains('GameRater');
+    cy.contains('10000 results');
   });
 });
 
 describe('Navigation', () => {
   it('navigates to a game details page', () => {
+    // Checks that the game details page loads successfully for a given game
     cy.visit('/');
     cy.get('[data-testid="game-card-link"]').first().click();
     cy.url().should('include', '/game/');
@@ -26,18 +29,18 @@ describe('Sort Games', () => {
     // Sort by release date ascending
     cy.get('[data-testid="sort-by-select"]').click();
     cy.contains('Release Date Asc').click();
-    // Check that the first game is South Park Rally
+    // Check that the first game is The Devil Inside
     cy.get('[data-testid="game-card-link"]').first().click();
-    cy.contains('South Park Rally');
+    cy.contains('The Devil Inside');
   });
 
   it('sorts games by release date descending', () => {
     // Sort by release date descending
     cy.get('[data-testid="sort-by-select"]').click();
     cy.contains('Release Date Desc').click();
-    // Check that the first game is The Wolf Among Us 2
+    // Check that the first game is Vampire: The Masquerade - Bloodlines 2
     cy.get('[data-testid="game-card-link"]').first().click();
-    cy.contains('The Wolf Among Us 2');
+    cy.contains('Vampire: The Masquerade - Bloodlines 2');
   });
 
   it('sorts games by name A-Z', () => {
@@ -104,12 +107,44 @@ describe('Sort Games', () => {
 });
 
 describe('Filter Games', () => {
-  it('filters games', () => {
+  it('filters games on Nintendo Switch and searches for Mario', () => {
     cy.visit('/');
+    // Check that there are 10000 results initially
+    cy.contains('10000 results');
+    // Filter by Nintendo Switch
     cy.get('[data-testid="filter-item-Nintendo Switch"]').click();
-    cy.contains('2159 results');
+    cy.contains('2180 results');
+    // Search for Mario
     cy.get('[data-testid="search-input"]').click().type('mario{enter}');
-    cy.contains('21 results');
+    cy.contains('22 results');
+    // Remove filter
+    cy.get('[data-testid="filter-item-Nintendo Switch"]').click();
+    cy.contains('106 results');
+    // Remove search
+    cy.get('[data-testid="empty-search-input"]').click();
+    cy.contains('10000 results');
+  });
+
+  it('filters games on Music and searches for sing', () => {
+    cy.visit('/');
+    // Check that there are 10000 results initially
+    cy.contains('10000 results');
+    // Filter by Music
+    cy.get('[data-testid="filter-item-Music"]').click();
+    cy.contains('251 results');
+    // Search for sing
+    cy.get('[data-testid="search-input"]').click().type('sing{enter}');
+    cy.contains('6 results');
+    // Filter by PlayStation 4
+    cy.get('[data-testid="filter-item-PlayStation 4"]').click();
+    cy.contains('2 results');
+    // Remove filters
+    cy.get('[data-testid="filter-item-Music"]').click();
+    cy.get('[data-testid="filter-item-PlayStation 4"]').click();
+    cy.contains('72 results');
+    // Remove search
+    cy.get('[data-testid="empty-search-input"]').click();
+    cy.contains('10000 results');
   });
 });
 
