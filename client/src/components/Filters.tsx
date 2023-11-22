@@ -20,12 +20,10 @@ const GET_FILTERS = gql(`
     getGenres {
         id
         name
-        gamesCount
     }
     getPlatforms {
         id
         name
-        gamesCount
     }
   }
 `);

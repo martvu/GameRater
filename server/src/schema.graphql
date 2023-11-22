@@ -39,29 +39,12 @@ type Genre {
   _id: String
   id: Int
   name: String
-  slug: String
-  created_at: Int
-  updated_at: Int
-  url: String
-  checksum: String
-  gamesCount: Int
 }
 
 type Platform {
   _id: String
   id: Int
   name: String
-  alternative_name: String
-  slug: String
-  category: Int
-  created_at: Int
-  updated_at: Int
-  url: String
-  platform_logo: Int
-  versions: [Int]
-  websites: [Int]
-  checksum: String
-  gamesCount: Int
 }
 
 type Games {
@@ -98,15 +81,9 @@ input GameSortInput {
 }
 
 type Query {
-  getReview(ID: ID!): Review!
-  getReviews(limit: Int): [Review!]!
-  getUser(username: String!): User!
-  getUsers(limit: Int): [User!]!
   getGame(ID: ID!): Game!
   getAvgRating(gameID: ID!): Float!
-  getGenre(id: Int): Genre!
   getGenres(limit: Int): [Genre!]!
-  getPlatform(id: Int): Platform!
   getPlatforms(limit: Int): [Platform!]!
   search(
     userId: String
@@ -123,8 +100,6 @@ type Query {
 
 type Mutation {
   createReview(reviewInput: ReviewInput): Review!
-  updateReview(ID: ID!, reviewInput: ReviewInput): String!
-  deleteReview(ID: ID!): String!
   signInOrCreateUser(userInput: UserInput): User!
   addFavorites(username: String!, gameID: String!): User!
   removeFavorites(username: String!, gameID: String!): User!
