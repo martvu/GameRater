@@ -7,7 +7,7 @@
     "generate": "graphql-codegen",
     "compile": "npm run generate && tsc",
     "start": "npm run compile && node ./dist/src/index.js",
-    "deploy": "forever start --minUptime 2000 --spinSleepTime 5 ./dist/src/index.js",
+    "deploy": "npm run compile && forever start --minUptime 2000 --spinSleepTime 5 ./dist/src/index.js",
     "lint": "eslint src/**/*.ts --fix",
     "test": "npm run generate && NODE_ENV=test vitest ",
     "coverage": "vitest run --coverage",
