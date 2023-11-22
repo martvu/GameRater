@@ -72,7 +72,7 @@ export default function GamesList() {
   }, [showFavorites, showReviewedGames, refetch]);
 
   useEffect(() => {
-    const sortByFromStorage = localStorage.getItem('selectedSortBy');
+    const sortByFromStorage = sessionStorage.getItem('selectedSortBy');
     if (sortByFromStorage) {
       setSortBy(JSON.parse(sortByFromStorage));
     }
@@ -91,7 +91,12 @@ export default function GamesList() {
   }, [currentPage]);
 
   if (loading) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error)
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <p className="text-xl font-semibold">Could not load data</p>
+      </div>
+    );
 
   return (
     <main className="mt-1">

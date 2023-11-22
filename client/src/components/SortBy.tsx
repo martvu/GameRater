@@ -44,13 +44,13 @@ export default function SortBy() {
       setSortBy(sortByObject);
     }
 
-    // Store the selected value in localStorage
-    localStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
-    localStorage.setItem('selectedSortLabel', value);
+    // Store the selected value in sessionStorage
+    sessionStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
+    sessionStorage.setItem('selectedSortLabel', value);
 
     // Reset the page to 1
     setCurrentPage(1);
-    localStorage.setItem('currentPage', '1');
+    sessionStorage.setItem('currentPage', '1');
   }
 
   return (
@@ -63,7 +63,7 @@ export default function SortBy() {
         }, 1);
       }}
       onValueChange={value => handleSortSelection(value)}
-      value={localStorage.getItem('selectedSortLabel') || ''}
+      value={sessionStorage.getItem('selectedSortLabel') || ''}
     >
       <SelectTrigger className="w-[150px] hover:bg-accent">
         <SelectValue placeholder="Sort By" />

@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
+import { useState } from 'react';
 
 interface GameCardProps {
   game: Game;
@@ -32,6 +33,7 @@ const GET_AVG_RATING = gql(`
 `);
 
 export function GameCard({ game }: GameCardProps) {
+  const [imageError, setImageError] = useState(false);
   const {
     _id: id,
     name,
@@ -42,25 +44,32 @@ export function GameCard({ game }: GameCardProps) {
     variables: { gameID: id as string },
   });
 
-  const handleImageError = (e) => {
-    e.target.src = imageNotFound; // Set the source to your fallback image
-  };
   const rating = data?.getAvgRating;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
     : ('' as string);
 
   return (
-    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] p-0 duration-300 overflow-hidden hover:scale-105 sm:h-[410px] sm:min-w-[260px]">
-      <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
-        <CardHeader className="mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
+    <Card className="h-[310px] min-w-[175px] max-w-[262px] overflow-visible p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[262px]">
+      <Link
+        data-testid="game-card-link"
+        to={`/game/${id}`}
+        aria-label={`Link to ${name} detail page`}
+      >
+        <CardHeader className="h-[235px] w-[176px] overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
           <div className="flex flex-1 items-center justify-center">
-            {imageId && (
+            {!imageError ? (
               <img
                 src={coverImageUrl}
                 alt={name as string}
-                className="object-cover fill-green-300"
-                onError={handleImageError}
+                className="object-cover"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <img
+                src={imageNotFound}
+                alt="Image not found"
+                className="object-cover"
               />
             )}
           </div>
@@ -69,7 +78,7 @@ export function GameCard({ game }: GameCardProps) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <CardTitle className="my-1 line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:max-w-[240px] sm:text-lg ">
+                <CardTitle className="line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:my-1 sm:max-w-[240px] sm:text-lg ">
                   {name}
                 </CardTitle>
               </TooltipTrigger>
@@ -80,7 +89,7 @@ export function GameCard({ game }: GameCardProps) {
           </TooltipProvider>
         </CardContent>
       </Link>
-      <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
+      <CardFooter className="mt-auto h-[40px] w-full pl-3 pr-2 sm:pb-2">
         <div className="relative flex h-full w-full items-center">
           <div className="absolute left-0 flex items-center">
             <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />

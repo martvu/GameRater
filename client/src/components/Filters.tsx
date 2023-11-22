@@ -93,7 +93,7 @@ export default function Filters() {
     return <div className="h-screen w-[210px]"></div>;
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div className="w-full"></div>;
   }
   return (
     <>
@@ -121,7 +121,7 @@ export default function Filters() {
         <ScrollArea className={cn('h-full pb-4 pr-2', isCollapsed && 'hidden')}>
           <div className="block pl-5">
             <h1
-              className={`mt-4 text-left font-bold tracking-wider text-foreground text-xl${
+              className={`mt-4 text-left text-xl font-bold tracking-wider text-foreground ${
                 isCollapsed ? 'hidden' : ''
               }`}
             >

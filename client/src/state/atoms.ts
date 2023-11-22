@@ -24,14 +24,13 @@ export const selectedGenresState = atom({
   default: [] as number[],
 });
 
-const currentPage = localStorage.getItem('currentPage');
+const currentPage = sessionStorage.getItem('currentPage');
 export const pageState = atom<number>({
   key: 'pageState',
   default: currentPage ? parseInt(currentPage, 10) : 1,
 });
 
-const sortBy = localStorage.getItem('selectedSortState');
-
+const sortBy = sessionStorage.getItem('selectedSortState');
 export const defaultSortBy = {
   field: 'first_release_date',
   order: 'desc',
