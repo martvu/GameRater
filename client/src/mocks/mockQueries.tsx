@@ -86,16 +86,14 @@ const getGamesSignedInMock = {
 const getFiltersMock = {
   request: {
     query: gql`
-      query GetFilters {
+      query GetFiltersMock {
         getGenres {
           id
           name
-          gamesCount
         }
         getPlatforms {
           id
           name
-          gamesCount
         }
       }
     `,

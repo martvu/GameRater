@@ -13,17 +13,6 @@ interface GameQueryFilters {
 
 export const resolvers: Resolvers = {
   Query: {
-    getUser: async (_, { username }) => {
-      return await User.findOne({ username: username });
-    },
-    getReview: async (_, { ID }) => {
-      const review = await Review.findById(ID);
-      return review.toObject();
-    },
-    getReviews: async (_, { limit }) => {
-      const reviews = await Review.find().limit(limit);
-      return reviews.map(review => review.toObject());
-    },
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
     },
@@ -43,18 +32,10 @@ export const resolvers: Resolvers = {
       });
       return averageRating;
     },
-    getGenre: async (_, { id }) => {
-      const genre = await Genre.findOne({ id: id });
-      return genre.toObject();
-    },
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
       genres.sort((a, b) => a.name.localeCompare(b.name as string));
       return genres.map(genre => genre.toObject());
-    },
-    getPlatform: async (_, { id }) => {
-      const platform = await Platform.findOne({ id: id });
-      return platform.toObject();
     },
     getPlatforms: async (_, { limit }) => {
       const platforms = await Platform.find().limit(limit);
@@ -207,21 +188,6 @@ export const resolvers: Resolvers = {
       }
       return { ...review.toObject(), _id: review._id.toString() };
     },
-    updateReview: async (
-      _,
-      { ID, reviewInput: { user, title, content, rating, platform, gameID } }
-    ) => {
-      await Review.updateOne(
-        { _id: ID },
-        { $set: { user, title, content, rating, platform, gameID } }
-      );
-      return ID;
-    },
-    deleteReview: async (_, { ID }) => {
-      await Review.deleteOne({ _id: ID });
-      await Game.updateOne({}, { $pull: { reviews: ID } });
-      return ID;
-    },
     signInOrCreateUser: async (_, { userInput: { username } }) => {
       const user = await User.findOne({ username: username });
       if (user) {
@@ -283,7 +249,7 @@ export const resolvers: Resolvers = {
       if (username) {
         const userReview = await Review.findOne({
           gameID: game._id,
-          user: username, // Assuming 'user' field in Review model stores userID
+          user: username,
         });
         userHasReviewed = !!userReview;
       }
@@ -304,16 +270,6 @@ export const resolvers: Resolvers = {
     },
     async reviews(user) {
       return await Review.find({ _id: { $in: user.reviews } });
-    },
-  },
-  Genre: {
-    gamesCount: async genre => {
-      return await Game.countDocuments({ genres: { $in: [genre.id] } });
-    },
-  },
-  Platform: {
-    gamesCount: async platform => {
-      return await Game.countDocuments({ platforms: { $in: [platform.id] } });
     },
   },
 };
