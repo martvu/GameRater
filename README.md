@@ -185,17 +185,8 @@ Users can add games to favorites and review them. A user is only allowed to add 
 ### Light/Dark Mode
 We have implemented a toggle between light and dark mode.
 
-# Future work
+<!-- # Accesibility
 
-For the next delivery we will primarily focus on the following:
-
-- Testing: Implementing both testing of individual components, end-2-end testing and testing of the API.
-- Accesibility: Making the app accessible to all users, including those with disabilities.
-- Sustainability: Making sure the app conforms with guidelines for sustainable web design.
-
-In addition we will also work on the following:
-- Improving filtering and searching, improve speed of fetching data and add number of hits to the search/filter results.  
-- Functionality to filter for favorites and games that the user has reviewed.
-- Further improve design and layout, color scheme. 
+# Sustainability  -->
 
 
