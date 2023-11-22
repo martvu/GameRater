@@ -55,6 +55,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
         {filters?.slice(0, numItemsToShow).map(item => (
           <div className="my-1 flex items-center space-x-2" key={item?.name}>
             <Checkbox
+              data-testid={`filter-item-${item?.name}`}
               id={`filter-item-${item?.name}`}
               onCheckedChange={checked => {
                 if (typeof item?.id === 'number')
@@ -68,7 +69,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
             />
             <Label
               htmlFor={`filter-item-${item?.name}`}
-              className={`text-left font-normal tracking-tight line-clamp-1 ${
+              className={`line-clamp-1 text-left font-normal tracking-tight ${
                 (filterType === 'platforms' &&
                   selectedPlatforms.includes(item?.id ?? 0)) ||
                 (filterType === 'genres' &&

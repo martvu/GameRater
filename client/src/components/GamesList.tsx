@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
 
-const GET_GAMES = gql(`
+export const GET_GAMES = gql(`
   query Search($userId: String, $showFavorites: Boolean, $showReviewedGames: Boolean, $query: String, $limit: Int!, $offset: Int!, $sortBy: GameSortInput, $platforms: [Int!], $genres: [Int!]) {
     search(userId: $userId, showFavorites: $showFavorites, showReviewedGames: $showReviewedGames, query: $query, limit: $limit, offset: $offset, sortBy: $sortBy, platforms: $platforms, genres: $genres) {
       count

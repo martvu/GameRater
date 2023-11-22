@@ -60,7 +60,7 @@ export default function Nav() {
             : 'justify-between'
         }`}
       >
-        <Link to="/" aria-label="Return to Home Page">
+        <Link data-testid="logo-btn" to="/" aria-label="Return to Home Page">
           <div
             className={`w-28 items-center justify-between gap-2 px-2 ${
               showFullWidthSearch ? 'hidden md:flex' : 'flex'
@@ -106,6 +106,7 @@ export default function Nav() {
               }`}
             >
               <Input
+                data-testid="search-input"
                 type="text"
                 className="w-full rounded-xl bg-muted pr-24 shadow-inner md:w-full lg:w-full"
                 placeholder={keyword || 'Search'}
@@ -114,6 +115,7 @@ export default function Nav() {
               />
               {searchQuery && (
                 <Button
+                  data-testid="empty-search-input"
                   variant="ghost"
                   size="round"
                   type="button"
@@ -152,8 +154,6 @@ export default function Nav() {
           <div>
             <UserNav />
           </div>
-
-          {/* <SignInOutButton /> */}
           <div className="mr-1">
             <ModeToggle />
           </div>

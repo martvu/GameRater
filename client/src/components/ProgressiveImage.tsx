@@ -23,24 +23,27 @@ const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   }, [fullSrc]);
 
   return (
-    <div className={cn("relative", className)}>
-        {/* Always render both images */}
-        {/* Placeholder Image */}
-        <div className="flex justify-center items-center absolute inset-0 z-10">
-            <img
-                src={placeholderSrc}
-                alt={alt}
-                className="object-cover w-1/2 transition-opacity duration-500 ease-in-out opacity-100"
-            />
-        </div>
-        {/* Full Image */}
+    <div className={cn('relative', className)}>
+      {/* Always render both images */}
+      {/* Placeholder Image */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
         <img
-            src={fullSrc}
-            alt={alt}
-            onLoad={() => setImageLoaded(true)}
-            className={cn("absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out", imageLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0')}
-            loading='lazy'
+          src={placeholderSrc}
+          alt={alt}
+          className="w-1/2 object-cover opacity-100 transition-opacity duration-500 ease-in-out"
         />
+      </div>
+      {/* Full Image */}
+      <img
+        src={fullSrc}
+        alt={alt}
+        onLoad={() => setImageLoaded(true)}
+        className={cn(
+          'absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out',
+          imageLoaded ? 'z-10 opacity-100' : 'z-0 opacity-0'
+        )}
+        loading="lazy"
+      />
     </div>
   );
 };

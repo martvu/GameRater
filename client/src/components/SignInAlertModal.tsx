@@ -10,7 +10,10 @@ export default function SignInAlertModal({
   onSignInSuccess,
 }: SignInAlertModalProps) {
   return (
-    <div className="flex flex-col items-center space-y-2">
+    <div
+      data-testid="sign-in-alert"
+      className="flex flex-col items-center space-y-2"
+    >
       <p>{message}</p>
       <SignInModal onSignInSuccess={onSignInSuccess} />
     </div>

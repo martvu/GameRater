@@ -102,13 +102,16 @@ export function SignInForm({ onClose }: SignInFormProps) {
               <div className="flex items-center gap-4">
                 <FormControl>
                   <Input
+                    data-testid="username-input"
                     placeholder="Your username"
                     {...field}
                     className="h-10 max-w-[200px]"
                     maxLength={15}
                   />
                 </FormControl>
-                <Button type="submit">Sign In</Button>
+                <Button data-testid="form-sign-in-button" type="submit">
+                  Sign In
+                </Button>
               </div>
               <FormMessage />
             </FormItem>

@@ -143,7 +143,11 @@ export function ReviewForm() {
             <FormItem>
               <FormLabel>Review Title</FormLabel>
               <FormControl>
-                <Input placeholder="Title of your review" {...field} />
+                <Input
+                  data-testid="review-title-input"
+                  placeholder="Title of your review"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -157,7 +161,7 @@ export function ReviewForm() {
               <FormLabel>Platform</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger data-testid="review-platform-select">
                     <SelectValue placeholder="Choose Platform" />
                   </SelectTrigger>
                 </FormControl>
@@ -165,6 +169,7 @@ export function ReviewForm() {
                   <SelectGroup>
                     {data?.getGame?.platforms?.map(platform => (
                       <SelectItem
+                        data-testid="review-platform"
                         key={platform?.name}
                         value={platform?.name as string}
                       >
@@ -187,6 +192,7 @@ export function ReviewForm() {
               <FormLabel>Review Content</FormLabel>
               <FormControl>
                 <Textarea
+                  data-testid="review-content-input"
                   placeholder="Tell us what you think about this game"
                   className="resize-none"
                   {...field}
@@ -216,7 +222,9 @@ export function ReviewForm() {
         <FormDescription>
           Your review will be public and shared with other users.
         </FormDescription>
-        <Button type="submit">Submit Review</Button>
+        <Button data-testid="review-submit-btn" type="submit">
+          Submit Review
+        </Button>
       </form>
     </Form>
   );

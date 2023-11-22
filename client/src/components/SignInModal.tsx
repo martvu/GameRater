@@ -20,7 +20,9 @@ export default function SignInModal({ onSignInSuccess }: SignInModalProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Sign In</Button>
+        <Button data-testid="modal-sign-in-button" variant="outline">
+          Sign In
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] overflow-auto">
         <SignInForm onClose={closeDialog} />

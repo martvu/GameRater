@@ -12,13 +12,19 @@ import {
 import { userState } from '@/state/atoms';
 import { useRecoilState } from 'recoil';
 import SignInModal from './SignInModal';
+import { useToast } from './ui/use-toast';
 
 export function UserNav() {
   const [user, setUser] = useRecoilState(userState);
+  const { toast } = useToast();
 
   function signOutUser() {
     localStorage.removeItem('user');
     setUser({ _id: '', username: '', favorites: [], reviews: [] });
+    toast({
+      title: 'Signed out',
+      description: 'You have been signed out.',
+    });
   }
 
   const fallBackLogo = user.username?.charAt(0).toUpperCase();
@@ -26,14 +32,14 @@ export function UserNav() {
     <SignInModal />
   ) : (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger data-testid="user-nav" asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
             <AvatarFallback>{fallBackLogo}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 mr-2" align="center" forceMount>
+      <DropdownMenuContent className="mr-2 w-56" align="center" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col items-center gap-2">
             <UserCircle />
@@ -42,7 +48,7 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOutUser}>
-          <Button variant="none" size="sm">
+          <Button data-testid="sign-out-button" variant="none" size="sm">
             <LogOut className="mr-2 h-4 w-4" />
             Sign out
           </Button>
