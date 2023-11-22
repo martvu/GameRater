@@ -1,5 +1,5 @@
 import { Star } from 'lucide-react';
-
+import imageNotFound from '@/assets/img-fallback.svg';
 import {
   Card,
   CardContent,
@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
+import ProgressiveImage from './ProgressiveImage';
 
 interface GameCardProps {
   game: Game;
@@ -44,27 +45,30 @@ export function GameCard({ game }: GameCardProps) {
   const rating = data?.getAvgRating;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
-    : ('' as string);
+    : imageNotFound;
 
   return (
-    <Card className="relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[260px]">
-      <Link data-testid="game-card-link" to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
-        <CardHeader className="mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
-          <div className="">
-            {imageId && (
-              <img
-                src={coverImageUrl}
-                alt={name as string}
-                className="object-cover"
-              />
-            )}
+    <Card className="h-[310px] min-w-[175px] max-w-[262px] overflow-visible p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[262px]">
+      <Link
+        data-testid="game-card-link"
+        to={`/game/${id}`}
+        aria-label={`Link to ${name} detail page`}
+      >
+        <CardHeader className="h-[235px] w-[176px] overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
+          <div className="flex flex-1 items-center justify-center">
+            <ProgressiveImage
+              placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
+              fullSrc={coverImageUrl}
+              alt={name as string}
+              className="h-full w-full object-cover" // Adjust the width and height as needed
+            />
           </div>
         </CardHeader>
         <CardContent className="relative px-3 text-start">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <CardTitle className="my-1 line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:max-w-[240px] sm:text-lg ">
+                <CardTitle className="line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:my-1 sm:max-w-[240px] sm:text-lg ">
                   {name}
                 </CardTitle>
               </TooltipTrigger>
@@ -75,7 +79,7 @@ export function GameCard({ game }: GameCardProps) {
           </TooltipProvider>
         </CardContent>
       </Link>
-      <CardFooter className="absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2">
+      <CardFooter className="mt-auto h-[40px] w-full pl-3 pr-2 sm:pb-2">
         <div className="relative flex h-full w-full items-center">
           <div className="absolute left-0 flex items-center">
             <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />

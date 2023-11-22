@@ -57,6 +57,7 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
           index += 1;
           return (
             <button
+              data-testid="review-star"
               type="button"
               key={index}
               className={

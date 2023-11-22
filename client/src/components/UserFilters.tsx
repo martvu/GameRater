@@ -1,6 +1,6 @@
 import { Button } from './ui/button';
 import { Heart, Star } from 'lucide-react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   pageState,
   showFavoritesState,
@@ -9,7 +9,7 @@ import {
 } from '@/state/atoms';
 
 export default function UserFilters() {
-  const [currentPage, setCurrentPage] = useRecoilState(pageState);
+  const setCurrentPage = useSetRecoilState(pageState);
   const user = useRecoilValue(userState);
   const [showFavorites, setShowFavorites] = useRecoilState(showFavoritesState);
   const [showReviewedGames, setShowReviewedGames] = useRecoilState(
@@ -31,6 +31,7 @@ export default function UserFilters() {
       {user._id && (
         <>
           <Button
+            data-testid="toggle-favorites-btn"
             aria-label="Toggle favorites"
             className="flex gap-1"
             size="md"
@@ -44,6 +45,7 @@ export default function UserFilters() {
             />
           </Button>
           <Button
+            data-testid="toggle-reviewed-btn"
             aria-label="Toggle reviewed games"
             className="flex gap-1"
             size="md"

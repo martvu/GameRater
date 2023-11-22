@@ -109,7 +109,9 @@ export function SignInForm({ onClose }: SignInFormProps) {
                     maxLength={15}
                   />
                 </FormControl>
-                <Button data-testid="form-sign-in-button" type="submit">Sign In</Button>
+                <Button data-testid="form-sign-in-button" type="submit">
+                  Sign In
+                </Button>
               </div>
               <FormMessage />
             </FormItem>

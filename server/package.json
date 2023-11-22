@@ -11,7 +11,7 @@
     "lint": "eslint src/**/*.ts --fix",
     "test": "npm run generate && NODE_ENV=test vitest ",
     "coverage": "vitest run --coverage",
-    "testserver": "npm run generate && NODE_ENV=test node -r dotenv/config ./dist/src/index.js dotenv_config_path=.env.test"
+    "testserver": "npm run compile && NODE_ENV=test node -r dotenv/config ./dist/src/index.js dotenv_config_path=.env.test"
   },
   "keywords": [],
   "author": "",

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ListFilter } from 'lucide-react';
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
@@ -86,40 +86,19 @@ export default function Filters() {
       selectedGenres.includes(genre.id as number)
     );
   });
+  // Apply transition to the filter menu
+  const filterContainerClasses = cn(
+    'flex h-full flex-col items-start overflow-hidden text-left transition-all duration-300 ease-in-out',
+    isCollapsed ? 'w-0' : 'w-[240px]' // Toggle between full width and collapsed state
+  );
 
-  if (loading) {
-    return <div className="h-screen w-[210px]"></div>;
-  }
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
   return (
     <>
-      <div
-        className={cn(
-          'flex h-full flex-col items-start overflow-y-auto text-left',
-          !isCollapsed && 'w-full'
-        )}
-      >
-        <Button
-          className={`z-50 m-1 hidden md:flex ${isCollapsed ? '' : ''}`}
-          variant="ghost"
-          onClick={toggleCollapse}
-          aria-label="toggle filters"
-        >
-          {isCollapsed ? (
-            <>
-              <ChevronRight size={18} />
-            </>
-          ) : (
-            <ChevronLeft size={18} />
-          )}
-          {!isCollapsed && <span className="z-50 ml-2">Hide filters</span>}
-        </Button>
-        <ScrollArea className={cn('h-full pb-4 pr-2', isCollapsed && 'hidden')}>
-          <div className="block pl-5">
+      <div className={filterContainerClasses}>
+        <ScrollArea className="h-full pb-4 pr-2">
+          <div className="pb-4 pl-5 md:pb-32">
             <h1
-              className={`mt-4 text-left font-bold tracking-wider text-foreground text-xl${
+              className={`mt-4 text-left text-xl font-bold tracking-wider text-foreground ${
                 isCollapsed ? 'hidden' : ''
               }`}
             >
@@ -137,6 +116,15 @@ export default function Filters() {
           </div>
         </ScrollArea>
       </div>
+      <Button
+        className="fixed bottom-4 left-4 z-50 m-1 hidden md:flex"
+        variant="outline"
+        onClick={toggleCollapse}
+        aria-label="toggle filters"
+      >
+        {isCollapsed ? <ListFilter /> : <ChevronLeft size={18} />}
+        {!isCollapsed && <span className="ml-2">Hide filters</span>}
+      </Button>
     </>
   );
 }

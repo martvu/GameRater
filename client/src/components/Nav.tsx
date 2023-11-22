@@ -45,16 +45,14 @@ export default function Nav() {
     setSelectedPlatforms([]);
     setSelectedGenres([]);
     setSearchQuery('');
-    localStorage.setItem('selectedSortBy', '');
-    localStorage.removeItem('selectedSortLabel');
-    localStorage.setItem('currentPage', '1');
-    localStorage.removeItem('selectedPlatforms');
-    localStorage.removeItem('selectedGenres');
-    localStorage.removeItem('searchQuery');
+    sessionStorage.removeItem('selectedSortLabel');
+    sessionStorage.setItem('selectedSortBy', '');
+    sessionStorage.setItem('currentPage', '1');
+    sessionStorage.removeItem('searchQuery');
   }
 
   return (
-    <header className="fixed top-0 z-40 flex h-16 w-full items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="fixed top-0 z-40 flex h-16 w-[calc(100vw-0.75rem)] items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <nav
         className={`flex w-full items-center ${
           showFullWidthSearch
@@ -62,7 +60,7 @@ export default function Nav() {
             : 'justify-between'
         }`}
       >
-        <Link to="/" aria-label="Return to Home Page">
+        <Link data-testid="logo-btn" to="/" aria-label="Return to Home Page">
           <div
             className={`w-28 items-center justify-between gap-2 px-2 ${
               showFullWidthSearch ? 'hidden md:flex' : 'flex'
@@ -117,6 +115,7 @@ export default function Nav() {
               />
               {searchQuery && (
                 <Button
+                  data-testid="empty-search-input"
                   variant="ghost"
                   size="round"
                   type="button"
