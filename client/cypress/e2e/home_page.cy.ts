@@ -54,6 +54,16 @@ describe('Sort Games', () => {
     cy.get('[data-testid="game-card-link"]').first().click();
     cy.contains('Zwei: The Ilvard Insurrection');
   });
+
+  it('sorts games by Metascore', () => {
+    // Sort by Metascore
+    cy.visit('/');
+    cy.get('[data-testid="sort-by-select"]').click();
+    cy.contains('Metascore').click();
+    // Check that the first game has a Metascore of 100
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.contains('Metascore: 100');
+  });
 });
 
 describe('Filter Games', () => {
