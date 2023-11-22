@@ -33,7 +33,7 @@ export function UserNav() {
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger data-testid="user-nav" asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+        <Button aria-label="User nav" variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
             <AvatarFallback>{fallBackLogo}</AvatarFallback>
           </Avatar>

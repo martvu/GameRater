@@ -5,6 +5,7 @@ type MetascoreProps = {
 export default function Metascore({ metascore }: MetascoreProps) {
   return (
     <div
+      aria-label="metascore"
       className={`flex items-center justify-center rounded-md border border-white text-sm text-white ${
         metascore !== undefined
           ? metascore > 75

@@ -115,6 +115,7 @@ export default function Nav() {
               />
               {searchQuery && (
                 <Button
+                  aria-label="Empty search input"
                   data-testid="empty-search-input"
                   variant="ghost"
                   size="round"
@@ -129,6 +130,7 @@ export default function Nav() {
                 </Button>
               )}
               <Button
+                aria-label="Search"
                 variant="search"
                 type="submit"
                 className="absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
