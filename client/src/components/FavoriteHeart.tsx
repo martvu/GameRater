@@ -103,6 +103,7 @@ export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
   return (
     <>
       <Button
+        aria-label="Favorite game button"
         data-testid="favorite-btn"
         onClick={toggleFavorite}
         className="z-10"
