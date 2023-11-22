@@ -5,9 +5,10 @@ import './index.css';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RecoilRoot } from 'recoil';
 
+const serverUri = import.meta.env.VITE_SERVER_URI;
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  //uri: 'http://it2810-48.idi.ntnu.no:4000/graphql',
+  uri: serverUri,
   cache: new InMemoryCache(),
 });
 
