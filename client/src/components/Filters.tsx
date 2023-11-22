@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft, ListFilter } from 'lucide-react';
+import { ChevronLeft, ListFilter } from 'lucide-react';
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
@@ -38,7 +38,7 @@ export default function Filters() {
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-  const { data, loading, error } = useQuery(GET_FILTERS);
+  const { data } = useQuery(GET_FILTERS);
 
   // Define the preferred platforms order
   const preferredOrder = [
