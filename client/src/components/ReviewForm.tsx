@@ -63,7 +63,9 @@ const formSchema = z.object({
   title: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
   }),
-  content: z.string().max(1000).min(4),
+  content: z.string().max(1000).min(4, {
+    message: 'Content must be at least 4 characters.',
+  }),
   rating: z
     .number()
     .min(1, {

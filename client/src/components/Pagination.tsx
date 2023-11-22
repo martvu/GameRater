@@ -23,7 +23,7 @@ export default function Pagination({
 
   function handlePageChange(pageNumber: number) {
     setCurrentPage(pageNumber);
-    localStorage.setItem('currentPage', pageNumber.toString());
+    sessionStorage.setItem('currentPage', pageNumber.toString());
   }
 
   const PageButton = ({ pageNumber }: PageButtonProps) => {

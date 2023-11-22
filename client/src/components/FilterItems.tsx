@@ -24,9 +24,6 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   const [selectedGenres, setSelectedGenres] =
     useRecoilState(selectedGenresState);
   const setCurrentPage = useSetRecoilState(pageState);
-  const showMore = () => {
-    setNumItemsToShow(numItemsToShow + 10);
-  };
 
   const handleCheckboxChange = (filterId: number, isChecked: boolean) => {
     if (filterType === 'platforms') {
@@ -45,6 +42,9 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
     setCurrentPage(1); // Reset page to 1 when a filter is selected
   };
 
+  const showMore = () => {
+    setNumItemsToShow(filters.length);
+  };
   const showLess = () => setNumItemsToShow(10);
   return (
     <div>
@@ -69,7 +69,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
             />
             <Label
               htmlFor={`filter-item-${item?.name}`}
-              className={`text-left font-normal tracking-tight ${
+              className={`text-left font-normal tracking-tight line-clamp-1 ${
                 (filterType === 'platforms' &&
                   selectedPlatforms.includes(item?.id ?? 0)) ||
                 (filterType === 'genres' &&
