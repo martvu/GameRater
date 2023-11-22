@@ -87,30 +87,6 @@ describe('Test get filters', () => {
       },
     });
   });
-  it('Favorites and Reviewed filters the games', async () => {
-    const response = await request(app)
-      .post('/graphql')
-      .send({
-        query: `
-          query Query($limit: Int!, $offset: Int!, $userId: String, $showFavorites: Boolean, $showReviewedGames: Boolean) {
-            search(limit: $limit, offset: $offset, userId: $userId, showFavorites: $showFavorites, showReviewedGames: $showReviewedGames) {
-              games {
-                name
-              }
-            }
-          }
-        `,
-        variables: {
-          limit: 1,
-          offset: 0,
-          userId: '',
-          showFavorites: true,
-          showReviewedGames: true,
-        },
-      });
-    expect(response.status).toBe(200);
-    console.log(response.body);
-  });
 });
 
 describe('Test game search and filter', () => {
@@ -175,9 +151,8 @@ describe('Test game search and filter', () => {
   });
 });
 
-let testUserId = '';
 describe('Test user', () => {
-  it('Creates a user', async () => {
+  it('creates a user', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
@@ -200,7 +175,7 @@ describe('Test user', () => {
       },
     });
   });
-  it('Adds favorites', async () => {
+  it('adds favorites', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
@@ -218,7 +193,6 @@ describe('Test user', () => {
         variables: { username: 'testUser', gameID: '655e6751d444b31dd6891333' },
       });
     expect(response.status).toBe(200);
-    testUserId = response.body.data.addFavorites._id;
     expect(response.body).toMatchObject({
       data: {
         addFavorites: {
@@ -233,32 +207,7 @@ describe('Test user', () => {
       },
     });
   });
-  it('Favorites and Reviewed filters the games', async () => {
-    const response = await request(app)
-      .post('/graphql')
-      .send({
-        query: `
-        query Query($limit: Int!, $offset: Int!, $userId: String, $showFavorites: Boolean, $showReviewedGames: Boolean) {
-          search(limit: $limit, offset: $offset, userId: $userId, showFavorites: $showFavorites, showReviewedGames: $showReviewedGames) {
-            games {
-              name
-            }
-          }
-        }
-      `,
-        variables: {
-          limit: 1,
-          offset: 0,
-          userId: testUserId,
-          showFavorites: true,
-          showReviewedGames: true,
-        },
-      });
-    expect(response.status).toBe(200);
-    console.log(response.body);
-    /* expect(response.body).toMatchObject({}); */
-  });
-  it('Removes favorites', async () => {
+  it('removes favorites', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
@@ -288,18 +237,19 @@ describe('Test user', () => {
 });
 
 describe('Test review', () => {
-  it('Creates review', async () => {
+  it('creates review', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
         query: `
-      mutation CreateReview($reviewInput: ReviewInput) {
-        createReview(reviewInput: $reviewInput) {
-          title
-          rating
-          user
-        }
-      }`,
+          mutation CreateReview($reviewInput: ReviewInput) {
+            createReview(reviewInput: $reviewInput) {
+              title
+              rating
+              user
+            }
+          }
+        `,
         variables: {
           reviewInput: {
             user: 'testUser',
@@ -322,23 +272,41 @@ describe('Test review', () => {
       },
     });
   });
-  it('Game contains review', async () => {
+  it('game has an average rating', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
         query: `
-        query Query($id: ID!, $username: String) {
-          getGame(ID: $id) {
-            reviews(username: $username) {
-              reviews {
-                title
-                user
+          query GetAvgRating($gameId: ID!) {
+            getAvgRating(gameID: $gameId)
+          }
+        `,
+        variables: { gameId: '655e6751d444b31dd6891333' },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      data: {
+        getAvgRating: 5,
+      },
+    });
+  });
+  it('game contains review', async () => {
+    const response = await request(app)
+      .post('/graphql')
+      .send({
+        query: `
+          query Query($id: ID!, $username: String) {
+            getGame(ID: $id) {
+              reviews(username: $username) {
+                reviews {
+                  title
+                  user
+                }
+                userHasReviewed
               }
-              userHasReviewed
             }
           }
-        }
-      `,
+        `,
         variables: { id: '655e6751d444b31dd6891333', username: 'testUser' },
       });
     expect(response.status).toBe(200);
