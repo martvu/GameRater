@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
+import { useState } from 'react';
 
 interface GameCardProps {
   game: Game;
@@ -32,6 +33,7 @@ const GET_AVG_RATING = gql(`
 `);
 
 export function GameCard({ game }: GameCardProps) {
+  const [imageError, setImageError] = useState(false);
   const {
     _id: id,
     name,
@@ -42,9 +44,6 @@ export function GameCard({ game }: GameCardProps) {
     variables: { gameID: id as string },
   });
 
-  const handleImageError = (e) => {
-    e.target.src = imageNotFound; // Set the source to your fallback image
-  };
   const rating = data?.getAvgRating;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
@@ -55,12 +54,18 @@ export function GameCard({ game }: GameCardProps) {
       <Link to={`/game/${id}`} aria-label={`Link to ${name} detail page`}>
         <CardHeader className="mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]">
           <div className="flex flex-1 items-center justify-center">
-            {imageId && (
+            {!imageError ? (
               <img
                 src={coverImageUrl}
                 alt={name as string}
-                className="object-cover fill-green-300"
-                onError={handleImageError}
+                className="object-cover"
+                onError={() => setImageError(true)}
+              />
+            ): (
+              <img
+                src={imageNotFound}
+                alt="Image not found"
+                className="object-cover"
               />
             )}
           </div>
