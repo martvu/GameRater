@@ -21,6 +21,7 @@ import {
   TooltipTrigger,
 } from './ui/tooltip';
 import { useState } from 'react';
+import ProgressiveImage from './ProgressiveImage';
 
 interface GameCardProps {
   game: Game;
@@ -47,7 +48,7 @@ export function GameCard({ game }: GameCardProps) {
   const rating = data?.getAvgRating;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
-    : ('' as string);
+    : imageNotFound;
 
   return (
     <Card className="h-[310px] min-w-[175px] max-w-[262px] overflow-visible p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[262px]">
@@ -58,23 +59,14 @@ export function GameCard({ game }: GameCardProps) {
       >
         <CardHeader className="h-[235px] w-[176px] overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
           <div className="flex flex-1 items-center justify-center">
-            {!imageError ? (
-              <img
-                src={coverImageUrl}
-                alt={name as string}
-                className="object-cover"
-                onError={() => setImageError(true)}
-              />
-            ) : (
-              <img
-                src={imageNotFound}
-                alt="Image not found"
-                className="object-cover"
-              />
-            )}
+            <ProgressiveImage
+              placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
+              fullSrc={coverImageUrl}
+              alt={name as string}
+              className="w-full h-full object-cover" // Adjust the width and height as needed
+            />
           </div>
-        </CardHeader>
-        <CardContent className="relative px-3 text-start">
+        </CardHeader><CardContent className="relative px-3 text-start">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

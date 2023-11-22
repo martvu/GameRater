@@ -68,7 +68,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
             />
             <Label
               htmlFor={`filter-item-${item?.name}`}
-              className={`text-left font-normal tracking-tight ${
+              className={`text-left font-normal tracking-tight line-clamp-1 ${
                 (filterType === 'platforms' &&
                   selectedPlatforms.includes(item?.id ?? 0)) ||
                 (filterType === 'genres' &&
