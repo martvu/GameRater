@@ -1,4 +1,4 @@
-import { act, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import GameListPage from '@/pages/GameListPage';
 import { vi, describe, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
