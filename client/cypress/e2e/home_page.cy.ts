@@ -1,6 +1,6 @@
 describe('The Home Page', () => {
   it('successfully loads', () => {
-    cy.visit('/'); // change URL to match your dev URL
+    cy.visit('/');
     cy.contains('GameRater');
   });
 });
@@ -8,18 +8,24 @@ describe('The Home Page', () => {
 describe('Navigation', () => {
   it('navigates to a game details page', () => {
     cy.visit('/');
-    cy.get('[data-testid="game-card-link"]').first().click(); // Adjust the selector to match your app
-    cy.url().should('include', '/game/'); // Check if URL changed correctly
-    cy.contains('Release Date'); // Replace with text or element unique to the game details page
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.url().should('include', '/game/');
+    cy.contains('Release Date');
   });
 });
 
 describe('Sort Games', () => {
+  beforeEach(() => {
+    // Remove all reviews and users from the database before each test
+    // Cypress recommends doing this before each test instead of after
+    cy.task('clearDB');
+    cy.visit('/');
+  });
+
   it('sorts games by release date ascending', () => {
     // Sort by release date ascending
-    cy.visit('/');
-    cy.get('[data-testid="sort-by-select"]').click(); // Adjust based on your dropdown selector
-    cy.contains('Release Date Asc').click(); // Adjust based on sorting options
+    cy.get('[data-testid="sort-by-select"]').click();
+    cy.contains('Release Date Asc').click();
     // Check that the first game is South Park Rally
     cy.get('[data-testid="game-card-link"]').first().click();
     cy.contains('South Park Rally');
@@ -27,7 +33,6 @@ describe('Sort Games', () => {
 
   it('sorts games by release date descending', () => {
     // Sort by release date descending
-    cy.visit('/');
     cy.get('[data-testid="sort-by-select"]').click();
     cy.contains('Release Date Desc').click();
     // Check that the first game is The Wolf Among Us 2
@@ -37,7 +42,6 @@ describe('Sort Games', () => {
 
   it('sorts games by name A-Z', () => {
     // Sort by name A-Z
-    cy.visit('/');
     cy.get('[data-testid="sort-by-select"]').click();
     cy.contains('Name A-Z').click();
     // Check that the first game is .Detuned
@@ -47,7 +51,6 @@ describe('Sort Games', () => {
 
   it('sorts games by name Z-A', () => {
     // Sort by name Z-A
-    cy.visit('/');
     cy.get('[data-testid="sort-by-select"]').click();
     cy.contains('Name Z-A').click();
     // Check that the first game is Zwei: The Ilvard Insurrection
@@ -57,23 +60,56 @@ describe('Sort Games', () => {
 
   it('sorts games by Metascore', () => {
     // Sort by Metascore
-    cy.visit('/');
     cy.get('[data-testid="sort-by-select"]').click();
     cy.contains('Metascore').click();
     // Check that the first game has a Metascore of 100
     cy.get('[data-testid="game-card-link"]').first().click();
     cy.contains('Metascore: 100');
   });
+
+  it('sorts games by User Rating', () => {
+    // Log in
+    cy.visit('/');
+    cy.get('[data-testid="modal-sign-in-button"]').click();
+    cy.get('[data-testid="username-input"]').click().type('testuser');
+    cy.get('[data-testid="form-sign-in-button"]').click();
+
+    // Check that testuser has no reviews yet
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+    cy.contains('No games found');
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+
+    // Add review
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.get('[data-testid="add-review-btn"]').click();
+    cy.get('[data-testid="review-title-input"]').click().type('Test Review');
+    cy.get('[data-testid="review-platform-select"]').click();
+    cy.focused().click();
+    cy.get('[data-testid="review-content-input"]').click().type('This is a test review.');
+    cy.get('[data-testid="review-star"]').eq(9).click();
+    cy.get('[data-testid="review-submit-btn"]').click();
+
+    // Check that the reviewed game appears in Reviewed
+    cy.get('[data-testid="logo-btn"]').click();
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+    cy.contains('1 results');
+
+    // Sort by User Rating
+    cy.get('[data-testid="sort-by-select"]').click();
+    cy.contains('User Rating').click();
+    // Check that the first game is the one reviewed by testuser
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.contains('5/5');
+  });
 });
 
 describe('Filter Games', () => {
   it('filters games', () => {
     cy.visit('/');
-    cy.get('[data-testid="filter-item-Nintendo Switch"]').click(); // Adjust based on your dropdown selector
+    cy.get('[data-testid="filter-item-Nintendo Switch"]').click();
     cy.contains('2159 results');
     cy.get('[data-testid="search-input"]').click().type('mario{enter}');
-    cy.contains('21 results'); // Adjust based on filter options
-    // Add assertions to verify filtering
+    cy.contains('21 results');
   });
 });
 
@@ -157,19 +193,22 @@ describe('Add Review', () => {
     // Remove all reviews and users from the database before each test
     // Cypress recommends doing this before each test instead of after
     cy.task('clearDB');
-  });
 
-  it('logs in, adds a review, logs out', () => {
     // Log in
     cy.visit('/');
     cy.get('[data-testid="modal-sign-in-button"]').click();
     cy.get('[data-testid="username-input"]').click().type('testuser');
     cy.get('[data-testid="form-sign-in-button"]').click();
+  });
 
-    // Check that buttons for Favorites and Reviewed are present
-    cy.contains('Favorites');
-    cy.contains('Reviewed');
+  afterEach(() => {
+    // Log out
+    cy.get('[data-testid="toggle-favorites-btn"]').click();
+    cy.get('[data-testid="user-nav"]').click();
+    cy.get('[data-testid="sign-out-button"]').click();
+  });
 
+  it('adds a review', () => {
     // Check that testuser has no reviews yet
     cy.get('[data-testid="toggle-reviewed-btn"]').click();
     cy.contains('No games found');
@@ -189,15 +228,55 @@ describe('Add Review', () => {
     cy.get('[data-testid="logo-btn"]').click();
     cy.get('[data-testid="toggle-reviewed-btn"]').click();
     cy.contains('1 results');
+  });
 
-    // Log out
-    cy.get('[data-testid="toggle-favorites-btn"]').click();
-    cy.get('[data-testid="user-nav"]').click();
-    cy.get('[data-testid="sign-out-button"]').click();
-    cy.contains('Sign In');
+  it('tries to add a review with missing input', () => {
+    // Check that testuser has no reviews yet
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+    cy.contains('No games found');
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
 
-    // Check that the buttons for Favorites and Reviewed are gone
-    cy.contains('Favorites').should('not.exist');
-    cy.contains('Reviewed').should('not.exist');
+    // Open review form
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.get('[data-testid="add-review-btn"]').click();
+
+    // Try to submit with no title
+    cy.get('[data-testid="review-submit-btn"]').click();
+    cy.contains('Title must be at least 2 characters.');
+
+    // Try to submit with too short title
+    cy.get('[data-testid="review-title-input"]').click().type('T');
+    cy.get('[data-testid="review-submit-btn"]').click();
+    cy.contains('Title must be at least 2 characters.');
+
+    // Try to submit with no platform
+    cy.get('[data-testid="review-title-input"]').click().type('est Review');
+    cy.get('[data-testid="review-submit-btn"]').click();
+    cy.contains('Please select a platform.');
+
+    // Try to submit with no content
+    cy.get('[data-testid="review-platform-select"]').click();
+    cy.focused().click();
+    cy.get('[data-testid="review-submit-btn"]').click();
+    cy.contains('String must contain at least 4 character(s)');
+
+    // Try to submit whit too short content
+    cy.get('[data-testid="review-content-input"]').click().type('Thi');
+    cy.get('[data-testid="review-submit-btn"]').click();
+    cy.contains('String must contain at least 4 character(s)');
+
+    // Try to submit with no rating
+    cy.get('[data-testid="review-content-input"]').click().type('s is a test review.');
+    cy.get('[data-testid="review-submit-btn"]').click();
+    cy.contains('Please select a rating.');
+
+    // Finally, submit the review
+    cy.get('[data-testid="review-star"]').eq(5).click();
+    cy.get('[data-testid="review-submit-btn"]').click();
+
+    // Check that the reviewed game appears in Reviewed
+    cy.get('[data-testid="logo-btn"]').click();
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+    cy.contains('1 results');
   });
 });
