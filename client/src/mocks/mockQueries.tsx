@@ -213,7 +213,7 @@ const getGameMock = {
               rating: 4,
               platform: 'PC',
               gameID: '1',
-            }
+            },
           ],
           userHasReviewed: false,
         },

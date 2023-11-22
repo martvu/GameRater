@@ -17,7 +17,7 @@ export default defineConfig({
           await users.dropIndexes();
           await disconnect();
           return null;
-        }
+        },
       });
     },
   },

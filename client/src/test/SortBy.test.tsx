@@ -105,6 +105,5 @@ describe('SortBy Component', () => {
     await userEvent.click(trigger);
     await userEvent.click(screen.getByTestId('user-rating'));
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    
   });
 });

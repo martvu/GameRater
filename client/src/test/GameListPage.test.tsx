@@ -45,12 +45,12 @@ describe('GameListPage Component', () => {
     });
   });
 
- it('signs in and renders correctly', async () => {
+  it('signs in and renders correctly', async () => {
     testPageRender(<GameListPage />, { mocks });
     await userEvent.click(screen.getByText('Sign In'));
     await userEvent.type(screen.getByLabelText('Username'), 'testuser{enter}');
     await userEvent.click(screen.getByText('T'));
-  
+
     await waitFor(() => {
       expect(screen.getByText('testuser')).toBeInTheDocument();
       expect(screen.getByText('Sign out')).toBeInTheDocument();
@@ -59,8 +59,7 @@ describe('GameListPage Component', () => {
       expect(screen.getByText('Favorites')).toBeInTheDocument();
       expect(screen.getByText('Reviewed')).toBeInTheDocument();
     });
-  }); 
-
+  });
 
   // NOT WORKING
   /* it('gets sign in prompt when trying to favorite a game', async () => {
@@ -78,5 +77,4 @@ describe('GameListPage Component', () => {
       });
     });
   });  */
-  
 });

@@ -143,7 +143,11 @@ export function ReviewForm() {
             <FormItem>
               <FormLabel>Review Title</FormLabel>
               <FormControl>
-                <Input data-testid="review-title-input" placeholder="Title of your review" {...field} />
+                <Input
+                  data-testid="review-title-input"
+                  placeholder="Title of your review"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -218,7 +222,9 @@ export function ReviewForm() {
         <FormDescription>
           Your review will be public and shared with other users.
         </FormDescription>
-        <Button data-testid="review-submit-btn" type="submit">Submit Review</Button>
+        <Button data-testid="review-submit-btn" type="submit">
+          Submit Review
+        </Button>
       </form>
     </Form>
   );

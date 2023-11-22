@@ -74,12 +74,24 @@ export default function SortBy() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort By</SelectLabel>
-          <SelectItem data-testid="release-date-desc" value="Release Date Desc">Release Date Desc</SelectItem>
-          <SelectItem data-testid="release-date-asc" value="Release Date Asc">Release Date Asc</SelectItem>
-          <SelectItem data-testid="a-z" value="Name A-Z">Name A-Z</SelectItem>
-          <SelectItem data-testid="z-a" value="Name Z-A">Name Z-A</SelectItem>
-          <SelectItem data-testid="metascore" value="Metascore">Metascore</SelectItem>
-          <SelectItem data-testid="user-rating" value="User Rating">User Rating</SelectItem>
+          <SelectItem data-testid="release-date-desc" value="Release Date Desc">
+            Release Date Desc
+          </SelectItem>
+          <SelectItem data-testid="release-date-asc" value="Release Date Asc">
+            Release Date Asc
+          </SelectItem>
+          <SelectItem data-testid="a-z" value="Name A-Z">
+            Name A-Z
+          </SelectItem>
+          <SelectItem data-testid="z-a" value="Name Z-A">
+            Name Z-A
+          </SelectItem>
+          <SelectItem data-testid="metascore" value="Metascore">
+            Metascore
+          </SelectItem>
+          <SelectItem data-testid="user-rating" value="User Rating">
+            User Rating
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

@@ -88,7 +88,9 @@ describe('Sort Games', () => {
     cy.get('[data-testid="review-title-input"]').click().type('Test Review');
     cy.get('[data-testid="review-platform-select"]').click();
     cy.focused().click();
-    cy.get('[data-testid="review-content-input"]').click().type('This is a test review.');
+    cy.get('[data-testid="review-content-input"]')
+      .click()
+      .type('This is a test review.');
     cy.get('[data-testid="review-star"]').eq(9).click();
     cy.get('[data-testid="review-submit-btn"]').click();
 
@@ -174,8 +176,8 @@ describe('Login and Logout', () => {
     // Check that the buttons for Favorites and Reviewed are gone
     cy.contains('Favorites').should('not.exist');
     cy.contains('Reviewed').should('not.exist');
-  }
-)});
+  });
+});
 
 describe('Add and Remove Favorite', () => {
   beforeEach(() => {
@@ -255,7 +257,9 @@ describe('Add Review', () => {
     cy.get('[data-testid="review-title-input"]').click().type('Test Review');
     cy.get('[data-testid="review-platform-select"]').click();
     cy.focused().click();
-    cy.get('[data-testid="review-content-input"]').click().type('This is a test review.');
+    cy.get('[data-testid="review-content-input"]')
+      .click()
+      .type('This is a test review.');
     cy.get('[data-testid="review-star"]').eq(5).click();
     cy.get('[data-testid="review-submit-btn"]').click();
 
@@ -293,15 +297,17 @@ describe('Add Review', () => {
     cy.get('[data-testid="review-platform-select"]').click();
     cy.focused().click();
     cy.get('[data-testid="review-submit-btn"]').click();
-    cy.contains('String must contain at least 4 character(s)');
+    cy.contains('Content must be at least 4 characters.');
 
     // Try to submit whit too short content
     cy.get('[data-testid="review-content-input"]').click().type('Thi');
     cy.get('[data-testid="review-submit-btn"]').click();
-    cy.contains('String must contain at least 4 character(s)');
+    cy.contains('Content must be at least 4 characters.');
 
     // Try to submit with no rating
-    cy.get('[data-testid="review-content-input"]').click().type('s is a test review.');
+    cy.get('[data-testid="review-content-input"]')
+      .click()
+      .type('s is a test review.');
     cy.get('[data-testid="review-submit-btn"]').click();
     cy.contains('Please select a rating.');
 

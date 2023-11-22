@@ -98,8 +98,12 @@ export default function Filters() {
     <>
       <div className={filterContainerClasses}>
         <ScrollArea className="h-full pb-4 pr-2">
-          <div className="pl-5 pb-4 md:pb-32">
-            <h1 className={`mt-4 text-left text-xl font-bold tracking-wider text-foreground ${isCollapsed ? 'hidden' : ''}`}>
+          <div className="pb-4 pl-5 md:pb-32">
+            <h1
+              className={`mt-4 text-left text-xl font-bold tracking-wider text-foreground ${
+                isCollapsed ? 'hidden' : ''
+              }`}
+            >
               Filter By
             </h1>
             {!isCollapsed && data && (
@@ -120,11 +124,7 @@ export default function Filters() {
         onClick={toggleCollapse}
         aria-label="toggle filters"
       >
-        {isCollapsed ? (
-          <ListFilter />
-        ) : (
-          <ChevronLeft size={18} />
-        )}
+        {isCollapsed ? <ListFilter /> : <ChevronLeft size={18} />}
         {!isCollapsed && <span className="ml-2">Hide filters</span>}
       </Button>
     </>

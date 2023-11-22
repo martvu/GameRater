@@ -109,7 +109,10 @@ export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
         variant={variant || 'ghost'}
         size="round"
       >
-        <Heart data-testid="heart-icon" className={isFavorite ? 'fill-red-600 text-red-600' : 'none'} />
+        <Heart
+          data-testid="heart-icon"
+          className={isFavorite ? 'fill-red-600 text-red-600' : 'none'}
+        />
       </Button>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>

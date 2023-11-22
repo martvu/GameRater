@@ -39,7 +39,7 @@ export function UserNav() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 mr-2" align="center" forceMount>
+      <DropdownMenuContent className="mr-2 w-56" align="center" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col items-center gap-2">
             <UserCircle />

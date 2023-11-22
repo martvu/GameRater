@@ -14,19 +14,18 @@ describe('FavoriteHeart Component', () => {
   it('renders correctly and can be clicked', async () => {
     render(
       <MockedProvider mocks={allMocks} addTypename={false}>
-      <RecoilRoot>
-        <FavoriteHeart game={{ _id: 'game1', name: 'Game One' }} />
-      </RecoilRoot>
+        <RecoilRoot>
+          <FavoriteHeart game={{ _id: 'game1', name: 'Game One' }} />
+        </RecoilRoot>
       </MockedProvider>
     );
-  
+
     const button = screen.getByTestId('favorite-btn');
     expect(button).toBeInTheDocument();
-  
+
     await userEvent.click(button);
     screen.debug();
     expect(screen.getByTestId('sign-in-alert')).toBeInTheDocument();
     // Assert any expected behavior after click
   });
-  
 });

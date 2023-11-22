@@ -60,10 +60,11 @@ export function GameCard({ game }: GameCardProps) {
               placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
               fullSrc={coverImageUrl}
               alt={name as string}
-              className="w-full h-full object-cover" // Adjust the width and height as needed
+              className="h-full w-full object-cover" // Adjust the width and height as needed
             />
           </div>
-        </CardHeader><CardContent className="relative px-3 text-start">
+        </CardHeader>
+        <CardContent className="relative px-3 text-start">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

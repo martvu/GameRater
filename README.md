@@ -92,7 +92,8 @@ npm run coverage
 
 End-to-end testing is done with Cypress. For testing, we use a test database, so the server must be started in "test" mode and client must run in dev mode. 
 
-To start the server in "test" mode, run the following in server folder:
+To start the test server, run the following in server folder:
+
 ```
 npm run testserver
 ```
@@ -108,7 +109,7 @@ And finally in another terminal run the following in client folder to run the te
 npm run cypress:run
 ```
 
-To run the tests in the Cypress GUI, run the following from client folder:
+To run the tests in the Cypress GUI instead, run the following from client folder:
 
 ```
 npm run cypress:open
