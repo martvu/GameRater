@@ -6,13 +6,14 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
     class="flex min-h-screen flex-col"
   >
     <header
-      class="fixed top-0 z-40 flex h-16 w-full items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      class="fixed top-0 z-40 flex h-16 w-[calc(100vw-0.75rem)] items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
     >
       <nav
         class="flex w-full items-center justify-between"
       >
         <a
           aria-label="Return to Home Page"
+          data-testid="logo-btn"
           href="/"
         >
           <div
@@ -59,7 +60,8 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                 value=""
               />
               <button
-                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-secondary-foreground hover:text-muted-foreground h-10 py-2 absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
+                aria-label="Search"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-secondary-foreground hover:text-muted-foreground transition duration-300 ease-in-out h-10 py-2 absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
                 type="submit"
               >
                 <svg
@@ -215,34 +217,8 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
             class="fixed top-16 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 pt-3 md:sticky md:block "
           >
             <div
-              class="flex h-full flex-col items-start overflow-y-auto text-left w-full"
+              class="flex h-full flex-col items-start overflow-hidden text-left transition-all duration-300 ease-in-out w-[240px]"
             >
-              <button
-                aria-label="toggle filters"
-                class="items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 z-50 m-1 hidden md:flex"
-              >
-                <svg
-                  class="lucide lucide-chevron-left"
-                  fill="none"
-                  height="18"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m15 18-6-6 6-6"
-                  />
-                </svg>
-                <span
-                  class="z-50 ml-2"
-                >
-                  Hide filters
-                </span>
-              </button>
               <div
                 class="relative overflow-hidden h-full pb-4 pr-2"
                 dir="ltr"
@@ -260,102 +236,44 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                     style="min-width: 100%; display: table;"
                   >
                     <div
-                      class="block pl-5"
+                      class="pb-4 pl-5 md:pb-32"
                     >
                       <h1
-                        class="mt-4 text-left font-bold tracking-wider text-foreground text-xl"
+                        class="mt-4 text-left text-xl font-bold tracking-wider text-foreground "
                       >
                         Filter By
                       </h1>
-                      <div>
-                        <h2
-                          class="my-2 text-left font-semibold capitalize text-foreground"
-                        >
-                          platforms
-                        </h2>
-                        <div
-                          class="ml-1 flex flex-col"
-                        >
-                          <div
-                            class="my-1 flex items-center space-x-2"
-                          >
-                            <button
-                              aria-checked="false"
-                              class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                              data-state="unchecked"
-                              data-testid="filter-item-Platform 3"
-                              id="filter-item-Platform 3"
-                              role="checkbox"
-                              type="button"
-                              value="on"
-                            />
-                            <label
-                              class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-left font-normal tracking-tight text-muted-foreground"
-                              for="filter-item-Platform 3"
-                            >
-                              Platform 3
-                            </label>
-                          </div>
-                        </div>
-                        <div />
-                      </div>
-                      <div>
-                        <h2
-                          class="my-2 text-left font-semibold capitalize text-foreground"
-                        >
-                          genres
-                        </h2>
-                        <div
-                          class="ml-1 flex flex-col"
-                        >
-                          <div
-                            class="my-1 flex items-center space-x-2"
-                          >
-                            <button
-                              aria-checked="false"
-                              class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                              data-state="unchecked"
-                              data-testid="filter-item-Genre 1"
-                              id="filter-item-Genre 1"
-                              role="checkbox"
-                              type="button"
-                              value="on"
-                            />
-                            <label
-                              class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-left font-normal tracking-tight text-muted-foreground"
-                              for="filter-item-Genre 1"
-                            >
-                              Genre 1
-                            </label>
-                          </div>
-                          <div
-                            class="my-1 flex items-center space-x-2"
-                          >
-                            <button
-                              aria-checked="false"
-                              class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                              data-state="unchecked"
-                              data-testid="filter-item-Genre 2"
-                              id="filter-item-Genre 2"
-                              role="checkbox"
-                              type="button"
-                              value="on"
-                            />
-                            <label
-                              class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-left font-normal tracking-tight text-muted-foreground"
-                              for="filter-item-Genre 2"
-                            >
-                              Genre 2
-                            </label>
-                          </div>
-                        </div>
-                        <div />
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <button
+              aria-label="toggle filters"
+              class="items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 fixed bottom-4 left-4 z-50 m-1 hidden md:flex"
+            >
+              <svg
+                class="lucide lucide-chevron-left"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m15 18-6-6 6-6"
+                />
+              </svg>
+              <span
+                class="ml-2"
+              >
+                Hide filters
+              </span>
+            </button>
           </aside>
         </div>
         <div
@@ -439,7 +357,7 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                   class="m-1 flex justify-center"
                 >
                   <div
-                    class="rounded-lg border bg-card text-card-foreground shadow-lg relative h-[310px] min-w-[175px] max-w-[260px] overflow-hidden p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[260px]"
+                    class="rounded-lg border bg-card text-card-foreground shadow-lg h-[310px] min-w-[175px] max-w-[262px] overflow-visible p-0 duration-300 hover:scale-105 sm:h-[410px] sm:min-w-[262px]"
                   >
                     <a
                       aria-label="Link to Example Game detail page"
@@ -447,23 +365,37 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                       href="/game/1"
                     >
                       <div
-                        class="flex flex-col mb-2 h-[240px] w-[175px] overflow-hidden sm:h-[320px] sm:w-[260px]"
+                        class="flex flex-col h-[235px] w-[176px] overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]"
                       >
                         <div
-                          class=""
+                          class="flex flex-1 items-center justify-center"
                         >
-                          <img
-                            alt="Example Game"
-                            class="object-cover"
-                            src="https://images.igdb.com/igdb/image/upload/t_cover_big/cover1.jpg"
-                          />
+                          <div
+                            class="relative h-full w-full object-cover"
+                          >
+                            <div
+                              class="absolute inset-0 z-10 flex items-center justify-center"
+                            >
+                              <img
+                                alt="Example Game"
+                                class="w-1/2 object-cover opacity-100 transition-opacity duration-500 ease-in-out"
+                                src="/project2/src/assets/img-fallback.svg"
+                              />
+                            </div>
+                            <img
+                              alt="Example Game"
+                              class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out z-0 opacity-0"
+                              loading="lazy"
+                              src="https://images.igdb.com/igdb/image/upload/t_cover_big/cover1.jpg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
                         class="pt-0 relative px-3 text-start"
                       >
                         <h3
-                          class="font-semibold tracking-tight my-1 line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:max-w-[240px] sm:text-lg"
+                          class="font-semibold tracking-tight line-clamp-1 max-w-[150px] py-1 text-sm duration-300 hover:opacity-50 sm:my-1 sm:max-w-[240px] sm:text-lg"
                           data-state="closed"
                         >
                           Example Game
@@ -471,7 +403,7 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                       </div>
                     </a>
                     <div
-                      class="flex items-center pt-0 absolute bottom-0 left-0 mt-auto h-[40px] w-full px-3 pb-2"
+                      class="flex items-center pt-0 mt-auto h-[40px] w-full pl-3 pr-2 sm:pb-2"
                     >
                       <div
                         class="relative flex h-full w-full items-center"
@@ -503,6 +435,7 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                           class="absolute right-10 flex items-center gap-2"
                         >
                           <div
+                            aria-label="metascore"
                             class="flex items-center justify-center rounded-md border border-white text-sm text-white bg-green-600 h-7 w-7 px-1"
                           >
                             85
@@ -512,6 +445,7 @@ exports[`GameListPage Component > matches the snapshot 1`] = `
                           class="absolute right-0"
                         >
                           <button
+                            aria-label="Favorite game button"
                             class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full z-10"
                             data-testid="favorite-btn"
                           >

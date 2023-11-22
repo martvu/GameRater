@@ -6,13 +6,14 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
     class="flex min-h-screen flex-col"
   >
     <header
-      class="fixed top-0 z-40 flex h-16 w-full items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      class="fixed top-0 z-40 flex h-16 w-[calc(100vw-0.75rem)] items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
     >
       <nav
         class="flex w-full items-center justify-between"
       >
         <a
           aria-label="Return to Home Page"
+          data-testid="logo-btn"
           href="/"
         >
           <div
@@ -59,7 +60,8 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 value=""
               />
               <button
-                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-secondary-foreground hover:text-muted-foreground h-10 py-2 absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
+                aria-label="Search"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-secondary-foreground hover:text-muted-foreground transition duration-300 ease-in-out h-10 py-2 absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
                 type="submit"
               >
                 <svg
@@ -254,6 +256,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                       class="absolute right-2 top-2"
                     >
                       <button
+                        aria-label="Favorite game button"
                         class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 w-10 rounded-full z-10"
                         data-testid="favorite-btn"
                       >
@@ -298,6 +301,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                       >
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -309,6 +313,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -320,6 +325,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -331,6 +337,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -342,6 +349,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-muted-foreground"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -374,6 +382,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                     aria-haspopup="dialog"
                     class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2 mb-4 w-[200px]"
                     data-state="closed"
+                    data-testid="add-review-btn"
                     type="button"
                   >
                     Add Review
@@ -407,6 +416,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         Metascore: 
                       </p>
                       <div
+                        aria-label="metascore"
                         class="flex items-center justify-center rounded-md border border-white text-sm text-white bg-green-600 h-7 w-7 px-1"
                       >
                         85
@@ -519,6 +529,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                       >
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -530,6 +541,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -541,6 +553,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -552,6 +565,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -563,6 +577,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -619,6 +634,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                       >
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -630,6 +646,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -641,6 +658,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -652,6 +670,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-red-400"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
@@ -663,6 +682,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                         </button>
                         <button
                           class="text-muted-foreground"
+                          data-testid="review-star"
                           disabled=""
                           type="button"
                         >
