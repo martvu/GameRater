@@ -78,26 +78,41 @@ describe('Filter Games', () => {
 });
 
 describe('Login and Logout', () => {
+  beforeEach(() => {
+    // Remove all reviews and users from the database before each test
+    // Cypress recommends doing this before each test instead of after
+    cy.task('clearDB');
+  });
+
   it('logs in and out', () => {
+    // Log in
     cy.visit('/');
     cy.get('[data-testid="modal-sign-in-button"]').click();
     cy.get('[data-testid="username-input"]').click().type('testuser');
     cy.get('[data-testid="form-sign-in-button"]').click();
 
+    // Check that buttons for Favorites and Reviewed are present
     cy.contains('Favorites');
     cy.contains('Reviewed');
 
+    // Log out
     cy.get('[data-testid="user-nav"]').click();
     cy.get('[data-testid="sign-out-button"]').click();
     cy.contains('Sign In');
 
-    //does not contain Favorites and Reviewed
+    // Check that the buttons for Favorites and Reviewed are gone
     cy.contains('Favorites').should('not.exist');
     cy.contains('Reviewed').should('not.exist');
   }
 )});
 
 describe('Add and Remove Favorite', () => {
+  beforeEach(() => {
+    // Remove all reviews and users from the database before each test
+    // Cypress recommends doing this before each test instead of after
+    cy.task('clearDB');
+  });
+
   it('logs in, adds a favorite, removes a favorite, logs out', () => {
     // Log in
     cy.visit('/');
@@ -124,6 +139,56 @@ describe('Add and Remove Favorite', () => {
     cy.get('[data-testid="favorite-btn"]').first().click();
     cy.get('[data-testid="toggle-favorites-btn"]').click();
     cy.contains('No games found');
+
+    // Log out
+    cy.get('[data-testid="toggle-favorites-btn"]').click();
+    cy.get('[data-testid="user-nav"]').click();
+    cy.get('[data-testid="sign-out-button"]').click();
+    cy.contains('Sign In');
+
+    // Check that the buttons for Favorites and Reviewed are gone
+    cy.contains('Favorites').should('not.exist');
+    cy.contains('Reviewed').should('not.exist');
+  });
+});
+
+describe('Add Review', () => {
+  beforeEach(() => {
+    // Remove all reviews and users from the database before each test
+    // Cypress recommends doing this before each test instead of after
+    cy.task('clearDB');
+  });
+
+  it('logs in, adds a review, logs out', () => {
+    // Log in
+    cy.visit('/');
+    cy.get('[data-testid="modal-sign-in-button"]').click();
+    cy.get('[data-testid="username-input"]').click().type('testuser');
+    cy.get('[data-testid="form-sign-in-button"]').click();
+
+    // Check that buttons for Favorites and Reviewed are present
+    cy.contains('Favorites');
+    cy.contains('Reviewed');
+
+    // Check that testuser has no reviews yet
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+    cy.contains('No games found');
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+
+    // Add review
+    cy.get('[data-testid="game-card-link"]').first().click();
+    cy.get('[data-testid="add-review-btn"]').click();
+    cy.get('[data-testid="review-title-input"]').click().type('Test Review');
+    cy.get('[data-testid="review-platform-select"]').click();
+    cy.focused().click();
+    cy.get('[data-testid="review-content-input"]').click().type('This is a test review.');
+    cy.get('[data-testid="review-star"]').eq(5).click();
+    cy.get('[data-testid="review-submit-btn"]').click();
+
+    // Check that the reviewed game appears in Reviewed
+    cy.get('[data-testid="logo-btn"]').click();
+    cy.get('[data-testid="toggle-reviewed-btn"]').click();
+    cy.contains('1 results');
 
     // Log out
     cy.get('[data-testid="toggle-favorites-btn"]').click();

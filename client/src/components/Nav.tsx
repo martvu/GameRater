@@ -62,7 +62,7 @@ export default function Nav() {
             : 'justify-between'
         }`}
       >
-        <Link to="/" aria-label="Return to Home Page">
+        <Link data-testid="logo-btn" to="/" aria-label="Return to Home Page">
           <div
             className={`w-28 items-center justify-between gap-2 px-2 ${
               showFullWidthSearch ? 'hidden md:flex' : 'flex'

@@ -45,6 +45,7 @@ export default function UserFilters() {
             />
           </Button>
           <Button
+            data-testid="toggle-reviewed-btn"
             aria-label="Toggle reviewed games"
             className="flex gap-1"
             size="md"
