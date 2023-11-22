@@ -1,6 +1,5 @@
 import { Star } from 'lucide-react';
 import imageNotFound from '@/assets/img-fallback.svg';
-
 import {
   Card,
   CardContent,
@@ -20,7 +19,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
-import { useState } from 'react';
 import ProgressiveImage from './ProgressiveImage';
 
 interface GameCardProps {
@@ -34,7 +32,6 @@ const GET_AVG_RATING = gql(`
 `);
 
 export function GameCard({ game }: GameCardProps) {
-  const [imageError, setImageError] = useState(false);
   const {
     _id: id,
     name,
