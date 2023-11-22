@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
 import { gql, useMutation } from '@apollo/client';
+import { useToast } from '@/components/ui/use-toast.ts';
 
 const SIGN_IN_OR_CREATE_USER = gql`
   mutation SignInOrCreateUser($userInput: UserInput) {
@@ -43,7 +44,11 @@ const formSchema = z.object({
     }),
 });
 
-export function SignInForm() {
+interface SignInFormProps {
+  onClose: () => void;
+}
+
+export function SignInForm({ onClose }: SignInFormProps) {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const setUser = useRecoilState(userState)[1];
 
@@ -53,9 +58,11 @@ export function SignInForm() {
       username: '',
     },
   });
+  const { toast } = useToast();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      onClose();
       const { data } = await signInOrCreateUser({
         variables: {
           userInput: {
@@ -65,17 +72,24 @@ export function SignInForm() {
       });
       setUser(data.signInOrCreateUser);
       localStorage.setItem('user', JSON.stringify(data.signInOrCreateUser));
-      console.log(data);
+      toast({
+        title: 'Signed in successfully',
+        description: `Welcome, ${data.signInOrCreateUser.username}!`,
+      });
     } catch (error) {
-      console.log('Could not create user');
-      console.log(error);
+      console.log('Could not create user', error);
+      toast({
+        variant: 'destructive',
+        title: 'Could not sign in',
+        description: 'Please try again.',
+      });
     }
     form.reset();
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormDescription className="w-60">
           We just need your username, and you're good to go!
         </FormDescription>
@@ -88,13 +102,16 @@ export function SignInForm() {
               <div className="flex items-center gap-4">
                 <FormControl>
                   <Input
+                    data-testid="username-input"
                     placeholder="Your username"
                     {...field}
                     className="h-10 max-w-[200px]"
                     maxLength={15}
                   />
                 </FormControl>
-                <Button type="submit">Sign In</Button>
+                <Button data-testid="form-sign-in-button" type="submit">
+                  Sign In
+                </Button>
               </div>
               <FormMessage />
             </FormItem>

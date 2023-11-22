@@ -18,6 +18,7 @@ type Review {
 type Reviews {
   reviews: [Review]
   count: Int!
+  userHasReviewed: Boolean!
 }
 
 type Game {
@@ -29,7 +30,7 @@ type Game {
   platforms: [Platform]
   first_release_date: String
   cover_image_id: String
-  reviews(limit: Int, offset: Int): Reviews
+  reviews(limit: Int, offset: Int, username: String): Reviews
   aggregated_rating: Float
   aggregated_rating_count: Int
 }
@@ -38,34 +39,23 @@ type Genre {
   _id: String
   id: Int
   name: String
-  slug: String
-  created_at: Int
-  updated_at: Int
-  url: String
-  checksum: String
-  gamesCount: Int
 }
 
 type Platform {
   _id: String
   id: Int
   name: String
-  alternative_name: String
-  slug: String
-  category: Int
-  created_at: Int
-  updated_at: Int
-  url: String
-  platform_logo: Int
-  versions: [Int]
-  websites: [Int]
-  checksum: String
-  gamesCount: Int
 }
 
 type Games {
   games: [Game]
   count: Int!
+  filters: FiltersID
+}
+
+type FiltersID {
+  genres: [Int]
+  platforms: [Int]
 }
 
 type Filters {
@@ -91,36 +81,25 @@ input GameSortInput {
 }
 
 type Query {
-  getReview(ID: ID!): Review!
-  getReviews(limit: Int): [Review!]!
-  getUser(username: String!): User!
-  getUsers(limit: Int): [User!]!
   getGame(ID: ID!): Game!
   getAvgRating(gameID: ID!): Float!
-  getGenre(id: Int): Genre!
   getGenres(limit: Int): [Genre!]!
-  getFilters(
-    limit: Int
-    platforms: [Int]
-    genres: [Int]
-    query: String
-  ): Filters
-  getPlatform(id: Int): Platform!
   getPlatforms(limit: Int): [Platform!]!
   search(
+    userId: String
     query: String
     limit: Int!
     offset: Int!
     platforms: [Int]
     genres: [Int]
     sortBy: GameSortInput
+    showFavorites: Boolean
+    showReviewedGames: Boolean
   ): Games!
 }
 
 type Mutation {
   createReview(reviewInput: ReviewInput): Review!
-  updateReview(ID: ID!, reviewInput: ReviewInput): String!
-  deleteReview(ID: ID!): String!
   signInOrCreateUser(userInput: UserInput): User!
   addFavorites(username: String!, gameID: String!): User!
   removeFavorites(username: String!, gameID: String!): User!

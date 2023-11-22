@@ -53,6 +53,10 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        scrollbar: {
+          DEFAULT: 'hsl(var(--scrollbar))',
+          foreground: 'hsl(var(--scrollbar-foreground))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

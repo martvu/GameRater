@@ -5,6 +5,13 @@ interface PaginationProps {
   setCurrentPage: (currentPage: number) => void;
   pages: number;
 }
+
+/**
+ * Pagination component
+ * @param {number} currentPage - The current page
+ * @param {function} setCurrentPage - Callback function when page is changed
+ * @param {number} pages - The total number of pages
+ */
 export default function Pagination({
   currentPage,
   setCurrentPage,
@@ -16,7 +23,7 @@ export default function Pagination({
 
   function handlePageChange(pageNumber: number) {
     setCurrentPage(pageNumber);
-    localStorage.setItem('currentPage', pageNumber.toString());
+    sessionStorage.setItem('currentPage', pageNumber.toString());
   }
 
   const PageButton = ({ pageNumber }: PageButtonProps) => {

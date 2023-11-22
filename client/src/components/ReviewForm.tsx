@@ -28,6 +28,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
 import { gql } from '../gql/';
 import Loading from './Loading';
+import { useToast } from '@/components/ui/use-toast.ts';
 
 const GET_GAME_PLATFORMS = gql(`
   query GetGamePlatforms($id: ID!) {
@@ -62,7 +63,9 @@ const formSchema = z.object({
   title: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
   }),
-  content: z.string().max(1000).min(4),
+  content: z.string().max(1000).min(4, {
+    message: 'Content must be at least 4 characters.',
+  }),
   rating: z
     .number()
     .min(1, {
@@ -84,6 +87,7 @@ export function ReviewForm() {
     refetchQueries: ['GetGame'],
     awaitRefetchQueries: true,
   });
+  const { toast } = useToast();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -98,30 +102,32 @@ export function ReviewForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     //Handle submit
-    try {
-      createReview({
-        variables: {
-          reviewInput: {
-            title: values.title.trim(),
-            content: values.content.trim(),
-            rating: values.rating,
-            platform: values.platform,
-            user: user.username,
-            gameID: id,
-          },
+    createReview({
+      variables: {
+        reviewInput: {
+          title: values.title.trim(),
+          content: values.content.trim(),
+          rating: values.rating,
+          platform: values.platform,
+          user: user.username,
+          gameID: id,
         },
-        onCompleted: () => {
-          console.log('Review created');
-        },
-        onError: error => {
-          alert('Could not create review');
-          console.log(error);
-        },
-      });
-    } catch (error) {
-      console.log('Could not create review');
-    }
-    form.reset();
+      },
+      onCompleted: () => {
+        toast({
+          title: 'Review created successfully',
+          description: `Your review for ${data?.getGame?.name} has been created.`,
+        });
+        form.reset();
+      },
+      onError: error => {
+        toast({
+          variant: 'destructive',
+          title: 'Could not create review',
+          description: error.message || 'Please try again.',
+        });
+      },
+    });
   }
 
   if (loading) return <Loading />;
@@ -137,7 +143,11 @@ export function ReviewForm() {
             <FormItem>
               <FormLabel>Review Title</FormLabel>
               <FormControl>
-                <Input placeholder="Title of your review" {...field} />
+                <Input
+                  data-testid="review-title-input"
+                  placeholder="Title of your review"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -151,7 +161,7 @@ export function ReviewForm() {
               <FormLabel>Platform</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger data-testid="review-platform-select">
                     <SelectValue placeholder="Choose Platform" />
                   </SelectTrigger>
                 </FormControl>
@@ -159,6 +169,7 @@ export function ReviewForm() {
                   <SelectGroup>
                     {data?.getGame?.platforms?.map(platform => (
                       <SelectItem
+                        data-testid="review-platform"
                         key={platform?.name}
                         value={platform?.name as string}
                       >
@@ -181,6 +192,7 @@ export function ReviewForm() {
               <FormLabel>Review Content</FormLabel>
               <FormControl>
                 <Textarea
+                  data-testid="review-content-input"
                   placeholder="Tell us what you think about this game"
                   className="resize-none"
                   {...field}
@@ -210,7 +222,9 @@ export function ReviewForm() {
         <FormDescription>
           Your review will be public and shared with other users.
         </FormDescription>
-        <Button type="submit">Submit Review</Button>
+        <Button data-testid="review-submit-btn" type="submit">
+          Submit Review
+        </Button>
       </form>
     </Form>
   );

@@ -6,10 +6,10 @@ import { userState } from '@/state/atoms';
 import { Game } from '@/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { gql } from '../gql';
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
+import { Dialog, DialogContent } from './ui/dialog';
 import SignInAlertModal from './SignInAlertModal';
 
-const ADD_FAVORITES = gql(`
+export const ADD_FAVORITES = gql(`
   mutation AddFavorites($username: String!, $gameID: String!) {
     addFavorites(username: $username, gameID: $gameID) {
       _id
@@ -21,7 +21,7 @@ const ADD_FAVORITES = gql(`
   }
 `);
 
-const REMOVE_FAVORITES = gql(`
+export const REMOVE_FAVORITES = gql(`
   mutation RemoveFavorites($username: String!, $gameID: String!) {
     removeFavorites(username: $username, gameID: $gameID) {
       _id
@@ -35,21 +35,29 @@ const REMOVE_FAVORITES = gql(`
 
 interface FavoriteHeartProps {
   game: Game;
+  variant?: 'text' | 'ghost' | 'outline' | 'secondary' | 'destructive';
 }
 
-export default function FavoriteHeart({ game }: FavoriteHeartProps) {
+export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
   const [addFavorites] = useMutation(ADD_FAVORITES);
   const [removeFavorite] = useMutation(REMOVE_FAVORITES);
   const [user, setUser] = useRecoilState(userState);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  async function toggleFavorite() {
-    if (isUpdating) return;
-
-    setIsUpdating(true);
-
+  const toggleFavorite = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    // If the user is not signed in, open the sign in alert modal
     if (!user.username) {
-      console.log('User not signed in');
+      setIsDialogOpen(true);
+      return;
+    }
+    if (isUpdating) return;
+    setIsUpdating(true);
+    if (!user.username) {
       setIsUpdating(false);
       return;
     }
@@ -64,7 +72,6 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
 
     // Optimistically update the UI
     setUser({ ...user, favorites: updatedFavorites });
-    console.log(updatedFavorites);
 
     try {
       await (isFavorite ? removeFavorite : addFavorites)({
@@ -74,13 +81,17 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
         },
       });
     } catch (error) {
-      console.log('Could not update favorites');
-      console.log(error);
+      console.log('Could not update favorites', error);
       setUser(user);
     } finally {
       setIsUpdating(false);
     }
-  }
+  };
+
+  const handleSignInSuccess = () => {
+    setIsDialogOpen(false);
+  };
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
@@ -88,35 +99,30 @@ export default function FavoriteHeart({ game }: FavoriteHeartProps) {
   const isFavorite = user.favorites?.some(
     favoriteGame => favoriteGame?._id === game._id
   );
-  const fillColor = isFavorite ? 'fill-red-600 text-red-600' : 'none';
 
-  if (user.username === '') {
-    return (
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            onClick={toggleFavorite}
-            className="z-10"
-            variant="ghost"
-            size="round"
-          >
-            <Heart className={fillColor} />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="overflow-auto">
-          <SignInAlertModal message={'Please sign in to favorite this game!'} />
+  return (
+    <>
+      <Button
+        aria-label="Favorite game button"
+        data-testid="favorite-btn"
+        onClick={toggleFavorite}
+        className="z-10"
+        variant={variant || 'ghost'}
+        size="round"
+      >
+        <Heart
+          data-testid="heart-icon"
+          className={isFavorite ? 'fill-red-600 text-red-600' : 'none'}
+        />
+      </Button>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <SignInAlertModal
+            message={'Please sign in to favorite this game!'}
+            onSignInSuccess={handleSignInSuccess}
+          />
         </DialogContent>
       </Dialog>
-    );
-  }
-  return (
-    <Button
-      onClick={toggleFavorite}
-      className="z-10"
-      variant="ghost"
-      size="round"
-    >
-      <Heart className={fillColor} />
-    </Button>
+    </>
   );
 }

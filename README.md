@@ -70,7 +70,67 @@ and
 cd server
 npm run lint
 ```
+# Testing
 
+## Component testing
+
+For component testing, we use Vitest. To run the tests, run the following from the root folder:
+
+```
+cd client
+npm run test
+```
+
+For test coverage, run the following from the root folder:
+
+```
+cd client
+npm run coverage
+```
+
+## End-to-end testing
+
+<!-- Bytte til å teste på VM URLen? isåfall må vi rydde opp etter testen -->
+End-to-end testing is done with Cypress. For testing, we use a test database, so the server must be started in "test" mode and client must run in dev mode. 
+
+To start the test server, run the following in server folder:
+
+```
+npm run testserver
+```
+
+Then in another terminal, run the following in client folder:
+
+```
+npm run dev
+```
+
+And finally in another terminal run the following in client folder to run the tests in the terminal:
+```
+npm run cypress:run
+```
+
+To run the tests in the Cypress GUI instead, run the following from client folder:
+
+```
+npm run cypress:open
+```
+
+This will open the Cypress GUI. From here, click "E2E Testing", then start E2E testing in preferred browser. 
+
+## API testing
+
+Testing the backend API is done with vitest and supertest. These tests run on the test database. To run the tests, run the following from the server folder:
+
+```
+npm test
+```
+
+For test coverage, run the following from the server folder:
+
+```
+npm run coverage
+```
 # Technology and choices
 
 ## Data

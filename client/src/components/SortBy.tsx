@@ -9,11 +9,13 @@ import {
 } from '@/components/ui/select';
 import { pageState } from '@/state/atoms';
 import { sortByState } from '@/state/atoms';
+import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function SortBy() {
   const setSortBy = useRecoilState(sortByState)[1];
   const setCurrentPage = useSetRecoilState(pageState);
+  const [selectOpen, setOpen] = useState(false);
 
   function handleSortSelection(value: string) {
     let sortByObject = { field: 'first_release_date', order: 'desc' };
@@ -41,33 +43,55 @@ export default function SortBy() {
       sortByObject = { field: 'user_rating', order: 'desc' };
       setSortBy(sortByObject);
     }
-  
-    // Store the selected value in localStorage
-    localStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
-    localStorage.setItem('selectedSortLabel', value);
+
+    // Store the selected value in sessionStorage
+    sessionStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
+    sessionStorage.setItem('selectedSortLabel', value);
 
     // Reset the page to 1
     setCurrentPage(1);
-    localStorage.setItem('currentPage', '1');
+    sessionStorage.setItem('currentPage', '1');
   }
 
   return (
+    // Need a setTimout to prevent the select from clicking through on touch devices
     <Select
+      open={selectOpen}
+      onOpenChange={() => {
+        setTimeout(() => {
+          setOpen(!selectOpen);
+        }, 1);
+      }}
       onValueChange={value => handleSortSelection(value)}
-      value={localStorage.getItem('selectedSortLabel') || ''}
+      value={sessionStorage.getItem('selectedSortLabel') || ''}
     >
-      <SelectTrigger className="w-[150px]">
+      <SelectTrigger
+        data-testid="sort-by-select"
+        className="w-[150px] hover:bg-accent"
+      >
         <SelectValue placeholder="Sort By" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort By</SelectLabel>
-          <SelectItem value="Release Date Desc">Release Date Desc</SelectItem>
-          <SelectItem value="Release Date Asc">Release Date Asc</SelectItem>
-          <SelectItem value="Name A-Z">Name A-Z</SelectItem>
-          <SelectItem value="Name Z-A">Name Z-A</SelectItem>
-          <SelectItem value="Metascore">Metascore</SelectItem>
-          <SelectItem value="User Rating">User Rating</SelectItem>
+          <SelectItem data-testid="release-date-desc" value="Release Date Desc">
+            Release Date Desc
+          </SelectItem>
+          <SelectItem data-testid="release-date-asc" value="Release Date Asc">
+            Release Date Asc
+          </SelectItem>
+          <SelectItem data-testid="a-z" value="Name A-Z">
+            Name A-Z
+          </SelectItem>
+          <SelectItem data-testid="z-a" value="Name Z-A">
+            Name Z-A
+          </SelectItem>
+          <SelectItem data-testid="metascore" value="Metascore">
+            Metascore
+          </SelectItem>
+          <SelectItem data-testid="user-rating" value="User Rating">
+            User Rating
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
