@@ -1,6 +1,6 @@
 import { Button } from './ui/button';
 import { Heart, Star } from 'lucide-react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   pageState,
   showFavoritesState,
@@ -9,7 +9,7 @@ import {
 } from '@/state/atoms';
 
 export default function UserFilters() {
-  const [currentPage, setCurrentPage] = useRecoilState(pageState);
+  const setCurrentPage = useSetRecoilState(pageState);
   const user = useRecoilValue(userState);
   const [showFavorites, setShowFavorites] = useRecoilState(showFavoritesState);
   const [showReviewedGames, setShowReviewedGames] = useRecoilState(
