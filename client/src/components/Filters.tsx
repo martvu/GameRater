@@ -3,7 +3,7 @@ import { ChevronLeft, ListFilter } from 'lucide-react';
 import FilterItems from './FilterItems';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
-import { gql } from '@/gql';
+import { GET_FILTERS } from '@/lib/queries';
 import { useQuery } from '@apollo/client';
 import { Genre, Platform } from '@/gql/graphql';
 import { useRecoilValue } from 'recoil';
@@ -14,19 +14,6 @@ import {
   selectedPlatformsState,
 } from '@/state/atoms';
 import { ScrollArea } from './ui/scroll-area';
-
-const GET_FILTERS = gql(`
-  query GetFilters {
-    getGenres {
-        id
-        name
-    }
-    getPlatforms {
-        id
-        name
-    }
-  }
-`);
 
 export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);

@@ -56,6 +56,7 @@ export default function SortBy() {
   return (
     // Need a setTimout to prevent the select from clicking through on touch devices
     <Select
+      aria-label="Sort By"
       open={selectOpen}
       onOpenChange={() => {
         setTimeout(() => {
@@ -66,6 +67,7 @@ export default function SortBy() {
       value={sessionStorage.getItem('selectedSortLabel') || ''}
     >
       <SelectTrigger
+        aria-label="Sort By Select"
         data-testid="sort-by-select"
         className="w-[150px] hover:bg-accent"
       >

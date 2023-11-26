@@ -55,6 +55,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
         {filters?.slice(0, numItemsToShow).map(item => (
           <div className="my-1 flex items-center space-x-2" key={item?.name}>
             <Checkbox
+              aria-label={`filter-item-${item?.name}`}
               data-testid={`filter-item-${item?.name}`}
               id={`filter-item-${item?.name}`}
               onCheckedChange={checked => {
@@ -74,7 +75,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
                   selectedPlatforms.includes(item?.id ?? 0)) ||
                 (filterType === 'genres' &&
                   selectedGenres.includes(item?.id ?? 0))
-                  ? 'text-foreground'
+                  ? 'font-semibold text-foreground'
                   : 'text-muted-foreground'
               }`}
             >
@@ -88,7 +89,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
         <Button
           variant={'text'}
           onClick={showMore}
-          className="flex w-36 items-center pl-0 text-green-400"
+          className="flex w-36 items-center pl-0 text-primary"
         >
           <Plus className="inline-block h-6" />
           <span>Show More</span>
@@ -97,7 +98,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
         <Button
           variant={'text'}
           onClick={showLess}
-          className="flex w-36 items-center pl-0 text-red-400"
+          className="flex w-36 items-center pl-0 text-destructive"
         >
           <Minus className="inline-block h-6" />
           <span>Show Less</span>
