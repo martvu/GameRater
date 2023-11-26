@@ -16,46 +16,13 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
-import { gql } from '@/gql';
+import { GET_GAME } from '@/lib/queries';
 import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
 import { Badge } from '@/components/ui/badge';
-
-export const GET_GAME = gql(`
-  query GetGame($id: ID!, $limit: Int!, $offset: Int!, $username: String) {
-    getAvgRating(gameID: $id)
-    getGame(ID: $id) {
-      _id
-      name
-      summary
-      imageId: cover_image_id
-      first_release_date
-      aggregatedRating: aggregated_rating
-      platforms {
-        name
-      }
-      genres {
-        name
-      }
-      reviews(limit: $limit, offset: $offset, username: $username) {
-        count
-        reviews {
-          _id
-          user
-          title
-          content
-          rating
-          platform
-          gameID
-        }
-        userHasReviewed
-      }
-    }
-  }
-`);
 
 type GameDetailParams = {
   id: string;
@@ -91,7 +58,6 @@ const BaseGameDetailPage = () => {
       year: 'numeric',
     });
   };
-
   const hasWrittenReview = data?.getGame.reviews?.userHasReviewed || false;
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
@@ -129,7 +95,7 @@ const BaseGameDetailPage = () => {
               <CardContent className="pt-0">
                 <div className=" flex items-center justify-center text-yellow-400">
                   <Rating
-                    rating={data?.getAvgRating}
+                    rating={data.getGame.user_rating || 0}
                     numRatings={data.getGame.reviews?.count || 0}
                   />
                 </div>
@@ -172,24 +138,28 @@ const BaseGameDetailPage = () => {
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2 text-muted-foreground">Platforms:</p>
-                    {data.getGame.platforms?.map(
-                      (platform: Platform | null) => (
-                        <li
-                          className="mb-1 mr-1 list-none"
-                          key={platform?.name}
-                        >
-                          <Badge variant="secondary">{platform?.name}</Badge>
-                        </li>
-                      )
-                    )}
+                    <ul className="flex flex-wrap">
+                      {data.getGame.platforms?.map(
+                        (platform: Platform | null) => (
+                          <li
+                            className="mb-1 mr-1 list-none"
+                            key={platform?.name}
+                          >
+                            <Badge variant="secondary">{platform?.name}</Badge>
+                          </li>
+                        )
+                      )}
+                    </ul>
                   </div>
                   <div className="mt-1 flex flex-row flex-wrap">
                     <p className="mr-2 text-muted-foreground">Genres:</p>
-                    {data.getGame.genres?.map((genre: Genre | null) => (
-                      <li className="mb-1 mr-1 list-none" key={genre?.name}>
-                        <Badge variant="secondary">{genre?.name}</Badge>
-                      </li>
-                    ))}
+                    <ul className="flex flex-wrap">
+                      {data.getGame.genres?.map((genre: Genre | null) => (
+                        <li className="mb-1 mr-1 list-none" key={genre?.name}>
+                          <Badge variant="secondary">{genre?.name}</Badge>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </CardContent>

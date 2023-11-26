@@ -60,21 +60,4 @@ describe('GameListPage Component', () => {
       expect(screen.getByText('Reviewed')).toBeInTheDocument();
     });
   });
-
-  // NOT WORKING
-  /* it('gets sign in prompt when trying to favorite a game', async () => {
-    testPageRender(<GameListPage />, { mocks });
-    await userEvent.click(screen.getAllByTestId('favorite-btn')[0]);
-    await act(async () => {
-      
-      screen.debug();
-      expect(screen.getByText('Sign In')).toBeInTheDocument();
-      
-  
-      // Wait for expected outcome after the click
-      await waitFor(() => {
-        expect(screen.getByText('Please sign in to favorite this game!')).toBeInTheDocument();
-      });
-    });
-  });  */
 });

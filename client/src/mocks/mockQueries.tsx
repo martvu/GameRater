@@ -1,6 +1,5 @@
-import { ADD_FAVORITES, REMOVE_FAVORITES } from '@/components/FavoriteHeart';
-import { GET_GAMES } from '@/components/GamesList';
-import { GET_GAME } from '@/pages/GameDetailPage';
+import { ADD_FAVORITES, REMOVE_FAVORITES } from '@/lib/mutations';
+import { GET_GAMES, GET_GAME } from '@/lib/queries';
 import { gql } from '@apollo/client';
 
 const getGamesMock = {
@@ -30,8 +29,8 @@ const getGamesMock = {
             summary: 'Example game summary',
             cover_image_id: 'cover1',
             name: 'Example Game',
+            user_rating: 4.5,
           },
-          // Add more game objects as needed
         ],
         filters: {
           genres: [1, 2], // Example genre IDs
@@ -175,7 +174,6 @@ const getGameMock = {
   },
   result: {
     data: {
-      getAvgRating: 4.5, // Example average rating
       getGame: {
         _id: '1',
         name: 'Example Game',
@@ -183,6 +181,7 @@ const getGameMock = {
         imageId: 'image1',
         first_release_date: 1620000000,
         aggregatedRating: 85,
+        user_rating: 4.5,
         platforms: [
           { name: 'PC' },
           // ... other platforms

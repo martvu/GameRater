@@ -33,6 +33,7 @@ type Game {
   reviews(limit: Int, offset: Int, username: String): Reviews
   aggregated_rating: Float
   aggregated_rating_count: Int
+  user_rating: Float
 }
 
 type Genre {

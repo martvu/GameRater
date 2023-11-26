@@ -4,8 +4,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { RecoilRoot } from 'recoil';
 
-// You can extend this to accept any additional props you might need
 interface TestPageRenderOptions {
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   mocks: any[];
   initialRoutes?: string[];
 }
