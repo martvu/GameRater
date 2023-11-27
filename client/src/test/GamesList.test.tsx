@@ -42,13 +42,12 @@ const renderGamesList = () => {
 describe('GameList Component', () => {
   it('renders the GamesList component with mocked GraphQL data', async () => {
     renderGamesList();
-    // Wait for the mocked data to be displayed  
+    // Wait for the mocked data to be displayed
     await waitFor(() => {
       expect(screen.getByText('Example Game')).toBeInTheDocument();
       expect(screen.getByText('1 results')).toBeInTheDocument();
       expect(screen.getByText('4.5')).toBeInTheDocument();
       expect(screen.getByText('85')).toBeInTheDocument();
     });
-
   });
 });

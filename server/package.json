@@ -9,6 +9,7 @@
     "start": "npm run compile && node ./dist/src/index.js",
     "deploy": "npm run compile && forever start --minUptime 2000 --spinSleepTime 5 ./dist/src/index.js",
     "lint": "eslint src/**/*.ts --fix",
+    "prettier": "npx prettier . --write",
     "test": "npm run generate && NODE_ENV=test vitest ",
     "coverage": "vitest run --coverage",
     "testserver": "npm run compile && NODE_ENV=test node -r dotenv/config ./dist/src/index.js dotenv_config_path=.env.test"

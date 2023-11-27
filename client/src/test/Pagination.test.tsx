@@ -10,7 +10,7 @@ describe('Pagination', () => {
     );
     expect(asFragment()).toMatchSnapshot();
   });
-  
+
   it('should render correctly', () => {
     render(<Pagination currentPage={1} setCurrentPage={() => {}} pages={5} />);
     const pageButtons = screen.getAllByRole('button');

@@ -11,8 +11,8 @@ afterEach(() => {
 class MockResizeObserver {
   constructor(public callback: ResizeObserverCallback) {}
   disconnect() {}
-  observe(_target: Element) {}
-  unobserve(_target: Element) {}
+  observe() {}
+  unobserve() {}
 }
 
 global.ResizeObserver = MockResizeObserver as unknown as typeof ResizeObserver;

@@ -18,10 +18,12 @@ function renderFilters({
 }: RenderFiltersOptions = {}) {
   return render(
     <MockedProvider mocks={allMocks} addTypename={false}>
-      <RecoilRoot initializeState={({ set }) => {
-        set(platformsListState, mockPlatformList);
-        set(genresListState, mockGenreList);
-      }}>
+      <RecoilRoot
+        initializeState={({ set }) => {
+          set(platformsListState, mockPlatformList);
+          set(genresListState, mockGenreList);
+        }}
+      >
         <Filters />
       </RecoilRoot>
     </MockedProvider>
@@ -37,11 +39,11 @@ describe('Filters Component', () => {
   it('renders correctly and handles toggle collapse', async () => {
     renderFilters();
     expect(screen.getByText('Filter By')).toBeInTheDocument();
-    
-    await waitFor(() => { 
+
+    await waitFor(() => {
       expect(screen.getByText('platforms')).toBeInTheDocument();
       expect(screen.getByText('genres')).toBeInTheDocument();
-      const checkboxes = screen.getAllByRole('checkbox')
+      const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes).toHaveLength(8);
     });
 
@@ -51,7 +53,7 @@ describe('Filters Component', () => {
     await waitFor(() => {
       expect(screen.queryByText('platforms')).not.toBeInTheDocument();
       expect(screen.queryByText('genres')).not.toBeInTheDocument();
-      const checkboxes = screen.queryAllByRole('checkbox')
+      const checkboxes = screen.queryAllByRole('checkbox');
       expect(checkboxes).toHaveLength(0);
     });
   });
@@ -60,7 +62,7 @@ describe('Filters Component', () => {
     renderFilters({ mockPlatformList: [1, 2, 3], mockGenreList: [1] });
     await waitFor(() => {
       expect(screen.getByText('platforms')).toBeInTheDocument();
-      const checkboxes = screen.getAllByRole('checkbox')
+      const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes).toHaveLength(4);
     });
   });
@@ -68,12 +70,12 @@ describe('Filters Component', () => {
   it('checks the checkboxes correctly', async () => {
     renderFilters();
     await waitFor(() => {
-      const checkboxes = screen.getAllByRole('checkbox')
+      const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes).toHaveLength(8);
     });
-    const checkboxes = screen.getAllByRole('checkbox')
+    const checkboxes = screen.getAllByRole('checkbox');
     await userEvent.click(checkboxes[0]);
-    const genreCheckbox = screen.getByTestId('filter-item-Genre 1')
+    const genreCheckbox = screen.getByTestId('filter-item-Genre 1');
     await userEvent.click(genreCheckbox);
     await waitFor(() => {
       expect(checkboxes[0]).toBeChecked();

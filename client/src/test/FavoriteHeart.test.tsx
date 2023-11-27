@@ -7,7 +7,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { allMocks } from '@/mocks/mockQueries';
 import userEvent from '@testing-library/user-event';
 
-
 describe('FavoriteHeart Component', () => {
   it('renders correctly and can be clicked', async () => {
     render(
@@ -23,6 +22,5 @@ describe('FavoriteHeart Component', () => {
 
     await userEvent.click(button);
     expect(screen.getByTestId('sign-in-alert')).toBeInTheDocument();
-    
   });
 });

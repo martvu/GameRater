@@ -52,7 +52,7 @@ const renderSortBy = () => {
       <SortBy />
     </RecoilRoot>
   );
-}
+};
 
 describe('SortBy Component', () => {
   let localStorageMock: LocalStorageMock;
@@ -78,7 +78,7 @@ describe('SortBy Component', () => {
     const { asFragment } = renderSortBy();
     expect(asFragment()).toMatchSnapshot();
   });
-  
+
   it('should open the select menu when clicked', async () => {
     renderSortBy();
     const trigger = screen.getByTestId('sort-by-select');

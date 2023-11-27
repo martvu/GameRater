@@ -64,7 +64,6 @@ export function ReviewForm() {
     awaitRefetchQueries: true,
   });
   const { toast } = useToast();
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,10 +74,8 @@ export function ReviewForm() {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Hello world")
-    //Handle submit
+    if (!user) return;
     createReview({
       variables: {
         reviewInput: {
@@ -91,11 +88,11 @@ export function ReviewForm() {
         },
       },
       onCompleted: () => {
+        form.reset();
         toast({
           title: 'Review created successfully',
           description: `Your review for "${data?.getGame?.name}" has been created.`,
         });
-        form.reset();
       },
       onError: error => {
         toast({
