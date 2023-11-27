@@ -36,3 +36,18 @@ export const CREATE_REVIEW = gql(`
     }
   }
 `);
+
+export const SIGN_IN_OR_CREATE_USER = gql(`
+  mutation SignInOrCreateUser($userInput: UserInput) {
+    signInOrCreateUser(userInput: $userInput) {
+      _id
+      username
+      favorites {
+        _id
+      }
+      reviews {
+        _id
+      }
+    }
+  }
+`);
