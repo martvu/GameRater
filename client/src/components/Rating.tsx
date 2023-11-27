@@ -11,8 +11,6 @@ interface RatingProps {
  * Rating component
  * @param {number} rating - The rating of the game
  * @param {number} numRatings - The number of ratings
- * @param {boolean} disabled - Whether the rating is disabled
- * @param {function} onChange - Callback function when rating is changed
  */
 export default function Rating({ rating, numRatings }: RatingProps) {
   return (

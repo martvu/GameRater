@@ -5,33 +5,9 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
 import { Game } from '@/gql/graphql';
 import { useMutation } from '@apollo/client';
-import { gql } from '../gql';
+import { ADD_FAVORITES, REMOVE_FAVORITES } from '@/lib/mutations';
 import { Dialog, DialogContent } from './ui/dialog';
 import SignInAlertModal from './SignInAlertModal';
-
-export const ADD_FAVORITES = gql(`
-  mutation AddFavorites($username: String!, $gameID: String!) {
-    addFavorites(username: $username, gameID: $gameID) {
-      _id
-      username
-      favorites {
-        _id
-      }
-    }
-  }
-`);
-
-export const REMOVE_FAVORITES = gql(`
-  mutation RemoveFavorites($username: String!, $gameID: String!) {
-    removeFavorites(username: $username, gameID: $gameID) {
-      _id
-      username
-      favorites {
-        _id
-      }
-    }
-  }
-`);
 
 interface FavoriteHeartProps {
   game: Game;

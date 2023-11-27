@@ -1,5 +1,5 @@
 import withLayout from '@/lib/withLayout';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Rating from '@/components/Rating';
@@ -16,46 +16,15 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
-import { gql } from '@/gql';
 import Metascore from '@/components/Metascore';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
 import { Badge } from '@/components/ui/badge';
-
-export const GET_GAME = gql(`
-  query GetGame($id: ID!, $limit: Int!, $offset: Int!, $username: String) {
-    getAvgRating(gameID: $id)
-    getGame(ID: $id) {
-      _id
-      name
-      summary
-      imageId: cover_image_id
-      first_release_date
-      aggregatedRating: aggregated_rating
-      platforms {
-        name
-      }
-      genres {
-        name
-      }
-      reviews(limit: $limit, offset: $offset, username: $username) {
-        count
-        reviews {
-          _id
-          user
-          title
-          content
-          rating
-          platform
-          gameID
-        }
-        userHasReviewed
-      }
-    }
-  }
-`);
+import ProgressiveImage from '@/components/ProgressiveImage';
+import imageNotFound from '@/assets/img-fallback.svg';
+import { GET_GAME } from '@/lib/queries.tsx';
 
 type GameDetailParams = {
   id: string;
@@ -67,6 +36,7 @@ const BaseGameDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
   const navigate = useNavigate();
+  const location = useLocation();
   const { loading, error, data } = useQuery(GET_GAME, {
     variables: {
       id: id as string,
@@ -104,7 +74,13 @@ const BaseGameDetailPage = () => {
           size="icon"
           variant="ghost"
           className="rounded-2x flex-shrink-0"
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (location.key !== 'default') {
+              navigate(-1);
+            } else {
+              navigate('/', { replace: true });
+            }
+          }}
         >
           <ArrowLeft />
         </Button>
@@ -113,23 +89,19 @@ const BaseGameDetailPage = () => {
           {/* Image, ratings, Write Review */}
           <section className="flex flex-col items-center justify-center gap-4">
             <Card className="w-auto overflow-hidden p-0">
-              <CardHeader className="h-[364px]  w-[264px] p-0 ">
-                <div className="relative flex cursor-default p-0">
-                  <div className="absolute right-2 top-2">
-                    <FavoriteHeart variant="secondary" game={data.getGame} />
-                  </div>
-                  <img
-                    src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
-                    alt={data.getGame.name as string}
-                    className="object-cover"
-                    loading="lazy"
-                  />
-                </div>
+              <CardHeader className="h-[364px] w-[264px] p-0">
+                <div className="absolute right-2 top-2"></div>
+                <ProgressiveImage
+                  fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
+                  placeholderSrc={imageNotFound}
+                  alt={data.getGame.name as string}
+                  className="h-full w-full object-cover" // Adjust the width and height as needed
+                />
               </CardHeader>
               <CardContent className="pt-0">
                 <div className=" flex items-center justify-center text-yellow-400">
                   <Rating
-                    rating={data?.getAvgRating}
+                    rating={data.getGame.user_rating || 0}
                     numRatings={data.getGame.reviews?.count || 0}
                   />
                 </div>
@@ -149,8 +121,9 @@ const BaseGameDetailPage = () => {
           {/* Title, Release Date, Platforms, Genres and Description */}
           <Card className="border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]">
             <CardHeader className="flex flex-col items-start">
-              <CardTitle className=" text-4xl font-semibold">
+              <CardTitle className=" flex gap-4 text-4xl font-semibold">
                 {data.getGame.name}
+                <FavoriteHeart variant="secondary" game={data.getGame} />
               </CardTitle>
               <CardContent className="py-2">
                 <div className="flex flex-col justify-start gap-1">
@@ -200,7 +173,7 @@ const BaseGameDetailPage = () => {
           </Card>
 
           {/* Reviews */}
-          <div className="col-span-1 flex h-full w-full justify-center lg:col-span-2">
+          <div className="col-span-1 mt-10 flex h-full w-full lg:col-span-2">
             <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
               <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
               {data.getGame.reviews?.reviews?.length !== 0 ? (

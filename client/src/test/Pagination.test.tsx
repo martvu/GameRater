@@ -4,6 +4,13 @@ import { describe, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
 describe('Pagination', () => {
+  it('matches the snapshot', () => {
+    const { asFragment } = render(
+      <Pagination currentPage={1} setCurrentPage={() => {}} pages={5} />
+    );
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('should render correctly', () => {
     render(<Pagination currentPage={1} setCurrentPage={() => {}} pages={5} />);
     const pageButtons = screen.getAllByRole('button');

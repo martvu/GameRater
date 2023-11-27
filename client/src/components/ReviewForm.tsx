@@ -26,34 +26,10 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
-import { gql } from '../gql/';
+import { CREATE_REVIEW } from '@/lib/mutations';
+import { GET_GAME_PLATFORMS } from '@/lib/queries';
 import Loading from './Loading';
 import { useToast } from '@/components/ui/use-toast.ts';
-
-const GET_GAME_PLATFORMS = gql(`
-  query GetGamePlatforms($id: ID!) {
-    getGame(ID: $id) {
-      name
-      platforms {
-        id
-        name
-      }
-    }
-  }
-`);
-
-const CREATE_REVIEW = gql(`
-  mutation CreateReview($reviewInput: ReviewInput!) {
-    createReview(reviewInput: $reviewInput) {
-      user
-      title
-      content
-      rating
-      platform
-      gameID
-    }
-  }
-`);
 
 type GameDetailParams = {
   id: string;
@@ -88,7 +64,6 @@ export function ReviewForm() {
     awaitRefetchQueries: true,
   });
   const { toast } = useToast();
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -99,9 +74,8 @@ export function ReviewForm() {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    //Handle submit
+    if (!user) return;
     createReview({
       variables: {
         reviewInput: {
@@ -114,11 +88,11 @@ export function ReviewForm() {
         },
       },
       onCompleted: () => {
+        form.reset();
         toast({
           title: 'Review created successfully',
-          description: `Your review for ${data?.getGame?.name} has been created.`,
+          description: `Your review for "${data?.getGame?.name}" has been created.`,
         });
-        form.reset();
       },
       onError: error => {
         toast({

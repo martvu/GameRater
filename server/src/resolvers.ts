@@ -16,22 +16,6 @@ export const resolvers: Resolvers = {
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
     },
-    getAvgRating: async (_, { gameID }) => {
-      const reviews = await Review.find({ gameID: gameID });
-      if (reviews.length === 0) {
-        return 0;
-      }
-      const totalRating = reviews.reduce(
-        (acc, review) => acc + review.rating.valueOf(),
-        0
-      );
-      const averageRating = Number((totalRating / reviews.length).toFixed(1));
-      await Game.findByIdAndUpdate(gameID, {
-        //Update the games user_rating
-        user_rating: averageRating,
-      });
-      return averageRating;
-    },
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
       genres.sort((a, b) => a.name.localeCompare(b.name as string));
@@ -78,7 +62,6 @@ export const resolvers: Resolvers = {
       if (genres && genres.length > 0) {
         filters['genres'] = { $in: genres };
       }
-
       // If showFavorites is true, filter by user's favorite games
       let combinedGameIds = [];
       let hasFavoritesOrReviews = false;

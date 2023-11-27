@@ -33,6 +33,7 @@ type Game {
   reviews(limit: Int, offset: Int, username: String): Reviews
   aggregated_rating: Float
   aggregated_rating_count: Int
+  user_rating: Float
 }
 
 type Genre {
@@ -82,7 +83,6 @@ input GameSortInput {
 
 type Query {
   getGame(ID: ID!): Game!
-  getAvgRating(gameID: ID!): Float!
   getGenres(limit: Int): [Genre!]!
   getPlatforms(limit: Int): [Platform!]!
   search(
