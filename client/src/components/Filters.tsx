@@ -27,7 +27,6 @@ export default function Filters() {
   };
   const { data } = useQuery(GET_FILTERS);
 
-  // Define the preferred platforms order
   const preferredOrder = [
     'Nintendo Switch',
     'PC (Microsoft Windows)',
@@ -35,7 +34,7 @@ export default function Filters() {
     'Xbox Series X|S',
   ];
 
-  // Custom sorting function
+  // Custom sorting function to sort platforms by preferred order
   const sortByPreference = (a: Platform, b: Platform) => {
     const aIndex = preferredOrder.indexOf(a.name as string);
     const bIndex = preferredOrder.indexOf(b.name as string);
@@ -57,7 +56,7 @@ export default function Filters() {
   // Now sort the copied array
   const sortedPlatforms: Platform[] = platformsCopy.sort(sortByPreference);
 
-  // Filter only platforms in platformList
+  // Filter only platforms in platformList (when search limits platforms) or all platforms if platformList is empty
   const filteredPlatforms = sortedPlatforms.filter(platform => {
     if (platformList.length === 0) return true;
     return (
@@ -66,6 +65,7 @@ export default function Filters() {
     );
   });
 
+  // Filter only genres in genreList or all genres if genreList is empty
   const filteredGenres = genresCopy.filter(genre => {
     if (genreList.length === 0) return true;
     return (
@@ -73,6 +73,7 @@ export default function Filters() {
       selectedGenres.includes(genre.id as number)
     );
   });
+
   // Apply transition to the filter menu
   const filterContainerClasses = cn(
     'flex h-full flex-col items-start overflow-hidden text-left transition-all duration-300 ease-in-out',

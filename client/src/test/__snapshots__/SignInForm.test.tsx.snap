@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SignInForm Component > matches the snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="space-y-2"
+  >
+    <p
+      class="text-sm text-muted-foreground w-60"
+      id="undefined-form-item-description"
+    >
+      We just need your username, and you're good to go!
+    </p>
+    <div
+      class="space-y-2"
+    >
+      <label
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for=":r0:-form-item"
+      >
+        Username
+      </label>
+      <div
+        class="flex items-center gap-4"
+      >
+        <input
+          aria-describedby=":r0:-form-item-description"
+          aria-invalid="false"
+          class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 h-10 max-w-[200px]"
+          data-testid="username-input"
+          id=":r0:-form-item"
+          maxlength="15"
+          name="username"
+          placeholder="Your username"
+          value=""
+        />
+        <button
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2"
+          data-testid="form-sign-in-button"
+          type="submit"
+        >
+          Sign In
+        </button>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

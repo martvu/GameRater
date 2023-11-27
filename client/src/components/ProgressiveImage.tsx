@@ -29,7 +29,7 @@ const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
       <div className="absolute inset-0 z-10 flex items-center justify-center">
         <img
           src={placeholderSrc}
-          alt={alt}
+          alt="Fallback cover image"
           className="w-1/2 object-cover opacity-100 transition-opacity duration-500 ease-in-out"
         />
       </div>

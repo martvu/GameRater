@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pagination > matches the snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="pagination"
+  >
+    <div
+      class="flex flex-wrap justify-center"
+    >
+      <button
+        aria-label="go to previous page"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10"
+        disabled=""
+      >
+        «
+      </button>
+      <button
+        aria-label="go to page 1"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-background hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10 border-primary"
+      >
+        1
+      </button>
+      <button
+        aria-label="go to page 2"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10 border-primary"
+      >
+        2
+      </button>
+      <button
+        aria-label="go to page 3"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10 border-primary"
+      >
+        3
+      </button>
+      <button
+        aria-label="go to page 4"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10 border-primary"
+      >
+        4
+      </button>
+      <button
+        aria-label="go to page 5"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10 border-primary"
+      >
+        5
+      </button>
+      <button
+        aria-label="go to next page"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 h-10 sm:h-12 sm:w-10"
+      >
+        »
+      </button>
+    </div>
+  </nav>
+</DocumentFragment>
+`;

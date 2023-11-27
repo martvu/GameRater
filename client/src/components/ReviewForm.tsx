@@ -77,6 +77,7 @@ export function ReviewForm() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("Hello world")
     //Handle submit
     createReview({
       variables: {

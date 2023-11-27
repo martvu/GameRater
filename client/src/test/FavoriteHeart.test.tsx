@@ -7,8 +7,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { allMocks } from '@/mocks/mockQueries';
 import userEvent from '@testing-library/user-event';
 
-// Mocks (Apollo, Recoil, LocalStorage)
-// ...
 
 describe('FavoriteHeart Component', () => {
   it('renders correctly and can be clicked', async () => {
@@ -24,8 +22,7 @@ describe('FavoriteHeart Component', () => {
     expect(button).toBeInTheDocument();
 
     await userEvent.click(button);
-    screen.debug();
     expect(screen.getByTestId('sign-in-alert')).toBeInTheDocument();
-    // Assert any expected behavior after click
+    
   });
 });

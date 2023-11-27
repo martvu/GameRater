@@ -47,7 +47,7 @@ export function GameCard({ game }: GameCardProps) {
             <ProgressiveImage
               placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
               fullSrc={coverImageUrl}
-              alt={name as string}
+              alt="Game cover image"
               className="h-full w-full object-cover" // Adjust the width and height as needed
             />
           </div>

@@ -106,6 +106,7 @@ export default function Nav() {
               }`}
             >
               <Input
+                id="search"
                 data-testid="search-input"
                 type="text"
                 className="w-full rounded-xl bg-muted pr-24 shadow-inner md:w-full lg:w-full"
