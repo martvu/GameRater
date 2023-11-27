@@ -26,6 +26,13 @@ export const resolvers: Resolvers = {
       platforms.reverse();
       return platforms.map(platform => platform.toObject());
     },
+    getSearchSuggestions: async (_, { query }) => {
+      const keywords = query.split(' ').filter(keyword => keyword.length > 0);
+      const regexPattern = keywords.map(keyword => `(?=.*${keyword})`).join('');
+      const filters = { name: { $regex: new RegExp(regexPattern, 'i') } };
+      const games = await Game.find(filters).limit(5);
+      return games.map(game => game.toObject());
+    },
     search: async (
       _,
       {
