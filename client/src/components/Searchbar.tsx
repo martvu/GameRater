@@ -4,15 +4,14 @@ import { Button } from '@/components/ui/button.tsx';
 import { Search, XCircle } from 'lucide-react';
 import { FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import { searchQueryState } from '@/state/atoms.ts';
+import { useRecoilState } from 'recoil';
 
 type SearchbarProps = {
   showFullWidthSearch?: boolean;
 };
 const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
   const navigate = useNavigate();
-
   const { keyword } = useParams<{ keyword?: string }>();
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

@@ -5,53 +5,36 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Search } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import {
-  defaultSortBy,
-  selectedGenresState,
-  selectedPlatformsState,
-  sortByState,
-} from '@/state/atoms';
-import { pageState } from '@/state/atoms';
-import { searchQueryState } from '@/state/atoms';
 import { UserNav } from './UserNav';
 import Searchbar from '@/components/Searchbar.tsx';
+import { cn } from '@/lib/utils.ts';
+import useReset from '@/hooks/useReset.tsx';
 
 export default function Nav() {
-  const setSearchQuery = useSetRecoilState(searchQueryState);
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
-  const setSelectedPlatforms = useSetRecoilState(selectedPlatformsState);
-  const setSelectedGenres = useSetRecoilState(selectedGenresState);
-  const setSortBy = useSetRecoilState(sortByState);
-  const setCurrentPage = useSetRecoilState(pageState);
+  const reset = useReset();
 
   function resetPage() {
     window.scrollTo(0, 0);
-    setSortBy(defaultSortBy);
-    setCurrentPage(1);
-    setSelectedPlatforms([]);
-    setSelectedGenres([]);
-    setSearchQuery('');
-    sessionStorage.removeItem('selectedSortLabel');
-    sessionStorage.setItem('selectedSortBy', '');
-    sessionStorage.setItem('currentPage', '1');
-    sessionStorage.removeItem('searchQuery');
+    reset();
   }
 
   return (
     <header className="fixed top-0 z-40 flex h-16 w-[calc(100vw-0.75rem)] items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <nav
-        className={`flex w-full items-center ${
+        className={cn(
+          'flex w-full items-center',
           showFullWidthSearch
             ? 'justify-center md:justify-between'
             : 'justify-between'
-        }`}
+        )}
       >
         <Link data-testid="logo-btn" to="/" aria-label="Return to Home Page">
           <div
-            className={`w-28 items-center justify-between gap-2 px-2 ${
+            className={cn(
+              'w-28 items-center justify-between gap-2 px-2',
               showFullWidthSearch ? 'hidden md:flex' : 'flex'
-            }`}
+            )}
           >
             <Button
               variant="text"
@@ -69,9 +52,10 @@ export default function Nav() {
           </div>
         </Link>
         <div
-          className={`w-full max-w-sm flex-grow items-center justify-center space-x-2 md:flex ${
+          className={cn(
+            'w-full max-w-sm flex-grow items-center justify-center space-x-2 md:flex',
             showFullWidthSearch ? 'flex' : 'hidden md:flex'
-          }`}
+          )}
         >
           {showFullWidthSearch && (
             <Button
@@ -86,9 +70,10 @@ export default function Nav() {
           <Searchbar showFullWidthSearch={showFullWidthSearch} />
         </div>
         <div
-          className={`flex-shrink-0 items-center md:gap-2 ${
+          className={cn(
+            'flex-shrink-0 items-center md:gap-2',
             showFullWidthSearch ? 'hidden md:flex' : 'flex'
-          }`}
+          )}
         >
           <Button
             onClick={() => setShowFullWidthSearch(true)}

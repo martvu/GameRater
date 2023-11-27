@@ -41,6 +41,7 @@ export const sortByState = atom<GameSortInput>({
   default: sortBy ? JSON.parse(sortBy) : defaultSortBy,
 });
 
+// For search query to persist on details page after searching
 export const searchQueryState = atom({
   key: 'searchQueryState',
   default: '',
