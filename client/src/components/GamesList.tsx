@@ -32,7 +32,6 @@ export default function GamesList() {
   const setPlatformsList = useSetRecoilState(platformsListState);
   const limit = 24;
 
-  // Ensure that keyword is a string, even if it's an empty string.
   const { loading, error, data, refetch } = useQuery(GET_GAMES, {
     variables: {
       limit,
@@ -45,10 +44,14 @@ export default function GamesList() {
       showFavorites,
       showReviewedGames,
     },
+    fetchPolicy:
+      showFavorites || showReviewedGames ? 'cache-and-network' : 'cache-first',
   });
 
   useEffect(() => {
-    refetch();
+    if (showFavorites || showReviewedGames) {
+      refetch();
+    }
   }, [showFavorites, showReviewedGames, refetch]);
 
   useEffect(() => {
