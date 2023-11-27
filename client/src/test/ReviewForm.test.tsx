@@ -76,7 +76,6 @@ describe('ReviewForm', () => {
     const submitButton = await screen.findByText('Submit Review');
     fireEvent.click(submitButton);
     await waitFor(() => {
-      screen.debug();
       expect(
         screen.getByText('Content must be at least 4 characters.')
       ).toBeInTheDocument();
@@ -92,6 +91,8 @@ describe('ReviewForm', () => {
     await userEvent.click(ratingInput[4]);
     // Submit the form
     fireEvent.click(submitButton);
-    screen.debug();
+    await waitFor(() => {
+      screen.debug();
+    });
   });
 });

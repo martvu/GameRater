@@ -93,6 +93,7 @@ export function ReviewForm() {
           title: 'Review created successfully',
           description: `Your review for "${data?.getGame?.name}" has been created.`,
         });
+        
       },
       onError: error => {
         toast({
