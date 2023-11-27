@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { render, renderHook, screen, act, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import FavoriteHeart from '@/components/FavoriteHeart';
 import { MockedProvider } from '@apollo/client/testing';
 import { allMocks } from '@/mocks/mockQueries';
@@ -69,7 +69,7 @@ describe('FavoriteHeart Component', () => {
         _id: '1',
         username: 'testUser',
         favorites: [{ _id: '1', name: 'Game One' }],
-        reviews: []
+        reviews: [],
       },
     });
     const button = screen.getByTestId('favorite-btn');

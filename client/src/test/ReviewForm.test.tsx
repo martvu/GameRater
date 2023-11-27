@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MockedProvider, wait } from '@apollo/client/testing';
+import { MockedProvider } from '@apollo/client/testing';
 import { RecoilRoot } from 'recoil';
 import { ReviewForm } from '@/components/ReviewForm';
 import { allMocks } from '@/mocks/mockQueries';

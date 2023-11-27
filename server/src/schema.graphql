@@ -83,7 +83,6 @@ input GameSortInput {
 
 type Query {
   getGame(ID: ID!): Game!
-  getAvgRating(gameID: ID!): Float!
   getGenres(limit: Int): [Genre!]!
   getPlatforms(limit: Int): [Platform!]!
   search(

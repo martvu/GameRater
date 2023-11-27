@@ -272,24 +272,6 @@ describe('Test review', () => {
       },
     });
   });
-  it('game has an average rating', async () => {
-    const response = await request(app)
-      .post('/graphql')
-      .send({
-        query: `
-          query GetAvgRating($gameId: ID!) {
-            getAvgRating(gameID: $gameId)
-          }
-        `,
-        variables: { gameId: '655e6751d444b31dd6891333' },
-      });
-    expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      data: {
-        getAvgRating: 5,
-      },
-    });
-  });
   it('game contains review', async () => {
     const response = await request(app)
       .post('/graphql')
