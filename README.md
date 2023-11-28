@@ -36,81 +36,58 @@ npm run dev
 
 # Prettier and ESLint
 
-We use Prettier and ESLint for code formatting.
+We use Prettier and ESLint for consistent code formatting and code quality.
 
-To format all files in the project run the following from the root folder:
-
-```
-cd client
-npx prettier . --write
-```
-
-and
+To format all files in the project (both client and server) run the following from the root folder:
 
 ```
-cd server
-npx prettier . --write
+npm run prettier
 ```
 
-To check if all files are formatted run this command instead:
+To check if all files are formatted, run this command instead from the root folder:
 
 ```
-npx prettier . --check
+npm run prettier:check
 ```
 
-To run ESLint do the following from the root folder:
-```
-cd client
-npm run lint
-```
-
-and
+To run ESLint, run the following from the root folder:
 
 ```
-cd server
 npm run lint
 ```
 # Testing
 
 ## Component testing
 
-For component testing, we use Vitest. To run the tests, run the following from the root folder:
+For component testing, we use Vitest. These tests use mocked data. To run the tests, run the following from the client folder:
 
 ```
-cd client
 npm run test
 ```
 
-For test coverage, run the following from the root folder:
+For test coverage, run the following from the client folder:
 
 ```
-cd client
 npm run coverage
 ```
 
 ## End-to-end testing
 
-<!-- Bytte til å teste på VM URLen? isåfall må vi rydde opp etter testen -->
 End-to-end testing is done with Cypress. For testing, we use a test database, so the server must be started in "test" mode and client must run in dev mode. 
 
-To start the test server, run the following in server folder:
+To start the app in "test" mode, run the following in root folder (this will start testserver and client in dev mode):
 
 ```
-npm run testserver
+npm start:test
 ```
 
-Then in another terminal, run the following in client folder:
+Then in another terminal, run the following in client folder (to run test in terminal):
 
 ```
-npm run dev
+npm run cypress:run 
 ```
 
-And finally in another terminal run the following in client folder to run the tests in the terminal:
-```
-npm run cypress:run
-```
-
-To run the tests in the Cypress GUI instead, run the following from client folder:
+Or to run the tests in the Cypress GUI, run the following from client folder:
 
 ```
 npm run cypress:open
@@ -131,6 +108,11 @@ For test coverage, run the following from the server folder:
 ```
 npm run coverage
 ```
+
+## Manual testing
+
+Manual testing was done by all group members throughout the project. 
+
 # Technology and choices
 
 ## Data
