@@ -9,8 +9,8 @@
     "client": "cd client && npm run dev",
     "lint": "concurrently \"cd client && npm run lint\" \"cd server && npm run lint\"",
     "prettier": "concurrently \"cd client && npm run prettier\" \"cd server && npm run prettier\"",
-    "test:client": "cd client && npm test",
-    "test:server": "cd server && npm test"
+    "test:client": "cd client && npm run generate && npm test",
+    "test:server": "cd server && npm run generate && npm test"
   },
   "author": "",
   "license": "ISC",
