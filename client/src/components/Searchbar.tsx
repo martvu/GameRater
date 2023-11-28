@@ -82,19 +82,18 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
 
     switch (event.key) {
       case 'ArrowDown':
-      case 'ArrowUp':
+      case 'ArrowUp': {
         event.preventDefault(); // Stop the page from scrolling
-        let nextListItem: HTMLElement | null = null;
 
-        if (event.key === 'ArrowDown') {
-          nextListItem = listItem.nextElementSibling as HTMLElement | null;
-        } else if (event.key === 'ArrowUp') {
-          nextListItem = listItem.previousElementSibling as HTMLElement | null;
-        }
+        const nextListItem =
+          event.key === 'ArrowDown'
+            ? (listItem.nextElementSibling as HTMLElement | null)
+            : (listItem.previousElementSibling as HTMLElement | null);
 
         nextListItem?.focus();
         break;
-      case 'Enter':
+      }
+      case 'Enter': {
         // Simulate a click on the Link component when Enter is pressed
         const link = listItem.querySelector('a') as HTMLAnchorElement | null;
         if (link) {
@@ -103,6 +102,7 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
           ((document.activeElement as HTMLElement) || null)?.blur(); // Remove focus from the active element
         }
         break;
+      }
     }
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
