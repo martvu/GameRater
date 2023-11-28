@@ -2,7 +2,14 @@ import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Search, XCircle } from 'lucide-react';
-import { FormEvent, useEffect, useState } from 'react';
+import {
+  FocusEvent,
+  FormEvent,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { searchQueryState } from '@/state/atoms.ts';
 import { useRecoilState } from 'recoil';
@@ -26,7 +33,9 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
       fetchPolicy: 'no-cache', // Use 'cache-and-network' or 'network-only' if you want to always fetch the latest results
     }
   );
+  const dropdownRef = useRef(null);
 
+  // Debounce the search query (Wait for 300ms after the user stops typing)
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (searchQuery.trim()) {
@@ -37,12 +46,64 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
     return () => clearTimeout(timerId);
   }, [searchQuery, getGames]);
 
-  const handleBlur = () => {
+  const handleBlur = (event: FocusEvent) => {
     // Delay hiding dropdown to allow for click events to be processed
-    setTimeout(() => setIsFocused(false), 300);
+    setTimeout(() => {
+      const relatedTarget = event.relatedTarget as Node | null;
+      const dropdown = dropdownRef.current as HTMLUListElement | null;
+
+      if (dropdown && !dropdown.contains(relatedTarget)) {
+        setIsFocused(false);
+      }
+    }, 100);
   };
   const handleFocus = () => {
     setIsFocused(true);
+  };
+
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      const dropdown = dropdownRef.current as HTMLUListElement | null;
+      const firstItem = dropdown?.querySelector('li');
+      (firstItem as HTMLElement)?.focus();
+    } else if (event.key === 'Escape') {
+      event.currentTarget.blur();
+      setIsFocused(false);
+    }
+  };
+  const handleLinkClick = () => {
+    setIsFocused(false); // Hide the dropdown
+    ((document.activeElement as HTMLElement) || null)?.blur(); // Remove focus from the active element
+  };
+  const handleListItemKeyDown = (event: KeyboardEvent<HTMLLIElement>) => {
+    // Get the parent list item of the focused element
+    const listItem = event.currentTarget;
+
+    switch (event.key) {
+      case 'ArrowDown':
+      case 'ArrowUp':
+        event.preventDefault(); // Stop the page from scrolling
+        let nextListItem: HTMLElement | null = null;
+
+        if (event.key === 'ArrowDown') {
+          nextListItem = listItem.nextElementSibling as HTMLElement | null;
+        } else if (event.key === 'ArrowUp') {
+          nextListItem = listItem.previousElementSibling as HTMLElement | null;
+        }
+
+        nextListItem?.focus();
+        break;
+      case 'Enter':
+        // Simulate a click on the Link component when Enter is pressed
+        const link = listItem.querySelector('a') as HTMLAnchorElement | null;
+        if (link) {
+          link.click(); // Perform the navigation
+          setIsFocused(false); // Hide the dropdown
+          ((document.activeElement as HTMLElement) || null)?.blur(); // Remove focus from the active element
+        }
+        break;
+    }
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,6 +135,8 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
             onChange={e => setSearchQuery(e.target.value)}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            onKeyDown={handleInputKeyDown}
+            autoComplete="off"
           />
           {searchQuery && (
             <Button
@@ -101,9 +164,9 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
           </Button>
         </div>
       </form>
-      {isFocused && searchQuery && called && loading && <div>Loading...</div>}
-      {isFocused && searchQuery && data && (
+      {isFocused && searchQuery && (
         <ul
+          ref={dropdownRef}
           className={cn(
             'absolute top-full z-10 rounded-md border border-accent bg-background shadow-lg',
             showFullWidthSearch
@@ -111,23 +174,39 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
               : 'w-[220px] md:w-[320px] lg:w-[420px]'
           )}
         >
-          {data.getSearchSuggestions.map(game => (
-            <li key={game._id} className="p-2 hover:bg-accent">
-              <Link to={`/game/${game._id}`}>
-                <div className="flex gap-4">
-                  <div className="w-10">
-                    <ProgressiveImage
-                      fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover_image_id}.jpg`}
-                      placeholderSrc={imageNotFound}
-                      alt={game.name as string}
-                      className="h-14 rounded-full object-cover"
-                    />
+          {loading && <li className="p-2">Loading...</li>}
+          {!loading &&
+            data &&
+            data.getSearchSuggestions.map(game => (
+              <li
+                key={game._id}
+                className="p-2 hover:bg-accent"
+                tabIndex={0}
+                onKeyDown={handleListItemKeyDown}
+              >
+                <Link to={`/game/${game._id}`} onClick={handleLinkClick}>
+                  <div className="flex gap-4">
+                    <div className="w-10">
+                      <ProgressiveImage
+                        fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover_image_id}.jpg`}
+                        placeholderSrc={imageNotFound}
+                        alt={game.name as string}
+                        className="h-14 rounded-full object-cover"
+                      />
+                    </div>
+                    <p className="text-left text-sm font-semibold">
+                      {game.name}
+                    </p>
                   </div>
-                  {game.name}
-                </div>
-              </Link>
-            </li>
-          ))}
+                </Link>
+              </li>
+            ))}
+          {called &&
+            !loading &&
+            data &&
+            data.getSearchSuggestions.length === 0 && (
+              <li className="p-2 text-center">No results found.</li>
+            )}
         </ul>
       )}
     </>
