@@ -57,7 +57,6 @@ describe('FavoriteHeart Component', () => {
       renderFavoriteHeart();
       const button = screen.getByTestId('favorite-btn');
       await userEvent.click(button);
-      screen.debug();
       expect(screen.getByTestId('sign-in-alert')).toBeInTheDocument();
       // Assert any expected behavior after click
     });
