@@ -91,8 +91,5 @@ describe('ReviewForm', () => {
     await userEvent.click(ratingInput[4]);
     // Submit the form
     fireEvent.click(submitButton);
-    await waitFor(() => {
-      screen.debug();
-    });
   });
 });
