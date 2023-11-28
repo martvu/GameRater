@@ -90,6 +90,32 @@ describe('Test get filters', () => {
 });
 
 describe('Test game search and filter', () => {
+  it('suggests search', async () => {
+    const response = await request(app)
+      .post('/graphql')
+      .send({
+        query: `
+          query SearchSuggestions($query: String!) {
+            getSearchSuggestions(query: $query) {
+              _id,
+              name,
+            }
+          }
+        `,
+        variables: { query: 'Super Mario Wonder' },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      data: {
+        getSearchSuggestions: [
+          {
+            name: 'Super Mario Bros. Wonder',
+            _id: '655e6751d444b31dd6891333',
+          },
+        ],
+      },
+    });
+  });
   it('searches, filters and returns correct game', async () => {
     const response = await request(app)
       .post('/graphql')
