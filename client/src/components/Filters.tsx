@@ -15,6 +15,10 @@ import {
 } from '@/state/atoms';
 import { ScrollArea } from './ui/scroll-area';
 
+/**
+ * Filters component
+ * Displayed on large screens (non-mobile)
+ */
 export default function Filters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const genreList = useRecoilValue(genresListState);
@@ -105,8 +109,8 @@ export default function Filters() {
         </ScrollArea>
       </div>
       <Button
-        className="fixed bottom-4 left-4 z-50 m-1 hidden md:flex"
-        variant="outline"
+        className="fixed bottom-8 left-8 z-50 m-1 hidden md:flex"
+        variant="secondary"
         onClick={toggleCollapse}
         aria-label="toggle filters"
       >

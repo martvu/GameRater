@@ -34,6 +34,10 @@ interface SignInFormProps {
   onClose: () => void;
 }
 
+/**
+ * SignInForm component
+ * @param {function} onClose - Function to close the modal
+ */
 export function SignInForm({ onClose }: SignInFormProps) {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const setUser = useRecoilState(userState)[1];

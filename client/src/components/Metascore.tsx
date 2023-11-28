@@ -2,6 +2,10 @@ type MetascoreProps = {
   metascore?: number;
 };
 
+/**
+ * Metascore component
+ * @param {number} metascore - The metascore of the game
+ */
 export default function Metascore({ metascore }: MetascoreProps) {
   return (
     <div

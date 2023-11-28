@@ -43,92 +43,90 @@ export default function Pagination({
 
   if (pages > 1)
     return (
-      <nav aria-label="pagination">
-        <div className="flex flex-wrap justify-center">
-          <Button
-            size="page"
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            variant="ghost"
-            aria-label="go to previous page"
-          >
-            «
-          </Button>
-          {pages <= 7 ? (
-            Array<number>(pages)
-              .fill(1)
-              .map((_, index) => {
-                return <PageButton pageNumber={index + 1} key={index} />;
-              })
-          ) : currentPage <= 4 ? (
-            <>
-              <PageButton pageNumber={1} />
-              <PageButton pageNumber={2} />
-              <PageButton pageNumber={3} />
-              <PageButton pageNumber={4} />
-              <PageButton pageNumber={5} />
-              <Button
-                size="page"
-                variant="ghost"
-                disabled
-                aria-label="more pages"
-              >
-                ...
-              </Button>
-              <PageButton pageNumber={pages} />
-            </>
-          ) : currentPage >= pages - 3 ? (
-            <>
-              <PageButton pageNumber={1} />
-              <Button
-                size="page"
-                variant="ghost"
-                disabled
-                aria-label="more pages"
-              >
-                ...
-              </Button>
-              <PageButton pageNumber={pages - 4} />
-              <PageButton pageNumber={pages - 3} />
-              <PageButton pageNumber={pages - 2} />
-              <PageButton pageNumber={pages - 1} />
-              <PageButton pageNumber={pages} />
-            </>
-          ) : (
-            <>
-              <PageButton pageNumber={1} />
-              <Button
-                size="page"
-                variant="ghost"
-                disabled
-                aria-label="more pages"
-              >
-                ...
-              </Button>
-              <PageButton pageNumber={currentPage - 1} />
-              <PageButton pageNumber={currentPage} />
-              <PageButton pageNumber={currentPage + 1} />
-              <Button
-                size="page"
-                variant="ghost"
-                disabled
-                aria-label="more pages"
-              >
-                ...
-              </Button>
-              <PageButton pageNumber={pages} />
-            </>
-          )}
-          <Button
-            size="page"
-            disabled={currentPage === pages}
-            onClick={() => handlePageChange(currentPage + 1)}
-            variant="ghost"
-            aria-label="go to next page"
-          >
-            »
-          </Button>
-        </div>
+      <nav aria-label='pagination' className="flex flex-wrap justify-center">
+        <Button
+          size="page"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+          variant="ghost"
+          aria-label="go to previous page"
+        >
+          «
+        </Button>
+        {pages <= 7 ? (
+          Array<number>(pages)
+            .fill(1)
+            .map((_, index) => {
+              return <PageButton pageNumber={index + 1} key={index} />;
+            })
+        ) : currentPage <= 4 ? (
+          <>
+            <PageButton pageNumber={1} />
+            <PageButton pageNumber={2} />
+            <PageButton pageNumber={3} />
+            <PageButton pageNumber={4} />
+            <PageButton pageNumber={5} />
+            <Button
+              size="page"
+              variant="ghost"
+              disabled
+              aria-label="more pages"
+            >
+              ...
+            </Button>
+            <PageButton pageNumber={pages} />
+          </>
+        ) : currentPage >= pages - 3 ? (
+          <>
+            <PageButton pageNumber={1} />
+            <Button
+              size="page"
+              variant="ghost"
+              disabled
+              aria-label="more pages"
+            >
+              ...
+            </Button>
+            <PageButton pageNumber={pages - 4} />
+            <PageButton pageNumber={pages - 3} />
+            <PageButton pageNumber={pages - 2} />
+            <PageButton pageNumber={pages - 1} />
+            <PageButton pageNumber={pages} />
+          </>
+        ) : (
+          <>
+            <PageButton pageNumber={1} />
+            <Button
+              size="page"
+              variant="ghost"
+              disabled
+              aria-label="more pages"
+            >
+              ...
+            </Button>
+            <PageButton pageNumber={currentPage - 1} />
+            <PageButton pageNumber={currentPage} />
+            <PageButton pageNumber={currentPage + 1} />
+            <Button
+              size="page"
+              variant="ghost"
+              disabled
+              aria-label="more pages"
+            >
+              ...
+            </Button>
+            <PageButton pageNumber={pages} />
+          </>
+        )}
+        <Button
+          size="page"
+          disabled={currentPage === pages}
+          onClick={() => handlePageChange(currentPage + 1)}
+          variant="ghost"
+          aria-label="go to next page"
+        >
+          »
+        </Button>
       </nav>
     );
 }

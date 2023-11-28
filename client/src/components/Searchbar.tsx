@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { searchQueryState } from '@/state/atoms.ts';
 import { useRecoilState } from 'recoil';
 import { useLazyQuery } from '@apollo/client';
@@ -22,8 +22,14 @@ import imageNotFound from '@/assets/img-fallback.svg';
 type SearchbarProps = {
   showFullWidthSearch?: boolean;
 };
+
+/**
+ * Searchbar component
+ * @param {boolean} showFullWidthSearch - Whether to show the full width search bar or not
+ */
 const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { keyword } = useParams<{ keyword?: string }>();
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const [isFocused, setIsFocused] = useState(false);
@@ -107,6 +113,8 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsFocused(false);
+    ((document.activeElement as HTMLElement) || null)?.blur();
     navigate(
       searchQuery === '' || searchQuery === null
         ? '/'
@@ -147,7 +155,7 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
               type="button"
               onClick={() => {
                 setSearchQuery('');
-                navigate('/');
+                if (!location.pathname.startsWith('/game/')) navigate('/');
               }}
               className="absolute bottom-0 right-10 top-0 flex items-center justify-center"
             >

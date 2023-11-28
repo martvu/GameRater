@@ -53,6 +53,10 @@ const formSchema = z.object({
   }),
 });
 
+/**
+ * ReviewForm component
+ * Review form for creating a review
+ */
 export function ReviewForm() {
   const [user] = useRecoilState(userState);
   const { id } = useParams<GameDetailParams>();

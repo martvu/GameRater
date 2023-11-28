@@ -5,6 +5,11 @@ interface SignInAlertModalProps {
   onSignInSuccess?: () => void;
 }
 
+/**
+ * SignInAlertModal component
+ * @param {string} message - The message to display
+ * @param {function} onSignInSuccess - Callback function when user signs in
+ */
 export default function SignInAlertModal({
   message,
   onSignInSuccess,

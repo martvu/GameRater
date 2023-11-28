@@ -6,9 +6,13 @@ interface ReviewCardProps {
   review: Review;
 }
 
+/**
+ * ReviewCard component
+ * @param {Review} review - The review object
+ */
 export default function ReviewCard(review: ReviewCardProps) {
   return (
-    <Card>
+    <Card className="max-w-full">
       <CardHeader>
         <div className="flex flex-col">
           <p className="text-lg font-semibold">{review.review.title}</p>
@@ -19,7 +23,7 @@ export default function ReviewCard(review: ReviewCardProps) {
         </div>
         <StarRating rating={review.review.rating as number} disabled={true} />
       </CardHeader>
-      <CardDescription className="flex max-w-[800px] flex-row items-center gap-2">
+      <CardDescription className="break-all pt-4">
         {review.review.content}
       </CardDescription>
     </Card>

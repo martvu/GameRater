@@ -14,6 +14,10 @@ import { useRecoilState } from 'recoil';
 import SignInModal from './SignInModal';
 import { useToast } from './ui/use-toast';
 
+/**
+ * UserNav component
+ * User navigation for signing out
+ */
 export function UserNav() {
   const [user, setUser] = useRecoilState(userState);
   const { toast } = useToast();

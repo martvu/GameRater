@@ -5,6 +5,10 @@ import { userState } from '@/state/atoms';
 import { useRecoilState } from 'recoil';
 import SignInAlertModal from './SignInAlertModal';
 
+/**
+ * ReviewModal component
+ * Modal for creating a review
+ */
 export default function ReviewModal() {
   const [user] = useRecoilState(userState);
 

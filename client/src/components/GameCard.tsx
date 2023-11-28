@@ -23,6 +23,10 @@ interface GameCardProps {
   game: Game;
 }
 
+/**
+ * GameCard component
+ * @param {Game} game - The game object
+ */
 export function GameCard({ game }: GameCardProps) {
   const {
     _id: id,

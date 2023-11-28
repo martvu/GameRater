@@ -8,6 +8,10 @@ import {
   userState,
 } from '@/state/atoms';
 
+/**
+ * UserFilters component
+ * Filters for showing favorites and reviewed games
+ */
 export default function UserFilters() {
   const setCurrentPage = useSetRecoilState(pageState);
   const user = useRecoilValue(userState);

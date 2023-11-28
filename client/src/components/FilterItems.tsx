@@ -16,6 +16,11 @@ interface FilterItemsProps {
   filterType: 'platforms' | 'genres';
 }
 
+/**
+ * FilterItems component
+ * @param {Platform[] | Genre[]} filters - The list of filters
+ * @param {string} filterType - The type of filter (platforms or genres)
+ */
 export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   const [numItemsToShow, setNumItemsToShow] = useState(10);
   const [selectedPlatforms, setSelectedPlatforms] = useRecoilState(

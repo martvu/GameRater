@@ -10,6 +10,10 @@ import Searchbar from '@/components/Searchbar.tsx';
 import { cn } from '@/lib/utils.ts';
 import useReset from '@/hooks/useReset.tsx';
 
+/**
+ * Nav component
+ * The navigation bar at the top of the page
+ */
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   const reset = useReset();

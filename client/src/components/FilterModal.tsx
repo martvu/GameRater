@@ -8,6 +8,10 @@ import {
 } from '@/components/ui/dialog';
 import Filters from './Filters';
 
+/**
+ * FilterModal component
+ * Displayed on mobile devices
+ */
 export default function FilterModal() {
   return (
     <Dialog>
