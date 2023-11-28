@@ -9,7 +9,7 @@ interface SignInModalProps {
 
 /**
  * SignInModal component
- * @param {function} onSignInSuccess - Callback function when user signs in
+ * @param {function} [onSignInSuccess] - Callback function when user signs in
  */
 export default function SignInModal({ onSignInSuccess }: SignInModalProps) {
   const [open, setOpen] = useState(false);

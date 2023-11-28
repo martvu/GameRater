@@ -13,7 +13,7 @@ interface ProgressiveImageProps {
  * @param {string} placeholderSrc - The placeholder image source
  * @param {string} fullSrc - The full (displayed) image source
  * @param {string} alt - The alt text for the image
- * @param {string} className - The class name for the image
+ * @param {string} [className] - The class name for the image
  */
 const ProgressiveImage = ({
   placeholderSrc,

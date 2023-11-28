@@ -25,7 +25,7 @@ type SearchbarProps = {
 
 /**
  * Searchbar component
- * @param {boolean} showFullWidthSearch - Whether to show the full width search bar or not
+ * @param {boolean} [showFullWidthSearch] - Whether to show the full width search bar or not
  */
 const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
   const navigate = useNavigate();
@@ -128,9 +128,7 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
         <Label htmlFor="search" className="sr-only" />
         <div
           className={`relative ${
-            showFullWidthSearch
-              ? 'w-full'
-              : 'w-[200px] md:w-[300px] lg:w-[400px]'
+            showFullWidthSearch ? 'w-full' : 'md:w-[350px] lg:w-[400px]'
           }`}
         >
           <Input

@@ -16,7 +16,7 @@ import { useToast } from './ui/use-toast';
 
 /**
  * UserNav component
- * User navigation for signing out
+ * User navigation for displaying username and signing out
  */
 export function UserNav() {
   const [user, setUser] = useRecoilState(userState);
@@ -42,7 +42,7 @@ export function UserNav() {
           variant="ghost"
           className="relative h-10 w-10 rounded-full"
         >
-          <Avatar className="h-10 w-10">
+          <Avatar className="h-10 w-10 border-2">
             <AvatarFallback>{fallBackLogo}</AvatarFallback>
           </Avatar>
         </Button>

@@ -10,7 +10,7 @@ import Filters from './Filters';
 
 /**
  * FilterModal component
- * Displayed on mobile devices
+ * Displayed on small screens (mobile devices)
  */
 export default function FilterModal() {
   return (

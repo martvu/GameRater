@@ -9,7 +9,7 @@ function BaseGameListPage() {
   return (
     <section className="grid flex-grow grid-cols-1 justify-center md:grid-cols-[auto,1fr] md:justify-normal">
       {/* Filter section visible on larger screens */}
-      <aside className="hidden px-2 md:block fixed top-16 z-30 h-[calc(100vh-3.5rem)] w-full shrink-0 pt-3 md:sticky ">
+      <aside className="fixed top-16 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 px-2 pt-3 md:sticky md:block ">
         <Filters />
       </aside>
       <section className="pl-2 pr-2 pt-4 sm:pr-4">

@@ -43,7 +43,7 @@ export default function Pagination({
 
   if (pages > 1)
     return (
-      <nav aria-label='pagination' className="flex flex-wrap justify-center">
+      <nav aria-label="pagination" className="flex flex-wrap justify-center">
         <Button
           size="page"
           disabled={currentPage === 1}

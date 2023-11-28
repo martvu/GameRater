@@ -7,7 +7,7 @@ import SignInAlertModal from './SignInAlertModal';
 
 /**
  * ReviewModal component
- * Modal for creating a review
+ * Modal for review form to add a review
  */
 export default function ReviewModal() {
   const [user] = useRecoilState(userState);

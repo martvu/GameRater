@@ -19,7 +19,7 @@ interface FilterItemsProps {
 /**
  * FilterItems component
  * @param {Platform[] | Genre[]} filters - The list of filters
- * @param {string} filterType - The type of filter (platforms or genres)
+ * @param {string} filterType - The type of filter ('platforms' or 'genres')
  */
 export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   const [numItemsToShow, setNumItemsToShow] = useState(10);
@@ -52,7 +52,7 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   };
   const showLess = () => setNumItemsToShow(10);
   return (
-    <div>
+    <>
       <h2 className="my-2 text-left font-semibold capitalize text-foreground">
         {filterType}
       </h2>
@@ -97,20 +97,20 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
           className="flex w-36 items-center pl-0 text-primary"
         >
           <Plus className="inline-block h-6" />
-          <span>Show More</span>
+          Show More
         </Button>
       ) : numItemsToShow > 10 && filters.length > 10 ? (
         <Button
           variant={'text'}
           onClick={showLess}
-          className="flex w-36 items-center pl-0 text-destructive"
+          className="flex w-36 items-center pl-0 text-red-700"
         >
           <Minus className="inline-block h-6" />
-          <span>Show Less</span>
+          Show Less
         </Button>
       ) : (
         <div></div>
       )}
-    </div>
+    </>
   );
 }

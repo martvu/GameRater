@@ -17,7 +17,7 @@ interface FavoriteHeartProps {
 /**
  * FavoriteHeart component
  * @param {Game} game - The game object
- * @param {string} variant - The variant of the button (default ghost)
+ * @param {string} [variant] - The variant of the button (default ghost)
  */
 export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
   const [addFavorites] = useMutation(ADD_FAVORITES);

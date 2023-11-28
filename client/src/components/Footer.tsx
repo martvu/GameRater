@@ -1,3 +1,6 @@
+/**
+ * Footer Component
+ */
 export default function Footer() {
   return (
     <footer className="mt-5 h-16 w-full border-t text-muted-foreground">

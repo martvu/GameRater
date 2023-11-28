@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
 import useParameterState from '@/hooks/useParameterState.tsx';
+
 /**
  * GamesList component
  * Displays a list of games based on filters, search query, and sorting
@@ -97,7 +98,7 @@ export default function GamesList() {
           <p className="text-foreground">No games found</p>
         </article>
       )}
-      <div className="my-2 pt-2 flex w-full justify-center">
+      <div className="my-2 flex w-full justify-center pt-2">
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

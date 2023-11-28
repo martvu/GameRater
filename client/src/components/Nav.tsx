@@ -33,7 +33,11 @@ export default function Nav() {
             : 'justify-between'
         )}
       >
-        <Link data-testid="logo-btn" to="/" aria-label="Return to Home Page">
+        <Link
+          data-testid="logo-btn"
+          to="/"
+          aria-label="GameRater logo link to Home Page"
+        >
           <div
             className={cn(
               'w-28 items-center justify-between gap-2 px-2',
@@ -75,7 +79,7 @@ export default function Nav() {
         </div>
         <div
           className={cn(
-            'flex-shrink-0 items-center md:gap-2',
+            'mr-1 flex-shrink-0 items-center gap-1 md:gap-2',
             showFullWidthSearch ? 'hidden md:flex' : 'flex'
           )}
         >
@@ -87,12 +91,8 @@ export default function Nav() {
           >
             <Search size={24} />
           </Button>
-          <div>
-            <UserNav />
-          </div>
-          <div className="mr-1">
-            <ModeToggle />
-          </div>
+          <UserNav />
+          <ModeToggle />
         </div>
       </nav>
     </header>
