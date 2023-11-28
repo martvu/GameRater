@@ -182,6 +182,8 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
                 key={game._id}
                 className="p-2 hover:bg-accent"
                 tabIndex={0}
+                data-testid="search-item"
+                role="listitem"
                 onKeyDown={handleListItemKeyDown}
               >
                 <Link to={`/game/${game._id}`} onClick={handleLinkClick}>

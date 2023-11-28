@@ -9,6 +9,7 @@ import {
   GET_GAME,
   GET_FILTERS,
   GET_GAME_PLATFORMS,
+  GET_SEARCH_SUGGESTIONS,
 } from '@/lib/queries';
 
 const getGamesMock = {
@@ -316,6 +317,31 @@ const createReviewMock = {
   },
 };
 
+const searchbarSuggestionsMock = {
+  request: {
+    query: GET_SEARCH_SUGGESTIONS,
+    variables: {
+      query: 'example',
+    },
+  },
+  result: {
+    data: {
+      getSearchSuggestions: [
+        {
+          _id: '1',
+          name: 'Example Game',
+          cover_image_id: 'cover1',
+        },
+        {
+          _id: '2',
+          name: 'Example Game 2',
+          cover_image_id: 'cover2',
+        },
+      ],
+    },
+  },
+};
+
 const allMocks = [
   createReviewMock,
   getGamePlatformsMock,
@@ -327,6 +353,7 @@ const allMocks = [
   signInMock,
   getGamesSignedInMock,
   getGameMock,
+  searchbarSuggestionsMock,
   // Add more mocks as needed for other queries
 ];
 
