@@ -108,6 +108,16 @@ describe('Sort Games', () => {
   });
 });
 
+describe('Search Games', () => {
+  it('searches for Mario', () => {
+    cy.visit('/');
+    cy.get('[data-testid="search-input"]').click().type('mario');
+    cy.get('[data-testid="search-item"]').should('have.length', 5);
+    cy.get('[data-testid="search-item"]').first().click();
+    cy.url().should('include', '/game/');
+  });
+});
+
 describe('Filter Games', () => {
   it('filters games on Nintendo Switch and searches for Mario', () => {
     cy.visit('/');

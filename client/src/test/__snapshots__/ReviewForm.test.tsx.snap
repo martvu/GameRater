@@ -1,0 +1,200 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReviewForm > matches the snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="space-y-8"
+  >
+    <div
+      class="space-y-2"
+    >
+      <label
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for=":r0:-form-item"
+      >
+        Review Title
+      </label>
+      <input
+        aria-describedby=":r0:-form-item-description"
+        aria-invalid="false"
+        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        data-testid="review-title-input"
+        id=":r0:-form-item"
+        name="title"
+        placeholder="Title of your review"
+        value=""
+      />
+    </div>
+    <div
+      class="space-y-2"
+    >
+      <label
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for=":r1:-form-item"
+      >
+        Platform
+      </label>
+      <button
+        aria-autocomplete="none"
+        aria-controls="radix-:r2:"
+        aria-describedby=":r1:-form-item-description"
+        aria-expanded="false"
+        aria-invalid="false"
+        class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        data-placeholder=""
+        data-state="closed"
+        data-testid="review-platform-select"
+        dir="ltr"
+        id=":r1:-form-item"
+        role="combobox"
+        type="button"
+      >
+        <span
+          style="pointer-events: none;"
+        >
+          Choose Platform
+        </span>
+        <svg
+          aria-hidden="true"
+          class="h-4 w-4 opacity-50"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m6 9 6 6 6-6"
+          />
+        </svg>
+      </button>
+      <select
+        aria-hidden="true"
+        style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+        tabindex="-1"
+      >
+        <option
+          value="Platform 3"
+        >
+          Platform 3
+        </option>
+        <option
+          value="PC (Microsoft Windows)"
+        >
+          PC (Microsoft Windows)
+        </option>
+      </select>
+    </div>
+    <div
+      class="space-y-2"
+    >
+      <label
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for=":r3:-form-item"
+      >
+        Review Content
+      </label>
+      <textarea
+        aria-describedby=":r3:-form-item-description"
+        aria-invalid="false"
+        class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+        data-testid="review-content-input"
+        id=":r3:-form-item"
+        name="content"
+        placeholder="Tell us what you think about this game"
+      />
+    </div>
+    <div
+      class="space-y-2"
+    >
+      <label
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for=":r4:-form-item"
+      >
+        Your Rating
+      </label>
+      <div
+        class="flex items-center font-light"
+      >
+        <button
+          class="text-muted-foreground"
+          data-testid="review-star"
+          type="button"
+        >
+          <span
+            class="text-2xl font-light"
+          >
+            ☆  
+          </span>
+        </button>
+        <button
+          class="text-muted-foreground"
+          data-testid="review-star"
+          type="button"
+        >
+          <span
+            class="text-2xl font-light"
+          >
+            ☆  
+          </span>
+        </button>
+        <button
+          class="text-muted-foreground"
+          data-testid="review-star"
+          type="button"
+        >
+          <span
+            class="text-2xl font-light"
+          >
+            ☆  
+          </span>
+        </button>
+        <button
+          class="text-muted-foreground"
+          data-testid="review-star"
+          type="button"
+        >
+          <span
+            class="text-2xl font-light"
+          >
+            ☆  
+          </span>
+        </button>
+        <button
+          class="text-muted-foreground"
+          data-testid="review-star"
+          type="button"
+        >
+          <span
+            class="text-2xl font-light"
+          >
+            ☆  
+          </span>
+        </button>
+        <span
+          class="ml-2 text-muted-foreground"
+        >
+          0/5
+        </span>
+      </div>
+    </div>
+    <p
+      class="text-sm text-muted-foreground"
+      id="undefined-form-item-description"
+    >
+      Your review will be public and shared with other users.
+    </p>
+    <button
+      class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2"
+      data-testid="review-submit-btn"
+      type="submit"
+    >
+      Submit Review
+    </button>
+  </form>
+</DocumentFragment>
+`;

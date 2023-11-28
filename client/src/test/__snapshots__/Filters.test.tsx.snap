@@ -29,6 +29,194 @@ exports[`Filters Component > matches the snapshot 1`] = `
             >
               Filter By
             </h1>
+            <h2
+              class="my-2 text-left font-semibold capitalize text-foreground"
+            >
+              platforms
+            </h2>
+            <div
+              class="ml-1 flex flex-col"
+            >
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-Nintendo Switch"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-Nintendo Switch"
+                  id="filter-item-Nintendo Switch"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-Nintendo Switch"
+                >
+                  Nintendo Switch
+                </label>
+              </div>
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-PC (Microsoft Windows)"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-PC (Microsoft Windows)"
+                  id="filter-item-PC (Microsoft Windows)"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-PC (Microsoft Windows)"
+                >
+                  PC (Microsoft Windows)
+                </label>
+              </div>
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-PlayStation 5"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-PlayStation 5"
+                  id="filter-item-PlayStation 5"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-PlayStation 5"
+                >
+                  PlayStation 5
+                </label>
+              </div>
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-Xbox Series X|S"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-Xbox Series X|S"
+                  id="filter-item-Xbox Series X|S"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-Xbox Series X|S"
+                >
+                  Xbox Series X|S
+                </label>
+              </div>
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-Platform 1"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-Platform 1"
+                  id="filter-item-Platform 1"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-Platform 1"
+                >
+                  Platform 1
+                </label>
+              </div>
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-Platform 3"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-Platform 3"
+                  id="filter-item-Platform 3"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-Platform 3"
+                >
+                  Platform 3
+                </label>
+              </div>
+            </div>
+            <div />
+            <h2
+              class="my-2 text-left font-semibold capitalize text-foreground"
+            >
+              genres
+            </h2>
+            <div
+              class="ml-1 flex flex-col"
+            >
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-Genre 1"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-Genre 1"
+                  id="filter-item-Genre 1"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-Genre 1"
+                >
+                  Genre 1
+                </label>
+              </div>
+              <div
+                class="my-1 flex items-center space-x-2"
+              >
+                <button
+                  aria-checked="false"
+                  aria-label="filter-item-Genre 2"
+                  class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  data-state="unchecked"
+                  data-testid="filter-item-Genre 2"
+                  id="filter-item-Genre 2"
+                  role="checkbox"
+                  type="button"
+                  value="on"
+                />
+                <label
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 line-clamp-1 text-left font-normal tracking-tight text-muted-foreground"
+                  for="filter-item-Genre 2"
+                >
+                  Genre 2
+                </label>
+              </div>
+            </div>
+            <div />
           </div>
         </div>
       </div>
@@ -36,7 +224,7 @@ exports[`Filters Component > matches the snapshot 1`] = `
   </div>
   <button
     aria-label="toggle filters"
-    class="items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 fixed bottom-4 left-4 z-50 m-1 hidden md:flex"
+    class="items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 fixed bottom-8 left-8 z-50 m-1 hidden md:flex"
   >
     <svg
       class="lucide lucide-chevron-left"

@@ -9,6 +9,7 @@ import {
   GET_GAME,
   GET_FILTERS,
   GET_GAME_PLATFORMS,
+  GET_SEARCH_SUGGESTIONS,
 } from '@/lib/queries';
 
 const getGamesMock = {
@@ -202,10 +203,10 @@ const getGameMock = {
   request: {
     query: GET_GAME,
     variables: {
-      id: '1', // Example game ID
-      limit: 5, // Example limit
-      offset: 0, // Example offset
-      username: '', // Example username
+      id: '1',
+      limit: 5,
+      offset: 0,
+      username: '',
     },
   },
   result: {
@@ -218,14 +219,8 @@ const getGameMock = {
         first_release_date: 1620000000,
         aggregatedRating: 85,
         user_rating: 4.5,
-        platforms: [
-          { name: 'PC' },
-          // ... other platforms
-        ],
-        genres: [
-          { name: 'Adventure' },
-          // ... other genres
-        ],
+        platforms: [{ name: 'PC' }],
+        genres: [{ name: 'Adventure' }],
         reviews: {
           count: 2,
           reviews: [
@@ -316,6 +311,31 @@ const createReviewMock = {
   },
 };
 
+const searchbarSuggestionsMock = {
+  request: {
+    query: GET_SEARCH_SUGGESTIONS,
+    variables: {
+      query: 'example',
+    },
+  },
+  result: {
+    data: {
+      getSearchSuggestions: [
+        {
+          _id: '1',
+          name: 'Example Game',
+          cover_image_id: 'cover1',
+        },
+        {
+          _id: '2',
+          name: 'Example Game 2',
+          cover_image_id: 'cover2',
+        },
+      ],
+    },
+  },
+};
+
 const allMocks = [
   createReviewMock,
   getGamePlatformsMock,
@@ -327,6 +347,7 @@ const allMocks = [
   signInMock,
   getGamesSignedInMock,
   getGameMock,
+  searchbarSuggestionsMock,
   // Add more mocks as needed for other queries
 ];
 
