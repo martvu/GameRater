@@ -8,11 +8,10 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import ReviewCard from '@/components/ReviewCard';
 import ReviewModal from '@/components/ReviewModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Pagination from '@/components/Pagination';
 import { Genre, Platform, Review } from '@/gql/graphql';
@@ -46,13 +45,18 @@ const BaseGameDetailPage = () => {
     },
   });
 
+  // Scroll to top of the page on mount because of the router
+  useEffect(() => {
+    // Scroll to top of the page
+    window.scrollTo(0, 0);
+  });
+
   if (loading) return <Loading />;
   if (error) return <p>Error: {error.message}</p>;
   // Check if the game data exists
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-
   const formatDate = (unixTimestampStr: string): string => {
     const date = new Date(Number(unixTimestampStr) * 1000);
     return date.toLocaleDateString('de-DE', {
@@ -66,9 +70,9 @@ const BaseGameDetailPage = () => {
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
-    <div className="flex justify-center pt-4">
-      {/* Back button */}
-      <div className="grid max-w-[1200px] grid-cols-1 gap-4 px-4">
+    <section className="flex justify-center pt-4">
+      <div className="max-w-96 flex flex-col gap-4 px-4">
+        {/* Back button */}
         <Button
           aria-label="Back to previous page"
           size="icon"
@@ -85,111 +89,110 @@ const BaseGameDetailPage = () => {
           <ArrowLeft />
         </Button>
 
-        <main className="grid gap-2 md:grid-cols-[auto,1fr]">
-          {/* Image, ratings, Write Review */}
-          <section className="flex flex-col items-center justify-center gap-4">
-            <Card className="w-auto overflow-hidden p-0">
-              <CardHeader className="h-[364px] w-[264px] p-0">
-                <div className="absolute right-2 top-2"></div>
-                <ProgressiveImage
-                  fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
-                  placeholderSrc={imageNotFound}
-                  alt={data.getGame.name as string}
-                  className="h-full w-full object-cover" // Adjust the width and height as needed
-                />
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className=" flex items-center justify-center text-yellow-400">
-                  <Rating
-                    rating={data.getGame.user_rating || 0}
-                    numRatings={data.getGame.reviews?.count || 0}
+        <div className="flex flex-row flex-wrap justify-center gap-8">
+          <section className="flex flex-row gap-2">
+            {/* Image, ratings, Write Review */}
+            <section className="flex flex-row items-center justify-center gap-4">
+              <Card className="w-auto overflow-hidden p-0">
+                <CardHeader className="h-[364px] w-[264px] p-0">
+                  <div className="absolute right-2 top-2"></div>
+                  <ProgressiveImage
+                    fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
+                    placeholderSrc={imageNotFound}
+                    alt={data.getGame.name as string}
+                    className="h-full w-full object-cover" // Adjust the width and height as needed
+                  />
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className=" flex items-center justify-center text-yellow-400">
+                    <Rating
+                      rating={data.getGame.user_rating || 0}
+                      numRatings={data.getGame.reviews?.count || 0}
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter className="flex flex-col justify-center">
+                  {hasWrittenReview ? (
+                    <Button className="mb-4 w-[200px]" disabled>
+                      Review Submitted
+                    </Button>
+                  ) : (
+                    <ReviewModal />
+                  )}
+                </CardFooter>
+              </Card>
+            </section>
+          </section>
+          {/* Title, Release Date, Platforms, Genres and Description */}
+          <section className="border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]">
+            <h1 className=" flex gap-4 text-4xl font-semibold">
+              {data.getGame.name}
+              <FavoriteHeart variant="secondary" game={data.getGame} />
+            </h1>
+
+            <section className="flex flex-col justify-start gap-1">
+              {data.getGame.aggregatedRating ? (
+                <div className="flex items-center gap-2">
+                  <p className="text-muted-foreground">Metascore: </p>
+                  <Metascore
+                    metascore={
+                      data.getGame.aggregatedRating
+                        ? data.getGame.aggregatedRating
+                        : undefined
+                    }
                   />
                 </div>
-              </CardContent>
-              <CardFooter className="flex flex-col justify-center">
-                {hasWrittenReview ? (
-                  <Button className="mb-4 w-[200px]" disabled>
-                    Review Submitted
-                  </Button>
-                ) : (
-                  <ReviewModal />
-                )}
-              </CardFooter>
-            </Card>
+              ) : null}
+              <div className="mt-1 flex items-center gap-2">
+                <p className="text-muted-foreground">Release Date:</p>
+                <p className="text-sm font-semibold">{releaseDate}</p>
+              </div>
+              <div className="mt-1 flex flex-row gap-2">
+                <p className="mr-2 text-muted-foreground">Platforms:</p>
+                <ul className="flex flex-row flex-wrap">
+                  {data.getGame.platforms?.map((platform: Platform | null) => (
+                    <li className="mb-1 mr-1 list-none" key={platform?.name}>
+                      <Badge variant="secondary">
+                        <span className="line-clamp-1">{platform?.name}</span>
+                      </Badge>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-1 flex flex-row gap-2">
+                <p className="mr-2 text-muted-foreground">Genres:</p>
+                <ul className="flex flex-row flex-wrap">
+                  {data.getGame.genres?.map((genre: Genre | null) => (
+                    <li className="mb-1 mr-1 list-none" key={genre?.name}>
+                      <Badge variant="secondary">{genre?.name}</Badge>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="mt-1 text-muted-foreground">
+                {data.getGame.summary}
+              </p>
+            </section>
           </section>
-
-          {/* Title, Release Date, Platforms, Genres and Description */}
-          <Card className="border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]">
-            <CardHeader className="flex flex-col items-start">
-              <CardTitle className=" flex gap-4 text-4xl font-semibold">
-                {data.getGame.name}
-                <FavoriteHeart variant="secondary" game={data.getGame} />
-              </CardTitle>
-              <CardContent className="py-2">
-                <div className="flex flex-col justify-start gap-1">
-                  {data.getGame.aggregatedRating ? (
-                    <div className="flex items-center gap-2">
-                      <p className="text-muted-foreground">Metascore: </p>
-                      <Metascore
-                        metascore={
-                          data.getGame.aggregatedRating
-                            ? data.getGame.aggregatedRating
-                            : undefined
-                        }
-                      />
-                    </div>
-                  ) : null}
-                  <div className="mt-1 flex items-center gap-2">
-                    <p className="text-muted-foreground">Release Date:</p>
-                    <p className="text-sm font-semibold">{releaseDate}</p>
-                  </div>
-                  <div className="mt-1 flex flex-row flex-wrap">
-                    <p className="mr-2 text-muted-foreground">Platforms:</p>
-                    {data.getGame.platforms?.map(
-                      (platform: Platform | null) => (
-                        <li
-                          className="mb-1 mr-1 list-none"
-                          key={platform?.name}
-                        >
-                          <Badge variant="secondary">{platform?.name}</Badge>
-                        </li>
-                      )
-                    )}
-                  </div>
-                  <div className="mt-1 flex flex-row flex-wrap">
-                    <p className="mr-2 text-muted-foreground">Genres:</p>
-                    {data.getGame.genres?.map((genre: Genre | null) => (
-                      <li className="mb-1 mr-1 list-none" key={genre?.name}>
-                        <Badge variant="secondary">{genre?.name}</Badge>
-                      </li>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </CardHeader>
-            <CardContent className="py-4">
-              <p className="text-md">{data.getGame.summary}</p>
-            </CardContent>
-          </Card>
-
-          {/* Reviews */}
-          <div className="col-span-1 mt-10 flex h-full w-full lg:col-span-2">
-            <div className="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]">
-              <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-              {data.getGame.reviews?.reviews?.length !== 0 ? (
-                data.getGame.reviews?.reviews?.map((review: Review | null) => (
-                  <div key={review?._id} className="my-2">
-                    <ReviewCard review={review as Review} />
-                  </div>
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center">
-                  <p className="text-foreground">No reviews yet</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </main>
+        </div>
+        {/* Reviews */}
+        <section className="col-span-1 mt-10 flex h-full w-full flex-col md:col-span-2">
+          <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
+          <ul className="flex min-w-full flex-col justify-center text-left md:min-w-[700px]">
+            {data.getGame.reviews?.reviews?.length !== 0 ? (
+              data.getGame.reviews?.reviews?.map((review: Review | null) => (
+                <li key={review?._id} className="my-2">
+                  <ReviewCard review={review as Review} />
+                </li>
+              ))
+            ) : (
+              <li className="flex flex-col items-center justify-center">
+                <p className="text-foreground">No reviews yet</p>
+              </li>
+            )}
+          </ul>
+        </section>
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
@@ -198,7 +201,7 @@ const BaseGameDetailPage = () => {
           }
         />
       </div>
-    </div>
+    </section>
   );
 };
 
