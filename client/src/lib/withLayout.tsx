@@ -8,7 +8,7 @@ const withLayout = <P extends object>(
   return props => (
     <div className="flex min-h-screen flex-col">
       <Nav />
-      <div className="flex-grow">
+      <div className="flex-grow pt-16">
         <WrappedComponent {...(props as P)} />
       </div>
       <Footer />

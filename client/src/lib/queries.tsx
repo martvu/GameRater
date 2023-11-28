@@ -67,6 +67,16 @@ export const GET_GAME = gql(`
   }
 `);
 
+export const GET_SEARCH_SUGGESTIONS = gql(`
+  query GetSearchSuggestions($query: String!) {
+    getSearchSuggestions(query: $query) {
+      _id
+      name
+      cover_image_id
+    }
+  }
+`);
+
 export const GET_GAME_PLATFORMS = gql(`
   query GetGamePlatforms($id: ID!) {
     getGame(ID: $id) {

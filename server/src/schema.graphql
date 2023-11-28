@@ -96,6 +96,7 @@ type Query {
     showFavorites: Boolean
     showReviewedGames: Boolean
   ): Games!
+  getSearchSuggestions(query: String!): [Game!]!
 }
 
 type Mutation {

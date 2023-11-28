@@ -66,7 +66,7 @@ const BaseGameDetailPage = () => {
   const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
-    <div className="flex justify-center pt-20">
+    <div className="flex justify-center pt-4">
       {/* Back button */}
       <div className="grid max-w-[1200px] grid-cols-1 gap-4 px-4">
         <Button
