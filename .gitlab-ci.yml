@@ -1,0 +1,26 @@
+stages:
+  - lint
+  - test
+
+before_script:
+  - npm install -g concurrently
+
+lint:
+  stage: lint
+  image: node:latest
+  script:
+    - npm run lint
+
+prettier:
+  stage: lint
+  image: node:latest
+  script:
+    - npm run prettier
+
+test:
+  stage: test
+  image: node:latest
+  script:
+    - npm run install
+    - npm run test:client
+    - npm run test:server
