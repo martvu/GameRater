@@ -1,5 +1,5 @@
 import { ModeToggle } from '@/components/theme/ModeToggle';
-import Logo from '@/assets/logo.webp';
+import Logo from '@/assets/GameRater.png';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Search } from 'lucide-react';
@@ -36,7 +36,7 @@ export default function Nav() {
         <Link data-testid="logo-btn" to="/" aria-label="GameRater Home">
           <div
             className={cn(
-              'w-28 items-center justify-between gap-2 px-2',
+              'w-32 items-center justify-between gap-2 px-2',
               showFullWidthSearch ? 'hidden md:flex' : 'flex'
             )}
           >
