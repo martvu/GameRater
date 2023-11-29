@@ -1,9 +1,57 @@
-import { ADD_FAVORITES, REMOVE_FAVORITES } from '@/components/FavoriteHeart';
-import { GET_GAMES } from '@/components/GamesList';
-import { GET_GAME } from '@/pages/GameDetailPage';
-import { gql } from '@apollo/client';
+import {
+  ADD_FAVORITES,
+  CREATE_REVIEW,
+  REMOVE_FAVORITES,
+  SIGN_IN_OR_CREATE_USER,
+} from '@/lib/mutations';
+import {
+  GET_GAMES,
+  GET_GAME,
+  GET_FILTERS,
+  GET_GAME_PLATFORMS,
+  GET_SEARCH_SUGGESTIONS,
+} from '@/lib/queries';
 
 const getGamesMock = {
+  request: {
+    query: GET_GAMES,
+    variables: {
+      limit: 24,
+      offset: 0,
+      sortBy: { field: 'first_release_date', order: 'desc' },
+      platforms: [],
+      genres: [],
+      query: undefined,
+      userId: '',
+      showFavorites: false,
+      showReviewedGames: false,
+    },
+  },
+  result: {
+    data: {
+      search: {
+        count: 1,
+        games: [
+          {
+            _id: '1',
+            aggregated_rating: 85,
+            first_release_date: 1620000000,
+            summary: 'Example game summary',
+            cover_image_id: 'cover1',
+            name: 'Example Game',
+            user_rating: 4.5,
+          },
+        ],
+        filters: {
+          genres: [1, 2], // Example genre IDs
+          platforms: [3, 4], // Example platform IDs
+        },
+      },
+    },
+  },
+};
+
+const getGamesMockedKeyword = {
   request: {
     query: GET_GAMES,
     variables: {
@@ -30,8 +78,8 @@ const getGamesMock = {
             summary: 'Example game summary',
             cover_image_id: 'cover1',
             name: 'Example Game',
+            user_rating: 4.5,
           },
-          // Add more game objects as needed
         ],
         filters: {
           genres: [1, 2], // Example genre IDs
@@ -85,66 +133,54 @@ const getGamesSignedInMock = {
 
 const getFiltersMock = {
   request: {
-    query: gql`
-      query GetFiltersMock {
-        getGenres {
-          id
-          name
-        }
-        getPlatforms {
-          id
-          name
-        }
-      }
-    `,
-    variables: {}, // If your query uses variables, specify them here
+    query: GET_FILTERS,
+    variables: {},
   },
   result: {
     data: {
       getGenres: [
-        { id: 1, name: 'Genre 1', gamesCount: 10 },
-        { id: 2, name: 'Genre 2', gamesCount: 20 },
+        { id: 1, name: 'Genre 1' },
+        { id: 2, name: 'Genre 2' },
       ],
       getPlatforms: [
-        { id: 1, name: 'Platform 1', gamesCount: 15 },
-        { id: 3, name: 'Platform 3', gamesCount: 25 },
+        { id: 1, name: 'Platform 1' },
+        { id: 3, name: 'Platform 3' },
+        { id: 4, name: 'PC (Microsoft Windows)' },
+        { id: 2, name: 'Nintendo Switch' },
+        { id: 5, name: 'PlayStation 5' },
+        { id: 6, name: 'Xbox Series X|S' },
       ],
     },
   },
 };
 
-const getAvgRatingMock = {
+const getGamePlatformsMock = {
   request: {
-    query: gql`
-      query GetAvgRating($gameID: ID!) {
-        getAvgRating(gameID: $gameID)
-      }
-    `,
-    variables: { gameID: '1' },
+    query: GET_GAME_PLATFORMS,
+    variables: { id: '1' },
   },
   result: {
     data: {
-      getAvgRating: 4.5,
+      getGame: {
+        name: 'Example Game',
+        platforms: [
+          {
+            id: 3,
+            name: 'Platform 3',
+          },
+          {
+            id: 4,
+            name: 'PC (Microsoft Windows)',
+          },
+        ],
+      },
     },
   },
 };
 
 const signInMock = {
   request: {
-    query: gql`
-      mutation SignInOrCreateUser($userInput: UserInput) {
-        signInOrCreateUser(userInput: $userInput) {
-          _id
-          username
-          favorites {
-            _id
-          }
-          reviews {
-            _id
-          }
-        }
-      }
-    `,
+    query: SIGN_IN_OR_CREATE_USER,
     variables: {
       userInput: {
         username: 'testuser',
@@ -167,15 +203,14 @@ const getGameMock = {
   request: {
     query: GET_GAME,
     variables: {
-      id: '1', // Example game ID
-      limit: 5, // Example limit
-      offset: 0, // Example offset
-      username: '', // Example username
+      id: '1',
+      limit: 5,
+      offset: 0,
+      username: '',
     },
   },
   result: {
     data: {
-      getAvgRating: 4.5, // Example average rating
       getGame: {
         _id: '1',
         name: 'Example Game',
@@ -183,14 +218,9 @@ const getGameMock = {
         imageId: 'image1',
         first_release_date: 1620000000,
         aggregatedRating: 85,
-        platforms: [
-          { name: 'PC' },
-          // ... other platforms
-        ],
-        genres: [
-          { name: 'Adventure' },
-          // ... other genres
-        ],
+        user_rating: 4.5,
+        platforms: [{ name: 'PC' }],
+        genres: [{ name: 'Adventure' }],
         reviews: {
           count: 2,
           reviews: [
@@ -218,9 +248,58 @@ const getGameMock = {
       },
     },
   },
-  // Optionally, you can add an `error` field to mock a failure scenario
 };
 
+const getGameMock2 = {
+  request: {
+    query: GET_GAME,
+    variables: {
+      id: '1',
+      limit: 5,
+      offset: 0,
+      username: 'testUser',
+    },
+  },
+  result: {
+    data: {
+      getGame: {
+        _id: '1',
+        name: 'Example Game',
+        summary: 'This is an example game summary.',
+        imageId: 'image1',
+        first_release_date: 1620000000,
+        aggregatedRating: 85,
+        user_rating: 4.5,
+        platforms: [{ name: 'PC' }],
+        genres: [{ name: 'Adventure' }],
+        reviews: {
+          count: 2,
+          reviews: [
+            {
+              _id: 'review1',
+              user: 'user1',
+              title: 'Great Game',
+              content: 'This is a great game because...',
+              rating: 5,
+              platform: 'PC',
+              gameID: '1',
+            },
+            {
+              _id: 'review2',
+              user: 'user2',
+              title: 'Good Game',
+              content: 'This is a good game because...',
+              rating: 4,
+              platform: 'PC',
+              gameID: '1',
+            },
+          ],
+          userHasReviewed: false,
+        },
+      },
+    },
+  },
+};
 const addFavoritesMock = {
   request: {
     query: ADD_FAVORITES,
@@ -253,15 +332,73 @@ const removeFavoritesMock = {
   },
 };
 
+const createReviewMock = {
+  request: {
+    query: CREATE_REVIEW,
+    variables: {
+      reviewInput: {
+        title: 'Great Game',
+        content: 'This is a great game because...',
+        rating: 5,
+        platform: 'PC (Microsoft Windows)',
+        user: 'testUser',
+        gameID: '1',
+      },
+    },
+  },
+  result: {
+    data: {
+      createReview: {
+        _id: 'review1',
+        user: 'testUser',
+        title: 'Great Game',
+        content: 'This is a great game because...',
+        rating: 5,
+        platform: 'PC (Microsoft Windows)',
+        gameID: '1',
+      },
+    },
+  },
+};
+
+const searchbarSuggestionsMock = {
+  request: {
+    query: GET_SEARCH_SUGGESTIONS,
+    variables: {
+      query: 'example',
+    },
+  },
+  result: {
+    data: {
+      getSearchSuggestions: [
+        {
+          _id: '1',
+          name: 'Example Game',
+          cover_image_id: 'cover1',
+        },
+        {
+          _id: '2',
+          name: 'Example Game 2',
+          cover_image_id: 'cover2',
+        },
+      ],
+    },
+  },
+};
+
 const allMocks = [
+  createReviewMock,
+  getGamePlatformsMock,
+  getGamesMockedKeyword,
   addFavoritesMock,
   removeFavoritesMock,
   getGamesMock,
   getFiltersMock,
-  getAvgRatingMock,
   signInMock,
   getGamesSignedInMock,
   getGameMock,
+  getGameMock2,
+  searchbarSuggestionsMock,
   // Add more mocks as needed for other queries
 ];
 
@@ -270,6 +407,5 @@ export {
   getGamesMock,
   getGamesSignedInMock,
   getFiltersMock,
-  getAvgRatingMock,
   signInMock,
 };

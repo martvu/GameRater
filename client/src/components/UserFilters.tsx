@@ -8,6 +8,10 @@ import {
   userState,
 } from '@/state/atoms';
 
+/**
+ * UserFilters component
+ * Filters for showing favorites and reviewed games
+ */
 export default function UserFilters() {
   const setCurrentPage = useSetRecoilState(pageState);
   const user = useRecoilValue(userState);
@@ -32,7 +36,7 @@ export default function UserFilters() {
         <>
           <Button
             data-testid="toggle-favorites-btn"
-            aria-label="Toggle favorites"
+            aria-label="Toggle show favorites"
             className="flex gap-1"
             size="md"
             variant={showFavorites ? 'invert' : 'secondary'}
@@ -46,7 +50,7 @@ export default function UserFilters() {
           </Button>
           <Button
             data-testid="toggle-reviewed-btn"
-            aria-label="Toggle reviewed games"
+            aria-label="Toggle show reviewed games"
             className="flex gap-1"
             size="md"
             variant={showReviewedGames ? 'invert' : 'secondary'}

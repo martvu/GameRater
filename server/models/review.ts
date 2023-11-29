@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-interface IReview {
+interface IReview extends Document {
   id?: String;
   user: String;
   title: String;

@@ -24,7 +24,7 @@ export const selectedGenresState = atom({
   default: [] as number[],
 });
 
-const currentPage = sessionStorage.getItem('currentPage');
+const currentPage = sessionStorage.getItem('gameListPage');
 export const pageState = atom<number>({
   key: 'pageState',
   default: currentPage ? parseInt(currentPage, 10) : 1,
@@ -41,16 +41,19 @@ export const sortByState = atom<GameSortInput>({
   default: sortBy ? JSON.parse(sortBy) : defaultSortBy,
 });
 
+// For search query to persist on details page after searching
 export const searchQueryState = atom({
   key: 'searchQueryState',
   default: '',
 });
 
+// For genres that are availbale to filter by after searching
 export const genresListState = atom({
   key: 'genresListState',
   default: [] as number[],
 });
 
+// For platforms that are availbale to filter by after searching
 export const platformsListState = atom({
   key: 'platformsListState',
   default: [] as number[],

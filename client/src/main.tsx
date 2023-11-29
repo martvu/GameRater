@@ -8,7 +8,7 @@ import { RecoilRoot } from 'recoil';
 const serverUri = import.meta.env.VITE_SERVER_URI;
 
 const client = new ApolloClient({
-  uri: serverUri,
+  uri: serverUri || 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
 });
 

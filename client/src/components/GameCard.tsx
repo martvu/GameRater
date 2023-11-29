@@ -9,8 +9,6 @@ import {
 } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Game } from '@/gql/graphql';
-import { useQuery } from '@apollo/client';
-import { gql } from '../gql/';
 import Metascore from './Metascore';
 import FavoriteHeart from './FavoriteHeart';
 import {
@@ -25,24 +23,18 @@ interface GameCardProps {
   game: Game;
 }
 
-const GET_AVG_RATING = gql(`
-  query GetAvgRating($gameID: ID!) {
-    getAvgRating(gameID: $gameID)
-  }
-`);
-
+/**
+ * GameCard component
+ * @param {Game} game - The game object
+ */
 export function GameCard({ game }: GameCardProps) {
   const {
     _id: id,
     name,
     aggregated_rating: aggregatedRating,
     cover_image_id: imageId,
+    user_rating: userRating,
   } = game;
-  const { data } = useQuery(GET_AVG_RATING, {
-    variables: { gameID: id as string },
-  });
-
-  const rating = data?.getAvgRating;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
     : imageNotFound;
@@ -54,15 +46,13 @@ export function GameCard({ game }: GameCardProps) {
         to={`/game/${id}`}
         aria-label={`Link to ${name} detail page`}
       >
-        <CardHeader className="h-[235px] w-[176px] overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
-          <div className="flex flex-1 items-center justify-center">
-            <ProgressiveImage
-              placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
-              fullSrc={coverImageUrl}
-              alt={name as string}
-              className="h-full w-full object-cover" // Adjust the width and height as needed
-            />
-          </div>
+        <CardHeader className="flex h-[235px] w-[176px] flex-1 items-center justify-center overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
+          <ProgressiveImage
+            placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
+            fullSrc={coverImageUrl}
+            alt="Game cover image"
+            className="h-full w-full object-cover" // Adjust the width and height as needed
+          />
         </CardHeader>
         <CardContent className="relative px-3 text-start">
           <TooltipProvider>
@@ -79,20 +69,23 @@ export function GameCard({ game }: GameCardProps) {
           </TooltipProvider>
         </CardContent>
       </Link>
-      <CardFooter className="mt-auto h-[40px] w-full pl-3 pr-2 sm:pb-2">
-        <div className="relative flex h-full w-full items-center">
-          <div className="absolute left-0 flex items-center">
-            <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />
-            <p>{rating === 0 ? '-' : rating}</p>
-          </div>
-          <div className="absolute right-10 flex items-center gap-2">
-            <Metascore
-              metascore={aggregatedRating ? aggregatedRating : undefined}
-            />
-          </div>
-          <div className="absolute right-0">
-            <FavoriteHeart game={game} />
-          </div>
+      <CardFooter className="relative mt-auto flex h-[40px] w-full items-center pl-3 pr-2 sm:pb-2">
+        <div className="absolute left-2 flex items-center">
+          <Star
+            aria-label={`${userRating} out of 5 stars`}
+            className="mr-1 h-5 fill-yellow-400 text-yellow-400"
+          />
+          {userRating ? (
+            <>
+              <p>{userRating}</p>
+            </>
+          ) : null}
+        </div>
+        <div className="absolute right-1 flex items-center">
+          <Metascore
+            metascore={aggregatedRating ? aggregatedRating : undefined}
+          />
+          <FavoriteHeart game={game} />
         </div>
       </CardFooter>
     </Card>

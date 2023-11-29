@@ -6,7 +6,13 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "install": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
     "server": "cd server && npm start",
-    "client": "cd client && npm run dev"
+    "client": "cd client && npm run dev",
+    "lint": "concurrently \"cd client && npm run lint\" \"cd server && npm run lint\"",
+    "prettier": "concurrently \"cd client && npm run prettier\" \"cd server && npm run prettier\"",
+    "prettier:check": "concurrently \"cd client && npx prettier . --check\" \"cd server && npx prettier . --check\"",
+    "test:client": "cd client && npm run generate && npm test",
+    "test:server": "cd server && npm run generate && npm test",
+    "start:test": "concurrently \"cd server && npm run testserver\" \"cd client && npm run dev\""
   },
   "author": "",
   "license": "ISC",

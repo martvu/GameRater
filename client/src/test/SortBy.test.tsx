@@ -19,6 +19,7 @@ class MockPointerEvent extends Event {
     this.pointerType = props.pointerType || 'mouse';
   }
 }
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 window.PointerEvent = MockPointerEvent as any;
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
 window.HTMLElement.prototype.releasePointerCapture = vi.fn();
@@ -45,6 +46,14 @@ vi.mock('recoil', async () => {
   };
 });
 
+const renderSortBy = () => {
+  return render(
+    <RecoilRoot>
+      <SortBy />
+    </RecoilRoot>
+  );
+};
+
 describe('SortBy Component', () => {
   let localStorageMock: LocalStorageMock;
   beforeEach(() => {
@@ -61,30 +70,24 @@ describe('SortBy Component', () => {
   });
 
   it('renders correctly', async () => {
-    render(
-      <RecoilRoot>
-        <SortBy />
-      </RecoilRoot>
-    );
+    renderSortBy();
+    expect(screen.getByText('Sort By')).toBeInTheDocument();
+  });
+
+  it('matches the snapshot', async () => {
+    const { asFragment } = renderSortBy();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should open the select menu when clicked', async () => {
-    render(
-      <RecoilRoot>
-        <SortBy />
-      </RecoilRoot>
-    );
+    renderSortBy();
     const trigger = screen.getByTestId('sort-by-select');
     await userEvent.click(trigger);
     expect(screen.getByText('Release Date Desc')).toBeInTheDocument();
   });
 
   it('should change the selected value when clicked', async () => {
-    render(
-      <RecoilRoot>
-        <SortBy />
-      </RecoilRoot>
-    );
+    renderSortBy();
     const trigger = screen.getByTestId('sort-by-select');
     await userEvent.click(trigger);
     expect(trigger).toHaveAttribute('aria-expanded', 'true');

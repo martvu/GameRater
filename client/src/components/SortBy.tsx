@@ -12,6 +12,10 @@ import { sortByState } from '@/state/atoms';
 import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
+/**
+ * SortBy component
+ * Select for sorting the games
+ */
 export default function SortBy() {
   const setSortBy = useRecoilState(sortByState)[1];
   const setCurrentPage = useSetRecoilState(pageState);
@@ -43,6 +47,10 @@ export default function SortBy() {
       sortByObject = { field: 'user_rating', order: 'desc' };
       setSortBy(sortByObject);
     }
+    if (value === 'Popularity') {
+      sortByObject = { field: 'user_rating_count', order: 'desc' };
+      setSortBy(sortByObject);
+    }
 
     // Store the selected value in sessionStorage
     sessionStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
@@ -56,6 +64,7 @@ export default function SortBy() {
   return (
     // Need a setTimout to prevent the select from clicking through on touch devices
     <Select
+      aria-label="Sort By"
       open={selectOpen}
       onOpenChange={() => {
         setTimeout(() => {
@@ -66,6 +75,7 @@ export default function SortBy() {
       value={sessionStorage.getItem('selectedSortLabel') || ''}
     >
       <SelectTrigger
+        aria-label="Sort By Select"
         data-testid="sort-by-select"
         className="w-[150px] hover:bg-accent"
       >
@@ -91,6 +101,9 @@ export default function SortBy() {
           </SelectItem>
           <SelectItem data-testid="user-rating" value="User Rating">
             User Rating
+          </SelectItem>
+          <SelectItem data-testid="popularity" value="Popularity">
+            Popularity
           </SelectItem>
         </SelectGroup>
       </SelectContent>

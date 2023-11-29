@@ -8,6 +8,10 @@ import {
 } from '@/components/ui/dialog';
 import Filters from './Filters';
 
+/**
+ * FilterModal component
+ * Displayed on small screens (mobile devices)
+ */
 export default function FilterModal() {
   return (
     <Dialog>
@@ -16,7 +20,7 @@ export default function FilterModal() {
           Filters
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="pb-16 pt-10 sm:max-w-[425px]">
         <Filters />
         <DialogFooter>
           <DialogClose asChild>

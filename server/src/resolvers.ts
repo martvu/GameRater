@@ -16,22 +16,6 @@ export const resolvers: Resolvers = {
     getGame: async (_, { ID }) => {
       return await Game.findById(ID);
     },
-    getAvgRating: async (_, { gameID }) => {
-      const reviews = await Review.find({ gameID: gameID });
-      if (reviews.length === 0) {
-        return 0;
-      }
-      const totalRating = reviews.reduce(
-        (acc, review) => acc + review.rating.valueOf(),
-        0
-      );
-      const averageRating = Number((totalRating / reviews.length).toFixed(1));
-      await Game.findByIdAndUpdate(gameID, {
-        //Update the games user_rating
-        user_rating: averageRating,
-      });
-      return averageRating;
-    },
     getGenres: async (_, { limit }) => {
       const genres = await Genre.find().limit(limit);
       genres.sort((a, b) => a.name.localeCompare(b.name as string));
@@ -41,6 +25,13 @@ export const resolvers: Resolvers = {
       const platforms = await Platform.find().limit(limit);
       platforms.reverse();
       return platforms.map(platform => platform.toObject());
+    },
+    getSearchSuggestions: async (_, { query }) => {
+      const keywords = query.split(' ').filter(keyword => keyword.length > 0);
+      const regexPattern = keywords.map(keyword => `(?=.*${keyword})`).join('');
+      const filters = { name: { $regex: new RegExp(regexPattern, 'i') } };
+      const games = await Game.find(filters).limit(5);
+      return games.map(game => game.toObject());
     },
     search: async (
       _,
@@ -78,7 +69,6 @@ export const resolvers: Resolvers = {
       if (genres && genres.length > 0) {
         filters['genres'] = { $in: genres };
       }
-
       // If showFavorites is true, filter by user's favorite games
       let combinedGameIds = [];
       let hasFavoritesOrReviews = false;
@@ -92,8 +82,8 @@ export const resolvers: Resolvers = {
       // If showReviewedGames is true, filter by user's reviewed games
       if (showReviewedGames && userId) {
         const user = await User.findOne({ _id: userId });
-        const reviews = await Review.find({ user: user.username });
-        const reviewedGameIds = reviews.map(review => review.gameID);
+        const usersReviews = await Review.find({ user: user.username });
+        const reviewedGameIds = usersReviews.map(review => review.gameID);
         if (
           user &&
           user.reviews &&
@@ -153,40 +143,57 @@ export const resolvers: Resolvers = {
       _,
       { reviewInput: { user, title, content, rating, platform, gameID } }
     ) => {
-      const review = await new Review({
+      // Create the new review
+      const newReview = new Review({
         user,
         title,
         content,
         rating,
         platform,
         gameID,
-      }).save();
-      const reviews = await Review.find({ gameID: gameID });
-
-      // Calculate the new average rating
-      let totalRating = reviews.reduce(
-        (acc, review) => acc + review.rating.valueOf(),
-        0
-      );
-      totalRating += rating; // Add the rating of the new review
-      const newAverageRating = Number(
-        (totalRating / (reviews.length + 1)).toFixed(1)
-      );
-      await Game.findByIdAndUpdate(gameID, {
-        $addToSet: { reviews: review._id },
-        //Update the games user_rating
-        user_rating: newAverageRating,
       });
 
+      // Validate the rating
+      if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+        throw new Error('Rating must be an integer between 1 and 5');
+      }
+      // Fetch all existing reviews for the game
+      const existingReviews = await Review.find({ gameID: gameID });
+
+      // Calculate the new average rating including the new review
+      const totalRating =
+        existingReviews.reduce(
+          (acc, review) => acc + Number(review.rating),
+          0
+        ) + Number(newReview.rating);
+      const newAverageRating = Number(
+        (totalRating / (existingReviews.length + 1)).toFixed(1)
+      );
+
+      // Add the review to the user's reviews
       const userDoc = await User.findOne({ username: user });
       if (userDoc) {
         await User.findByIdAndUpdate(userDoc._id, {
-          $addToSet: { reviews: review._id },
+          $addToSet: { reviews: newReview._id },
         });
       } else {
         throw new Error('User not found');
       }
-      return { ...review.toObject(), _id: review._id.toString() };
+      try {
+        await Game.findByIdAndUpdate(gameID, {
+          $addToSet: { reviews: newReview._id },
+          //Update the games user_rating and user_rating_count
+          user_rating: newAverageRating,
+          user_rating_count: existingReviews.length + 1,
+        });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Error updating game');
+      }
+
+      // Save the new review
+      await newReview.save();
+      return { ...newReview.toObject(), _id: newReview._id.toString() };
     },
     signInOrCreateUser: async (_, { userInput: { username } }) => {
       const user = await User.findOne({ username: username });

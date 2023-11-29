@@ -6,6 +6,16 @@ import express from 'express';
 import { expressMiddleware } from '@apollo/server/express4';
 import request from 'supertest';
 import mongoose from 'mongoose';
+import {
+  TEST_ADD_FAVORITES,
+  TEST_CREATE_REVIEW,
+  TEST_GET_FILTERS,
+  TEST_GET_GAME,
+  TEST_REMOVE_FAVORITES,
+  TEST_SEARCH,
+  TEST_SEARCH_SUGGESTIONS,
+  TEST_SIGN_IN_OR_CREATE_USER,
+} from './testQueries.js';
 
 const app = express();
 const typeDefs = readFileSync('./src/schema.graphql', 'utf8');
@@ -53,16 +63,7 @@ describe('Test get filters', () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          query GetFilters($limit: Int) {
-            getGenres(limit: $limit) {
-              name
-            }
-            getPlatforms(limit: $limit) {
-              name
-            }
-          }
-        `,
+        query: TEST_GET_FILTERS,
         variables: { limit: 2 },
       });
     expect(response.status).toBe(200);
@@ -90,29 +91,30 @@ describe('Test get filters', () => {
 });
 
 describe('Test game search and filter', () => {
+  it('suggests search', async () => {
+    const response = await request(app)
+      .post('/graphql')
+      .send({
+        query: TEST_SEARCH_SUGGESTIONS,
+        variables: { query: 'Super Mario Wonder' },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      data: {
+        getSearchSuggestions: [
+          {
+            name: 'Super Mario Bros. Wonder',
+            _id: '655e6751d444b31dd6891333',
+          },
+        ],
+      },
+    });
+  });
   it('searches, filters and returns correct game', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          query Search($limit: Int!, $offset: Int!, $query: String, $platforms: [Int], $genres: [Int], $sortBy: GameSortInput) {
-            search(limit: $limit, offset: $offset, query: $query, platforms: $platforms, genres: $genres, sortBy: $sortBy) {
-              count
-              games {
-                name
-                _id
-                platforms {
-                  name
-                  id
-                }
-                genres {
-                  name
-                  id
-                }
-              }
-            }
-          }
-        `,
+        query: TEST_SEARCH,
         variables: {
           query: 'mario',
           limit: 1,
@@ -156,14 +158,7 @@ describe('Test user', () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          mutation SignInOrCreateUser($userInput: UserInput) {
-            signInOrCreateUser(userInput: $userInput) {
-              username
-              _id
-            }
-          }
-        `,
+        query: TEST_SIGN_IN_OR_CREATE_USER,
         variables: { userInput: { username: 'testUser' } },
       });
     expect(response.status).toBe(200);
@@ -179,17 +174,7 @@ describe('Test user', () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          mutation AddFavorites($username: String!, $gameID: String!) {
-            addFavorites(username: $username, gameID: $gameID) {
-              username
-              favorites {
-                name
-                _id
-              }
-            }
-          }
-        `,
+        query: TEST_ADD_FAVORITES,
         variables: { username: 'testUser', gameID: '655e6751d444b31dd6891333' },
       });
     expect(response.status).toBe(200);
@@ -211,17 +196,7 @@ describe('Test user', () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          mutation RemoveFavorites($username: String!, $gameID: String!) {
-            removeFavorites(username: $username, gameID: $gameID) {
-              username
-              favorites {
-                name
-                _id
-              }
-            }
-          }
-        `,
+        query: TEST_REMOVE_FAVORITES,
         variables: { username: 'testUser', gameID: '655e6751d444b31dd6891333' },
       });
     expect(response.status).toBe(200);
@@ -237,23 +212,15 @@ describe('Test user', () => {
 });
 
 describe('Test review', () => {
-  it('creates review', async () => {
+  it('creates a valid review', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          mutation CreateReview($reviewInput: ReviewInput) {
-            createReview(reviewInput: $reviewInput) {
-              title
-              rating
-              user
-            }
-          }
-        `,
+        query: TEST_CREATE_REVIEW,
         variables: {
           reviewInput: {
             user: 'testUser',
-            title: 'testTitle',
+            title: 'validReview',
             content: 'testContent',
             rating: 5,
             platform: 'Nintendo Switch',
@@ -265,48 +232,118 @@ describe('Test review', () => {
     expect(response.body).toMatchObject({
       data: {
         createReview: {
-          title: 'testTitle',
+          title: 'validReview',
           rating: 5,
           user: 'testUser',
         },
       },
     });
   });
-  it('game has an average rating', async () => {
+  it('throw error when invalid rating (6)', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          query GetAvgRating($gameId: ID!) {
-            getAvgRating(gameID: $gameId)
-          }
-        `,
-        variables: { gameId: '655e6751d444b31dd6891333' },
+        query: TEST_CREATE_REVIEW,
+        variables: {
+          reviewInput: {
+            user: 'testUser',
+            title: 'invalidRatingReview',
+            content: 'testContent',
+            rating: 6,
+            platform: 'Nintendo Switch',
+            gameID: '655e6751d444b31dd6891333',
+          },
+        },
       });
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
-      data: {
-        getAvgRating: 5,
-      },
+      errors: [
+        {
+          message: 'Rating must be an integer between 1 and 5',
+        },
+      ],
     });
   });
-  it('game contains review', async () => {
+  it('throw error when invalid rating (0)', async () => {
     const response = await request(app)
       .post('/graphql')
       .send({
-        query: `
-          query Query($id: ID!, $username: String) {
-            getGame(ID: $id) {
-              reviews(username: $username) {
-                reviews {
-                  title
-                  user
-                }
-                userHasReviewed
-              }
-            }
-          }
-        `,
+        query: TEST_CREATE_REVIEW,
+        variables: {
+          reviewInput: {
+            user: 'testUser',
+            title: 'invalidRatingReview',
+            content: 'testContent',
+            rating: 0,
+            platform: 'Nintendo Switch',
+            gameID: '655e6751d444b31dd6891333',
+          },
+        },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      errors: [
+        {
+          message: 'Rating must be an integer between 1 and 5',
+        },
+      ],
+    });
+  });
+  it('throw error when invalid user', async () => {
+    const response = await request(app)
+      .post('/graphql')
+      .send({
+        query: TEST_CREATE_REVIEW,
+        variables: {
+          reviewInput: {
+            user: 'invalid',
+            title: 'invalidUserReview',
+            content: 'testContent',
+            rating: 3,
+            platform: 'Nintendo Switch',
+            gameID: '655e6751d444b31dd6891333',
+          },
+        },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      errors: [
+        {
+          message: 'User not found',
+        },
+      ],
+    });
+  });
+  it('throws error when gameID is invalid', async () => {
+    const response = await request(app)
+      .post('/graphql')
+      .send({
+        query: TEST_CREATE_REVIEW,
+        variables: {
+          reviewInput: {
+            user: 'testUser',
+            title: 'invalidGameReview',
+            content: 'testContent',
+            rating: 3,
+            platform: 'Nintendo Switch',
+            gameID: 'invalidId',
+          },
+        },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      errors: [
+        {
+          message: 'Error updating game',
+        },
+      ],
+    });
+  });
+  it('game reviews contains only validReview', async () => {
+    const response = await request(app)
+      .post('/graphql')
+      .send({
+        query: TEST_GET_GAME,
         variables: { id: '655e6751d444b31dd6891333', username: 'testUser' },
       });
     expect(response.status).toBe(200);
@@ -316,7 +353,7 @@ describe('Test review', () => {
           reviews: {
             reviews: [
               {
-                title: 'testTitle',
+                title: 'validReview',
                 user: 'testUser',
               },
             ],

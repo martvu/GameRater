@@ -4,6 +4,11 @@ import userEvent from '@testing-library/user-event';
 import Rating, { StarRating } from '@/components/Rating';
 
 describe('Rating Component', () => {
+  it('matches the snapshot', () => {
+    const { asFragment } = render(<Rating rating={3} numRatings={100} />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('renders star rating based on provided rating', () => {
     render(<Rating rating={3} numRatings={100} />);
     // Assuming the StarRating component displays the rating value as text
@@ -19,8 +24,6 @@ describe('Rating Component', () => {
     render(<Rating rating={5} numRatings={1} />);
     expect(screen.getByText('Based on 1 user rating')).toBeInTheDocument();
   });
-
-  // Additional tests if needed...
 });
 
 describe('StarRating Component', () => {

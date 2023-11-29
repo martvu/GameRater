@@ -7,9 +7,10 @@
     "generate": "graphql-codegen",
     "compile": "npm run generate && tsc",
     "start": "npm run compile && node ./dist/src/index.js",
-    "deploy": "forever start --minUptime 2000 --spinSleepTime 5 ./dist/src/index.js",
+    "deploy": "npm run compile && forever start --minUptime 2000 --spinSleepTime 5 ./dist/src/index.js",
     "lint": "eslint src/**/*.ts --fix",
-    "test": "npm run generate && NODE_ENV=test vitest ",
+    "prettier": "npx prettier . --write",
+    "test": "npm run generate && NODE_ENV=test vitest",
     "coverage": "vitest run --coverage",
     "testserver": "npm run compile && NODE_ENV=test node -r dotenv/config ./dist/src/index.js dotenv_config_path=.env.test"
   },
@@ -32,7 +33,7 @@
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-resolvers": "^4.0.1",
-    "@types/node": "^20.8.6",
+    "@types/node": "^20.10.0",
     "@types/supertest": "^2.0.16",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
@@ -43,7 +44,7 @@
     "prettier": "^3.0.3",
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.2",
     "vitest": "^0.34.6"
   }
 }

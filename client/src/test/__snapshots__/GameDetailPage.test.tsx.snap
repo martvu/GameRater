@@ -2,142 +2,69 @@
 
 exports[`GameDetailPage Component > matches the snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="flex min-h-screen flex-col"
+  <header
+    class="fixed top-0 z-40 flex h-16 w-[calc(100vw-0.75rem)] items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
   >
-    <header
-      class="fixed top-0 z-40 flex h-16 w-[calc(100vw-0.75rem)] items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
+    <nav
+      class="flex w-full items-center justify-between"
     >
-      <nav
-        class="flex w-full items-center justify-between"
+      <a
+        aria-label="GameRater Home"
+        data-testid="logo-btn"
+        href="/"
       >
-        <a
-          aria-label="Return to Home Page"
-          data-testid="logo-btn"
-          href="/"
-        >
-          <div
-            class="w-28 items-center justify-between gap-2 px-2 flex"
-          >
-            <button
-              class="inline-flex items-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 justify-start hover:text-gray-400 h-10 px-4 py-2 hover:opacity-80"
-            >
-              <span
-                class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
-              >
-                <span
-                  class="flex h-full w-full items-center justify-center rounded-full bg-muted"
-                >
-                  CN
-                </span>
-              </span>
-              <h1
-                class="ml-1 text-xl font-bold tracking-wide text-primary"
-              >
-                GameRater
-              </h1>
-            </button>
-          </div>
-        </a>
         <div
-          class="w-full max-w-sm flex-grow items-center justify-center space-x-2 md:flex hidden md:flex"
-        >
-          <form
-            class="flex"
-          >
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sr-only"
-              for="search"
-            />
-            <div
-              class="relative w-[200px] md:w-[300px] lg:w-[400px]"
-            >
-              <input
-                class="flex h-10 border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full rounded-xl bg-muted pr-24 shadow-inner md:w-full lg:w-full"
-                data-testid="search-input"
-                placeholder="Search"
-                type="text"
-                value=""
-              />
-              <button
-                aria-label="Search"
-                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-secondary-foreground hover:text-muted-foreground transition duration-300 ease-in-out h-10 py-2 absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
-                type="submit"
-              >
-                <svg
-                  class="lucide lucide-search"
-                  fill="none"
-                  height="24"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="11"
-                    cy="11"
-                    r="8"
-                  />
-                  <path
-                    d="m21 21-4.3-4.3"
-                  />
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
-        <div
-          class="flex-shrink-0 items-center md:gap-2 flex"
+          class="w-32 items-center justify-between gap-2 px-2 flex"
         >
           <button
-            class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl md:hidden"
+            class="inline-flex items-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 justify-start hover:text-gray-400 h-10 px-4 py-2 hover:opacity-80"
           >
-            <svg
-              class="lucide lucide-search"
-              fill="none"
-              height="24"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
             >
-              <circle
-                cx="11"
-                cy="11"
-                r="8"
-              />
-              <path
-                d="m21 21-4.3-4.3"
-              />
-            </svg>
+              <span
+                class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+              >
+                GR
+              </span>
+            </span>
+            <h1
+              class="ml-1 text-xl font-bold tracking-wide text-primary"
+            >
+              GameRater
+            </h1>
           </button>
-          <div>
-            <button
-              aria-controls="radix-:r0:"
-              aria-expanded="false"
-              aria-haspopup="dialog"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-              data-state="closed"
-              data-testid="modal-sign-in-button"
-              type="button"
-            >
-              Sign In
-            </button>
-          </div>
+        </div>
+      </a>
+      <div
+        class="w-full max-w-sm flex-grow items-center justify-center space-x-2 hidden md:flex"
+      >
+        <form
+          class="flex"
+        >
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sr-only"
+            for="search"
+          />
           <div
-            class="mr-1"
+            class="relative md:w-[350px] lg:w-[400px]"
           >
+            <input
+              autocomplete="off"
+              class="flex h-10 border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full rounded-xl bg-muted pr-24 shadow-inner md:w-full lg:w-full"
+              data-testid="search-input"
+              id="search"
+              placeholder="Search"
+              type="text"
+              value=""
+            />
             <button
-              class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl"
+              aria-label="Search"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-secondary-foreground hover:text-muted-foreground transition duration-300 ease-in-out h-10 py-2 absolute right-0 top-0 rounded-l-none rounded-r-xl px-3 active:opacity-90"
+              type="submit"
             >
               <svg
-                class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+                class="lucide lucide-search"
                 fill="none"
                 height="24"
                 stroke="currentColor"
@@ -149,99 +76,166 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <circle
-                  cx="12"
-                  cy="12"
-                  r="4"
+                  cx="11"
+                  cy="11"
+                  r="8"
                 />
                 <path
-                  d="M12 2v2"
-                />
-                <path
-                  d="M12 20v2"
-                />
-                <path
-                  d="m4.93 4.93 1.41 1.41"
-                />
-                <path
-                  d="m17.66 17.66 1.41 1.41"
-                />
-                <path
-                  d="M2 12h2"
-                />
-                <path
-                  d="M20 12h2"
-                />
-                <path
-                  d="m6.34 17.66-1.41 1.41"
-                />
-                <path
-                  d="m19.07 4.93-1.41 1.41"
+                  d="m21 21-4.3-4.3"
                 />
               </svg>
-              <svg
-                class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-                fill="none"
-                height="24"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                width="24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
-                />
-              </svg>
-              <span
-                class="sr-only"
-              >
-                Toggle theme
-              </span>
             </button>
           </div>
-        </div>
-      </nav>
-    </header>
-    <div
-      class="flex-grow"
+        </form>
+      </div>
+      <div
+        class="mr-1 flex-shrink-0 items-center gap-1 md:gap-2 flex"
+      >
+        <button
+          aria-label="open searchbar"
+          class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl md:hidden"
+        >
+          <svg
+            class="lucide lucide-search"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="8"
+            />
+            <path
+              d="m21 21-4.3-4.3"
+            />
+          </svg>
+        </button>
+        <button
+          aria-controls="radix-:r0:"
+          aria-expanded="false"
+          aria-haspopup="dialog"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+          data-state="closed"
+          data-testid="modal-sign-in-button"
+          type="button"
+        >
+          Sign In
+        </button>
+        <button
+          aria-label="toggle light mode"
+          class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl"
+          title="Toggle light mode"
+        >
+          <svg
+            class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="4"
+            />
+            <path
+              d="M12 2v2"
+            />
+            <path
+              d="M12 20v2"
+            />
+            <path
+              d="m4.93 4.93 1.41 1.41"
+            />
+            <path
+              d="m17.66 17.66 1.41 1.41"
+            />
+            <path
+              d="M2 12h2"
+            />
+            <path
+              d="M20 12h2"
+            />
+            <path
+              d="m6.34 17.66-1.41 1.41"
+            />
+            <path
+              d="m19.07 4.93-1.41 1.41"
+            />
+          </svg>
+          <svg
+            class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+  <main
+    class="min-h-screen flex-grow pt-16"
+  >
+    <section
+      class="flex justify-center pt-4"
     >
       <div
-        class="flex justify-center pt-20"
+        class="max-w-96 flex flex-col gap-4 px-4"
       >
-        <div
-          class="grid max-w-[1200px] grid-cols-1 gap-4 px-4"
+        <button
+          aria-label="Back to previous page"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2x flex-shrink-0"
         >
-          <button
-            aria-label="Back to previous page"
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2x flex-shrink-0"
+          <svg
+            class="lucide lucide-arrow-left"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              class="lucide lucide-arrow-left"
-              fill="none"
-              height="24"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="m12 19-7-7 7-7"
-              />
-              <path
-                d="M19 12H5"
-              />
-            </svg>
-          </button>
-          <main
-            class="grid gap-2 md:grid-cols-[auto,1fr]"
+            <path
+              d="m12 19-7-7 7-7"
+            />
+            <path
+              d="M19 12H5"
+            />
+          </svg>
+        </button>
+        <section
+          class="flex flex-row flex-wrap justify-center gap-8"
+        >
+          <section
+            class="flex flex-row gap-2"
           >
             <section
-              class="flex flex-col items-center justify-center gap-4"
+              class="flex flex-row items-center justify-center gap-4"
             >
               <div
                 class="rounded-lg border bg-card text-card-foreground shadow-lg w-auto overflow-hidden p-0"
@@ -250,134 +244,118 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                   class="flex flex-col h-[364px] w-[264px] p-0"
                 >
                   <div
-                    class="relative flex cursor-default p-0"
+                    class="relative h-full w-full object-cover"
                   >
                     <div
-                      class="absolute right-2 top-2"
+                      class="absolute inset-0 z-10 flex items-center justify-center"
                     >
-                      <button
-                        aria-label="Favorite game button"
-                        class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 w-10 rounded-full z-10"
-                        data-testid="favorite-btn"
-                      >
-                        <svg
-                          class="none"
-                          data-testid="heart-icon"
-                          fill="none"
-                          height="24"
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-                          />
-                        </svg>
-                      </button>
+                      <img
+                        alt="Fallback cover image"
+                        class="w-1/2 object-cover opacity-100 transition-opacity duration-500 ease-in-out"
+                        src="/project2/src/assets/img-fallback.svg"
+                      />
                     </div>
                     <img
                       alt="Example Game"
-                      class="object-cover"
+                      class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out z-0 opacity-0"
                       loading="lazy"
                       src="https://images.igdb.com/igdb/image/upload/t_cover_big/image1.jpg"
                     />
                   </div>
                 </div>
                 <div
-                  class="pt-0"
+                  class="flex items-center justify-center pt-0"
                 >
                   <div
-                    class=" flex items-center justify-center text-yellow-400"
+                    class="flex flex-col items-center"
                   >
                     <div
-                      class="flex flex-col items-center"
+                      aria-label="4.5 out of 5 stars"
+                      class="flex items-center font-light"
                     >
-                      <div
-                        class="flex items-center font-light"
+                      <button
+                        aria-label="review-star-1"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
                       >
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-muted-foreground"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ☆  
-                          </span>
-                        </button>
                         <span
-                          class="ml-2 text-muted-foreground"
+                          class="text-2xl font-light"
                         >
-                          4.5/5
+                          ★  
                         </span>
-                      </div>
-                      <span
-                        class="text-xs leading-6 text-muted-foreground"
+                      </button>
+                      <button
+                        aria-label="review-star-2"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
                       >
-                        Based on 2 user ratings
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        aria-label="review-star-3"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        aria-label="review-star-4"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        aria-label="review-star-5"
+                        class="text-muted-foreground"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ☆  
+                        </span>
+                      </button>
+                      <span
+                        class="ml-2 text-muted-foreground"
+                      >
+                        4.5/5
                       </span>
                     </div>
+                    <span
+                      class="text-xs leading-6 text-muted-foreground"
+                    >
+                      Based on 2 user ratings
+                    </span>
                   </div>
                 </div>
                 <div
                   class="items-center pt-0 flex flex-col justify-center"
                 >
                   <button
-                    aria-controls="radix-:r6:"
+                    aria-controls="radix-:r3:"
                     aria-expanded="false"
                     aria-haspopup="dialog"
                     class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/70 h-10 px-4 py-2 mb-4 w-[200px]"
@@ -390,337 +368,356 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 </div>
               </div>
             </section>
-            <div
-              class="rounded-lg border p-4 text-card-foreground shadow-lg border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]"
+          </section>
+          <section
+            class="border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]"
+          >
+            <h1
+              class=" flex gap-4 text-4xl font-semibold"
+            >
+              Example Game
+              <button
+                aria-label="Favorite game button"
+                class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 w-10 rounded-full z-10"
+                data-testid="favorite-btn"
+              >
+                <svg
+                  class="none"
+                  data-testid="heart-icon"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                  />
+                </svg>
+              </button>
+            </h1>
+            <section
+              class="flex flex-col justify-start gap-1"
             >
               <div
-                class="flex flex-col items-start"
-              >
-                <h3
-                  class="tracking-tight text-4xl font-semibold"
-                >
-                  Example Game
-                </h3>
-                <div
-                  class="py-2"
-                >
-                  <div
-                    class="flex flex-col justify-start gap-1"
-                  >
-                    <div
-                      class="flex items-center gap-2"
-                    >
-                      <p
-                        class="text-muted-foreground"
-                      >
-                        Metascore: 
-                      </p>
-                      <div
-                        aria-label="metascore"
-                        class="flex items-center justify-center rounded-md border border-white text-sm text-white bg-green-600 h-7 w-7 px-1"
-                      >
-                        85
-                      </div>
-                    </div>
-                    <div
-                      class="mt-1 flex items-center gap-2"
-                    >
-                      <p
-                        class="text-muted-foreground"
-                      >
-                        Release Date:
-                      </p>
-                      <p
-                        class="text-sm font-semibold"
-                      >
-                        03.05.2021
-                      </p>
-                    </div>
-                    <div
-                      class="mt-1 flex flex-row flex-wrap"
-                    >
-                      <p
-                        class="mr-2 text-muted-foreground"
-                      >
-                        Platforms:
-                      </p>
-                      <li
-                        class="mb-1 mr-1 list-none"
-                      >
-                        <div
-                          class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                        >
-                          PC
-                        </div>
-                      </li>
-                    </div>
-                    <div
-                      class="mt-1 flex flex-row flex-wrap"
-                    >
-                      <p
-                        class="mr-2 text-muted-foreground"
-                      >
-                        Genres:
-                      </p>
-                      <li
-                        class="mb-1 mr-1 list-none"
-                      >
-                        <div
-                          class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                        >
-                          Adventure
-                        </div>
-                      </li>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="py-4"
+                class="flex items-center gap-2"
               >
                 <p
-                  class="text-md"
+                  class="text-muted-foreground"
                 >
-                  This is an example game summary.
+                  Metascore: 
                 </p>
+                <div
+                  aria-label="metascore"
+                  class="flex items-center justify-center rounded-md border border-white text-sm text-white bg-green-700 h-7 w-7 px-1"
+                >
+                  85
+                </div>
               </div>
-            </div>
-            <div
-              class="col-span-1 flex h-full w-full justify-center lg:col-span-2"
+              <div
+                class="mt-1 flex items-center gap-2"
+              >
+                <p
+                  class="text-muted-foreground"
+                >
+                  Release Date:
+                </p>
+                <time
+                  class="text-sm font-semibold"
+                >
+                  03.05.2021
+                </time>
+              </div>
+              <dl
+                class="mt-1 flex flex-row flex-wrap gap-2"
+              >
+                <dt
+                  class="mr-2 text-muted-foreground"
+                >
+                  Platforms:
+                </dt>
+                <dd
+                  class="mr-1 list-none"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  >
+                    <p
+                      class="line-clamp-1"
+                    >
+                      PC
+                    </p>
+                  </div>
+                </dd>
+              </dl>
+              <dl
+                class="mt-1 flex flex-row flex-wrap gap-2"
+              >
+                <dt
+                  class="mr-2 text-muted-foreground"
+                >
+                  Genres:
+                </dt>
+                <dd
+                  class="mb-1 mr-1 list-none"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  >
+                    Adventure
+                  </div>
+                </dd>
+              </dl>
+              <p
+                class="mt-1 text-muted-foreground"
+              >
+                This is an example game summary.
+              </p>
+            </section>
+          </section>
+        </section>
+        <section
+          class="col-span-1 mt-10 flex h-full w-full flex-col md:col-span-2"
+        >
+          <h1
+            class="text-2xl font-bold text-foreground"
+          >
+            Reviews
+          </h1>
+          <ul
+            class="flex min-w-full flex-col justify-center text-left md:min-w-[700px]"
+          >
+            <li
+              class="my-2"
             >
               <div
-                class="flex min-w-full flex-col justify-center text-left lg:min-w-[700px]"
+                class="rounded-lg border bg-card p-4 text-card-foreground shadow-lg max-w-full"
               >
-                <h1
-                  class="text-2xl font-bold text-foreground"
-                >
-                  Reviews
-                </h1>
                 <div
-                  class="my-2"
+                  class="flex flex-col"
                 >
-                  <div
-                    class="rounded-lg border bg-card p-4 text-card-foreground shadow-lg"
+                  <h3
+                    class="tracking-tight text-lg font-semibold"
                   >
-                    <div
-                      class="flex flex-col"
+                    Great Game
+                  </h3>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    user1
+                  </h4>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    PC
+                  </h4>
+                  <div
+                    aria-label="5 out of 5 stars"
+                    class="flex items-center font-light"
+                  >
+                    <button
+                      aria-label="review-star-1"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
                     >
-                      <div
-                        class="flex flex-col"
+                      <span
+                        class="text-2xl font-light"
                       >
-                        <p
-                          class="text-lg font-semibold"
-                        >
-                          Great Game
-                        </p>
-                        <p
-                          class="text-sm text-muted-foreground"
-                        >
-                          user1
-                        </p>
-                        <p
-                          class="text-sm text-muted-foreground"
-                        >
-                          PC
-                        </p>
-                      </div>
-                      <div
-                        class="flex items-center font-light"
-                      >
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <span
-                          class="ml-2 text-muted-foreground"
-                        >
-                          5/5
-                        </span>
-                      </div>
-                    </div>
-                    <p
-                      class="text-sm text-muted-foreground flex max-w-[800px] flex-row items-center gap-2"
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-2"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
                     >
-                      This is a great game because...
-                    </p>
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-3"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-4"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-5"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <span
+                      class="ml-2 text-muted-foreground"
+                    >
+                      5/5
+                    </span>
                   </div>
                 </div>
-                <div
-                  class="my-2"
+                <p
+                  class="text-sm text-muted-foreground break-all pt-4"
                 >
-                  <div
-                    class="rounded-lg border bg-card p-4 text-card-foreground shadow-lg"
-                  >
-                    <div
-                      class="flex flex-col"
-                    >
-                      <div
-                        class="flex flex-col"
-                      >
-                        <p
-                          class="text-lg font-semibold"
-                        >
-                          Good Game
-                        </p>
-                        <p
-                          class="text-sm text-muted-foreground"
-                        >
-                          user2
-                        </p>
-                        <p
-                          class="text-sm text-muted-foreground"
-                        >
-                          PC
-                        </p>
-                      </div>
-                      <div
-                        class="flex items-center font-light"
-                      >
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          class="text-muted-foreground"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ☆  
-                          </span>
-                        </button>
-                        <span
-                          class="ml-2 text-muted-foreground"
-                        >
-                          4/5
-                        </span>
-                      </div>
-                    </div>
-                    <p
-                      class="text-sm text-muted-foreground flex max-w-[800px] flex-row items-center gap-2"
-                    >
-                      This is a good game because...
-                    </p>
-                  </div>
-                </div>
+                  This is a great game because...
+                </p>
               </div>
-            </div>
-          </main>
-        </div>
+            </li>
+            <li
+              class="my-2"
+            >
+              <div
+                class="rounded-lg border bg-card p-4 text-card-foreground shadow-lg max-w-full"
+              >
+                <div
+                  class="flex flex-col"
+                >
+                  <h3
+                    class="tracking-tight text-lg font-semibold"
+                  >
+                    Good Game
+                  </h3>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    user2
+                  </h4>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    PC
+                  </h4>
+                  <div
+                    aria-label="4 out of 5 stars"
+                    class="flex items-center font-light"
+                  >
+                    <button
+                      aria-label="review-star-1"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-2"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-3"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-4"
+                      class="text-red-400"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ★  
+                      </span>
+                    </button>
+                    <button
+                      aria-label="review-star-5"
+                      class="text-muted-foreground"
+                      data-testid="review-star"
+                      disabled=""
+                      type="button"
+                    >
+                      <span
+                        class="text-2xl font-light"
+                      >
+                        ☆  
+                      </span>
+                    </button>
+                    <span
+                      class="ml-2 text-muted-foreground"
+                    >
+                      4/5
+                    </span>
+                  </div>
+                </div>
+                <p
+                  class="text-sm text-muted-foreground break-all pt-4"
+                >
+                  This is a good game because...
+                </p>
+              </div>
+            </li>
+          </ul>
+        </section>
       </div>
-    </div>
-    <footer
-      class="mt-5 h-16 w-full border-t text-slate-400"
+    </section>
+  </main>
+  <footer
+    class="mt-5 h-16 w-full border-t text-muted-foreground"
+  >
+    <p
+      class="container mx-auto px-6 pt-5 text-center text-sm"
     >
-      <div
-        class="container mx-auto px-6 pt-5 text-left text-sm"
-      >
-        Copyright 2023 GameRater
-      </div>
-    </footer>
-  </div>
+      Copyright 2023 GameRater
+    </p>
+  </footer>
 </DocumentFragment>
 `;

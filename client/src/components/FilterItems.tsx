@@ -16,6 +16,11 @@ interface FilterItemsProps {
   filterType: 'platforms' | 'genres';
 }
 
+/**
+ * FilterItems component
+ * @param {Platform[] | Genre[]} filters - The list of filters
+ * @param {string} filterType - The type of filter ('platforms' or 'genres')
+ */
 export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   const [numItemsToShow, setNumItemsToShow] = useState(10);
   const [selectedPlatforms, setSelectedPlatforms] = useRecoilState(
@@ -47,14 +52,15 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
   };
   const showLess = () => setNumItemsToShow(10);
   return (
-    <div>
-      <h2 className="my-2 text-left font-semibold capitalize text-foreground">
+    <>
+      <h3 className="my-2 text-left font-semibold capitalize text-foreground">
         {filterType}
-      </h2>
-      <div className="ml-1 flex flex-col">
+      </h3>
+      <ul className="ml-1 flex flex-col">
         {filters?.slice(0, numItemsToShow).map(item => (
-          <div className="my-1 flex items-center space-x-2" key={item?.name}>
+          <li className="my-1 flex items-center space-x-2" key={item?.name}>
             <Checkbox
+              aria-label={`${filterType} filter for ${item?.name}`}
               data-testid={`filter-item-${item?.name}`}
               id={`filter-item-${item?.name}`}
               onCheckedChange={checked => {
@@ -74,37 +80,37 @@ export default function FilterItems({ filters, filterType }: FilterItemsProps) {
                   selectedPlatforms.includes(item?.id ?? 0)) ||
                 (filterType === 'genres' &&
                   selectedGenres.includes(item?.id ?? 0))
-                  ? 'text-foreground'
+                  ? 'font-semibold text-foreground'
                   : 'text-muted-foreground'
               }`}
             >
               {item?.name}
               {/* {item?.gamesCount && ` (${item?.gamesCount})`} */}
             </Label>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
       {filters && numItemsToShow < filters.length ? (
         <Button
+          aria-label="show more filters"
           variant={'text'}
           onClick={showMore}
-          className="flex w-36 items-center pl-0 text-green-400"
+          className="flex w-36 items-center pl-0 text-primary"
         >
           <Plus className="inline-block h-6" />
-          <span>Show More</span>
+          Show More
         </Button>
       ) : numItemsToShow > 10 && filters.length > 10 ? (
         <Button
+          aria-label="show less filters"
           variant={'text'}
           onClick={showLess}
-          className="flex w-36 items-center pl-0 text-red-400"
+          className="flex w-36 items-center pl-0 text-red-700"
         >
           <Minus className="inline-block h-6" />
-          <span>Show Less</span>
+          Show Less
         </Button>
-      ) : (
-        <div></div>
-      )}
-    </div>
+      ) : null}
+    </>
   );
 }

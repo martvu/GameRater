@@ -17,8 +17,8 @@ type Review {
 
 type Reviews {
   reviews: [Review]
-  count: Int!
-  userHasReviewed: Boolean!
+  count: Int
+  userHasReviewed: Boolean
 }
 
 type Game {
@@ -33,6 +33,8 @@ type Game {
   reviews(limit: Int, offset: Int, username: String): Reviews
   aggregated_rating: Float
   aggregated_rating_count: Int
+  user_rating: Float
+  user_rating_count: Int
 }
 
 type Genre {
@@ -82,7 +84,6 @@ input GameSortInput {
 
 type Query {
   getGame(ID: ID!): Game!
-  getAvgRating(gameID: ID!): Float!
   getGenres(limit: Int): [Genre!]!
   getPlatforms(limit: Int): [Platform!]!
   search(
@@ -96,6 +97,7 @@ type Query {
     showFavorites: Boolean
     showReviewedGames: Boolean
   ): Games!
+  getSearchSuggestions(query: String!): [Game!]!
 }
 
 type Mutation {

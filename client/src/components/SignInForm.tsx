@@ -15,23 +15,9 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useToast } from '@/components/ui/use-toast.ts';
-
-const SIGN_IN_OR_CREATE_USER = gql`
-  mutation SignInOrCreateUser($userInput: UserInput) {
-    signInOrCreateUser(userInput: $userInput) {
-      _id
-      username
-      favorites {
-        _id
-      }
-      reviews {
-        _id
-      }
-    }
-  }
-`;
+import { SIGN_IN_OR_CREATE_USER } from '@/lib/mutations';
 
 const formSchema = z.object({
   username: z
@@ -48,6 +34,10 @@ interface SignInFormProps {
   onClose: () => void;
 }
 
+/**
+ * SignInForm component
+ * @param {function} onClose - Function to close the modal
+ */
 export function SignInForm({ onClose }: SignInFormProps) {
   const [signInOrCreateUser] = useMutation(SIGN_IN_OR_CREATE_USER);
   const setUser = useRecoilState(userState)[1];
@@ -70,12 +60,15 @@ export function SignInForm({ onClose }: SignInFormProps) {
           },
         },
       });
-      setUser(data.signInOrCreateUser);
-      localStorage.setItem('user', JSON.stringify(data.signInOrCreateUser));
-      toast({
-        title: 'Signed in successfully',
-        description: `Welcome, ${data.signInOrCreateUser.username}!`,
-      });
+
+      if (data) {
+        setUser(data.signInOrCreateUser);
+        localStorage.setItem('user', JSON.stringify(data.signInOrCreateUser));
+        toast({
+          title: 'Signed in successfully',
+          description: `Welcome, ${data.signInOrCreateUser.username}!`,
+        });
+      }
     } catch (error) {
       console.log('Could not create user', error);
       toast({
