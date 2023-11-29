@@ -4,12 +4,10 @@ import Platform from '../models/platform.js';
 import Review from '../models/review.js';
 import User from '../models/user.js';
 import {
-  GameSortInput,
   InputMaybe,
   Resolvers,
   Scalars,
 } from './__generated__/resolvers-types';
-import { Query } from 'mongoose';
 
 interface GameQueryFilters {
   platforms?: { $in: number[] };
