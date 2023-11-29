@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-interface IUser {
+interface IUser extends Document {
   username: String;
   favorites: String[];
   reviews: String[];
