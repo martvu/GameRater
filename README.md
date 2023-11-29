@@ -1,4 +1,41 @@
+
+<!-- TOC ignore:true -->
 # Prosjekt 2 – Team 48 – GameRater
+
+<!-- TOC -->
+
+  - [Welcome to GameRater](#welcome-to-gamerater)
+  - [How to run project](#how-to-run-project)
+    - [Install dependencies from root](#install-dependencies-from-root)
+    - [Run client and server from root](#run-client-and-server-from-root)
+    - [Run only server](#run-only-server)
+    - [Run only client](#run-only-client)
+  - [Prettier and ESLint](#prettier-and-eslint)
+  - [Testing](#testing)
+    - [Component testing](#component-testing)
+    - [End-to-end testing](#end-to-end-testing)
+    - [API testing](#api-testing)
+    - [Manual testing](#manual-testing)
+  - [Technology and choices](#technology-and-choices)
+    - [Data](#data)
+    - [Database](#database)
+    - [Server](#server)
+    - [Frameworks for user Interface](#frameworks-for-user-interface)
+    - [Client](#client)
+  - [GraphQL](#graphql)
+    - [GraphQL Code Generator](#graphql-code-generator)
+  - [Functionality](#functionality)
+    - [Search](#search)
+    - [Sort and filtering](#sort-and-filtering)
+    - [List of Games](#list-of-games)
+    - [Detailed Game Page](#detailed-game-page)
+    - [User "sign in"](#user-sign-in)
+    - [Reviews and favorites](#reviews-and-favorites)
+    - [Light/Dark Mode](#lightdark-mode)
+  - [Accesibility](#accesibility)
+  - [Sustainability](#sustainability)
+
+<!-- /TOC -->
 
 ## Welcome to GameRater
 
@@ -127,7 +164,7 @@ We use a MongoDB Community Edition database that is hosted on our virtual machin
 
 We use an Apollo server with GraphQL as our query language. Apollo Server is compatible with our choice of Apollo Client on the client side and
 
-### User Interface
+### Frameworks for user Interface
 
 In this project we use the following technologies for our UI:
 
@@ -141,7 +178,7 @@ The client is built on React, programmed in TypeScript, and set up with Vite. We
 ## GraphQL
 
 ### GraphQL Code Generator
-To avoid having to manually write types while working with GraphQL in TypeScript, we utilized the GraphQL Code Generator library to generate types for our resolvers and queries. This library automates the process of generating TypeScript types from our GraphQL schema and documents. These types need to be generated whenever the project is run to be updated which is why we have set up our scripts to also run graphql-codegen.
+To avoid having to manually write types while working with GraphQL in TypeScript, we utilized the GraphQL Code Generator library to generate types for our resolvers and queries. This library automates the process of generating TypeScript types from our GraphQL schema and documents. These types need to be generated whenever the project is run to be updated which is why we have set most of our scripts to also run graphql-codegen. 
 
 ## Functionality
 
@@ -165,7 +202,9 @@ The games are showed as a list of game cards and we have implemented pagination 
 Each game has a detailed game page, where the user can also submit a review and read other user's reviews.
 
 ### User "sign in"
-For the current state of the project, we decided to let users select a username without needing a password to allow for easier testing. Choosing a unique username will create a new user in our database. If the username is already taken, the app will simply log you into that user.
+We decided to let users select a username without needing a password to allow for easier testing. Choosing a unique username will create a new user in our database. If the username is already taken, the app will simply log you into that user.
+
+Authentication with password could be implemented in the future, but for the scope of this project we decided to focus on other functionality.
 
 ### Reviews and favorites
 Users can add games to favorites and review them. A user is only allowed to add one review per game. This functionality requires the user to be signed in with a user name. When a game is either favorited or reviewed, the user can filter for these on the game list page.
@@ -177,7 +216,8 @@ A toggle between light and dark mode is implemented.
 The app is tested with screen reader on Mac and tools like Google lighthouse and axe browser extention to test for accesibility issues. We have made sure our app is keyboard navigable and that all elements are accessible. We use semantic HTML, aria-labels when necessary and alt-text for images. We have also used colors with high contrast to make sure the app is readable for people with color blindness.
 
 ## Sustainability  
-Dark mode is implemented and used as default to reduce energy consumption. 
-We have made sure to fetch only the data that is needed and focused on performance and efficiency in our app. Although our bundle size could be reduced further, we have chosen to prioritize the use of these frameworks for ease of development and consistency. We have also made sure to only import the components that we actually use in our app to reduce bundle size. We focus on keeping our code clean and readable to make it easier for future development and maintenance. 
+Dark mode is implemented and used as default to reduce energy consumption. We have made sure to fetch only the data that is needed and prioritized performance and efficiency in our app. We also emphasized on keeping our code clean and readable to make it easier for future development and maintenance. 
+
+Choice of tailwind,shadcn and other libraries. Although our bundle size could be reduced further, we have chosen to use these frameworks for ease of development and consistency. We have also made sure to only import the components that we actually use in our app to reduce bundle size. 
 
 
