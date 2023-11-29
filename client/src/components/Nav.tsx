@@ -33,11 +33,7 @@ export default function Nav() {
             : 'justify-between'
         )}
       >
-        <Link
-          data-testid="logo-btn"
-          to="/"
-          aria-label="GameRater logo link to Home Page"
-        >
+        <Link data-testid="logo-btn" to="/" aria-label="GameRater Home">
           <div
             className={cn(
               'w-28 items-center justify-between gap-2 px-2',
@@ -51,7 +47,7 @@ export default function Nav() {
             >
               <Avatar>
                 <AvatarImage src={Logo} alt="GameRater logo" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>GR</AvatarFallback>
               </Avatar>
               <h1 className="ml-1 text-xl font-bold tracking-wide text-primary">
                 GameRater
@@ -67,6 +63,7 @@ export default function Nav() {
         >
           {showFullWidthSearch && (
             <Button
+              aria-label="return to collapsed search"
               onClick={() => setShowFullWidthSearch(false)}
               size="icon"
               variant="ghost"
@@ -84,6 +81,7 @@ export default function Nav() {
           )}
         >
           <Button
+            aria-label="open searchbar"
             onClick={() => setShowFullWidthSearch(true)}
             size="icon"
             variant="ghost"

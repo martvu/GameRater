@@ -47,11 +47,13 @@ export const searchQueryState = atom({
   default: '',
 });
 
+// For genres that are availbale to filter by after searching
 export const genresListState = atom({
   key: 'genresListState',
   default: [] as number[],
 });
 
+// For platforms that are availbale to filter by after searching
 export const platformsListState = atom({
   key: 'platformsListState',
   default: [] as number[],

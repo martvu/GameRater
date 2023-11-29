@@ -54,6 +54,7 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
           return (
             <button
               data-testid="review-star"
+              aria-label={`review-star-${index}`}
               type="button"
               key={index}
               className={
