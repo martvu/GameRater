@@ -55,6 +55,7 @@ describe('Searchbar Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Example Game')).toBeInTheDocument();
     });
+
     const input = screen.getByTestId('search-input');
     const dropdownItems = screen.getAllByRole('listitem'); // This assumes each dropdown item has a role='listitem'
 
