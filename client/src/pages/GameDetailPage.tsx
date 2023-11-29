@@ -19,7 +19,6 @@ type GameDetailParams = {
 const BaseGameDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const { id } = useParams<GameDetailParams>();
   const reviewsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);

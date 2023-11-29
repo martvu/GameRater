@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-export interface IGame extends Document {
+interface IGame extends Document {
   _id: Schema.Types.ObjectId;
   id: Number;
   name: String;
