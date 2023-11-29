@@ -118,6 +118,7 @@ exports[`ReviewForm > matches the snapshot 1`] = `
         Your Rating
       </label>
       <div
+        aria-label="0 out of 5 stars"
         class="flex items-center font-light"
       >
         <button

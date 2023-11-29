@@ -86,9 +86,9 @@ export default function Filters() {
 
   return (
     <>
-      <div className={filterContainerClasses}>
+      <section className={filterContainerClasses}>
         <ScrollArea className="h-full pb-4 pr-2">
-          <div className="pb-4 pl-5 md:pb-32">
+          <section className="pb-4 pl-5 md:pb-32">
             <h1
               className={`mt-4 text-left text-xl font-bold tracking-wider text-foreground ${
                 isCollapsed ? 'hidden' : ''
@@ -105,14 +105,14 @@ export default function Filters() {
                 <FilterItems filters={filteredGenres} filterType="genres" />
               </>
             )}
-          </div>
+          </section>
         </ScrollArea>
-      </div>
+      </section>
       <Button
         className="fixed bottom-8 left-8 z-50 m-1 hidden md:flex"
         variant="secondary"
         onClick={toggleCollapse}
-        aria-label="toggle filters"
+        aria-label={isCollapsed ? 'show filters' : 'hide filters'}
       >
         {isCollapsed ? <ListFilter /> : <ChevronLeft size={18} />}
         {!isCollapsed && <span className="ml-2">Hide filters</span>}

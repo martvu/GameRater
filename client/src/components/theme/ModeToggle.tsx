@@ -15,6 +15,7 @@ export function ModeToggle() {
   return (
     <>
       <Button
+        title={theme === 'dark' ? 'Toggle light mode' : 'Toggle dark mode'}
         aria-label={theme === 'dark' ? 'toggle light mode' : 'toggle dark mode'}
         className="rounded-2xl"
         onClick={toggleTheme}

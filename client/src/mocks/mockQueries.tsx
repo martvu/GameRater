@@ -40,6 +40,7 @@ const getGamesMock = {
             cover_image_id: 'cover1',
             name: 'Example Game',
             user_rating: 4.5,
+            user_rating_count: 2,
           },
         ],
         filters: {
@@ -79,6 +80,7 @@ const getGamesMockedKeyword = {
             cover_image_id: 'cover1',
             name: 'Example Game',
             user_rating: 4.5,
+            user_rating_count: 2,
           },
         ],
         filters: {
@@ -250,6 +252,56 @@ const getGameMock = {
   },
 };
 
+const getGameMock2 = {
+  request: {
+    query: GET_GAME,
+    variables: {
+      id: '1',
+      limit: 5,
+      offset: 0,
+      username: 'testUser',
+    },
+  },
+  result: {
+    data: {
+      getGame: {
+        _id: '1',
+        name: 'Example Game',
+        summary: 'This is an example game summary.',
+        imageId: 'image1',
+        first_release_date: 1620000000,
+        aggregatedRating: 85,
+        user_rating: 4.5,
+        platforms: [{ name: 'PC' }],
+        genres: [{ name: 'Adventure' }],
+        reviews: {
+          count: 2,
+          reviews: [
+            {
+              _id: 'review1',
+              user: 'user1',
+              title: 'Great Game',
+              content: 'This is a great game because...',
+              rating: 5,
+              platform: 'PC',
+              gameID: '1',
+            },
+            {
+              _id: 'review2',
+              user: 'user2',
+              title: 'Good Game',
+              content: 'This is a good game because...',
+              rating: 4,
+              platform: 'PC',
+              gameID: '1',
+            },
+          ],
+          userHasReviewed: false,
+        },
+      },
+    },
+  },
+};
 const addFavoritesMock = {
   request: {
     query: ADD_FAVORITES,
@@ -347,6 +399,7 @@ const allMocks = [
   signInMock,
   getGamesSignedInMock,
   getGameMock,
+  getGameMock2,
   searchbarSuggestionsMock,
   // Add more mocks as needed for other queries
 ];

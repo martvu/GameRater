@@ -12,6 +12,7 @@ function BaseGameListPage() {
       <aside className="fixed top-16 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 px-2 pt-3 md:sticky md:block ">
         <Filters />
       </aside>
+      {/* Games list section */}
       <section className="pl-2 pr-2 pt-4 sm:pr-4">
         <div className="z-10 flex items-center justify-between gap-1 bg-background pb-2">
           {/* Filter modal visible on smaller screens */}

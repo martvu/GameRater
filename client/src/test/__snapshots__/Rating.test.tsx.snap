@@ -6,6 +6,7 @@ exports[`Rating Component > matches the snapshot 1`] = `
     class="flex flex-col items-center"
   >
     <div
+      aria-label="3 out of 5 stars"
       class="flex items-center font-light"
     >
       <button

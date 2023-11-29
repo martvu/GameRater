@@ -14,7 +14,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
         href="/"
       >
         <div
-          class="w-28 items-center justify-between gap-2 px-2 flex"
+          class="w-32 items-center justify-between gap-2 px-2 flex"
         >
           <button
             class="inline-flex items-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 justify-start hover:text-gray-400 h-10 px-4 py-2 hover:opacity-80"
@@ -131,6 +131,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
         <button
           aria-label="toggle light mode"
           class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-2xl"
+          title="Toggle light mode"
         >
           <svg
             class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
@@ -227,7 +228,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
             />
           </svg>
         </button>
-        <div
+        <section
           class="flex flex-row flex-wrap justify-center gap-8"
         >
           <section
@@ -242,9 +243,6 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 <div
                   class="flex flex-col h-[364px] w-[264px] p-0"
                 >
-                  <div
-                    class="absolute right-2 top-2"
-                  />
                   <div
                     class="relative h-full w-full object-cover"
                   >
@@ -266,94 +264,91 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pt-0"
+                  class="flex items-center justify-center pt-0"
                 >
                   <div
-                    class=" flex items-center justify-center text-yellow-400"
+                    class="flex flex-col items-center"
                   >
                     <div
-                      class="flex flex-col items-center"
+                      aria-label="4.5 out of 5 stars"
+                      class="flex items-center font-light"
                     >
-                      <div
-                        class="flex items-center font-light"
+                      <button
+                        aria-label="review-star-1"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
                       >
-                        <button
-                          aria-label="review-star-1"
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          aria-label="review-star-2"
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          aria-label="review-star-3"
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          aria-label="review-star-4"
-                          class="text-red-400"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ★  
-                          </span>
-                        </button>
-                        <button
-                          aria-label="review-star-5"
-                          class="text-muted-foreground"
-                          data-testid="review-star"
-                          disabled=""
-                          type="button"
-                        >
-                          <span
-                            class="text-2xl font-light"
-                          >
-                            ☆  
-                          </span>
-                        </button>
                         <span
-                          class="ml-2 text-muted-foreground"
+                          class="text-2xl font-light"
                         >
-                          4.5/5
+                          ★  
                         </span>
-                      </div>
-                      <span
-                        class="text-xs leading-6 text-muted-foreground"
+                      </button>
+                      <button
+                        aria-label="review-star-2"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
                       >
-                        Based on 2 user ratings
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        aria-label="review-star-3"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        aria-label="review-star-4"
+                        class="text-red-400"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ★  
+                        </span>
+                      </button>
+                      <button
+                        aria-label="review-star-5"
+                        class="text-muted-foreground"
+                        data-testid="review-star"
+                        disabled=""
+                        type="button"
+                      >
+                        <span
+                          class="text-2xl font-light"
+                        >
+                          ☆  
+                        </span>
+                      </button>
+                      <span
+                        class="ml-2 text-muted-foreground"
+                      >
+                        4.5/5
                       </span>
                     </div>
+                    <span
+                      class="text-xs leading-6 text-muted-foreground"
+                    >
+                      Based on 2 user ratings
+                    </span>
                   </div>
                 </div>
                 <div
@@ -431,60 +426,52 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 >
                   Release Date:
                 </p>
-                <p
+                <time
                   class="text-sm font-semibold"
                 >
                   03.05.2021
-                </p>
+                </time>
               </div>
-              <div
-                class="mt-1 flex flex-row gap-2"
+              <dl
+                class="mt-1 flex flex-row flex-wrap gap-2"
               >
-                <p
+                <dt
                   class="mr-2 text-muted-foreground"
                 >
                   Platforms:
-                </p>
-                <ul
-                  class="flex flex-row flex-wrap"
+                </dt>
+                <dd
+                  class="mr-1 list-none"
                 >
-                  <li
-                    class="mb-1 mr-1 list-none"
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
                   >
-                    <div
-                      class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    <p
+                      class="line-clamp-1"
                     >
-                      <span
-                        class="line-clamp-1"
-                      >
-                        PC
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div
-                class="mt-1 flex flex-row gap-2"
+                      PC
+                    </p>
+                  </div>
+                </dd>
+              </dl>
+              <dl
+                class="mt-1 flex flex-row flex-wrap gap-2"
               >
-                <p
+                <dt
                   class="mr-2 text-muted-foreground"
                 >
                   Genres:
-                </p>
-                <ul
-                  class="flex flex-row flex-wrap"
+                </dt>
+                <dd
+                  class="mb-1 mr-1 list-none"
                 >
-                  <li
-                    class="mb-1 mr-1 list-none"
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
                   >
-                    <div
-                      class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                    >
-                      Adventure
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                    Adventure
+                  </div>
+                </dd>
+              </dl>
               <p
                 class="mt-1 text-muted-foreground"
               >
@@ -492,7 +479,7 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
               </p>
             </section>
           </section>
-        </div>
+        </section>
         <section
           class="col-span-1 mt-10 flex h-full w-full flex-col md:col-span-2"
         >
@@ -513,26 +500,23 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 <div
                   class="flex flex-col"
                 >
-                  <div
-                    class="flex flex-col"
+                  <h3
+                    class="tracking-tight text-lg font-semibold"
                   >
-                    <p
-                      class="text-lg font-semibold"
-                    >
-                      Great Game
-                    </p>
-                    <p
-                      class="text-sm text-muted-foreground"
-                    >
-                      user1
-                    </p>
-                    <p
-                      class="text-sm text-muted-foreground"
-                    >
-                      PC
-                    </p>
-                  </div>
+                    Great Game
+                  </h3>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    user1
+                  </h4>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    PC
+                  </h4>
                   <div
+                    aria-label="5 out of 5 stars"
                     class="flex items-center font-light"
                   >
                     <button
@@ -623,26 +607,23 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
                 <div
                   class="flex flex-col"
                 >
-                  <div
-                    class="flex flex-col"
+                  <h3
+                    class="tracking-tight text-lg font-semibold"
                   >
-                    <p
-                      class="text-lg font-semibold"
-                    >
-                      Good Game
-                    </p>
-                    <p
-                      class="text-sm text-muted-foreground"
-                    >
-                      user2
-                    </p>
-                    <p
-                      class="text-sm text-muted-foreground"
-                    >
-                      PC
-                    </p>
-                  </div>
+                    Good Game
+                  </h3>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    user2
+                  </h4>
+                  <h4
+                    class="text-sm text-muted-foreground"
+                  >
+                    PC
+                  </h4>
                   <div
+                    aria-label="4 out of 5 stars"
                     class="flex items-center font-light"
                   >
                     <button
@@ -732,11 +713,11 @@ exports[`GameDetailPage Component > matches the snapshot 1`] = `
   <footer
     class="mt-5 h-16 w-full border-t text-muted-foreground"
   >
-    <div
+    <p
       class="container mx-auto px-6 pt-5 text-center text-sm"
     >
       Copyright 2023 GameRater
-    </div>
+    </p>
   </footer>
 </DocumentFragment>
 `;
