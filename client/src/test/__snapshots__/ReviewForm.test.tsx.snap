@@ -121,6 +121,7 @@ exports[`ReviewForm > matches the snapshot 1`] = `
         class="flex items-center font-light"
       >
         <button
+          aria-label="review-star-1"
           class="text-muted-foreground"
           data-testid="review-star"
           type="button"
@@ -132,6 +133,7 @@ exports[`ReviewForm > matches the snapshot 1`] = `
           </span>
         </button>
         <button
+          aria-label="review-star-2"
           class="text-muted-foreground"
           data-testid="review-star"
           type="button"
@@ -143,6 +145,7 @@ exports[`ReviewForm > matches the snapshot 1`] = `
           </span>
         </button>
         <button
+          aria-label="review-star-3"
           class="text-muted-foreground"
           data-testid="review-star"
           type="button"
@@ -154,6 +157,7 @@ exports[`ReviewForm > matches the snapshot 1`] = `
           </span>
         </button>
         <button
+          aria-label="review-star-4"
           class="text-muted-foreground"
           data-testid="review-star"
           type="button"
@@ -165,6 +169,7 @@ exports[`ReviewForm > matches the snapshot 1`] = `
           </span>
         </button>
         <button
+          aria-label="review-star-5"
           class="text-muted-foreground"
           data-testid="review-star"
           type="button"
