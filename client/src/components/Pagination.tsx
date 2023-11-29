@@ -12,6 +12,7 @@ interface PaginationProps {
  * @param {number} currentPage - The current page
  * @param {function} setCurrentPage - Callback function when page is changed
  * @param {number} pages - The total number of pages
+ * @param {string} storageKey - The key to use for session storage, only for GameListPage
  */
 export default function Pagination({
   currentPage,
