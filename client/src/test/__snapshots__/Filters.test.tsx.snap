@@ -2,7 +2,7 @@
 
 exports[`Filters Component > matches the snapshot 1`] = `
 <DocumentFragment>
-  <div
+  <section
     class="flex h-full flex-col items-start overflow-hidden text-left transition-all duration-300 ease-in-out w-[240px]"
   >
     <div
@@ -21,7 +21,7 @@ exports[`Filters Component > matches the snapshot 1`] = `
         <div
           style="min-width: 100%; display: table;"
         >
-          <div
+          <section
             class="pb-4 pl-5 md:pb-32"
           >
             <h1
@@ -29,20 +29,20 @@ exports[`Filters Component > matches the snapshot 1`] = `
             >
               Filter By
             </h1>
-            <h2
+            <h3
               class="my-2 text-left font-semibold capitalize text-foreground"
             >
               platforms
-            </h2>
-            <div
+            </h3>
+            <ul
               class="ml-1 flex flex-col"
             >
-              <div
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-Nintendo Switch"
+                  aria-label="platforms filter for Nintendo Switch"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-Nintendo Switch"
@@ -57,13 +57,13 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   Nintendo Switch
                 </label>
-              </div>
-              <div
+              </li>
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-PC (Microsoft Windows)"
+                  aria-label="platforms filter for PC (Microsoft Windows)"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-PC (Microsoft Windows)"
@@ -78,13 +78,13 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   PC (Microsoft Windows)
                 </label>
-              </div>
-              <div
+              </li>
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-PlayStation 5"
+                  aria-label="platforms filter for PlayStation 5"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-PlayStation 5"
@@ -99,13 +99,13 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   PlayStation 5
                 </label>
-              </div>
-              <div
+              </li>
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-Xbox Series X|S"
+                  aria-label="platforms filter for Xbox Series X|S"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-Xbox Series X|S"
@@ -120,13 +120,13 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   Xbox Series X|S
                 </label>
-              </div>
-              <div
+              </li>
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-Platform 1"
+                  aria-label="platforms filter for Platform 1"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-Platform 1"
@@ -141,13 +141,13 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   Platform 1
                 </label>
-              </div>
-              <div
+              </li>
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-Platform 3"
+                  aria-label="platforms filter for Platform 3"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-Platform 3"
@@ -162,23 +162,22 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   Platform 3
                 </label>
-              </div>
-            </div>
-            <div />
-            <h2
+              </li>
+            </ul>
+            <h3
               class="my-2 text-left font-semibold capitalize text-foreground"
             >
               genres
-            </h2>
-            <div
+            </h3>
+            <ul
               class="ml-1 flex flex-col"
             >
-              <div
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-Genre 1"
+                  aria-label="genres filter for Genre 1"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-Genre 1"
@@ -193,13 +192,13 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   Genre 1
                 </label>
-              </div>
-              <div
+              </li>
+              <li
                 class="my-1 flex items-center space-x-2"
               >
                 <button
                   aria-checked="false"
-                  aria-label="filter-item-Genre 2"
+                  aria-label="genres filter for Genre 2"
                   class="peer h-5 w-5 shrink-0 rounded-sm border border-primary shadow-lg ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   data-state="unchecked"
                   data-testid="filter-item-Genre 2"
@@ -214,16 +213,15 @@ exports[`Filters Component > matches the snapshot 1`] = `
                 >
                   Genre 2
                 </label>
-              </div>
-            </div>
-            <div />
-          </div>
+              </li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <button
-    aria-label="toggle filters"
+    aria-label="hide filters"
     class="items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 fixed bottom-8 left-8 z-50 m-1 hidden md:flex"
   >
     <svg

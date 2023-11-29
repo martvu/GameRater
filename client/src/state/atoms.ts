@@ -24,7 +24,7 @@ export const selectedGenresState = atom({
   default: [] as number[],
 });
 
-const currentPage = sessionStorage.getItem('currentPage');
+const currentPage = sessionStorage.getItem('gameListPage');
 export const pageState = atom<number>({
   key: 'pageState',
   default: currentPage ? parseInt(currentPage, 10) : 1,

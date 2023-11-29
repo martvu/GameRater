@@ -48,7 +48,10 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
   };
   return (
     <>
-      <div className="flex items-center font-light">
+      <div
+        aria-label={`${rating} out of 5 stars`}
+        className="flex items-center font-light"
+      >
         {[...Array(5)].map((_star, index) => {
           index += 1;
           return (

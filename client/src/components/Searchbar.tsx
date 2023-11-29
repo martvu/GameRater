@@ -172,6 +172,8 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
       </form>
       {isFocused && searchQuery && (
         <ul
+          aria-live="polite"
+          aria-label="search suggestions"
           ref={dropdownRef}
           className={cn(
             'absolute top-full z-10 rounded-md border border-accent bg-background shadow-lg',
@@ -192,16 +194,18 @@ const Searchbar = ({ showFullWidthSearch }: SearchbarProps) => {
                 role="listitem"
                 onKeyDown={handleListItemKeyDown}
               >
-                <Link to={`/game/${game._id}`} onClick={handleLinkClick}>
+                <Link
+                  aria-label={`Link to ${game.name} detail page`}
+                  to={`/game/${game._id}`}
+                  onClick={handleLinkClick}
+                >
                   <div className="flex gap-4">
-                    <div className="w-10">
-                      <ProgressiveImage
-                        fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover_image_id}.jpg`}
-                        placeholderSrc={imageNotFound}
-                        alt={game.name as string}
-                        className="h-14 rounded-full object-cover"
-                      />
-                    </div>
+                    <ProgressiveImage
+                      fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover_image_id}.jpg`}
+                      placeholderSrc={imageNotFound}
+                      alt={game.name as string}
+                      className="h-14 w-10 rounded-full object-cover"
+                    />
                     <p className="text-left text-sm font-semibold">
                       {game.name}
                     </p>

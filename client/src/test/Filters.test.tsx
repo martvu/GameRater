@@ -55,7 +55,7 @@ describe('Filters Component', () => {
     });
 
     // Test toggle collapse
-    await userEvent.click(screen.getByLabelText('toggle filters'));
+    await userEvent.click(screen.getByLabelText('hide filters'));
 
     await waitFor(() => {
       expect(screen.queryByText('platforms')).not.toBeInTheDocument();
