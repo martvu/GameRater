@@ -4,6 +4,7 @@ interface PaginationProps {
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
   pages: number;
+  storageKey: 'gameListPage' | 'reviewPage';
 }
 
 /**
@@ -16,6 +17,7 @@ export default function Pagination({
   currentPage,
   setCurrentPage,
   pages,
+  storageKey,
 }: PaginationProps) {
   interface PageButtonProps {
     pageNumber: number;
@@ -23,7 +25,10 @@ export default function Pagination({
 
   function handlePageChange(pageNumber: number) {
     setCurrentPage(pageNumber);
-    sessionStorage.setItem('currentPage', pageNumber.toString());
+    // Save page number to session storage, only for GameListPage
+    if (storageKey === 'gameListPage') {
+      sessionStorage.setItem(storageKey, pageNumber.toString());
+    }
   }
 
   const PageButton = ({ pageNumber }: PageButtonProps) => {

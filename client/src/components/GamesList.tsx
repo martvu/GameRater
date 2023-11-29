@@ -88,10 +88,7 @@ export default function GamesList() {
       </article>
       <ul className="grid grid-cols-[repeat(auto-fill,minmax(175px,1fr))] justify-center gap-1 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] sm:gap-4">
         {data?.search.games?.map((game: Game | null | undefined) => (
-          <li
-            className="m-1 flex justify-center"
-            key={`${game?._id}_${game?.user_rating_count}`}
-          >
+          <li className="m-1 flex justify-center" key={`${game?._id}`}>
             {game && <GameCard game={game} />}
           </li>
         ))}
@@ -106,6 +103,7 @@ export default function GamesList() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={Math.ceil((data?.search.count || 1) / limit) || 1}
+          storageKey="gameListPage"
         />
       </div>
     </section>

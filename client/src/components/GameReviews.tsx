@@ -39,6 +39,7 @@ export const GameReviews = ({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         pages={Math.ceil((count || 1) / reviewsPerPage) || 1}
+        storageKey="reviewPage"
       />
     </>
   );

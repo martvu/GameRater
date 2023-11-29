@@ -88,12 +88,6 @@ exports[`GameList Component > matches the snapshot 1`] = `
               <p>
                 4.5
               </p>
-              <p
-                aria-label="2 reviews"
-                class="ml-1 font-light text-muted-foreground opacity-80"
-              >
-                (2) 
-              </p>
             </div>
             <div
               class="absolute right-1 flex items-center"
