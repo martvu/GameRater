@@ -12,7 +12,6 @@ export const GET_GAMES = gql(`
         cover_image_id
         name
         user_rating
-        user_rating_count
       }
       filters {
         genres 

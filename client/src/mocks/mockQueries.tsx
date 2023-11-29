@@ -40,7 +40,6 @@ const getGamesMock = {
             cover_image_id: 'cover1',
             name: 'Example Game',
             user_rating: 4.5,
-            user_rating_count: 2,
           },
         ],
         filters: {
@@ -80,7 +79,6 @@ const getGamesMockedKeyword = {
             cover_image_id: 'cover1',
             name: 'Example Game',
             user_rating: 4.5,
-            user_rating_count: 2,
           },
         ],
         filters: {
