@@ -9,31 +9,29 @@ interface RatingProps {
 
 /**
  * Rating component
+ * Star rating component that displays the rating and number of ratings
  * @param {number} rating - The rating of the game
- * @param {number} numRatings - The number of ratings
+ * @param {number} [numRatings] - The number of ratings
  */
 export default function Rating({ rating, numRatings }: RatingProps) {
   return (
     <>
-      {/*        <!-- Component: Basic Rating --> */}
       <div className="flex flex-col items-center">
-        {/*          <!-- Rating --> */}
         <StarRating rating={rating} disabled={true} />
-        {/*          <!-- Helper text --> */}
         <span className="text-xs leading-6 text-muted-foreground">
           Based on {numRatings} user {numRatings === 1 ? 'rating' : 'ratings'}
         </span>
       </div>
-      {/*        <!-- End Basic Rating --> */}
     </>
   );
 }
 
 /**
  * StarRating component
+ * Show stars and rating value, can be disabled or used for giving ratings
  * @param {number} rating - The rating of the game
- * @param {boolean} disabled - Whether the rating is disabled
- * @param {function} onChange - Callback function when rating is changed
+ * @param {boolean} [disabled] - Whether the rating is disabled
+ * @param {function} [onChange] - Callback function when rating is changed
  */
 export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
   const [ratingValue, setRatingValue] = useState(rating || 0);
@@ -56,6 +54,7 @@ export const StarRating = ({ rating, disabled, onChange }: RatingProps) => {
           return (
             <button
               data-testid="review-star"
+              aria-label={`review-star-${index}`}
               type="button"
               key={index}
               className={

@@ -1,26 +1,63 @@
+
+<!-- TOC ignore:true -->
 # Prosjekt 2 – Team 48 – GameRater
+
+<!-- TOC -->
+
+  - [Welcome to GameRater](#welcome-to-gamerater)
+  - [How to run project](#how-to-run-project)
+    - [Install dependencies from root](#install-dependencies-from-root)
+    - [Run client and server from root](#run-client-and-server-from-root)
+    - [Run only server](#run-only-server)
+    - [Run only client](#run-only-client)
+  - [Prettier and ESLint](#prettier-and-eslint)
+  - [Testing](#testing)
+    - [Component testing](#component-testing)
+    - [End-to-end testing](#end-to-end-testing)
+    - [API testing](#api-testing)
+    - [Manual testing](#manual-testing)
+  - [Technology and choices](#technology-and-choices)
+    - [Data](#data)
+    - [Database](#database)
+    - [Server](#server)
+    - [Frameworks for user Interface](#frameworks-for-user-interface)
+    - [Client](#client)
+  - [GraphQL](#graphql)
+    - [GraphQL Code Generator](#graphql-code-generator)
+  - [Functionality](#functionality)
+    - [Search](#search)
+    - [Sort and filtering](#sort-and-filtering)
+    - [List of Games](#list-of-games)
+    - [Detailed Game Page](#detailed-game-page)
+    - [User "sign in"](#user-sign-in)
+    - [Reviews and favorites](#reviews-and-favorites)
+    - [Light/Dark Mode](#lightdark-mode)
+  - [Accesibility](#accesibility)
+  - [Sustainability](#sustainability)
+
+<!-- /TOC -->
 
 ## Welcome to GameRater
 
 GameRater is an app that helps you explore new and interesting games to play. Search through our database of thousands of games, filter on both platforms and genres, and sort by either name, release date, Metascore or user rating to make it easier to find the games you want. Not sure if a particular game is what you are looking for? Have a look at how a game has been rated and reviewed by other gamers, and make sure to check out the Metascore to see what the critics think. We also highly recommend leaving reviews of the games you have played to help others.
 
-# How to run project
+## How to run project
 
 We have set up scripts in the root folder to run both server and client concurrently. It is also possible to run these individually, but for client to fetch data, the server needs to be run first.
 
-## Install dependencies from root
+### Install dependencies from root
 
 ```
 npm install
 ```
 
-## Run client and server from root
+### Run client and server from root
 
 ```
 npm start
 ```
 
-## Run only server
+### Run only server
 
 ```
 cd server
@@ -34,83 +71,60 @@ cd client
 npm run dev
 ```
 
-# Prettier and ESLint
+## Prettier and ESLint
 
-We use Prettier and ESLint for code formatting.
+We use Prettier and ESLint for consistent code formatting and code quality.
 
-To format all files in the project run the following from the root folder:
-
-```
-cd client
-npx prettier . --write
-```
-
-and
+To format all files in the project (both client and server) run the following from the root folder:
 
 ```
-cd server
-npx prettier . --write
+npm run prettier
 ```
 
-To check if all files are formatted run this command instead:
+To check if all files are formatted, run this command instead from the root folder:
 
 ```
-npx prettier . --check
+npm run prettier:check
 ```
 
-To run ESLint do the following from the root folder:
+To run ESLint, run the following from the root folder:
+
 ```
-cd client
 npm run lint
 ```
+## Testing
 
-and
+### Component testing
 
-```
-cd server
-npm run lint
-```
-# Testing
-
-## Component testing
-
-For component testing, we use Vitest. To run the tests, run the following from the root folder:
+For component testing, we use Vitest. These tests use mocked data. To run the tests, run the following from the client folder:
 
 ```
-cd client
-npm run test
+npm test
 ```
 
-For test coverage, run the following from the root folder:
+For test coverage, run the following from the client folder:
 
 ```
-cd client
 npm run coverage
 ```
 
-## End-to-end testing
+### End-to-end testing
 
-<!-- Bytte til å teste på VM URLen? isåfall må vi rydde opp etter testen -->
 End-to-end testing is done with Cypress. For testing, we use a test database, so the server must be started in "test" mode and client must run in dev mode. 
 
-To start the test server, run the following in server folder:
+To start the app in "test" mode, run the following in root folder (this will start testserver and client in dev mode):
 
 ```
-npm run testserver
+npm start:test
 ```
 
-Then in another terminal, run the following in client folder:
+Then in another terminal, run the following in client folder (to run test in terminal):
 
 ```
-npm run dev
+npm run cypress:run 
 ```
 
-And finally in another terminal run the following in client folder to run the tests in the terminal:
-```
-npm run cypress:run
-```
-
-To run the tests in the Cypress GUI instead, run the following from client folder:
+Or to run the tests in the Cypress GUI, run the following from client folder:
 
 ```
 npm run cypress:open
@@ -118,7 +132,7 @@ npm run cypress:open
 
 This will open the Cypress GUI. From here, click "E2E Testing", then start E2E testing in preferred browser. 
 
-## API testing
+### API testing
 
 Testing the backend API is done with vitest and supertest. These tests run on the test database. To run the tests, run the following from the server folder:
 
@@ -131,41 +145,55 @@ For test coverage, run the following from the server folder:
 ```
 npm run coverage
 ```
-# Technology and choices
 
-## Data
+### Manual testing
+
+Manual testing was done by all group members throughout the project. For cases not covered by the tests, we have manually tested the app to make sure it works as intended.
+
+## Technology and choices
+
+### Data
 
 We got our game data from IGDB.com, a gaming website with information about thousands of video games. To make sure the dataset was not overly large we scraped their RestAPI for only a subset of the data consisting of around 10,000 games based on release date and popularity.
 
-## Database
+### Database
 
 We use a MongoDB Community Edition database that is hosted on our virtual machine. MongoDB is a flexible and scalable NoSQL database that multiple group members had worked with in the past, and so it seemed like a good choice for our project.
 
-## Server
+### Server
 
 We use an Apollo server with GraphQL as our query language. Apollo Server is compatible with our choice of Apollo Client on the client side and
 
-## User Interface
+### Frameworks for user Interface
 
 In this project we use the following technologies for our UI:
 
 - Tailwind CSS: Several group members have experience using this framework and we wanted high control over styling. Tailwind allows for fast and flexible development, while also providing consistency.
 - shadcn: Shadcn is a new "component" library based on Radix UI that comes with default styling and accessibility while also allowing for a high level of customization. Because of its high level of customization, we only have to import the components that we actually use in our app and therefore reduce bundle size.
 
-## Client
+### Client
 
 The client is built on React, programmed in TypeScript, and set up with Vite. We use Apollo Client for managing GraphQL data as this streamlines data fetching, caching and state management. For global state management we use Recoil for its ease of use and flexibility.
 
 ## GraphQL
 
 ### GraphQL Code Generator
-To avoid having to manually write types while working with GraphQL in TypeScript, we utilized the GraphQL Code Generator library to generate types for our resolvers and queries. This library automates the process of generating TypeScript types from our GraphQL schema and documents. These types need to be generated whenever the project is run to be updated which is why we have set up our scripts to also run graphql-codegen.
+To avoid having to manually write types while working with GraphQL in TypeScript, we utilized the GraphQL Code Generator library to generate types for our resolvers and queries. This library automates the process of generating TypeScript types from our GraphQL schema and documents. These types need to be generated whenever the project is run to be updated which is why we have set most of our scripts to also run graphql-codegen. 
 
-
-# Functionality
+## Functionality
 
 ### Search
-We have implemented search for games.
+We have implemented two types of search for games. 
+
+One is a search suggestion that shows up when the user types in the search bar. This search only searches for games by name. Clicking on a suggestion will take the user to the detailed game page for that game.
+
+The other is a search that is triggered when the user presses enter or clicks the search button. This searches for games that also match the selected filters (searches all games if no filters selected). The search will also limit the filters to only show the platforms and genres that are available for the search results.
+
+### Sort and filtering
+Sorting and filtering is implemented on the backend to handle whole dataset before being loaded to the frontend. This works with search and pagination.
+We decided to use OR filtering for the platforms and genres, meaning that if the user selects multiple platforms or genres, the games will be filtered to include any of the selected platforms or genres. 
+
+We also decided to allow user to choose filters first, then search even though this might result in no results (another solution would be to just reset the filters upon searching). This is because we want to give the user the freedom to choose what they want to search for, and not limit them to only search for games that are available on the platforms they have selected. The selected filters can then be unselected to see if any games match the search and filter combination. 
 
 ### List of Games
 The games are showed as a list of game cards and we have implemented pagination to handle the large dataset.
@@ -173,20 +201,23 @@ The games are showed as a list of game cards and we have implemented pagination 
 ### Detailed Game Page
 Each game has a detailed game page, where the user can also submit a review and read other user's reviews.
 
-### Sort and filtering
-Sorting and filtering is implemented on the backend to handle whole dataset before being loaded to the frontend.
-
 ### User "sign in"
-For the current state of the project, we decided to let users select a username without needing a password to allow for easier testing. Choosing a unique username will create a new user in our database. If the username is already taken, the app will simply log you into that user.
+We decided to let users select a username without needing a password to allow for easier testing. Choosing a unique username will create a new user in our database. If the username is already taken, the app will simply log you into that user.
+
+Authentication with password could be implemented in the future, but for the scope of this project we decided to focus on other functionality.
 
 ### Reviews and favorites
-Users can add games to favorites and review them. A user is only allowed to add one review per game. This functionality requires the user to be signed in with a user name.
+Users can add games to favorites and review them. A user is only allowed to add one review per game. This functionality requires the user to be signed in with a user name. When a game is either favorited or reviewed, the user can filter for these on the game list page.
 
 ### Light/Dark Mode
-We have implemented a toggle between light and dark mode.
+A toggle between light and dark mode is implemented.
 
-<!-- # Accesibility
+## Accesibility
+The app is tested with screen reader on Mac and tools like Google lighthouse and axe browser extention to test for accesibility issues. We have made sure our app is keyboard navigable and that all elements are accessible. We use semantic HTML, aria-labels when necessary and alt-text for images. We have also used colors with high contrast to make sure the app is readable for people with color blindness.
 
-# Sustainability  -->
+## Sustainability  
+Dark mode is implemented and used as default to reduce energy consumption. We have made sure to fetch only the data that is needed and prioritized performance and efficiency in our app. We also emphasized on keeping our code clean and readable to make it easier for future development and maintenance. 
+
+Choice of tailwind,shadcn and other libraries. Although our bundle size could be reduced further, we have chosen to use these frameworks for ease of development and consistency. We have also made sure to only import the components that we actually use in our app to reduce bundle size. 
 
 

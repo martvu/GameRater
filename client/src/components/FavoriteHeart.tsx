@@ -11,9 +11,14 @@ import SignInAlertModal from './SignInAlertModal';
 
 interface FavoriteHeartProps {
   game: Game;
-  variant?: 'text' | 'ghost' | 'outline' | 'secondary' | 'destructive';
+  variant?: 'secondary' | 'ghost' | 'text' | 'outline';
 }
 
+/**
+ * FavoriteHeart component
+ * @param {Game} game - The game object
+ * @param {string} [variant] - The variant of the button (default ghost)
+ */
 export default function FavoriteHeart({ game, variant }: FavoriteHeartProps) {
   const [addFavorites] = useMutation(ADD_FAVORITES);
   const [removeFavorite] = useMutation(REMOVE_FAVORITES);

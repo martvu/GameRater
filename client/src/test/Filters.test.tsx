@@ -31,8 +31,15 @@ function renderFilters({
 }
 
 describe('Filters Component', () => {
-  it('matches the snapshot', () => {
+  it('matches the snapshot', async () => {
     const { asFragment } = renderFilters();
+
+    await waitFor(() => {
+      expect(screen.getByText('Filter By')).toBeInTheDocument();
+      expect(screen.getByText('platforms')).toBeInTheDocument();
+      expect(screen.getByText('genres')).toBeInTheDocument();
+    });
+
     expect(asFragment()).toMatchSnapshot();
   });
 

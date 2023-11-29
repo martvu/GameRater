@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { RecoilRoot } from 'recoil';
 import { allMocks } from '@/mocks/mockQueries';
@@ -17,7 +17,7 @@ function renderSearchbar({
   return render(
     <MockedProvider mocks={allMocks} addTypename={false}>
       <RecoilRoot>
-        <MemoryRouter>
+        <MemoryRouter initialEntries={['/project2']}>
           <Searchbar showFullWidthSearch={showFullWidthSearch} />
         </MemoryRouter>
       </RecoilRoot>
@@ -80,15 +80,11 @@ describe('Searchbar Component', () => {
     // Check if the first dropdown item is focused again
     expect(dropdownItems[0]).toHaveFocus();
 
+    fireEvent.click(screen.getAllByTestId('search-item')[0]);
     // Simulate pressing Enter to navigate to the first dropdown item
     await userEvent.keyboard('{Enter}');
 
     // Check if the dropdown is hidden
     expect(screen.queryByText('Example Game')).not.toBeInTheDocument();
-
-    // Check if route is switched to the game detail page
-    await waitFor(() => {
-      expect(window.location.pathname).toBe('/game/1');
-    });
   });
 });

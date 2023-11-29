@@ -58,6 +58,16 @@ const renderReviewForm = () => {
   );
 };
 describe('ReviewForm', () => {
+  it('matches the snapshot', async () => {
+    const { asFragment } = renderReviewForm();
+
+    await waitFor(() => {
+      expect(screen.getByText('Submit Review')).toBeInTheDocument();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('renders correctly', async () => {
     renderReviewForm();
 

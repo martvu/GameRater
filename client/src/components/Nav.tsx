@@ -10,6 +10,10 @@ import Searchbar from '@/components/Searchbar.tsx';
 import { cn } from '@/lib/utils.ts';
 import useReset from '@/hooks/useReset.tsx';
 
+/**
+ * Nav component
+ * The navigation bar at the top of the page
+ */
 export default function Nav() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   const reset = useReset();
@@ -29,7 +33,7 @@ export default function Nav() {
             : 'justify-between'
         )}
       >
-        <Link data-testid="logo-btn" to="/" aria-label="Return to Home Page">
+        <Link data-testid="logo-btn" to="/" aria-label="GameRater Home">
           <div
             className={cn(
               'w-28 items-center justify-between gap-2 px-2',
@@ -43,7 +47,7 @@ export default function Nav() {
             >
               <Avatar>
                 <AvatarImage src={Logo} alt="GameRater logo" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>GR</AvatarFallback>
               </Avatar>
               <h1 className="ml-1 text-xl font-bold tracking-wide text-primary">
                 GameRater
@@ -59,6 +63,7 @@ export default function Nav() {
         >
           {showFullWidthSearch && (
             <Button
+              aria-label="return to collapsed search"
               onClick={() => setShowFullWidthSearch(false)}
               size="icon"
               variant="ghost"
@@ -71,11 +76,12 @@ export default function Nav() {
         </div>
         <div
           className={cn(
-            'flex-shrink-0 items-center md:gap-2',
+            'mr-1 flex-shrink-0 items-center gap-1 md:gap-2',
             showFullWidthSearch ? 'hidden md:flex' : 'flex'
           )}
         >
           <Button
+            aria-label="open searchbar"
             onClick={() => setShowFullWidthSearch(true)}
             size="icon"
             variant="ghost"
@@ -83,12 +89,8 @@ export default function Nav() {
           >
             <Search size={24} />
           </Button>
-          <div>
-            <UserNav />
-          </div>
-          <div className="mr-1">
-            <ModeToggle />
-          </div>
+          <UserNav />
+          <ModeToggle />
         </div>
       </nav>
     </header>

@@ -10,7 +10,7 @@ exports[`Searchbar Component > matches the snapshot 1`] = `
       for="search"
     />
     <div
-      class="relative w-[200px] md:w-[300px] lg:w-[400px]"
+      class="relative md:w-[350px] lg:w-[400px]"
     >
       <input
         autocomplete="off"

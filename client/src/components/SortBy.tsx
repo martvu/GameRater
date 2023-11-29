@@ -12,6 +12,10 @@ import { sortByState } from '@/state/atoms';
 import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
+/**
+ * SortBy component
+ * Select for sorting the games
+ */
 export default function SortBy() {
   const setSortBy = useRecoilState(sortByState)[1];
   const setCurrentPage = useSetRecoilState(pageState);

@@ -23,6 +23,10 @@ interface GameCardProps {
   game: Game;
 }
 
+/**
+ * GameCard component
+ * @param {Game} game - The game object
+ */
 export function GameCard({ game }: GameCardProps) {
   const {
     _id: id,
@@ -42,15 +46,13 @@ export function GameCard({ game }: GameCardProps) {
         to={`/game/${id}`}
         aria-label={`Link to ${name} detail page`}
       >
-        <CardHeader className="h-[235px] w-[176px] overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
-          <div className="flex flex-1 items-center justify-center">
-            <ProgressiveImage
-              placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
-              fullSrc={coverImageUrl}
-              alt="Game cover image"
-              className="h-full w-full object-cover" // Adjust the width and height as needed
-            />
-          </div>
+        <CardHeader className="flex h-[235px] w-[176px] flex-1 items-center justify-center overflow-hidden rounded-t-lg sm:mb-2 sm:h-[320px] sm:w-[260px]">
+          <ProgressiveImage
+            placeholderSrc={imageNotFound} // imageNotFound is used for both placeholder and error state
+            fullSrc={coverImageUrl}
+            alt="Game cover image"
+            className="h-full w-full object-cover" // Adjust the width and height as needed
+          />
         </CardHeader>
         <CardContent className="relative px-3 text-start">
           <TooltipProvider>
@@ -67,20 +69,16 @@ export function GameCard({ game }: GameCardProps) {
           </TooltipProvider>
         </CardContent>
       </Link>
-      <CardFooter className="mt-auto h-[40px] w-full pl-3 pr-2 sm:pb-2">
-        <div className="relative flex h-full w-full items-center">
-          <div className="absolute left-0 flex items-center">
-            <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />
-            <p>{userRating === 0 ? '-' : userRating}</p>
-          </div>
-          <div className="absolute right-10 flex items-center gap-2">
-            <Metascore
-              metascore={aggregatedRating ? aggregatedRating : undefined}
-            />
-          </div>
-          <div className="absolute right-0">
-            <FavoriteHeart game={game} />
-          </div>
+      <CardFooter className="relative mt-auto flex h-[40px] w-full items-center pl-3 pr-2 sm:pb-2">
+        <div className="absolute left-2 flex items-center">
+          <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />
+          <p>{userRating === 0 ? '-' : userRating}</p>
+        </div>
+        <div className="absolute right-1 flex items-center">
+          <Metascore
+            metascore={aggregatedRating ? aggregatedRating : undefined}
+          />
+          <FavoriteHeart game={game} />
         </div>
       </CardFooter>
     </Card>

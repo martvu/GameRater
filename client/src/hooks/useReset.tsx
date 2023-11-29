@@ -8,6 +8,10 @@ import {
   sortByState,
 } from '@/state/atoms.ts';
 
+/**
+ * useReset hook
+ * Resets all the filters and sort
+ */
 const useReset = () => {
   const setSelectedPlatforms = useSetRecoilState(selectedPlatformsState);
   const setSelectedGenres = useSetRecoilState(selectedGenresState);
