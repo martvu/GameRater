@@ -69,6 +69,7 @@ exports[`GameList Component > matches the snapshot 1`] = `
               class="absolute left-2 flex items-center"
             >
               <svg
+                aria-label="4.5 out of 5 stars"
                 class="mr-1 h-5 fill-yellow-400 text-yellow-400"
                 fill="none"
                 height="24"
@@ -86,6 +87,12 @@ exports[`GameList Component > matches the snapshot 1`] = `
               </svg>
               <p>
                 4.5
+              </p>
+              <p
+                aria-label="undefined reviews"
+                class="ml-1 font-light text-muted-foreground opacity-80"
+              >
+                 
               </p>
             </div>
             <div
