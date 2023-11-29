@@ -1,41 +1,29 @@
 import withLayout from '@/lib/withLayout';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import Rating from '@/components/Rating';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
-import ReviewCard from '@/components/ReviewCard';
-import ReviewModal from '@/components/ReviewModal';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import Pagination from '@/components/Pagination';
-import { Genre, Platform, Review } from '@/gql/graphql';
-import Metascore from '@/components/Metascore';
-import FavoriteHeart from '@/components/FavoriteHeart';
+import { Review } from '@/gql/graphql';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/state/atoms';
 import Loading from '@/components/Loading';
-import { Badge } from '@/components/ui/badge';
-import ProgressiveImage from '@/components/ProgressiveImage';
-import imageNotFound from '@/assets/img-fallback.svg';
 import { GET_GAME } from '@/lib/queries.tsx';
+import { GameDetails } from '@/components/GameDetails.tsx';
+import { GameReviews } from '@/components/GameReviews.tsx';
 
 type GameDetailParams = {
   id: string;
 };
 
 const BaseGameDetailPage = () => {
-  const { id } = useParams<GameDetailParams>();
-  const user = useRecoilValue(userState);
-  const [currentPage, setCurrentPage] = useState(1);
-  const reviewsPerPage = 5;
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { id } = useParams<GameDetailParams>();
+  const reviewsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const user = useRecoilValue(userState);
   const { loading, error, data } = useQuery(GET_GAME, {
     variables: {
       id: id as string,
@@ -45,7 +33,7 @@ const BaseGameDetailPage = () => {
     },
   });
 
-  // Scroll to top of the page on mount because of the router
+  // Scroll to top of the page on mount because of the router optimizations
   useEffect(() => {
     // Scroll to top of the page
     window.scrollTo(0, 0);
@@ -57,17 +45,6 @@ const BaseGameDetailPage = () => {
   if (!data?.getGame) {
     return <div>Game not found</div>;
   }
-  const formatDate = (unixTimestampStr: string): string => {
-    const date = new Date(Number(unixTimestampStr) * 1000);
-    return date.toLocaleDateString('de-DE', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-  };
-
-  const hasWrittenReview = data?.getGame.reviews?.userHasReviewed || false;
-  const releaseDate = formatDate(data?.getGame?.first_release_date as string);
 
   return (
     <section className="flex justify-center pt-4">
@@ -88,117 +65,14 @@ const BaseGameDetailPage = () => {
         >
           <ArrowLeft />
         </Button>
-
-        <div className="flex flex-row flex-wrap justify-center gap-8">
-          <section className="flex flex-row gap-2">
-            {/* Image, ratings, Write Review */}
-            <section className="flex flex-row items-center justify-center gap-4">
-              <Card className="w-auto overflow-hidden p-0">
-                <CardHeader className="h-[364px] w-[264px] p-0">
-                  <div className="absolute right-2 top-2"></div>
-                  <ProgressiveImage
-                    fullSrc={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.getGame.imageId}.jpg`}
-                    placeholderSrc={imageNotFound}
-                    alt={data.getGame.name as string}
-                    className="h-full w-full object-cover" // Adjust the width and height as needed
-                  />
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className=" flex items-center justify-center text-yellow-400">
-                    <Rating
-                      rating={data.getGame.user_rating || 0}
-                      numRatings={data.getGame.reviews?.count || 0}
-                    />
-                  </div>
-                </CardContent>
-                <CardFooter className="flex flex-col justify-center">
-                  {hasWrittenReview ? (
-                    <Button className="mb-4 w-[200px]" disabled>
-                      Review Submitted
-                    </Button>
-                  ) : (
-                    <ReviewModal />
-                  )}
-                </CardFooter>
-              </Card>
-            </section>
-          </section>
-          {/* Title, Release Date, Platforms, Genres and Description */}
-          <section className="border-none bg-transparent pb-4 text-left md:min-w-[400px] md:max-w-[700px] lg:min-w-[500px]">
-            <h1 className=" flex gap-4 text-4xl font-semibold">
-              {data.getGame.name}
-              <FavoriteHeart variant="secondary" game={data.getGame} />
-            </h1>
-
-            <section className="flex flex-col justify-start gap-1">
-              {data.getGame.aggregatedRating ? (
-                <div className="flex items-center gap-2">
-                  <p className="text-muted-foreground">Metascore: </p>
-                  <Metascore
-                    metascore={
-                      data.getGame.aggregatedRating
-                        ? data.getGame.aggregatedRating
-                        : undefined
-                    }
-                  />
-                </div>
-              ) : null}
-              <div className="mt-1 flex items-center gap-2">
-                <p className="text-muted-foreground">Release Date:</p>
-                <p className="text-sm font-semibold">{releaseDate}</p>
-              </div>
-              <div className="mt-1 flex flex-row gap-2">
-                <p className="mr-2 text-muted-foreground">Platforms:</p>
-                <ul className="flex flex-row flex-wrap">
-                  {data.getGame.platforms?.map((platform: Platform | null) => (
-                    <li className="mb-1 mr-1 list-none" key={platform?.name}>
-                      <Badge variant="secondary">
-                        <span className="line-clamp-1">{platform?.name}</span>
-                      </Badge>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-1 flex flex-row gap-2">
-                <p className="mr-2 text-muted-foreground">Genres:</p>
-                <ul className="flex flex-row flex-wrap">
-                  {data.getGame.genres?.map((genre: Genre | null) => (
-                    <li className="mb-1 mr-1 list-none" key={genre?.name}>
-                      <Badge variant="secondary">{genre?.name}</Badge>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <p className="mt-1 text-muted-foreground">
-                {data.getGame.summary}
-              </p>
-            </section>
-          </section>
-        </div>
+        <GameDetails game={data.getGame} />
         {/* Reviews */}
-        <section className="col-span-1 mt-10 flex h-full w-full flex-col md:col-span-2">
-          <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-          <ul className="flex min-w-full flex-col justify-center text-left md:min-w-[700px]">
-            {data.getGame.reviews?.reviews?.length !== 0 ? (
-              data.getGame.reviews?.reviews?.map((review: Review | null) => (
-                <li key={review?._id} className="my-2">
-                  <ReviewCard review={review as Review} />
-                </li>
-              ))
-            ) : (
-              <li className="flex flex-col items-center justify-center">
-                <p className="text-foreground">No reviews yet</p>
-              </li>
-            )}
-          </ul>
-        </section>
-        <Pagination
+        <GameReviews
+          reviews={data.getGame.reviews?.reviews as Review[]}
+          count={data.getGame.reviews?.count}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          pages={
-            Math.ceil((data.getGame.reviews?.count || 1) / reviewsPerPage) || 1
-          }
+          reviewsPerPage={reviewsPerPage}
         />
       </div>
     </section>

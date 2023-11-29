@@ -27,7 +27,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/state/atoms';
 import { CREATE_REVIEW } from '@/lib/mutations';
-import { GET_GAME_PLATFORMS } from '@/lib/queries';
+import { GET_GAME, GET_GAME_PLATFORMS } from '@/lib/queries';
 import Loading from './Loading';
 import { useToast } from '@/components/ui/use-toast.ts';
 
@@ -64,7 +64,17 @@ export function ReviewForm() {
     variables: { id: id as string },
   });
   const [createReview] = useMutation(CREATE_REVIEW, {
-    refetchQueries: ['GetGame'],
+    refetchQueries: [
+      {
+        query: GET_GAME,
+        variables: {
+          id: id,
+          limit: 5,
+          offset: 0,
+          username: user?.username,
+        },
+      },
+    ],
     awaitRefetchQueries: true,
   });
   const { toast } = useToast();

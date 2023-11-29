@@ -3,12 +3,67 @@ import Genre from '../models/genre.js';
 import Platform from '../models/platform.js';
 import Review from '../models/review.js';
 import User from '../models/user.js';
-import { Resolvers } from './__generated__/resolvers-types';
+import {
+  GameSortInput,
+  InputMaybe,
+  Resolvers,
+  Scalars,
+} from './__generated__/resolvers-types';
+import { Query } from 'mongoose';
 
 interface GameQueryFilters {
   platforms?: { $in: number[] };
   genres?: { $in: number[] };
   name?: { $regex: RegExp };
+}
+
+// Split query parsing into its own function
+const parseQuery = (query: InputMaybe<Scalars['String']['input']>) => {
+  const keywords = query.split(' ').filter(keyword => keyword.length > 0);
+  const regexPattern = keywords.map(keyword => `(?=.*${keyword})`).join('');
+  return { $regex: new RegExp(regexPattern, 'i') };
+};
+
+// Handle fetching of favorites and reviewed games
+const fetchUserGameIds = async (
+  userId: string,
+  showFavorites: boolean,
+  showReviewedGames: boolean
+) => {
+  const combinedGameIds = new Set();
+
+  if (showFavorites) {
+    const user = await User.findOne({ _id: userId });
+    user.favorites.forEach(id => combinedGameIds.add(id));
+  }
+
+  if (showReviewedGames) {
+    const reviews = await Review.find({ user: userId });
+    reviews.forEach(review => combinedGameIds.add(review.gameID));
+  }
+
+  return Array.from(combinedGameIds);
+};
+
+function getGameFilters(
+  query: InputMaybe<Scalars['String']['input']>,
+  platforms: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>,
+  genres: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>
+) {
+  const filters: GameQueryFilters = {};
+  if (query) {
+    filters.name = parseQuery(query);
+  }
+
+  if (platforms && platforms.length > 0) {
+    filters['platforms'] = { $in: platforms };
+  }
+
+  if (genres && genres.length > 0) {
+    filters['genres'] = { $in: genres };
+  }
+
+  return filters;
 }
 
 export const resolvers: Resolvers = {
@@ -47,89 +102,46 @@ export const resolvers: Resolvers = {
         showReviewedGames,
       }
     ) => {
-      const filters: GameQueryFilters = {};
-      let distinctGenres: number[] = [];
-      let distinctPlatforms: number[] = [];
-      // Apply filters if provided
-      if (query) {
-        // Split the query into individual keywords
-        const keywords = query.split(' ').filter(keyword => keyword.length > 0);
-        // Create a regex pattern that matches documents containing all keywords
-        const regexPattern = keywords
-          .map(keyword => `(?=.*${keyword})`)
-          .join('');
-        filters.name = { $regex: new RegExp(regexPattern, 'i') };
-        // Get distinct platforms and genres matching the query
-        distinctPlatforms = await Game.distinct('platforms', filters).exec();
-        distinctGenres = await Game.distinct('genres', filters).exec();
-      }
-      if (platforms && platforms.length > 0) {
-        filters['platforms'] = { $in: platforms };
-      }
-      if (genres && genres.length > 0) {
-        filters['genres'] = { $in: genres };
-      }
-      // If showFavorites is true, filter by user's favorite games
-      let combinedGameIds = [];
-      let hasFavoritesOrReviews = false;
-      if (showFavorites && userId) {
-        const user = await User.findOne({ _id: userId });
-        if (user && user.favorites && user.favorites.length > 0) {
-          combinedGameIds.push(...user.favorites);
-          hasFavoritesOrReviews = true;
+      const filters: GameQueryFilters = getGameFilters(
+        query,
+        platforms,
+        genres
+      );
+
+      if (showFavorites || showReviewedGames) {
+        const gameIds = await fetchUserGameIds(
+          userId,
+          showFavorites,
+          showReviewedGames
+        );
+        if (gameIds.length <= 0) {
+          return {
+            games: [],
+            count: 0,
+            filters: { platforms: [], genres: [] },
+          };
         }
-      }
-      // If showReviewedGames is true, filter by user's reviewed games
-      if (showReviewedGames && userId) {
-        const user = await User.findOne({ _id: userId });
-        const reviews = await Review.find({ user: user.username });
-        const reviewedGameIds = reviews.map(review => review.gameID);
-        if (
-          user &&
-          user.reviews &&
-          reviewedGameIds &&
-          reviewedGameIds.length > 0
-        ) {
-          combinedGameIds.push(...reviewedGameIds);
-          hasFavoritesOrReviews = true;
-        }
-      }
-      // If user has favorites or reviews, filter by those
-      if (hasFavoritesOrReviews) {
-        // Remove duplicate IDs
-        combinedGameIds = [...new Set(combinedGameIds)];
-        if (combinedGameIds.length > 0) {
-          filters['_id'] = { $in: combinedGameIds };
-        }
-        // Return no results if specifically requested data is not available
-      } else if (showFavorites || showReviewedGames) {
-        return { games: [], count: 0, filters: { platforms: [], genres: [] } };
+        filters['_id'] = { $in: gameIds };
       }
 
       try {
-        let sortQuery = Game.find();
-        // Apply sorting if sortBy is provided
+        const query = Game.find(filters);
+
         if (sortBy) {
           const { field, order } = sortBy;
-          sortQuery = sortQuery
+          query
             .collation({ locale: 'en', strength: 1 })
             .sort({ [field]: order === 'asc' ? 1 : -1 });
         }
-        // Execute the query with pagination to retrieve games
-        const games = await sortQuery
-          .find(filters)
-          .skip(offset)
-          .limit(limit)
-          .exec();
-        // Count the total number of games matching the query
+        const games = await query.skip(offset).limit(limit).exec();
         const count = await Game.find(filters).countDocuments().exec();
 
         return {
           games: games.map(game => game.toObject()),
           count,
           filters: {
-            platforms: distinctPlatforms,
-            genres: distinctGenres,
+            platforms: await Game.distinct('platforms', filters).exec(),
+            genres: await Game.distinct('genres', filters).exec(),
           },
         };
       } catch (error) {
@@ -143,40 +155,48 @@ export const resolvers: Resolvers = {
       _,
       { reviewInput: { user, title, content, rating, platform, gameID } }
     ) => {
-      const review = await new Review({
+      // Create the new review
+      const newReview = new Review({
         user,
         title,
         content,
         rating,
         platform,
         gameID,
-      }).save();
-      const reviews = await Review.find({ gameID: gameID });
-
-      // Calculate the new average rating
-      let totalRating = reviews.reduce(
-        (acc, review) => acc + review.rating.valueOf(),
-        0
-      );
-      totalRating += rating; // Add the rating of the new review
-      const newAverageRating = Number(
-        (totalRating / (reviews.length + 1)).toFixed(1)
-      );
-      await Game.findByIdAndUpdate(gameID, {
-        $addToSet: { reviews: review._id },
-        //Update the games user_rating
-        user_rating: newAverageRating,
       });
 
+      // Fetch all existing reviews for the game
+      const existingReviews = await Review.find({ gameID: gameID });
+
+      // Calculate the new average rating including the new review
+      const totalRating =
+        existingReviews.reduce(
+          (acc, review) => acc + Number(review.rating),
+          0
+        ) + Number(newReview.rating);
+      const newAverageRating = Number(
+        (totalRating / (existingReviews.length + 1)).toFixed(1)
+      );
+
+      // Save the new review
+      await newReview.save();
+      await Game.findByIdAndUpdate(gameID, {
+        $addToSet: { reviews: newReview._id },
+        //Update the games user_rating and user_rating_count
+        user_rating: newAverageRating,
+        user_rating_count: existingReviews.length + 1,
+      });
+
+      // Add the review to the user's reviews
       const userDoc = await User.findOne({ username: user });
       if (userDoc) {
         await User.findByIdAndUpdate(userDoc._id, {
-          $addToSet: { reviews: review._id },
+          $addToSet: { reviews: newReview._id },
         });
       } else {
         throw new Error('User not found');
       }
-      return { ...review.toObject(), _id: review._id.toString() };
+      return { ...newReview.toObject(), _id: newReview._id.toString() };
     },
     signInOrCreateUser: async (_, { userInput: { username } }) => {
       const user = await User.findOne({ username: username });
