@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-interface IGenre {
+interface IGenre extends Document {
   _id: Schema.Types.ObjectId;
   id: Number;
   name: String;

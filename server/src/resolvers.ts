@@ -82,8 +82,8 @@ export const resolvers: Resolvers = {
       // If showReviewedGames is true, filter by user's reviewed games
       if (showReviewedGames && userId) {
         const user = await User.findOne({ _id: userId });
-        const reviews = await Review.find({ user: user.username });
-        const reviewedGameIds = reviews.map(review => review.gameID);
+        const usersReviews = await Review.find({ user: user.username });
+        const reviewedGameIds = usersReviews.map(review => review.gameID);
         if (
           user &&
           user.reviews &&
@@ -143,40 +143,57 @@ export const resolvers: Resolvers = {
       _,
       { reviewInput: { user, title, content, rating, platform, gameID } }
     ) => {
-      const review = await new Review({
+      // Create the new review
+      const newReview = new Review({
         user,
         title,
         content,
         rating,
         platform,
         gameID,
-      }).save();
-      const reviews = await Review.find({ gameID: gameID });
-
-      // Calculate the new average rating
-      let totalRating = reviews.reduce(
-        (acc, review) => acc + review.rating.valueOf(),
-        0
-      );
-      totalRating += rating; // Add the rating of the new review
-      const newAverageRating = Number(
-        (totalRating / (reviews.length + 1)).toFixed(1)
-      );
-      await Game.findByIdAndUpdate(gameID, {
-        $addToSet: { reviews: review._id },
-        //Update the games user_rating
-        user_rating: newAverageRating,
       });
 
+      // Validate the rating
+      if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+        throw new Error('Rating must be an integer between 1 and 5');
+      }
+      // Fetch all existing reviews for the game
+      const existingReviews = await Review.find({ gameID: gameID });
+
+      // Calculate the new average rating including the new review
+      const totalRating =
+        existingReviews.reduce(
+          (acc, review) => acc + Number(review.rating),
+          0
+        ) + Number(newReview.rating);
+      const newAverageRating = Number(
+        (totalRating / (existingReviews.length + 1)).toFixed(1)
+      );
+
+      // Add the review to the user's reviews
       const userDoc = await User.findOne({ username: user });
       if (userDoc) {
         await User.findByIdAndUpdate(userDoc._id, {
-          $addToSet: { reviews: review._id },
+          $addToSet: { reviews: newReview._id },
         });
       } else {
         throw new Error('User not found');
       }
-      return { ...review.toObject(), _id: review._id.toString() };
+      try {
+        await Game.findByIdAndUpdate(gameID, {
+          $addToSet: { reviews: newReview._id },
+          //Update the games user_rating and user_rating_count
+          user_rating: newAverageRating,
+          user_rating_count: existingReviews.length + 1,
+        });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Error updating game');
+      }
+
+      // Save the new review
+      await newReview.save();
+      return { ...newReview.toObject(), _id: newReview._id.toString() };
     },
     signInOrCreateUser: async (_, { userInput: { username } }) => {
       const user = await User.findOne({ username: username });

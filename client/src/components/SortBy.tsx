@@ -47,6 +47,10 @@ export default function SortBy() {
       sortByObject = { field: 'user_rating', order: 'desc' };
       setSortBy(sortByObject);
     }
+    if (value === 'Popularity') {
+      sortByObject = { field: 'user_rating_count', order: 'desc' };
+      setSortBy(sortByObject);
+    }
 
     // Store the selected value in sessionStorage
     sessionStorage.setItem('selectedSortBy', JSON.stringify(sortByObject));
@@ -97,6 +101,9 @@ export default function SortBy() {
           </SelectItem>
           <SelectItem data-testid="user-rating" value="User Rating">
             User Rating
+          </SelectItem>
+          <SelectItem data-testid="popularity" value="Popularity">
+            Popularity
           </SelectItem>
         </SelectGroup>
       </SelectContent>

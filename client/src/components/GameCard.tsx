@@ -34,6 +34,7 @@ export function GameCard({ game }: GameCardProps) {
     aggregated_rating: aggregatedRating,
     cover_image_id: imageId,
     user_rating: userRating,
+    user_rating_count: reviewCount,
   } = game;
   const coverImageUrl = imageId
     ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`
@@ -71,8 +72,17 @@ export function GameCard({ game }: GameCardProps) {
       </Link>
       <CardFooter className="relative mt-auto flex h-[40px] w-full items-center pl-3 pr-2 sm:pb-2">
         <div className="absolute left-2 flex items-center">
-          <Star className="mr-1 h-5 fill-yellow-400 text-yellow-400" />
-          <p>{userRating === 0 ? '-' : userRating}</p>
+          <Star
+            aria-label={`${userRating} out of 5 stars`}
+            className="mr-1 h-5 fill-yellow-400 text-yellow-400"
+          />
+          <p>{userRating === 0 ? '' : userRating}</p>
+          <p
+            aria-label={`${reviewCount} reviews`}
+            className="ml-1 font-light text-muted-foreground opacity-80"
+          >
+            {reviewCount ? `(${reviewCount})` : ''}{' '}
+          </p>
         </div>
         <div className="absolute right-1 flex items-center">
           <Metascore

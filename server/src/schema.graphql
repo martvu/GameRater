@@ -17,8 +17,8 @@ type Review {
 
 type Reviews {
   reviews: [Review]
-  count: Int!
-  userHasReviewed: Boolean!
+  count: Int
+  userHasReviewed: Boolean
 }
 
 type Game {
@@ -34,6 +34,7 @@ type Game {
   aggregated_rating: Float
   aggregated_rating_count: Int
   user_rating: Float
+  user_rating_count: Int
 }
 
 type Genre {
